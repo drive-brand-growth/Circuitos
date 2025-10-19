@@ -4,7 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Circuit OS - Executive Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Vercel Geist Design System + Circuit OS Colors */
+        :root {
+            /* Circuit OS Brand Colors */
+            --neon-green: #38FF6A;
+            --neon-green-bright: #5aff88;
+            --neon-green-dark: #2ecc54;
+            --neon-glow: rgba(56, 255, 106, 0.6);
+
+            /* Steel Gray */
+            --steel-gray: #8B9198;
+            --steel-light: #B8BCC2;
+            --steel-dark: #6B6F75;
+
+            /* Backgrounds */
+            --background: #000000;
+            --foreground: #FAFAFA;
+            --accents-1: #0a0a0a;
+            --accents-2: #1a1a1a;
+            --accents-3: #333333;
+            --accents-4: #666666;
+            --accents-6: #999999;
+
+            /* Typography */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+
+            /* Spacing */
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-6: 24px;
+
+            /* Border Radius */
+            --radius-md: 6px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,9 +49,9 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-            background: #000000;
-            color: #FFFFFF;
+            font-family: var(--font-sans);
+            background: var(--background);
+            color: var(--foreground);
             overflow: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -23,11 +60,12 @@
         /* Vercel-style header */
         .header {
             height: 64px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--accents-2);
             display: flex;
             align-items: center;
-            padding: 0 24px;
-            background: #000000;
+            padding: 0 var(--space-6);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
             position: relative;
         }
 
@@ -38,7 +76,7 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(56, 255, 106, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(56, 255, 106, 0.2), transparent);
             pointer-events: none;
         }
 
@@ -51,22 +89,18 @@
         .logo img {
             width: auto;
             height: 40px;
-            filter: drop-shadow(0 0 8px rgba(56, 255, 106, 0.3));
-            transition: filter 0.2s ease;
+            transition: opacity 0.2s ease;
         }
 
         .logo:hover img {
-            filter: drop-shadow(0 0 12px rgba(56, 255, 106, 0.5));
+            opacity: 0.8;
         }
 
         .logo-text {
             font-size: 16px;
             font-weight: 600;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #FFFFFF 0%, #CCCCCC 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            letter-spacing: -0.01em;
+            color: var(--foreground);
         }
 
         /* Vercel-style tabs */
@@ -84,7 +118,7 @@
             align-items: center;
             font-size: 14px;
             font-weight: 500;
-            color: #666666;
+            color: var(--accents-6);
             cursor: pointer;
             border-bottom: 2px solid transparent;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -100,18 +134,18 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: #38FF6A;
+            background: var(--neon-green);
             transform: scaleX(0);
             transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .tab:hover {
-            color: #FFFFFF;
+            color: var(--foreground);
             background: rgba(255, 255, 255, 0.03);
         }
 
         .tab.active {
-            color: #FFFFFF;
+            color: var(--foreground);
         }
 
         .tab.active::before {
@@ -128,20 +162,38 @@
 
         .status-badge {
             padding: 4px 12px;
-            border-radius: 6px;
+            border-radius: var(--radius-md);
             font-size: 12px;
             font-weight: 500;
             background: rgba(56, 255, 106, 0.1);
-            color: #38FF6A;
+            color: var(--neon-green);
             border: 1px solid rgba(56, 255, 106, 0.2);
             letter-spacing: 0.02em;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--neon-glow);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         /* Content area */
         .content {
             height: calc(100vh - 64px);
             width: 100%;
-            background: #000000;
+            background: var(--background);
         }
 
         .content iframe {
@@ -185,14 +237,13 @@
 <body>
     <div class="header">
         <div class="logo">
-            <img src="Brand-Assets/circuit-os-executive-logo.svg" alt="Circuit OS">
+            <img src="Brand-Assets/circuit-os-horizontal-FIXED.svg" alt="Circuit OS">
         </div>
 
         <div class="tabs">
             <div class="tab active" data-tab="demo">Interactive Demo</div>
             <div class="tab" data-tab="unified">Dashboards</div>
             <div class="tab" data-tab="sales">Sales Team</div>
-            <div class="tab" data-tab="university">CAIO University</div>
         </div>
 
         <div class="header-right">
@@ -204,7 +255,6 @@
         <iframe id="demo" class="active" src="Dashboards/interactive-demo.html"></iframe>
         <iframe id="unified" src="Dashboards/unified-demo-dashboard.html"></iframe>
         <iframe id="sales" src="Dashboards/sales-team-dashboard.html"></iframe>
-        <iframe id="university" src="Dashboards/caio-university.html"></iframe>
     </div>
 
     <script>

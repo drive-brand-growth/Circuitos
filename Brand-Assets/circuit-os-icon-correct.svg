@@ -1,0 +1,141 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Metallic gradient for C -->
+    <linearGradient id="metalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8e8e8;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#a0a0a0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#707070;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Inner shadow for 3D depth -->
+    <filter id="innerShadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="2" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.6"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Outer glow for C -->
+    <filter id="outerGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Green orb radial gradient -->
+    <radialGradient id="orbGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#00dd66;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc44;stop-opacity:1" />
+    </radialGradient>
+
+    <!-- Green glow filter -->
+    <filter id="greenGlow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Top highlight -->
+    <linearGradient id="topHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.5" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+
+  <!-- LETTER "C" - A circle with opening on the RIGHT side -->
+  <g id="letter-c">
+    <!-- Outer C ring (thicker stroke) -->
+    <path d="M 100 30
+             A 70 70 0 1 1 100 170
+             A 70 70 0 0 1 100 30
+             M 100 50
+             A 50 50 0 0 0 100 150
+             A 50 50 0 1 0 100 50
+             Z"
+          fill="url(#metalGradient)"
+          stroke="#606060"
+          stroke-width="2"
+          filter="url(#innerShadow)"/>
+
+    <!-- Cut out the opening on the RIGHT side (3 o'clock) -->
+    <path d="M 150 80
+             L 170 80
+             L 170 120
+             L 150 120
+             Z"
+          fill="#000000"
+          opacity="1"/>
+
+    <!-- Top highlight for 3D effect -->
+    <path d="M 100 30
+             A 70 70 0 0 1 170 100
+             L 150 100
+             A 50 50 0 0 0 100 50
+             Z"
+          fill="url(#topHighlight)"
+          opacity="0.6"/>
+  </g>
+
+  <!-- Green orb - positioned IN the opening on the right -->
+  <g id="green-orb">
+    <!-- Outer glow halo -->
+    <circle cx="170" cy="100" r="20"
+            fill="#00ff88"
+            opacity="0.2"
+            filter="url(#greenGlow)"/>
+
+    <!-- Main green orb -->
+    <circle cx="170" cy="100" r="12"
+            fill="url(#orbGradient)"
+            filter="url(#greenGlow)"/>
+
+    <!-- Bright highlight on orb -->
+    <circle cx="167" cy="97" r="5"
+            fill="#ffffff"
+            opacity="0.9"/>
+
+    <!-- Inner glow -->
+    <circle cx="170" cy="100" r="8"
+            fill="#00ff88"
+            opacity="0.6"/>
+  </g>
+
+  <!-- Pulsing animation -->
+  <style>
+    @keyframes orbPulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.7;
+        transform: scale(1.15);
+      }
+    }
+
+    #green-orb {
+      animation: orbPulse 3s ease-in-out infinite;
+      transform-origin: 170px 100px;
+    }
+
+    @keyframes metalShine {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.95; }
+    }
+
+    #letter-c {
+      animation: metalShine 4s ease-in-out infinite;
+    }
+  </style>
+</svg>

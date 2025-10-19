@@ -4,7 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Circuit OS - Interactive AI Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Vercel Geist Design System + Circuit OS Colors */
+        :root {
+            --neon-green: #38FF6A;
+            --neon-green-bright: #5aff88;
+            --neon-glow: rgba(56, 255, 106, 0.6);
+            --steel-gray: #8B9198;
+            --steel-light: #B8BCC2;
+
+            --background: #000000;
+            --foreground: #FAFAFA;
+            --accents-1: #0a0a0a;
+            --accents-2: #1a1a1a;
+            --accents-3: #333333;
+            --accents-6: #999999;
+
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            --space-4: 16px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-12: 48px;
+
+            --radius-md: 6px;
+            --radius-lg: 8px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,19 +41,21 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #000;
-            color: #fff;
+            font-family: var(--font-sans);
+            background: var(--background);
+            color: var(--foreground);
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .header {
             height: 64px;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid var(--accents-2);
             display: flex;
             align-items: center;
-            padding: 0 24px;
-            background: #000;
+            padding: 0 var(--space-6);
+            background: var(--background);
         }
 
         .logo {
@@ -58,12 +89,17 @@
             font-size: 48px;
             font-weight: 700;
             letter-spacing: -0.03em;
-            margin-bottom: 16px;
+            margin-bottom: var(--space-4);
+            background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .demo-header p {
             font-size: 18px;
-            color: #888;
+            color: var(--accents-6);
+            line-height: 1.6;
         }
 
         /* Step-by-step workflow */
@@ -74,23 +110,23 @@
         }
 
         .step {
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 24px;
+            background: var(--accents-1);
+            border: 1px solid var(--accents-2);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
             opacity: 0.5;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
 
         .step.active {
             opacity: 1;
-            border-color: #38FF6A;
-            box-shadow: 0 0 0 1px #38FF6A;
+            border-color: var(--neon-green);
+            box-shadow: 0 0 0 1px var(--neon-green);
         }
 
         .step.completed {
             opacity: 0.7;
-            border-color: #38FF6A;
+            border-color: var(--neon-green);
         }
 
         .step-header {
