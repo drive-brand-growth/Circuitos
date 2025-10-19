@@ -12,33 +12,44 @@
         }
 
         :root {
-            /* Dark Knight Theme - Batman Inspired */
+            /* Neon Green (Primary Interactive) */
+            --neon-green: #38FF6A;
+            --neon-green-bright: #5aff88;
+            --neon-green-dark: #2ecc54;
+            --neon-glow: rgba(56, 255, 106, 0.6);
+            --neon-glow-subtle: rgba(56, 255, 106, 0.3);
+            --neon-green-light: #5aff88;
+            --neon-green-glow: rgba(56, 255, 106, 0.4);
+
+            /* Steel Gray (Secondary Structure) */
+            --steel-gray: #8B9198;
+            --steel-light: #B8BCC2;
+            --steel-dark: #6B6F75;
+            --steel-metallic: linear-gradient(135deg, #B8BCC2 0%, #8B9198 50%, #6B6F75 100%);
+
+            /* Backgrounds - Pure blacks for maximum contrast */
+            --bg-black: #000000;
+            --bg-dark: #0a0a0a;
+            --bg-medium: #141414;
+            --bg-light: #1a1a1a;
+
+            /* Text - High contrast white */
+            --text-white: #FFFFFF;
+            --text-gray: #CCCCCC;
+            --text-muted: #999999;
+
+            /* Borders */
+            --border: rgba(56, 255, 106, 0.2);
+            --border-bright: rgba(56, 255, 106, 0.5);
+
+            /* Legacy compatibility */
             --gotham-black: #000000;
-            --knight-dark: #0A0A0B;
-            --shadow-gray: #141415;
-            --steel-gray: #1E1E20;
-            --armor-gray: #2A2A2D;
-
-            /* Subtle Neon Green - Primary Interactive */
-            --neon-green-subtle: #00FF88;
-            --neon-green-dark: #00CC6E;
-            --neon-green-dim: rgba(0, 255, 136, 0.15);
-            --neon-green-glow: rgba(0, 255, 136, 0.25);
-            --neon-green-border: rgba(0, 255, 136, 0.3);
-
-            /* Gold Accents - Secondary Luxury */
-            --gold-primary: #D4AF37;
-            --gold-dark: #B8941E;
-            --gold-light: #E5C158;
-            --gold-dim: rgba(212, 175, 55, 0.15);
-            --gold-glow: rgba(212, 175, 55, 0.25);
-
-            /* Text Hierarchy */
+            --knight-dark: #0a0a0a;
+            --shadow-gray: #141414;
             --text-primary: #FFFFFF;
-            --text-secondary: #B0B0B0;
-            --text-muted: #6B6B6B;
-            --text-neon: #00FF88;
-            --text-gold: #D4AF37;
+            --gray-light: #CCCCCC;
+            --gray-medium: #999999;
+            --white-pure: #FFFFFF;
         }
 
         @keyframes fadeInUp {
@@ -49,15 +60,6 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
-            }
-        }
-
-        @keyframes goldShimmer {
-            0% {
-                background-position: -200% center;
-            }
-            100% {
-                background-position: 200% center;
             }
         }
 
@@ -80,6 +82,64 @@
             50% {
                 transform: translateY(-20px) translateX(10px);
                 opacity: 0.6;
+            }
+        }
+
+        /* PREMIUM NEON + STEEL ANIMATIONS */
+        @keyframes neonPulse {
+            0%, 100% {
+                filter: drop-shadow(0 0 8px rgba(56, 255, 106, 0.8))
+                        drop-shadow(0 0 16px rgba(56, 255, 106, 0.4));
+                opacity: 1;
+            }
+            50% {
+                filter: drop-shadow(0 0 12px rgba(56, 255, 106, 1))
+                        drop-shadow(0 0 24px rgba(56, 255, 106, 0.6));
+                opacity: 0.9;
+            }
+        }
+
+        @keyframes steelShimmer {
+            0% {
+                background-position: -200% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        @keyframes neonTextGlow {
+            0%, 100% {
+                text-shadow:
+                    0 0 10px rgba(56, 255, 106, 0.8),
+                    0 0 20px rgba(56, 255, 106, 0.6),
+                    0 0 30px rgba(56, 255, 106, 0.4);
+            }
+            50% {
+                text-shadow:
+                    0 0 15px rgba(56, 255, 106, 1),
+                    0 0 30px rgba(56, 255, 106, 0.8),
+                    0 0 45px rgba(56, 255, 106, 0.6);
+            }
+        }
+
+        @keyframes neonDotPulse {
+            0%, 100% {
+                box-shadow: 0 0 8px rgba(56, 255, 106, 1);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 16px rgba(56, 255, 106, 1);
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes circuitFlow {
+            0% {
+                stroke-dashoffset: 1000;
+            }
+            100% {
+                stroke-dashoffset: 0;
             }
         }
 
@@ -123,87 +183,70 @@
         }
 
         .logo-container {
-            width: 160px;
-            height: 160px;
-            margin: 0 auto 40px;
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 32px;
             position: relative;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
         }
 
-        .logo-container::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
-            animation: pulse 4s ease-in-out infinite;
-        }
-
-        .logo-container svg {
+        .logo-container img {
             width: 100%;
             height: 100%;
-            position: relative;
-            z-index: 1;
-            filter: drop-shadow(0 0 20px var(--gold-glow));
+            display: block;
+        }
+
+        .logo-neon-pulse {
+            animation: neonPulse 3s ease-in-out infinite;
         }
 
         h1 {
-            font-size: 72px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            letter-spacing: 0.15em;
-            background: linear-gradient(
-                90deg,
-                var(--gold-dark) 0%,
-                var(--gold-primary) 25%,
-                var(--gold-light) 50%,
-                var(--gold-primary) 75%,
-                var(--gold-dark) 100%
-            );
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: goldShimmer 3s linear infinite, fadeInUp 1s ease-out 0.4s both;
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.03em;
+            color: #FFFFFF;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
         }
 
         .tagline {
-            font-size: 20px;
-            color: var(--gray-light);
-            margin-bottom: 30px;
-            letter-spacing: 0.3em;
-            font-weight: 300;
-            text-transform: uppercase;
-            animation: fadeInUp 1s ease-out 0.6s both;
+            font-size: 18px;
+            font-weight: 500;
+            color: #B8BCC2;
+            letter-spacing: 0.1em;
+            margin-bottom: 32px;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
         }
 
         .status-indicator {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            background: rgba(56, 255, 106, 0.1);
+            border: 1px solid rgba(56, 255, 106, 0.3);
             padding: 12px 24px;
-            background: var(--neon-green-dim);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--neon-green-border);
-            border-radius: 50px;
-            font-size: 12px;
+            border-radius: 100px;
             font-weight: 600;
-            letter-spacing: 0.15em;
-            color: var(--neon-green-subtle);
-            box-shadow: 0 0 12px var(--neon-green-glow);
+            color: #38FF6A;
+            letter-spacing: 0.05em;
+            font-size: 12px;
             animation: fadeInUp 1s ease-out 0.8s both;
         }
 
         .pulse-dot {
             width: 8px;
             height: 8px;
-            background: var(--neon-green-subtle);
+            background: #38FF6A;
             border-radius: 50%;
-            box-shadow: 0 0 12px rgba(0, 255, 136, 0.6);
-            animation: pulse 2s ease-in-out infinite;
+            animation: neonDotPulse 2s ease-in-out infinite;
+        }
+
+        .status-dot-neon {
+            width: 10px;
+            height: 10px;
+            background: #38FF6A;
+            border-radius: 50%;
+            animation: neonDotPulse 2s ease-in-out infinite;
         }
 
         /* Dashboard Grid */
@@ -214,26 +257,49 @@
             margin-bottom: 80px;
         }
 
-        /* Executive Cards with Glassmorphism */
+        /* Executive Cards with Glassmorphism + Steel Borders */
         .executive-card {
-            background: linear-gradient(
-                135deg,
-                rgba(42, 42, 45, 0.7) 0%,
-                rgba(20, 20, 21, 0.5) 100%
-            );
-            backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            box-shadow:
-                0 8px 32px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 50px;
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(40px) saturate(150%);
+            border: 2px solid var(--steel-gray);
+            border-radius: 24px;
+            padding: 48px;
             text-decoration: none;
-            color: var(--white-pure);
+            color: #FFFFFF;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
             animation: fadeInUp 1s ease-out both;
+        }
+
+        .card-interactive {
+            border: 2px solid var(--steel-gray);
+            background: rgba(20, 20, 20, 0.6);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-interactive:hover {
+            border-color: var(--neon-green);
+            box-shadow:
+                0 0 20px rgba(56, 255, 106, 0.3),
+                0 0 40px rgba(56, 255, 106, 0.15),
+                inset 0 0 20px rgba(56, 255, 106, 0.05);
+            transform: translateY(-4px);
+        }
+
+        .steel-border {
+            border: 2px solid transparent;
+            background:
+                linear-gradient(#0a0a0a, #0a0a0a) padding-box,
+                linear-gradient(90deg,
+                    #6B6F75 0%,
+                    #B8BCC2 25%,
+                    #FFFFFF 50%,
+                    #B8BCC2 75%,
+                    #6B6F75 100%
+                ) border-box;
+            background-size: 200% 100%;
+            animation: steelShimmer 3s linear infinite;
         }
 
         .executive-card:nth-child(1) { animation-delay: 1s; }
@@ -247,18 +313,22 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+            background: linear-gradient(90deg, transparent, #38FF6A, transparent);
             opacity: 0;
-            transition: opacity 0.4s;
+            transition: opacity 0.3s;
         }
 
         .executive-card:hover {
             transform: translateY(-8px);
+            border-color: var(--neon-green);
             box-shadow:
-                0 16px 48px rgba(0, 0, 0, 0.6),
-                0 0 24px var(--neon-green-glow),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border-color: var(--neon-green-border);
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(56, 255, 106, 0.3),
+                inset 0 0 20px rgba(56, 255, 106, 0.05);
+        }
+
+        .executive-card:hover .card-icon svg {
+            filter: drop-shadow(0 0 12px var(--neon-glow));
         }
 
         .executive-card:hover::before {
@@ -275,17 +345,14 @@
         .card-icon svg {
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 0 10px var(--gold-glow));
+            filter: drop-shadow(0 0 10px var(--neon-green-glow));
         }
 
         .executive-card h2 {
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 20px;
-            background: linear-gradient(90deg, var(--gold-primary), var(--gold-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #FFFFFF;
         }
 
         .executive-card p {
@@ -296,23 +363,46 @@
             font-weight: 300;
         }
 
-        /* Executive Button with Ripple Effect */
+        /* Executive Button with Neon Glow + Steel Outline */
         .btn-executive {
             display: inline-block;
+            background: linear-gradient(135deg, #38FF6A 0%, #2ecc54 100%);
+            color: #000000;
+            font-weight: 600;
+            font-size: 16px;
             padding: 16px 40px;
-            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold-primary) 100%);
-            color: var(--gotham-black);
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 14px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid var(--steel-gray);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             box-shadow:
-                0 4px 12px rgba(212, 175, 55, 0.3),
-                0 2px 4px rgba(0, 0, 0, 0.4);
+                0 0 15px rgba(56, 255, 106, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
             position: relative;
             overflow: hidden;
+        }
+
+        .btn-neon {
+            background: linear-gradient(135deg, #38FF6A 0%, #2ecc54 100%);
+            color: #000000;
+            border: 2px solid var(--steel-gray);
+            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow:
+                0 0 15px rgba(56, 255, 106, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-neon:hover {
+            background: linear-gradient(135deg, #5aff88 0%, #38FF6A 100%);
+            border-color: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow:
+                0 0 25px rgba(56, 255, 106, 0.6),
+                0 5px 20px rgba(0, 0, 0, 0.4);
         }
 
         .btn-executive::after {
@@ -332,19 +422,62 @@
         }
 
         .executive-card:hover .btn-executive {
-            background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-light) 100%);
-            box-shadow:
-                0 8px 24px rgba(212, 175, 55, 0.4),
-                0 4px 8px rgba(0, 0, 0, 0.3);
             transform: translateY(-2px);
+            border-color: #FFFFFF;
+            box-shadow:
+                0 0 25px rgba(56, 255, 106, 0.6),
+                0 5px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, #5aff88 0%, #38FF6A 100%);
+        }
+
+        /* Circuit Board Background Pattern */
+        .circuit-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+            background-image:
+                linear-gradient(90deg, var(--steel-gray) 1px, transparent 1px),
+                linear-gradient(0deg, var(--steel-gray) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        /* Steel Dividers with Neon Accent */
+        .divider-steel-neon {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 60px 0;
+        }
+
+        .divider-line-steel {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                var(--steel-gray) 50%,
+                transparent 100%
+            );
+        }
+
+        .divider-dot-neon {
+            width: 6px;
+            height: 6px;
+            background: #38FF6A;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(56, 255, 106, 0.8);
         }
 
         /* Footer */
         .footer {
             margin-top: 80px;
             padding-top: 50px;
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
-            color: var(--gray-medium);
+            border-top: 1px solid rgba(56, 255, 106, 0.2);
+            color: #999999;
             font-size: 14px;
             font-weight: 300;
             animation: fadeInUp 1s ease-out 1.6s both;
@@ -355,18 +488,18 @@
         }
 
         .footer strong {
-            color: var(--gold-primary);
+            color: #38FF6A;
             font-weight: 600;
         }
 
         .footer a {
-            color: var(--gold-primary);
+            color: #38FF6A;
             text-decoration: none;
             transition: color 0.3s;
         }
 
         .footer a:hover {
-            color: var(--gold-light);
+            color: #5aff88;
         }
 
         /* Responsive Design */
@@ -377,12 +510,7 @@
             }
 
             h1 {
-                font-size: 56px;
-            }
-
-            .logo-container {
-                width: 120px;
-                height: 120px;
+                font-size: 48px;
             }
         }
 
@@ -392,16 +520,12 @@
             }
 
             .tagline {
-                font-size: 16px;
+                font-size: 14px;
+                letter-spacing: 0.08em;
             }
 
             .executive-card {
                 padding: 35px;
-            }
-
-            .logo-container {
-                width: 100px;
-                height: 100px;
             }
         }
     </style>
@@ -414,55 +538,14 @@
         <!-- Executive Hero Header -->
         <header class="executive-hero">
             <div class="logo-container">
-                <svg width="160" height="160" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#E5C158" />
-                            <stop offset="50%" style="stop-color:#D4AF37" />
-                            <stop offset="100%" style="stop-color:#B8941E" />
-                        </linearGradient>
-                        <radialGradient id="goldGlow" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" style="stop-color:#D4AF37;stop-opacity:0.6" />
-                            <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:0.3" />
-                            <stop offset="100%" style="stop-color:#D4AF37;stop-opacity:0" />
-                        </radialGradient>
-                        <filter id="outerGlow">
-                            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                            <feMerge>
-                                <feMergeNode in="coloredBlur"/>
-                                <feMergeNode in="SourceGraphic"/>
-                            </feMerge>
-                        </filter>
-                    </defs>
-                    <circle cx="100" cy="100" r="90" fill="url(#goldGlow)" opacity="0.4"/>
-                    <polygon points="100,30 160,65 160,135 100,170 40,135 40,65"
-                             fill="none" stroke="url(#goldGradient)" stroke-width="3" filter="url(#outerGlow)"/>
-                    <polygon points="100,40 150,70 150,130 100,160 50,130 50,70"
-                             fill="none" stroke="url(#goldGradient)" stroke-width="1.5" opacity="0.5"/>
-                    <line x1="50" y1="70" x2="70" y2="70" stroke="url(#goldGradient)" stroke-width="2" opacity="0.7"/>
-                    <line x1="130" y1="70" x2="150" y2="70" stroke="url(#goldGradient)" stroke-width="2" opacity="0.7"/>
-                    <line x1="70" y1="70" x2="70" y2="85" stroke="url(#goldGradient)" stroke-width="2" opacity="0.7"/>
-                    <line x1="130" y1="70" x2="130" y2="85" stroke="url(#goldGradient)" stroke-width="2" opacity="0.7"/>
-                    <path d="M 130 100 C 130 78, 114 65, 100 65 C 86 65, 70 78, 70 100 C 70 122, 86 135, 100 135 C 108 135, 115 132, 120 127"
-                          fill="none" stroke="url(#goldGradient)" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M 125 100 C 125 83, 112 73, 100 73 C 88 73, 75 83, 75 100 C 75 117, 88 127, 100 127 C 106 127, 111 125, 115 121"
-                          fill="none" stroke="#E5C158" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-                    <circle cx="70" cy="85" r="3" fill="url(#goldGradient)" filter="url(#outerGlow)"/>
-                    <circle cx="130" cy="85" r="3" fill="url(#goldGradient)" filter="url(#outerGlow)"/>
-                    <circle cx="70" cy="70" r="3" fill="url(#goldGradient)" filter="url(#outerGlow)"/>
-                    <circle cx="130" cy="70" r="3" fill="url(#goldGradient)" filter="url(#outerGlow)"/>
-                    <circle cx="100" cy="100" r="8" fill="none" stroke="url(#goldGradient)" stroke-width="2" filter="url(#outerGlow)"/>
-                    <circle cx="100" cy="100" r="4" fill="url(#goldGradient)" opacity="0.8"/>
-                    <circle cx="98" cy="98" r="2" fill="#E5C158" opacity="0.9"/>
-                    <line x1="50" y1="130" x2="70" y2="130" stroke="url(#goldGradient)" stroke-width="2" opacity="0.7"/>
-                    <line x1="130" y1="130" x2="150" y2="130" stroke="url(#goldGradient)" stroke-width="2" opacity="0.7"/>
-                    <circle cx="70" cy="130" r="3" fill="url(#goldGradient)" filter="url(#outerGlow)"/>
-                    <circle cx="130" cy="130" r="3" fill="url(#goldGradient)" filter="url(#outerGlow)"/>
-                </svg>
+                <img src="Brand-Assets/circuit-os-icon.svg"
+                     alt="Circuit OS"
+                     width="48"
+                     height="48">
             </div>
 
-            <h1>CIRCUIT OS</h1>
-            <p class="tagline">Enterprise AI Intelligence Platform</p>
+            <h1>Circuit OS</h1>
+            <p class="tagline">COMMAND REVENUE. ELIMINATE CHAOS.</p>
 
             <div class="status-indicator">
                 <span class="pulse-dot"></span>
@@ -472,19 +555,19 @@
 
         <!-- Dashboard Grid -->
         <div class="dashboard-grid">
-            <a href="Dashboards/unified-demo-dashboard.html" class="executive-card">
+            <a href="Dashboards/unified-demo-dashboard.html" class="executive-card card-interactive">
                 <div class="card-icon">
                     <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
                         <defs>
-                            <linearGradient id="iconGold1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#E5C158" />
-                                <stop offset="100%" style="stop-color:#D4AF37" />
+                            <linearGradient id="iconGreen1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#5aff88" />
+                                <stop offset="100%" style="stop-color:#38FF6A" />
                             </linearGradient>
                         </defs>
-                        <path d="M 30 10 L 40 20 L 40 40 L 30 50 L 20 40 L 20 20 Z" fill="none" stroke="url(#iconGold1)" stroke-width="2"/>
-                        <circle cx="30" cy="30" r="8" fill="none" stroke="url(#iconGold1)" stroke-width="2"/>
-                        <line x1="30" y1="10" x2="30" y2="22" stroke="url(#iconGold1)" stroke-width="2"/>
-                        <line x1="30" y1="38" x2="30" y2="50" stroke="url(#iconGold1)" stroke-width="2"/>
+                        <path d="M 30 10 L 40 20 L 40 40 L 30 50 L 20 40 L 20 20 Z" fill="none" stroke="url(#iconGreen1)" stroke-width="2"/>
+                        <circle cx="30" cy="30" r="8" fill="none" stroke="url(#iconGreen1)" stroke-width="2"/>
+                        <line x1="30" y1="10" x2="30" y2="22" stroke="url(#iconGreen1)" stroke-width="2"/>
+                        <line x1="30" y1="38" x2="30" y2="50" stroke="url(#iconGreen1)" stroke-width="2"/>
                     </svg>
                 </div>
                 <h2>Unified Demo</h2>
@@ -492,19 +575,19 @@
                 <span class="btn-executive">Launch Demo</span>
             </a>
 
-            <a href="Dashboards/sales-team-dashboard.html" class="executive-card">
+            <a href="Dashboards/sales-team-dashboard.html" class="executive-card card-interactive">
                 <div class="card-icon">
                     <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
                         <defs>
-                            <linearGradient id="iconGold2" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#E5C158" />
-                                <stop offset="100%" style="stop-color:#D4AF37" />
+                            <linearGradient id="iconGreen2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#5aff88" />
+                                <stop offset="100%" style="stop-color:#38FF6A" />
                             </linearGradient>
                         </defs>
-                        <rect x="10" y="15" width="15" height="15" rx="2" fill="none" stroke="url(#iconGold2)" stroke-width="2"/>
-                        <rect x="35" y="15" width="15" height="15" rx="2" fill="none" stroke="url(#iconGold2)" stroke-width="2"/>
-                        <rect x="10" y="35" width="15" height="15" rx="2" fill="none" stroke="url(#iconGold2)" stroke-width="2"/>
-                        <rect x="35" y="35" width="15" height="15" rx="2" fill="none" stroke="url(#iconGold2)" stroke-width="2"/>
+                        <rect x="10" y="15" width="15" height="15" rx="2" fill="none" stroke="url(#iconGreen2)" stroke-width="2"/>
+                        <rect x="35" y="15" width="15" height="15" rx="2" fill="none" stroke="url(#iconGreen2)" stroke-width="2"/>
+                        <rect x="10" y="35" width="15" height="15" rx="2" fill="none" stroke="url(#iconGreen2)" stroke-width="2"/>
+                        <rect x="35" y="35" width="15" height="15" rx="2" fill="none" stroke="url(#iconGreen2)" stroke-width="2"/>
                     </svg>
                 </div>
                 <h2>Sales Dashboard</h2>
@@ -512,19 +595,19 @@
                 <span class="btn-executive">View Dashboard</span>
             </a>
 
-            <a href="Dashboards/caio-university.html" class="executive-card">
+            <a href="Dashboards/caio-university.html" class="executive-card card-interactive">
                 <div class="card-icon">
                     <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
                         <defs>
-                            <linearGradient id="iconGold3" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#E5C158" />
-                                <stop offset="100%" style="stop-color:#D4AF37" />
+                            <linearGradient id="iconGreen3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#5aff88" />
+                                <stop offset="100%" style="stop-color:#38FF6A" />
                             </linearGradient>
                         </defs>
-                        <path d="M 30 10 L 50 20 L 50 35 L 30 45 L 10 35 L 10 20 Z" fill="none" stroke="url(#iconGold3)" stroke-width="2"/>
-                        <line x1="30" y1="45" x2="30" y2="55" stroke="url(#iconGold3)" stroke-width="2"/>
-                        <line x1="20" y1="55" x2="40" y2="55" stroke="url(#iconGold3)" stroke-width="2"/>
-                        <path d="M 30 10 L 30 25" stroke="url(#iconGold3)" stroke-width="2"/>
+                        <path d="M 30 10 L 50 20 L 50 35 L 30 45 L 10 35 L 10 20 Z" fill="none" stroke="url(#iconGreen3)" stroke-width="2"/>
+                        <line x1="30" y1="45" x2="30" y2="55" stroke="url(#iconGreen3)" stroke-width="2"/>
+                        <line x1="20" y1="55" x2="40" y2="55" stroke="url(#iconGreen3)" stroke-width="2"/>
+                        <path d="M 30 10 L 30 25" stroke="url(#iconGreen3)" stroke-width="2"/>
                     </svg>
                 </div>
                 <h2>CAIO University</h2>
@@ -545,5 +628,8 @@
 
     <!-- Particle System Script -->
     <script src="circuit-particles.js"></script>
+
+    <!-- Neon + Steel Animation System -->
+    <script src="circuit-animations.js"></script>
 </body>
 </html>

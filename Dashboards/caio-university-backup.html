@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAIO University - Chief AI Officer Certification Program</title>
+
     <style>
         * {
             margin: 0;
@@ -12,17 +13,50 @@
         }
 
         :root {
-            --bg-dark: #0B0C0D;
-            --bg-medium: #141618;
-            --bg-light: #1C1F22;
+            /* Neon Green (Primary Interactive) */
+            --neon-green: #38FF6A;
+            --neon-green-bright: #5aff88;
+            --neon-green-dark: #2ecc54;
+            --neon-green-light: #5aff88;
+            --neon-green-glow: rgba(56, 255, 106, 0.4);
+            --neon-glow: rgba(56, 255, 106, 0.6);
+            --neon-glow-subtle: rgba(56, 255, 106, 0.3);
+
+            /* Steel Gray (Secondary Structure) */
+            --steel-gray: #8B9198;
+            --steel-light: #B8BCC2;
+            --steel-dark: #6B6F75;
+            --steel-metallic: linear-gradient(135deg, #B8BCC2 0%, #8B9198 50%, #6B6F75 100%);
+
+            /* Backgrounds - Pure blacks for maximum contrast */
+            --bg-black: #000000;
+            --bg-dark: #0a0a0a;
+            --bg-medium: #141414;
+            --bg-light: #1a1a1a;
+            --bg-card: #1a1a1a;
+
+            /* Text - High contrast white */
+            --text-primary: #FFFFFF;
+            --text-secondary: #CCCCCC;
+            --text-muted: #999999;
+
+            /* Borders */
+            --border: rgba(56, 255, 106, 0.1);
+            --border-medium: rgba(56, 255, 106, 0.2);
+            --border-strong: rgba(56, 255, 106, 0.3);
+
+            /* Status colors */
+            --success: #38FF6A;
+            --warning: #FFB800;
+            --error: #DC3545;
+
+            /* Legacy compatibility */
+            --gotham-black: #000000;
+            --knight-dark: #0a0a0a;
+            --shadow-gray: #141414;
             --accent-green: #38FF6A;
-            --text-primary: #E3E7EB;
-            --text-secondary: #C2C8CF;
-            --text-muted: #8F979F;
-            --border: rgba(90, 97, 106, 0.2);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
+            --accent-green-dark: #2ecc54;
+            --accent-green-light: #5aff88;
         }
 
         body {
@@ -71,10 +105,11 @@
         }
 
         .progress-bar-fill {
-            background: var(--accent-green);
+            background: linear-gradient(90deg, var(--accent-green) 0%, var(--accent-green-dark) 100%);
             height: 100%;
             width: 0%;
             transition: width 0.3s ease;
+            box-shadow: 0 0 12px rgba(0, 255, 136, 0.25);
         }
 
         .progress-text {
@@ -401,6 +436,42 @@
             border-radius: 8px;
         }
 
+        /* Circuit OS Custom Icon System */
+        .circuit-icon {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            vertical-align: middle;
+            color: #8B9198;
+            transition: all 0.3s ease;
+        }
+
+        .circuit-icon.active,
+        .circuit-icon:hover {
+            color: var(--accent-green);
+            filter: drop-shadow(0 0 4px rgba(56, 255, 106, 0.6));
+        }
+
+        .circuit-icon.large {
+            width: 32px;
+            height: 32px;
+        }
+
+        .circuit-icon.small {
+            width: 18px;
+            height: 18px;
+        }
+
+        @keyframes icon-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .circuit-icon.processing {
+            animation: icon-pulse 1.5s infinite;
+            color: var(--accent-green);
+        }
+
         /* Responsive */
         @media (max-width: 968px) {
             .main-container {
@@ -418,7 +489,9 @@
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <div class="logo">🎓 CAIO University</div>
+            <div class="logo" style="display: flex; align-items: center; gap: 12px;">
+                <img src="../Brand-Assets/circuit-os-logo.svg" alt="Circuit OS" style="width: 180px; height: auto;">
+            </div>
             <div class="progress-bar-header">
                 <div class="progress-bar-bg">
                     <div class="progress-bar-fill" id="overallProgress"></div>
@@ -2875,6 +2948,12 @@ Track performance over 3-6 months, adjust weights based on accuracy
         // Load module list in sidebar
         function loadModuleList() {
             const list = document.getElementById('moduleList');
+            if (!list) {
+                console.error('moduleList element not found!');
+                return;
+            }
+
+            console.log('Loading modules...', courseData.modules.length);
             list.innerHTML = '';
 
             courseData.modules.forEach(module => {
@@ -2908,8 +2987,7 @@ Track performance over 3-6 months, adjust weights based on accuracy
             userProgress.currentLesson = 0;
             saveProgress();
             loadModuleList();
-            loadLesson(moduleId, 0);
-        }
+            loadLesson(moduleId, 0);}
 
         // Load a lesson
         function loadLesson(moduleId, lessonIndex) {
@@ -2976,13 +3054,11 @@ Track performance over 3-6 months, adjust weights based on accuracy
             if (optionIndex === correctIndex) {
                 selected.classList.add('correct');
                 feedback.innerHTML = '<strong style="color: var(--success);">✓ Correct!</strong>';
-                feedback.classList.add('show');
-            } else {
+                feedback.classList.add('show');} else {
                 selected.classList.add('incorrect');
                 options[correctIndex].classList.add('correct');
                 feedback.innerHTML = '<strong style="color: var(--error);">✗ Incorrect.</strong> The correct answer is highlighted in green.';
-                feedback.classList.add('show');
-            }
+                feedback.classList.add('show');}
         }
 
         // Complete lesson and go to next
@@ -2993,8 +3069,7 @@ Track performance over 3-6 months, adjust weights based on accuracy
 
             if (!userProgress.completed.includes(lessonId)) {
                 userProgress.completed.push(lessonId);
-                saveProgress();
-            }
+                saveProgress();}
 
             loadLesson(moduleId, lessonIndex + 1);
         }
@@ -3025,9 +3100,7 @@ Track performance over 3-6 months, adjust weights based on accuracy
         function showDashboard() {
             const totalLessons = courseData.modules.reduce((sum, mod) => sum + mod.lessons.length, 0);
             const completedLessons = userProgress.completed.length;
-            const percentage = Math.round((completedLessons / totalLessons) * 100);
-
-            const contentArea = document.getElementById('contentArea');
+            const percentage = Math.round((completedLessons / totalLessons) * 100);const contentArea = document.getElementById('contentArea');
             contentArea.innerHTML = `
                 <h1>📊 Your CAIO Progress Dashboard</h1>
 
@@ -3097,18 +3170,27 @@ Track performance over 3-6 months, adjust weights based on accuracy
 
         // Download certificate
         function downloadCertificate() {
-            alert('Certificate download feature coming soon!\n\nFor now, take a screenshot of your dashboard as proof of completion.');
-        }
+            alert('Certificate download feature coming soon!\n\nFor now, take a screenshot of your dashboard as proof of completion.');}
 
         // Initialize app
         function init() {
+            console.log('Initializing CAIO University...');
+            console.log('courseData:', courseData);
+            console.log('userProgress:', userProgress);
             loadModuleList();
             loadLesson(userProgress.currentModule, userProgress.currentLesson);
             updateProgressBar();
         }
 
-        // Start the app
-        init();
+        // Start the app when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     </script>
+
+    <!-- Neon + Steel Animation System -->
+    <script src="../circuit-animations.js"></script>
 </body>
 </html>

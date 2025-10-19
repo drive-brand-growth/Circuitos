@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit OS - Executive Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: #000000;
+            color: #FFFFFF;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Vercel-style header */
+        .header {
+            height: 64px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            background: #000000;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(56, 255, 106, 0.3), transparent);
+            pointer-events: none;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            width: auto;
+            height: 40px;
+            filter: drop-shadow(0 0 8px rgba(56, 255, 106, 0.3));
+            transition: filter 0.2s ease;
+        }
+
+        .logo:hover img {
+            filter: drop-shadow(0 0 12px rgba(56, 255, 106, 0.5));
+        }
+
+        .logo-text {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #FFFFFF 0%, #CCCCCC 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Vercel-style tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-left: 48px;
+            height: 100%;
+        }
+
+        .tab {
+            height: 100%;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #666666;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            position: relative;
+            letter-spacing: -0.01em;
+        }
+
+        .tab::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #38FF6A;
+            transform: scaleX(0);
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tab:hover {
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tab.active {
+            color: #FFFFFF;
+        }
+
+        .tab.active::before {
+            transform: scaleX(1);
+        }
+
+        /* Right side of header */
+        .header-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(56, 255, 106, 0.1);
+            color: #38FF6A;
+            border: 1px solid rgba(56, 255, 106, 0.2);
+            letter-spacing: 0.02em;
+        }
+
+        /* Content area */
+        .content {
+            height: calc(100vh - 64px);
+            width: 100%;
+            background: #000000;
+        }
+
+        .content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+            background: #000000;
+        }
+
+        .content iframe.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Loading indicator */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #666;
+            font-size: 14px;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="Brand-Assets/circuit-os-executive-logo.svg" alt="Circuit OS">
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="demo">Interactive Demo</div>
+            <div class="tab" data-tab="unified">Dashboards</div>
+            <div class="tab" data-tab="sales">Sales Team</div>
+            <div class="tab" data-tab="university">CAIO University</div>
+        </div>
+
+        <div class="header-right">
+            <div class="status-badge">LIVE</div>
+        </div>
+    </div>
+
+    <div class="content">
+        <iframe id="demo" class="active" src="Dashboards/interactive-demo.html"></iframe>
+        <iframe id="unified" src="Dashboards/unified-demo-dashboard.html"></iframe>
+        <iframe id="sales" src="Dashboards/sales-team-dashboard.html"></iframe>
+        <iframe id="university" src="Dashboards/caio-university.html"></iframe>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab');
+        const iframes = document.querySelectorAll('.content iframe');
+
+        // Add loading indicators for iframes
+        iframes.forEach(iframe => {
+            iframe.addEventListener('load', () => {
+                console.log(`Iframe loaded: ${iframe.id}`);
+            });
+
+            iframe.addEventListener('error', (e) => {
+                console.error(`Iframe error: ${iframe.id}`, e);
+            });
+        });
+
+        // Tab switching logic
+        tabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const targetId = tab.dataset.tab;
+                console.log('Tab clicked:', targetId);
+
+                // Remove active from all tabs and iframes
+                tabs.forEach(t => t.classList.remove('active'));
+                iframes.forEach(f => f.classList.remove('active'));
+
+                // Add active to clicked tab
+                tab.classList.add('active');
+
+                // Show corresponding iframe
+                const targetIframe = document.getElementById(targetId);
+
+                if (targetIframe) {
+                    targetIframe.classList.add('active');
+                    console.log('Showing iframe:', targetId);
+
+                    // If iframe hasn't loaded yet, reload it
+                    if (!targetIframe.contentDocument) {
+                        const src = targetIframe.getAttribute('src');
+                        targetIframe.src = src;
+                    }
+                } else {
+                    console.error('Iframe not found:', targetId);
+                }
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                const activeTab = document.querySelector('.tab.active');
+                const activeIndex = Array.from(tabs).indexOf(activeTab);
+
+                let newIndex;
+                if (e.key === 'ArrowLeft') {
+                    newIndex = activeIndex > 0 ? activeIndex - 1 : tabs.length - 1;
+                } else {
+                    newIndex = activeIndex < tabs.length - 1 ? activeIndex + 1 : 0;
+                }
+
+                tabs[newIndex].click();
+            }
+        });
+
+        // Log initial state
+        console.log('Dashboard initialized with', tabs.length, 'tabs and', iframes.length, 'iframes');
+    </script>
+</body>
+</html>

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Circuit OS: Lead Qualification Dashboard</title>
-
     <style>
         * {
             margin: 0;
@@ -13,47 +12,17 @@
         }
 
         :root {
-            /* Dark Knight + Subtle Neon Hybrid Theme */
-            --gotham-black: #000000;
-            --knight-dark: #0A0A0B;
-            --shadow-gray: #141415;
-            --steel-gray: #1E1E20;
-            --armor-gray: #2A2A2D;
-
-            /* Subtle Neon Green - Primary Interactive */
-            --neon-green-subtle: #00FF88;
-            --neon-green-dark: #00CC6E;
-            --neon-green-dim: rgba(0, 255, 136, 0.15);
-            --neon-green-glow: rgba(0, 255, 136, 0.25);
-            --neon-green-border: rgba(0, 255, 136, 0.3);
-
-            /* Gold Accents - Secondary Luxury */
-            --gold-primary: #D4AF37;
-            --gold-dark: #B8941E;
-            --gold-light: #E5C158;
-            --gold-dim: rgba(212, 175, 55, 0.15);
-            --gold-glow: rgba(212, 175, 55, 0.25);
-
-            /* Text Hierarchy */
-            --text-primary: #FFFFFF;
-            --text-secondary: #B0B0B0;
-            --text-muted: #6B6B6B;
-            --text-neon: #00FF88;
-            --text-gold: #D4AF37;
-
-            /* Legacy compatibility */
-            --bg-dark: #000000;
-            --bg-medium: #0A0A0B;
-            --bg-light: #141415;
-            --bg-card: #1E1E20;
-            --accent-gold: #00FF88;
-            --accent-gold-dark: #00CC6E;
-            --accent-gold-light: #33FFA3;
-            --border: rgba(0, 255, 136, 0.1);
-            --border-medium: rgba(0, 255, 136, 0.2);
-            --border-strong: rgba(0, 255, 136, 0.3);
-            --success: #00FF88;
-            --warning: #D4AF37;
+            --bg-dark: #0a0a0a;
+            --bg-medium: #1a1a1a;
+            --bg-light: #252525;
+            --accent-green: #38FF6A;
+            --accent-green-dark: #2ecc54;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --text-muted: #707070;
+            --border: rgba(56, 255, 106, 0.15);
+            --success: #38FF6A;
+            --warning: #FFB800;
             --error: #DC3545;
         }
 
@@ -90,10 +59,10 @@
 
         @keyframes glow {
             0%, 100% {
-                box-shadow: 0 0 24px rgba(0, 255, 136, 0.25), 0 0 12px rgba(0, 255, 136, 0.15);
+                box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
             }
             50% {
-                box-shadow: 0 0 30px rgba(0, 255, 136, 0.3), 0 0 16px rgba(0, 255, 136, 0.2);
+                box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
             }
         }
 
@@ -122,7 +91,7 @@
         .header {
             background: var(--bg-medium);
             border: 1px solid var(--border);
-            border-top: 3px solid var(--accent-gold);
+            border-top: 3px solid var(--accent-green);
             border-radius: 4px;
             padding: 30px;
             margin-bottom: 20px;
@@ -131,10 +100,10 @@
         }
 
         .header h1 {
-            color: var(--accent-gold);
+            color: var(--accent-green);
             font-size: 32px;
             margin-bottom: 10px;
-            text-shadow: 0 2px 8px rgba(0, 255, 136, 0.25);
+            text-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
             font-weight: 700;
         }
 
@@ -168,7 +137,7 @@
 
         .stat-card:hover {
             transform: translateY(-5px);
-            border-color: var(--accent-gold);
+            border-color: var(--accent-green);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
         }
 
@@ -182,11 +151,11 @@
         }
 
         .stat-value {
-            color: var(--accent-gold);
+            color: var(--accent-green);
             font-size: 42px;
             font-weight: bold;
             margin-bottom: 8px;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 2px 4px rgba(212, 175, 55, 0.2);
         }
 
         .stat-change {
@@ -217,7 +186,7 @@
 
         .lead-card:hover {
             transform: translateY(-5px);
-            border-color: var(--accent-gold);
+            border-color: var(--accent-green);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
         }
 
@@ -296,10 +265,10 @@
 
         .confidence-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--success), var(--accent-gold));
+            background: linear-gradient(90deg, var(--success), var(--accent-green));
             border-radius: 6px;
             transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 12px rgba(0, 255, 136, 0.25);
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
         }
 
         .confidence-fill.medium {
@@ -313,17 +282,18 @@
         }
 
         .confidence-value {
-            color: var(--accent-gold);
+            color: var(--accent-green);
             font-size: 18px;
             font-weight: bold;
             min-width: 60px;
             text-align: right;
+            text-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
         }
 
         .recommendation {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.08) 0%, rgba(0, 255, 136, 0.03) 100%);
-            border: 1px solid var(--border-medium);
-            border-left: 3px solid var(--accent-gold);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.03) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-left: 3px solid var(--accent-green);
             color: var(--text-primary);
             padding: 20px;
             border-radius: 4px;
@@ -332,7 +302,7 @@
         }
 
         .recommendation-title {
-            color: var(--accent-gold);
+            color: var(--accent-green);
             font-size: 13px;
             margin-bottom: 10px;
             text-transform: uppercase;
@@ -365,9 +335,9 @@
 
         .factor-item {
             background: var(--bg-light);
-            border-left: 3px solid var(--accent-gold);
+            border-left: 3px solid var(--accent-green);
             border: 1px solid var(--border);
-            border-left: 3px solid var(--accent-gold);
+            border-left: 3px solid var(--accent-green);
             padding: 15px;
             border-radius: 6px;
             transition: all 0.3s ease;
@@ -383,7 +353,7 @@
 
         .factor-item:hover {
             background: var(--bg-dark);
-            border-left-color: var(--accent-gold);
+            border-left-color: var(--accent-green);
             transform: translateX(10px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
@@ -402,7 +372,7 @@
         }
 
         .factor-importance {
-            color: var(--accent-gold);
+            color: var(--accent-green);
             font-size: 13px;
             font-weight: bold;
         }
@@ -442,17 +412,15 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%);
-            color: #000000;
-            border: none;
-            box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3), 0 2px 4px rgba(0, 0, 0, 0.4);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-green-dark) 100%);
+            color: #000;
+            border: 1px solid var(--accent-green);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4), 0 3px 8px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(135deg, var(--accent-gold-light) 0%, var(--accent-gold) 100%);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+            background: linear-gradient(135deg, var(--accent-green-dark) 0%, var(--accent-green) 100%);
         }
 
         .btn-secondary {
@@ -497,7 +465,7 @@
         }
 
         .governance-footer strong {
-            color: var(--accent-gold);
+            color: var(--accent-green);
         }
 
         /* Demo Mode Indicator */
@@ -505,11 +473,11 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(0, 255, 136, 0.12);
-            border: 2px solid var(--accent-gold);
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid var(--accent-green);
             padding: 12px 24px;
             border-radius: 4px;
-            color: var(--accent-gold);
+            color: var(--accent-green);
             font-weight: bold;
             font-size: 14px;
             z-index: 1000;
@@ -519,9 +487,9 @@
         }
 
         .demo-mode:hover {
-            background: rgba(0, 255, 136, 0.2);
+            background: rgba(212, 175, 55, 0.2);
             transform: scale(1.05);
-            box-shadow: 0 4px 16px rgba(0, 255, 136, 0.25);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
         }
 
         .demo-mode.active {
@@ -540,13 +508,13 @@
         }
 
         .progress-ring-circle-active {
-            stroke: var(--accent-gold);
+            stroke: var(--accent-green);
             fill: transparent;
             stroke-width: 4;
             stroke-dasharray: 251.2;
             stroke-dashoffset: 251.2;
             transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: drop-shadow(0 2px 4px rgba(0, 255, 136, 0.25));
+            filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.3));
         }
 
         .progress-ring-text {
@@ -556,7 +524,8 @@
             transform: translate(-50%, -50%);
             font-size: 20px;
             font-weight: bold;
-            color: var(--accent-gold);
+            color: var(--accent-green);
+            text-shadow: 0 2px 4px rgba(212, 175, 55, 0.2);
         }
 
         .confidence-circle {
@@ -578,7 +547,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.08), transparent);
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.08), transparent);
             transition: left 0.5s;
         }
 
@@ -594,7 +563,7 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--accent-gold), transparent);
+            background: linear-gradient(90deg, var(--accent-green), transparent);
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -618,12 +587,12 @@
         .metric-badge {
             display: inline-block;
             padding: 4px 12px;
-            background: rgba(0, 255, 136, 0.12);
-            border: 1px solid var(--border-strong);
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--accent-green);
             border-radius: 3px;
             font-size: 11px;
             font-weight: bold;
-            color: var(--accent-gold);
+            color: var(--accent-green);
             letter-spacing: 1px;
             margin-left: 10px;
         }
@@ -639,46 +608,10 @@
 
         .importance-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-dark));
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-green-dark));
             border-radius: 2px;
             transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 8px rgba(0, 255, 136, 0.2);
-        }
-
-        /* Circuit OS Custom Icon System */
-        .circuit-icon {
-            width: 24px;
-            height: 24px;
-            display: inline-block;
-            vertical-align: middle;
-            color: #8B9198;
-            transition: all 0.3s ease;
-        }
-
-        .circuit-icon.active,
-        .circuit-icon:hover {
-            color: var(--accent-gold);
-            filter: drop-shadow(0 0 6px rgba(0, 255, 136, 0.5));
-        }
-
-        .circuit-icon.large {
-            width: 32px;
-            height: 32px;
-        }
-
-        .circuit-icon.small {
-            width: 18px;
-            height: 18px;
-        }
-
-        @keyframes icon-pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
-
-        .circuit-icon.processing {
-            animation: icon-pulse 1.5s infinite;
-            color: var(--accent-gold);
+            box-shadow: 0 0 6px rgba(212, 175, 55, 0.3);
         }
 
         @media (max-width: 768px) {
@@ -708,23 +641,13 @@
 <body>
     <!-- Demo Mode Indicator -->
     <div class="demo-mode" id="demoToggle" onclick="toggleDemo()">
-        <span id="demoText">
-            <svg class="circuit-icon small" style="margin-right: 4px;">
-                <use href="../circuit-icons.svg#icon-circuit-bolt"/>
-            </svg>
-            START DEMO
-        </span>
+        <span id="demoText">▶ START DEMO</span>
     </div>
 
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1>
-                <svg class="circuit-icon large active" style="margin-right: 8px;">
-                    <use href="../circuit-icons.svg#icon-circuit-bolt"/>
-                </svg>
-                Circuit OS: Lead Qualification AI
-            </h1>
+            <h1>⚡ Circuit OS: Lead Qualification AI</h1>
             <p>Powered by Random Forest ML • 90% Accuracy • Human-Governed</p>
         </div>
 
@@ -773,28 +696,16 @@
             </div>
 
             <div class="recommendation">
-                <div class="recommendation-title">
-                            <svg class="circuit-icon small active" style="margin-right: 6px;">
-                                <use href="../circuit-icons.svg#icon-decision"/>
-                            </svg>
-                            Recommended Action</div>
+                <div class="recommendation-title">🎯 Recommended Action</div>
                 <div class="recommendation-text">HIGH PRIORITY: Assign to senior closer, schedule demo within 24 hours</div>
             </div>
 
             <div class="explanation-section">
-                <div class="section-title">
-                            <svg class="circuit-icon" style="margin-right: 6px;">
-                                <use href="../circuit-icons.svg#icon-analytics"/>
-                            </svg>
-                            Why AI Qualified This Lead</div>
+                <div class="section-title">📊 Why AI Qualified This Lead</div>
                 <div class="factor-list">
                     <div class="factor-item">
                         <div class="factor-header">
-                            <span class="factor-name">
-                            <svg class="circuit-icon small active" style="margin-right: 4px;">
-                                <use href="../circuit-icons.svg#icon-circuit-bolt"/>
-                            </svg>
-                            Engagement Score</span>
+                            <span class="factor-name">⚡ Engagement Score</span>
                             <span class="factor-importance">46% importance</span>
                         </div>
                         <div class="factor-value">Value: 87/100</div>
@@ -805,11 +716,7 @@
                     </div>
                     <div class="factor-item">
                         <div class="factor-header">
-                            <span class="factor-name">
-                            <svg class="circuit-icon small active" style="margin-right: 4px;">
-                                <use href="../circuit-icons.svg#icon-building"/>
-                            </svg>
-                            Company Size</span>
+                            <span class="factor-name">🏢 Company Size</span>
                             <span class="factor-importance">16% importance</span>
                         </div>
                         <div class="factor-value">Value: 550 employees</div>
@@ -820,11 +727,7 @@
                     </div>
                     <div class="factor-item">
                         <div class="factor-header">
-                            <span class="factor-name">
-                            <svg class="circuit-icon small active" style="margin-right: 4px;">
-                                <use href="../circuit-icons.svg#icon-money"/>
-                            </svg>
-                            Budget</span>
+                            <span class="factor-name">💰 Budget</span>
                             <span class="factor-importance">16% importance</span>
                         </div>
                         <div class="factor-value">Value: $125,000</div>
@@ -835,11 +738,7 @@
                     </div>
                     <div class="factor-item">
                         <div class="factor-header">
-                            <span class="factor-name">
-                            <svg class="circuit-icon small active" style="margin-right: 4px;">
-                                <use href="../circuit-icons.svg#icon-industry"/>
-                            </svg>
-                            Industry</span>
+                            <span class="factor-name">🏭 Industry</span>
                             <span class="factor-importance">7% importance</span>
                         </div>
                         <div class="factor-value">Value: Technology</div>
@@ -850,11 +749,7 @@
                     </div>
                     <div class="factor-item">
                         <div class="factor-header">
-                            <span class="factor-name">
-                            <svg class="circuit-icon small active" style="margin-right: 4px;">
-                                <use href="../circuit-icons.svg#icon-refresh"/>
-                            </svg>
-                            Previous Purchases</span>
+                            <span class="factor-name">🔁 Previous Purchases</span>
                             <span class="factor-importance">3% importance</span>
                         </div>
                         <div class="factor-value">Value: 2 orders</div>
@@ -894,20 +789,12 @@
             </div>
 
             <div class="recommendation">
-                <div class="recommendation-title">
-                            <svg class="circuit-icon small active" style="margin-right: 6px;">
-                                <use href="../circuit-icons.svg#icon-alert"/>
-                            </svg>
-                            Recommended Action</div>
+                <div class="recommendation-title">⚠️ Recommended Action</div>
                 <div class="recommendation-text">BORDERLINE: Quick human review recommended before routing to sales</div>
             </div>
 
             <div class="explanation-section">
-                <div class="section-title">
-                            <svg class="circuit-icon" style="margin-right: 6px;">
-                                <use href="../circuit-icons.svg#icon-analytics"/>
-                            </svg>
-                            Why This Lead Needs Review</div>
+                <div class="section-title">📊 Why This Lead Needs Review</div>
                 <div class="factor-list">
                     <div class="factor-item">
                         <div class="factor-header">
@@ -964,20 +851,12 @@
             </div>
 
             <div class="recommendation">
-                <div class="recommendation-title">
-                            <svg class="circuit-icon small active" style="margin-right: 6px;">
-                                <use href="../circuit-icons.svg#icon-outreach"/>
-                            </svg>
-                            Recommended Action</div>
+                <div class="recommendation-title">📧 Recommended Action</div>
                 <div class="recommendation-text">NOT QUALIFIED: Add to long-term nurture sequence</div>
             </div>
 
             <div class="explanation-section">
-                <div class="section-title">
-                            <svg class="circuit-icon" style="margin-right: 6px;">
-                                <use href="../circuit-icons.svg#icon-analytics"/>
-                            </svg>
-                            Why AI Rejected This Lead</div>
+                <div class="section-title">📊 Why AI Rejected This Lead</div>
                 <div class="factor-list">
                     <div class="factor-item">
                         <div class="factor-header">
@@ -1044,7 +923,8 @@
             if (demoMode) {
                 text.textContent = '⏸ PAUSE DEMO';
                 btn.classList.add('active');
-                startDemo();} else {
+                startDemo();
+            } else {
                 text.textContent = '▶ START DEMO';
                 btn.classList.remove('active');
                 stopDemo();
@@ -1088,9 +968,9 @@
             removeAllHighlights();
             const el = document.querySelector(selector);
             if (el) {
-                el.style.outline = '2px solid var(--accent-gold)';
+                el.style.outline = '2px solid var(--accent-green)';
                 el.style.outlineOffset = '4px';
-                el.style.boxShadow = '0 0 30px rgba(56, 255, 106, 0.4)';
+                el.style.boxShadow = '0 0 30px rgba(212, 175, 55, 0.4)';
 
                 // Show tooltip
                 const tooltip = document.createElement('div');
@@ -1101,7 +981,7 @@
                     top: -50px;
                     left: 50%;
                     transform: translateX(-50%);
-                    background: var(--accent-gold);
+                    background: var(--accent-green);
                     color: #000;
                     padding: 10px 20px;
                     border-radius: 4px;
@@ -1109,7 +989,7 @@
                     font-weight: bold;
                     white-space: nowrap;
                     z-index: 10000;
-                    box-shadow: 0 5px 20px rgba(56, 255, 106, 0.5);
+                    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
                 `;
                 el.style.position = 'relative';
                 el.appendChild(tooltip);
@@ -1170,10 +1050,12 @@
 
         // Sales team actions
         function assignToSales() {
-            alert('✓ Lead assigned to senior closer\n📅 Demo scheduled for tomorrow 2PM\n📧 Confirmation email sent');}
+            alert('✓ Lead assigned to senior closer\n📅 Demo scheduled for tomorrow 2PM\n📧 Confirmation email sent');
+        }
 
         function approveQualified() {
-            alert('✓ Lead manually approved as QUALIFIED\n→ Routing to sales team\n📝 Audit log updated with human review');}
+            alert('✓ Lead manually approved as QUALIFIED\n→ Routing to sales team\n📝 Audit log updated with human review');
+        }
 
         function rejectLead() {
             alert('✗ Lead manually rejected\n→ Adding to nurture campaign\n📝 Audit log updated with human review');
@@ -1188,7 +1070,8 @@
         }
 
         function viewFullProfile() {
-            alert('📊 Opening full lead profile:\n• Complete contact history\n• Website behavior tracking\n• Email engagement metrics\n• Social media activity\n• Competitor intelligence');}
+            alert('📊 Opening full lead profile:\n• Complete contact history\n• Website behavior tracking\n• Email engagement metrics\n• Social media activity\n• Competitor intelligence');
+        }
 
         function overrideAI() {
             alert('⚠️ Override AI Decision\n\nPlease select:\n1. Manually DISQUALIFY (reason required)\n2. Change priority level\n3. Assign to different rep\n\n→ All overrides logged for model improvement');

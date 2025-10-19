@@ -6,43 +6,49 @@
     <title>Lead Processing Demo - Circuit OS</title>
     <style>
         :root {
-            /* Dark Knight + Subtle Neon Hybrid Theme */
-            --gotham-black: #000000;
-            --knight-dark: #0A0A0B;
-            --shadow-gray: #141415;
-            --steel-gray: #1E1E20;
-            --armor-gray: #2A2A2D;
+            /* Neon Green (Primary Interactive) */
+            --neon-green: #38FF6A;
+            --neon-green-bright: #5aff88;
+            --neon-green-dark: #2ecc54;
+            --neon-green-light: #5aff88;
+            --neon-green-glow: rgba(56, 255, 106, 0.4);
+            --neon-glow: rgba(56, 255, 106, 0.6);
+            --neon-glow-subtle: rgba(56, 255, 106, 0.3);
+            --neon-green-subtle: rgba(56, 255, 106, 0.15);
 
-            /* Subtle Neon Green - Primary Interactive */
-            --neon-green-subtle: #00FF88;
-            --neon-green-dark: #00CC6E;
-            --neon-green-dim: rgba(0, 255, 136, 0.15);
-            --neon-green-glow: rgba(0, 255, 136, 0.25);
-            --neon-green-border: rgba(0, 255, 136, 0.3);
+            /* Steel Gray (Secondary Structure) */
+            --steel-gray: #8B9198;
+            --steel-light: #B8BCC2;
+            --steel-dark: #6B6F75;
+            --steel-metallic: linear-gradient(135deg, #B8BCC2 0%, #8B9198 50%, #6B6F75 100%);
 
-            /* Gold Accents - Secondary Luxury */
-            --gold-primary: #D4AF37;
-            --gold-dark: #B8941E;
-            --gold-light: #E5C158;
-            --gold-dim: rgba(212, 175, 55, 0.15);
-            --gold-glow: rgba(212, 175, 55, 0.25);
+            /* Backgrounds - Pure blacks for maximum contrast */
+            --bg-black: #000000;
+            --bg-dark: #0a0a0a;
+            --bg-medium: #141414;
+            --bg-light: #1a1a1a;
+            --bg-card: #1a1a1a;
 
-            /* Text Hierarchy */
+            /* Text - High contrast white */
             --text-primary: #FFFFFF;
-            --text-secondary: #B0B0B0;
-            --text-muted: #6B6B6B;
-            --text-neon: #00FF88;
-            --text-gold: #D4AF37;
+            --text-secondary: #CCCCCC;
+            --text-muted: #999999;
+
+            /* Borders */
+            --border: rgba(56, 255, 106, 0.1);
+            --border-medium: rgba(56, 255, 106, 0.2);
+            --border-strong: rgba(56, 255, 106, 0.3);
+            --border-color: rgba(56, 255, 106, 0.15);
+
+            /* Status colors */
+            --success: #38FF6A;
+            --warning: #FFB800;
+            --error: #DC3545;
 
             /* Legacy compatibility */
-            --bg-dark: #000000;
-            --bg-medium: #0A0A0B;
-            --bg-light: #141415;
-            --bg-card: #1E1E20;
-            --neon-green: #00FF88;
-            --neon-green-light: #33FFA3;
-            --neon-green-subtle: rgba(0, 255, 136, 0.15);
-            --border-color: rgba(0, 255, 136, 0.15);
+            --gotham-black: #000000;
+            --knight-dark: #0a0a0a;
+            --shadow-gray: #141414;
         }
 
         * {
@@ -248,6 +254,48 @@
         @keyframes flowRight {
             from { width: 0; }
             to { width: 60px; }
+        }
+
+        /* PREMIUM NEON + STEEL ANIMATIONS */
+        @keyframes neonPulse {
+            0%, 100% {
+                filter: drop-shadow(0 0 8px rgba(56, 255, 106, 0.8))
+                        drop-shadow(0 0 16px rgba(56, 255, 106, 0.4));
+                opacity: 1;
+            }
+            50% {
+                filter: drop-shadow(0 0 12px rgba(56, 255, 106, 1))
+                        drop-shadow(0 0 24px rgba(56, 255, 106, 0.6));
+                opacity: 0.9;
+            }
+        }
+
+        @keyframes circuitFlow {
+            0% {
+                stroke-dashoffset: 1000;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes neonProgress {
+            0% {
+                width: 0%;
+                box-shadow: 0 0 10px rgba(56, 255, 106, 0.8);
+            }
+            100% {
+                width: 100%;
+                box-shadow: 0 0 20px rgba(56, 255, 106, 1);
+            }
+        }
+
+        .circuit-line {
+            stroke: var(--neon-green);
+            stroke-width: 2;
+            stroke-dasharray: 10 5;
+            animation: circuitFlow 20s linear infinite;
+            opacity: 0.6;
         }
 
         /* Processing Log */
@@ -1346,5 +1394,8 @@ Emily Rodriguez,e.rodriguez@startupco.io,StartupCo,SaaS/Technology,75000,45`;
         // Initial state
         addLog('Lead processing system ready. Submit a lead to begin.');
     </script>
+
+    <!-- Neon + Steel Animation System -->
+    <script src="../circuit-animations.js"></script>
 </body>
 </html>

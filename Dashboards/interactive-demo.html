@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit OS - Interactive AI Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .header {
+            height: 64px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            background: #000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            width: 32px;
+            height: 32px;
+        }
+
+        .logo-text {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .demo-header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .demo-header p {
+            font-size: 18px;
+            color: #888;
+        }
+
+        /* Step-by-step workflow */
+        .workflow {
+            display: grid;
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .step {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 24px;
+            opacity: 0.5;
+            transition: all 0.2s;
+        }
+
+        .step.active {
+            opacity: 1;
+            border-color: #38FF6A;
+            box-shadow: 0 0 0 1px #38FF6A;
+        }
+
+        .step.completed {
+            opacity: 0.7;
+            border-color: #38FF6A;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #222;
+            border: 2px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .step.active .step-number {
+            background: #38FF6A;
+            color: #000;
+            border-color: #38FF6A;
+        }
+
+        .step.completed .step-number {
+            background: #38FF6A;
+            color: #000;
+            border-color: #38FF6A;
+        }
+
+        .step-title {
+            flex: 1;
+        }
+
+        .step-title h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .step-title p {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .step-content {
+            display: none;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #333;
+        }
+
+        .step.active .step-content {
+            display: block;
+        }
+
+        .logic-box {
+            background: #0a0a0a;
+            border: 1px solid #38FF6A;
+            border-left: 3px solid #38FF6A;
+            border-radius: 4px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .logic-box h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #38FF6A;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .logic-box pre {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #ccc;
+            overflow-x: auto;
+        }
+
+        .data-input {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .data-input label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .data-input input,
+        .data-input select {
+            width: 100%;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 10px 12px;
+            color: #fff;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .data-input input:focus,
+        .data-input select:focus {
+            outline: none;
+            border-color: #38FF6A;
+        }
+
+        .result-display {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #222;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .result-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #38FF6A;
+        }
+
+        .btn {
+            background: #38FF6A;
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn:hover {
+            background: #5aff88;
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #222;
+            color: #fff;
+            border: 1px solid #444;
+        }
+
+        .btn-secondary:hover {
+            background: #333;
+            border-color: #555;
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 8px;
+            background: #222;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #38FF6A, #5aff88);
+            transition: width 0.5s ease;
+        }
+
+        .decision-factors {
+            display: grid;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .factor {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 4px;
+        }
+
+        .factor-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #38FF6A;
+        }
+
+        .factor-text {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .factor-score {
+            font-weight: 600;
+            color: #38FF6A;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .ai-thinking {
+            display: none;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: #0a0a0a;
+            border: 1px solid #38FF6A;
+            border-radius: 4px;
+            margin: 16px 0;
+        }
+
+        .ai-thinking.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #333;
+            border-top-color: #38FF6A;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="../Brand-Assets/circuit-os-icon.svg" alt="Circuit OS">
+            <span class="logo-text">Circuit OS Interactive Demo</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="demo-header">
+            <h1>See AI in Action</h1>
+            <p>Step-by-step walkthrough of how Circuit OS qualifies leads with explainable AI</p>
+        </div>
+
+        <div class="workflow">
+            <!-- Step 1: Data Input -->
+            <div class="step active" id="step1">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-title">
+                        <h3>Data Input</h3>
+                        <p>Capture lead information from form or CRM</p>
+                    </div>
+                </div>
+                <div class="step-content">
+                    <div class="data-input">
+                        <label>Company Name</label>
+                        <input type="text" id="companyName" placeholder="e.g., Acme Corp" value="Acme Corp">
+                    </div>
+                    <div class="data-input">
+                        <label>Annual Revenue</label>
+                        <select id="revenue">
+                            <option value="100M+">$100M+</option>
+                            <option value="50M-100M">$50M-100M</option>
+                            <option value="10M-50M">$10M-50M</option>
+                            <option value="<10M">&lt;$10M</option>
+                        </select>
+                    </div>
+                    <div class="data-input">
+                        <label>Industry</label>
+                        <select id="industry">
+                            <option value="Technology">Technology</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Manufacturing">Manufacturing</option>
+                            <option value="Retail">Retail</option>
+                        </select>
+                    </div>
+                    <div class="data-input">
+                        <label>Decision Maker Title</label>
+                        <input type="text" id="title" placeholder="e.g., VP of Sales" value="VP of Sales">
+                    </div>
+
+                    <div class="logic-box">
+                        <h4>Logic: Data Validation</h4>
+                        <pre>IF company_name IS NOT EMPTY
+AND revenue IS SELECTED
+AND industry IS SELECTED
+AND title IS NOT EMPTY
+THEN → Proceed to DMN Rules
+ELSE → Request missing data</pre>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn" onclick="processStep1()">Process Lead →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: DMN Business Rules -->
+            <div class="step" id="step2">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-title">
+                        <h3>DMN Business Rules</h3>
+                        <p>Apply decision model notation for instant qualification</p>
+                    </div>
+                </div>
+                <div class="step-content">
+                    <div class="logic-box">
+                        <h4>Logic: DMN Decision Table</h4>
+                        <pre>DECISION TABLE: Lead_Tier_Assignment
+
+IF revenue = "$100M+" AND title contains ["VP", "C-Level", "Director"]
+THEN tier = "Enterprise" (Score: +40)
+
+IF revenue = "$50M-100M" AND industry IN ["Technology", "Finance"]
+THEN tier = "Mid-Market Premium" (Score: +30)
+
+IF revenue &lt; "$10M"
+THEN tier = "SMB" (Score: +10)</pre>
+                    </div>
+
+                    <div class="result-display" id="dmnResults">
+                        <!-- Populated by JavaScript -->
+                    </div>
+
+                    <div class="ai-thinking" id="thinking2">
+                        <div class="spinner"></div>
+                        <span>Applying DMN rules...</span>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn" onclick="processStep2()" disabled id="btn2">Analyze with ML →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: ML Prediction -->
+            <div class="step" id="step3">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <div class="step-title">
+                        <h3>Machine Learning Analysis</h3>
+                        <p>Random Forest model predicts conversion probability</p>
+                    </div>
+                </div>
+                <div class="step-content">
+                    <div class="logic-box">
+                        <h4>Logic: Random Forest Algorithm</h4>
+                        <pre>TRAINED MODEL: Lead_Conversion_Predictor
+- Algorithm: Random Forest (100 trees)
+- Training Data: 10,000 historical leads
+- Accuracy: 92%
+
+FEATURES:
+1. Revenue tier (weighted 0.35)
+2. Industry match (weighted 0.25)
+3. Title seniority (weighted 0.20)
+4. Engagement score (weighted 0.20)
+
+OUTPUT: Probability(0-100%) + Feature Importance</pre>
+                    </div>
+
+                    <div class="result-display" id="mlResults">
+                        <!-- Populated by JavaScript -->
+                    </div>
+
+                    <div class="decision-factors" id="mlFactors">
+                        <!-- Populated by JavaScript -->
+                    </div>
+
+                    <div class="ai-thinking" id="thinking3">
+                        <div class="spinner"></div>
+                        <span>Running ML prediction model...</span>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn" onclick="processStep3()" disabled id="btn3">Get LLM Insights →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: LLM Strategic Analysis -->
+            <div class="step" id="step4">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <div class="step-title">
+                        <h3>LLM Strategic Insights</h3>
+                        <p>Claude analyzes context and recommends strategy</p>
+                    </div>
+                </div>
+                <div class="step-content">
+                    <div class="logic-box">
+                        <h4>Logic: LLM Prompt Engineering</h4>
+                        <pre>PROMPT TO CLAUDE:
+"Analyze this B2B lead and recommend sales strategy:
+
+Company: {company_name}
+Revenue: {revenue}
+Industry: {industry}
+Title: {title}
+DMN Tier: {tier}
+ML Confidence: {ml_score}%
+
+Provide:
+1. Strategic recommendation (Enterprise/Standard/Nurture)
+2. Key talking points (3 bullets)
+3. Risk factors (if any)
+4. Recommended next action"</pre>
+                    </div>
+
+                    <div class="result-display" id="llmResults">
+                        <!-- Populated by JavaScript -->
+                    </div>
+
+                    <div class="ai-thinking" id="thinking4">
+                        <div class="spinner"></div>
+                        <span>Claude is analyzing lead context...</span>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn" onclick="processStep4()" disabled id="btn4">Generate Final Decision →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Hybrid Decision -->
+            <div class="step" id="step5">
+                <div class="step-header">
+                    <div class="step-number">5</div>
+                    <div class="step-title">
+                        <h3>Final Hybrid Decision</h3>
+                        <p>Combine DMN + ML + LLM for optimal outcome</p>
+                    </div>
+                </div>
+                <div class="step-content">
+                    <div class="logic-box">
+                        <h4>Logic: Hybrid Fusion Algorithm</h4>
+                        <pre>WEIGHTED DECISION FUSION:
+
+DMN Score (40% weight): {dmn_score}
+ML Score (35% weight): {ml_score}
+LLM Score (25% weight): {llm_score}
+
+FINAL_SCORE = (DMN × 0.40) + (ML × 0.35) + (LLM × 0.25)
+
+IF FINAL_SCORE ≥ 80 THEN "High Priority - Route to Senior AE"
+IF FINAL_SCORE ≥ 60 THEN "Qualified - Standard Sales Flow"
+IF FINAL_SCORE ≥ 40 THEN "Nurture - Marketing Automation"
+ELSE "Disqualify - Archive"</pre>
+                    </div>
+
+                    <div class="result-display" id="finalResults">
+                        <!-- Populated by JavaScript -->
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn" onclick="processStep5()" disabled id="btn5">Generate Outreach Email →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 6: Auto-Generated Outreach -->
+            <div class="step" id="step6">
+                <div class="step-header">
+                    <div class="step-number">6</div>
+                    <div class="step-title">
+                        <h3>Automated Outreach</h3>
+                        <p>AI writes personalized email based on insights</p>
+                    </div>
+                </div>
+                <div class="step-content">
+                    <div class="logic-box">
+                        <h4>Logic: Email Generation</h4>
+                        <pre>TEMPLATE SELECTION:
+IF tier = "Enterprise" → Use executive_pitch.template
+IF tier = "Mid-Market" → Use value_proposition.template
+IF tier = "SMB" → Use quick_win.template
+
+PERSONALIZATION:
+- Insert {company_name}
+- Reference {industry} pain points
+- Highlight {llm_talking_points}
+- CTA based on {urgency_score}</pre>
+                    </div>
+
+                    <div class="result-display" id="emailResults">
+                        <!-- Populated by JavaScript -->
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn" onclick="resetDemo()">Start New Demo</button>
+                        <button class="btn-secondary" onclick="downloadReport()">Download Full Report</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let leadData = {};
+        let currentStep = 1;
+
+        function processStep1() {
+            // Capture input
+            leadData.companyName = document.getElementById('companyName').value;
+            leadData.revenue = document.getElementById('revenue').value;
+            leadData.industry = document.getElementById('industry').value;
+            leadData.title = document.getElementById('title').value;
+
+            // Mark step complete
+            completeStep(1);
+            activateStep(2);
+            document.getElementById('btn2').disabled = false;
+        }
+
+        function processStep2() {
+            document.getElementById('thinking2').classList.add('active');
+
+            setTimeout(() => {
+                // DMN Logic
+                let dmnScore = 0;
+                let tier = '';
+
+                if (leadData.revenue === '100M+') {
+                    dmnScore += 40;
+                    tier = 'Enterprise';
+                } else if (leadData.revenue === '50M-100M') {
+                    dmnScore += 30;
+                    tier = 'Mid-Market Premium';
+                } else {
+                    dmnScore += 15;
+                    tier = 'SMB';
+                }
+
+                if (['Technology', 'Finance'].includes(leadData.industry)) {
+                    dmnScore += 15;
+                }
+
+                if (leadData.title.includes('VP') || leadData.title.includes('C-')) {
+                    dmnScore += 15;
+                }
+
+                leadData.dmnScore = dmnScore;
+                leadData.tier = tier;
+
+                document.getElementById('dmnResults').innerHTML = `
+                    <div class="result-item">
+                        <span class="result-label">Assigned Tier</span>
+                        <span class="result-value">${tier}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">DMN Qualification Score</span>
+                        <span class="result-value">${dmnScore}/100</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Rules Applied</span>
+                        <span class="result-value">3 of 8 rules matched</span>
+                    </div>
+                `;
+
+                document.getElementById('thinking2').classList.remove('active');
+                completeStep(2);
+                activateStep(3);
+                document.getElementById('btn3').disabled = false;
+            }, 1500);
+        }
+
+        function processStep3() {
+            document.getElementById('thinking3').classList.add('active');
+
+            setTimeout(() => {
+                // ML Simulation
+                let mlScore = leadData.dmnScore + Math.floor(Math.random() * 20) + 10;
+                mlScore = Math.min(mlScore, 95);
+                leadData.mlScore = mlScore;
+
+                document.getElementById('mlResults').innerHTML = `
+                    <div class="result-item">
+                        <span class="result-label">Conversion Probability</span>
+                        <span class="result-value">${mlScore}%</span>
+                    </div>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: ${mlScore}%"></div>
+                    </div>
+                `;
+
+                document.getElementById('mlFactors').innerHTML = `
+                    <div class="factor">
+                        <div class="factor-icon">$</div>
+                        <div class="factor-text">Revenue Tier: ${leadData.revenue}</div>
+                        <div class="factor-score">+35%</div>
+                    </div>
+                    <div class="factor">
+                        <div class="factor-icon">🏢</div>
+                        <div class="factor-text">Industry: ${leadData.industry}</div>
+                        <div class="factor-score">+25%</div>
+                    </div>
+                    <div class="factor">
+                        <div class="factor-icon">👤</div>
+                        <div class="factor-text">Decision Maker Level</div>
+                        <div class="factor-score">+20%</div>
+                    </div>
+                `;
+
+                document.getElementById('thinking3').classList.remove('active');
+                completeStep(3);
+                activateStep(4);
+                document.getElementById('btn4').disabled = false;
+            }, 2000);
+        }
+
+        function processStep4() {
+            document.getElementById('thinking4').classList.add('active');
+
+            setTimeout(() => {
+                // LLM Simulation
+                let recommendation = leadData.tier === 'Enterprise' ? 'High Priority - Executive Engagement' : 'Standard Sales Process';
+
+                document.getElementById('llmResults').innerHTML = `
+                    <div class="result-item">
+                        <span class="result-label">Strategic Recommendation</span>
+                        <span class="result-value">${recommendation}</span>
+                    </div>
+                    <div style="margin-top: 16px; padding: 16px; background: #0a0a0a; border-radius: 4px;">
+                        <strong style="color: #38FF6A;">Key Talking Points:</strong>
+                        <ul style="margin-top: 8px; margin-left: 20px; color: #ccc;">
+                            <li>Revenue optimization for ${leadData.industry} sector</li>
+                            <li>AI-powered decision automation (their current gap)</li>
+                            <li>Enterprise scalability with proven ROI</li>
+                        </ul>
+                    </div>
+                `;
+
+                document.getElementById('thinking4').classList.remove('active');
+                completeStep(4);
+                activateStep(5);
+                document.getElementById('btn5').disabled = false;
+            }, 2500);
+        }
+
+        function processStep5() {
+            // Final Hybrid Score
+            let finalScore = Math.round(
+                (leadData.dmnScore * 0.40) +
+                (leadData.mlScore * 0.35) +
+                (85 * 0.25) // LLM score
+            );
+
+            let decision = finalScore >= 80 ? 'HIGH PRIORITY' :
+                          finalScore >= 60 ? 'QUALIFIED' : 'NURTURE';
+
+            document.getElementById('finalResults').innerHTML = `
+                <div class="result-item">
+                    <span class="result-label">Final Hybrid Score</span>
+                    <span class="result-value">${finalScore}/100</span>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: ${finalScore}%"></div>
+                </div>
+                <div class="result-item" style="margin-top: 16px;">
+                    <span class="result-label">Decision</span>
+                    <span class="result-value">${decision}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Route To</span>
+                    <span class="result-value">${decision === 'HIGH PRIORITY' ? 'Senior Account Executive' : 'Sales Team'}</span>
+                </div>
+            `;
+
+            completeStep(5);
+            activateStep(6);
+
+            // Auto-generate WORLD-CLASS email (Hook-Story-Offer + Awareness Model)
+            setTimeout(() => {
+                // Detect awareness level (A2-A3 based on demo behavior)
+                const awarenessLevel = finalScore >= 80 ? 'A2' : 'A3';
+
+                // Generate email using Circuit OS framework
+                let subject, hook, story, offer;
+
+                if (awarenessLevel === 'A2') {
+                    // Product Aware - They know about us
+                    subject = `${leadData.companyName} + revenue automation`;
+                    hook = `Noticed you're evaluating AI sales automation platforms right now.`;
+                    story = `Most ${leadData.industry} companies with ${leadData.revenue} revenue hit the same wall: sales team drowning in unqualified leads while top performers waste hours on manual qualification.\n\nThree months ago, TechCorp (similar size, similar industry) had the same issue. Their VP Sales was losing top performers because reps spent 40% of time on leads that would never close.\n\nThey deployed Circuit OS and something shifted: qualification became instant, explainable, and accurate. Their best reps now focus 100% on closing while AI handles qualification with 92% accuracy.\n\nThe result: 40% shorter sales cycles, zero complaints about lead quality, and their top closer just had their best quarter ever.`;
+                    offer = `Want to see it qualify 5 of your actual leads? I can show you in 15 minutes.`;
+                } else {
+                    // Solution Aware - They know solutions exist
+                    subject = `Your lead qualification process`;
+                    hook = `Your top closers are spending 40% of their time on leads that won't close.`;
+                    story = `Quick story: talked to a VP Sales at a ${leadData.industry} company last month.\n\nBefore Circuit OS:\n- 15 hours/week manual qualification\n- Sales team complaining about lead quality  \n- No way to explain why leads were rejected\n\nAfter 60 days:\n- Qualification happens in real-time\n- Sales team trusts the AI (because it shows its logic)\n- Hit revenue targets ahead of schedule\n\nWhat made the difference: hybrid AI system that combines business rules (DMN) + machine learning + LLM reasoning. Not a black box.`;
+                    offer = `I put together a 2-minute breakdown of how ${leadData.industry} companies are doing this now. Want me to send it?`;
+                }
+
+                document.getElementById('emailResults').innerHTML = `
+                    <div style="background: #0a0a0a; border: 1px solid #333; border-radius: 4px; padding: 20px; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.8;">
+                        <div style="color: #888;">To: ${leadData.title} @ ${leadData.companyName}</div>
+                        <div style="color: #888; margin-bottom: 16px;">Subject: ${subject}</div>
+                        <div style="color: #ccc;">
+                            <p>${hook}</p>
+                            <p style="margin-top: 16px; white-space: pre-line;">${story}</p>
+                            <p style="margin-top: 16px;">${offer}</p>
+                            <p style="margin-top: 16px;">Best,<br>Circuit OS Sales Team</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 16px; padding: 12px; background: #0a0a0a; border: 1px solid #38FF6A; border-left: 3px solid #38FF6A; border-radius: 4px;">
+                        <div style="font-size: 12px; color: #38FF6A; font-weight: 600; margin-bottom: 8px;">OUTREACH QUALITY SCORE: 94/100</div>
+                        <div style="font-size: 11px; color: #888;">
+                            ✓ Awareness Level: ${awarenessLevel} (${awarenessLevel === 'A2' ? 'Product-Aware' : 'Solution-Aware'})<br>
+                            ✓ Hook-Story-Offer Framework Applied<br>
+                            ✓ No Generic Greetings (Hi/Hello)<br>
+                            ✓ Trigger-Based Personalization<br>
+                            ✓ Human Voice (Not Robotic)<br>
+                            ✓ Clear CTA with Low Friction<br>
+                        </div>
+                    </div>
+                `;
+            }, 500);
+        }
+
+        function completeStep(step) {
+            document.getElementById('step' + step).classList.add('completed');
+            document.getElementById('step' + step).classList.remove('active');
+        }
+
+        function activateStep(step) {
+            document.getElementById('step' + step).classList.add('active');
+            document.getElementById('step' + step).scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function resetDemo() {
+            location.reload();
+        }
+
+        function downloadReport() {
+            alert('Full AI decision report would be downloaded as PDF (feature in development)');
+        }
+    </script>
+</body>
+</html>

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CircuitOS AI Platform - Executive Demo</title>
-
     <style>
         * {
             margin: 0;
@@ -13,45 +12,21 @@
         }
 
         :root {
-            /* Dark Knight + Subtle Neon Hybrid Theme */
-            --gotham-black: #000000;
-            --knight-dark: #0A0A0B;
-            --shadow-gray: #141415;
-            --steel-gray: #1E1E20;
-            --armor-gray: #2A2A2D;
-
-            /* Subtle Neon Green - Primary Interactive */
-            --neon-green-subtle: #00FF88;
-            --neon-green-dark: #00CC6E;
-            --neon-green-dim: rgba(0, 255, 136, 0.15);
-            --neon-green-glow: rgba(0, 255, 136, 0.25);
-            --neon-green-border: rgba(0, 255, 136, 0.3);
-
-            /* Gold Accents - Secondary Luxury */
-            --gold-primary: #D4AF37;
-            --gold-dark: #B8941E;
-            --gold-light: #E5C158;
-            --gold-dim: rgba(212, 175, 55, 0.15);
-            --gold-glow: rgba(212, 175, 55, 0.25);
-
-            /* Text Hierarchy */
-            --text-primary: #FFFFFF;
-            --text-secondary: #B0B0B0;
-            --text-muted: #6B6B6B;
-            --text-neon: #00FF88;
-            --text-gold: #D4AF37;
-
-            /* Legacy compatibility */
-            --bg-dark: #000000;
-            --bg-medium: #0A0A0B;
-            --bg-light: #141415;
-            --bg-card: #1E1E20;
-            --neon-green: #00FF88;
-            --border: rgba(0, 255, 136, 0.1);
-            --border-medium: rgba(0, 255, 136, 0.2);
-            --border-strong: rgba(0, 255, 136, 0.3);
-            --success: #00FF88;
-            --warning: #D4AF37;
+            /* Neon Green + Steel Theme */
+            --bg-dark: #0a0a0a;
+            --bg-medium: #1a1a1a;
+            --bg-light: #252525;
+            --neon-green: #38FF6A;
+            --neon-green-dark: #2ecc54;
+            --neon-green-light: #5aff88;
+            --steel-gray: #8B9198;
+            --steel-light: #C5C9CE;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --text-muted: #707070;
+            --border: rgba(56, 255, 106, 0.2);
+            --success: #38FF6A;
+            --warning: #FFB800;
             --error: #DC3545;
         }
 
@@ -107,11 +82,17 @@
         .logo {
             width: 50px;
             height: 50px;
-        }
-
-        .logo svg {
-            width: 100%;
-            height: 100%;
+            background: linear-gradient(135deg, var(--neon-green) 0%, var(--neon-green-dark) 100%);
+            border: 2px solid var(--neon-green-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 24px;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .header-title {
@@ -129,7 +110,7 @@
 
         .header-title p {
             font-size: 13px;
-            color: var(--steel-gray);
+            color: var(--neon-green-light);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -137,19 +118,18 @@
         }
 
         .status-badge {
-            background: rgba(0, 255, 136, 0.12);
-            border: 1px solid var(--border-strong);
+            background: rgba(74, 93, 35, 0.2);
+            border: 1px solid var(--neon-green);
             padding: 8px 16px;
             border-radius: 4px;
             font-size: 12px;
             font-weight: 600;
-            color: var(--neon-green);
+            color: var(--neon-green-light);
             text-transform: uppercase;
             letter-spacing: 1.5px;
             display: flex;
             align-items: center;
             gap: 8px;
-            text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
         }
 
         .status-indicator {
@@ -198,15 +178,14 @@
         }
 
         .tab:hover {
-            background: rgba(0, 255, 136, 0.08);
+            background: rgba(74, 93, 35, 0.1);
             color: var(--text-primary);
         }
 
         .tab.active {
-            color: var(--text-primary);
+            color: var(--neon-green-light);
             border-bottom-color: var(--neon-green);
-            background: rgba(0, 255, 136, 0.08);
-            box-shadow: 0 -2px 12px rgba(0, 255, 136, 0.2);
+            background: rgba(74, 93, 35, 0.15);
         }
 
         .tab::after {
@@ -290,13 +269,13 @@
         }
 
         .card-badge {
-            background: rgba(0, 255, 136, 0.15);
-            border: 1px solid rgba(0, 255, 136, 0.5);
+            background: rgba(74, 93, 35, 0.2);
+            border: 1px solid var(--neon-green);
             padding: 6px 14px;
             border-radius: 4px;
             font-size: 11px;
-            font-weight: 600;
-            color: var(--neon-green);
+            font-weight: bold;
+            color: var(--neon-green-light);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -329,15 +308,13 @@
         .stat-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(0, 255, 136, 0.05) 100%);
-            border: 1px solid rgba(0, 255, 136, 0.3);
+            background: linear-gradient(135deg, var(--neon-green) 0%, var(--neon-green-dark) 100%);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0, 255, 136, 0.15);
         }
 
         .stat-details {
@@ -356,7 +333,7 @@
         .stat-value {
             font-size: 32px;
             font-weight: 700;
-            color: var(--neon-green);
+            color: var(--neon-green-light);
             font-family: 'Consolas', 'Courier New', monospace;
             margin-bottom: 4px;
         }
@@ -386,16 +363,14 @@
 
         .btn-primary {
             background: linear-gradient(135deg, var(--neon-green) 0%, var(--neon-green-dark) 100%);
-            color: #000000;
-            border: none;
-            box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3), 0 2px 4px rgba(0, 0, 0, 0.4);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            color: #fff;
+            border: 1px solid var(--neon-green-light);
         }
 
         .btn-primary:hover {
             background: linear-gradient(135deg, var(--neon-green-light) 0%, var(--neon-green) 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4), 0 3px 8px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 20px rgba(74, 93, 35, 0.4);
         }
 
         .btn-secondary {
@@ -518,7 +493,7 @@
         .architecture-title {
             font-size: 18px;
             font-weight: 700;
-            color: var(--neon-green);
+            color: var(--neon-green-light);
             font-family: 'Consolas', 'Courier New', monospace;
             margin-bottom: 15px;
             text-transform: uppercase;
@@ -548,7 +523,7 @@
         }
 
         .footer strong {
-            color: var(--neon-green);
+            color: var(--neon-green-light);
         }
 
         /* Responsive */
@@ -600,37 +575,10 @@
     <!-- Header -->
     <div class="header">
         <div class="logo-section">
-            <div class="logo">
-                <svg width="50" height="50" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="steelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#B8BCC2;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#8a8e94;stop-opacity:1" />
-                        </linearGradient>
-                        <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" style="stop-color:#00FF88;stop-opacity:0.6" />
-                            <stop offset="50%" style="stop-color:#00FF88;stop-opacity:0.2" />
-                            <stop offset="100%" style="stop-color:#00FF88;stop-opacity:0" />
-                        </radialGradient>
-                        <filter id="glowFilter">
-                            <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
-                            <feMerge>
-                                <feMergeNode in="coloredBlur"/>
-                                <feMergeNode in="SourceGraphic"/>
-                            </feMerge>
-                        </filter>
-                    </defs>
-                    <circle cx="280" cy="160" r="60" fill="url(#glowGrad)" opacity="0.6"/>
-                    <path d="M 200 80 C 260 80, 300 120, 300 180 C 300 240, 260 280, 200 280 L 200 240 C 240 240, 270 210, 270 180 C 270 150, 240 120, 200 120 L 200 80 Z"
-                        fill="url(#steelGrad)" stroke="#7a7e84" stroke-width="2"/>
-                    <circle cx="280" cy="160" r="16" fill="#00FF88" filter="url(#glowFilter)"/>
-                    <circle cx="280" cy="160" r="12" fill="#33FFA3" opacity="0.8"/>
-                    <circle cx="276" cy="156" r="5" fill="#ffffff" opacity="0.6"/>
-                </svg>
-            </div>
+            <div class="logo">CO</div>
             <div class="header-title">
-                <h1>CIRCUIT OS AI PLATFORM</h1>
-                <p>AI Intelligence System</p>
+                <h1>CIRCUITOS AI PLATFORM</h1>
+                <p>Military-Grade Intelligence System</p>
             </div>
         </div>
         <div class="status-badge">
@@ -653,11 +601,7 @@
             <!-- Stats Grid -->
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon">
-                            <svg class="circuit-icon large active">
-                                <use href="../circuit-icons.svg#icon-analytics"/>
-                            </svg>
-                        </div>
+                    <div class="stat-icon">📊</div>
                     <div class="stat-details">
                         <div class="stat-label">Today's Leads</div>
                         <div class="stat-value">47</div>
@@ -665,11 +609,7 @@
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">
-                            <svg class="circuit-icon large active">
-                                <use href="../circuit-icons.svg#icon-check-circle"/>
-                            </svg>
-                        </div>
+                    <div class="stat-icon">✅</div>
                     <div class="stat-details">
                         <div class="stat-label">Auto-Qualified</div>
                         <div class="stat-value">32</div>
@@ -677,11 +617,7 @@
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">
-                            <svg class="circuit-icon large active">
-                                <use href="../circuit-icons.svg#icon-user"/>
-                            </svg>
-                        </div>
+                    <div class="stat-icon">👤</div>
                     <div class="stat-details">
                         <div class="stat-label">Human Review</div>
                         <div class="stat-value">15</div>
@@ -689,11 +625,7 @@
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">
-                            <svg class="circuit-icon large active">
-                                <use href="../circuit-icons.svg#icon-circuit-bolt"/>
-                            </svg>
-                        </div>
+                    <div class="stat-icon">⚡</div>
                     <div class="stat-details">
                         <div class="stat-label">Time Saved</div>
                         <div class="stat-value">3.9h</div>
@@ -706,47 +638,43 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <div class="card-icon">
-                            <svg class="circuit-icon active">
-                                <use href="../circuit-icons.svg#icon-decision"/>
-                            </svg>
-                        </div>
+                        <div class="card-icon">🎯</div>
                         Lead #L-492847 - High Priority
                     </div>
                     <div class="card-badge">92% Confidence</div>
                 </div>
 
                 <h3 style="color: var(--neon-green-light); margin-bottom: 15px; font-size: 16px; text-transform: uppercase; letter-spacing: 1.5px;">AI RECOMMENDATION</h3>
-                <p style="color: var(--text-primary); font-size: 15px; line-height: 1.8; margin-bottom: 25px; padding: 20px; background: rgba(0, 255, 136, 0.08); border-left: 3px solid var(--neon-green); border-radius: 4px;">
+                <p style="color: var(--text-primary); font-size: 15px; line-height: 1.8; margin-bottom: 25px; padding: 20px; background: rgba(74, 93, 35, 0.1); border-left: 3px solid var(--neon-green); border-radius: 4px;">
                     <strong>HIGH PRIORITY:</strong> Assign to senior closer, schedule demo within 24 hours
                 </p>
 
                 <h3 style="color: var(--text-primary); margin-bottom: 15px; font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px;">KEY DECISION FACTORS</h3>
                 <ul class="feature-list">
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-circuit-bolt"/></svg>
+                        <span class="feature-icon">⚡</span>
                         <span class="feature-text"><strong>Engagement Score:</strong> 87/100 (46% importance) - Very high engagement strongly increases qualification likelihood</span>
                     </li>
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-building"/></svg>
+                        <span class="feature-icon">🏢</span>
                         <span class="feature-text"><strong>Company Size:</strong> 550 employees (16% importance) - Enterprise size is ideal for our offering</span>
                     </li>
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-money"/></svg>
+                        <span class="feature-icon">💰</span>
                         <span class="feature-text"><strong>Budget:</strong> $125,000 (16% importance) - Budget exceeds our typical deal size (strong fit)</span>
                     </li>
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-industry"/></svg>
+                        <span class="feature-icon">🏭</span>
                         <span class="feature-text"><strong>Industry:</strong> Technology (7% importance) - Industry is a perfect fit for our solution</span>
                     </li>
                 </ul>
 
                 <div style="margin-top: 25px; display: flex; gap: 15px;">
-                    <button class="btn btn-primary" onclick="assignToCloser()">
+                    <button class="btn btn-primary" onclick="alert('✓ Lead assigned to senior closer\\n📅 Demo scheduled for tomorrow 2PM\\n📧 Confirmation email sent')">
                         ✓ ASSIGN TO SENIOR CLOSER
                     </button>
-                    <button class="btn btn-secondary" onclick="trackButtonClick('view_profile')">VIEW FULL PROFILE</button>
-                    <button class="btn btn-secondary" onclick="trackButtonClick('override_ai')">OVERRIDE AI DECISION</button>
+                    <button class="btn btn-secondary">VIEW FULL PROFILE</button>
+                    <button class="btn btn-secondary">OVERRIDE AI DECISION</button>
                 </div>
             </div>
         </div>
@@ -756,11 +684,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <div class="card-icon">
-                            <svg class="circuit-icon active">
-                                <use href="../circuit-icons.svg#icon-analytics"/>
-                            </svg>
-                        </div>
+                        <div class="card-icon">📊</div>
                         AI Performance Scorecard
                     </div>
                     <div class="card-badge">Last 30 Days</div>
@@ -778,37 +702,37 @@
                     <tbody>
                         <tr>
                             <td>Model Accuracy</td>
-                            <td style="color: var(--neon-green); font-weight: 700;">92%</td>
+                            <td style="color: var(--neon-green-light); font-weight: 700;">92%</td>
                             <td><span style="color: var(--success);">✓ Excellent</span></td>
                             <td>+2% vs last month</td>
                         </tr>
                         <tr>
                             <td>Predictions Made</td>
-                            <td style="color: var(--neon-green); font-weight: 700;">15,247</td>
+                            <td style="color: var(--neon-green-light); font-weight: 700;">15,247</td>
                             <td><span style="color: var(--success);">✓ Active</span></td>
                             <td>+18% volume increase</td>
                         </tr>
                         <tr>
                             <td>Human Review Rate</td>
-                            <td style="color: var(--neon-green); font-weight: 700;">14.2%</td>
+                            <td style="color: var(--neon-green-light); font-weight: 700;">14.2%</td>
                             <td><span style="color: var(--success);">✓ Optimal</span></td>
                             <td>Target: 15%</td>
                         </tr>
                         <tr>
                             <td>Bias Incidents</td>
-                            <td style="color: var(--neon-green); font-weight: 700;">0</td>
+                            <td style="color: var(--neon-green-light); font-weight: 700;">0</td>
                             <td><span style="color: var(--success);">✓ Clean</span></td>
                             <td>No issues detected</td>
                         </tr>
                         <tr>
                             <td>Time Saved</td>
-                            <td style="color: var(--neon-green); font-weight: 700;">243 hours</td>
+                            <td style="color: var(--neon-green-light); font-weight: 700;">243 hours</td>
                             <td><span style="color: var(--success);">✓ High Impact</span></td>
                             <td>$12,150 cost savings</td>
                         </tr>
                         <tr>
                             <td>Revenue Impact</td>
-                            <td style="color: var(--neon-green); font-weight: 700;">+$187,500</td>
+                            <td style="color: var(--neon-green-light); font-weight: 700;">+$187,500</td>
                             <td><span style="color: var(--success);">✓ Strong ROI</span></td>
                             <td>30 extra deals closed</td>
                         </tr>
@@ -818,11 +742,7 @@
 
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon">
-                            <svg class="circuit-icon large active">
-                                <use href="../circuit-icons.svg#icon-shield"/>
-                            </svg>
-                        </div>
+                    <div class="stat-icon">🛡️</div>
                     <div class="stat-details">
                         <div class="stat-label">Governance Score</div>
                         <div class="stat-value">100%</div>
@@ -830,11 +750,7 @@
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">
-                            <svg class="circuit-icon large active">
-                                <use href="../circuit-icons.svg#icon-chart-up"/>
-                            </svg>
-                        </div>
+                    <div class="stat-icon">📈</div>
                     <div class="stat-details">
                         <div class="stat-label">Models in Production</div>
                         <div class="stat-value">4</div>
@@ -842,11 +758,7 @@
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">
-                            <svg class="circuit-icon large active">
-                                <use href="../circuit-icons.svg#icon-balance"/>
-                            </svg>
-                        </div>
+                    <div class="stat-icon">⚖️</div>
                     <div class="stat-details">
                         <div class="stat-label">Audit Coverage</div>
                         <div class="stat-value">100%</div>
@@ -858,38 +770,34 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <div class="card-icon">
-                            <svg class="circuit-icon active">
-                                <use href="../circuit-icons.svg#icon-decision"/>
-                            </svg>
-                        </div>
+                        <div class="card-icon">🎯</div>
                         AI Governance Framework
                     </div>
                 </div>
 
                 <ul class="feature-list">
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-check-circle"/></svg>
+                        <span class="feature-icon">✓</span>
                         <span class="feature-text"><strong>Human Accountability:</strong> Every model has a named human owner (Data Scientist + Business Owner)</span>
                     </li>
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-check-circle"/></svg>
+                        <span class="feature-icon">✓</span>
                         <span class="feature-text"><strong>Explainability:</strong> 100% of predictions include plain-English explanations</span>
                     </li>
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-check-circle"/></svg>
+                        <span class="feature-icon">✓</span>
                         <span class="feature-text"><strong>Human Review:</strong> Low confidence predictions (&lt;85%) trigger mandatory manual review</span>
                     </li>
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-check-circle"/></svg>
+                        <span class="feature-icon">✓</span>
                         <span class="feature-text"><strong>Bias Monitoring:</strong> Weekly automated audits across protected attributes</span>
                     </li>
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-check-circle"/></svg>
+                        <span class="feature-icon">✓</span>
                         <span class="feature-text"><strong>Performance Tracking:</strong> Real-time alerts if model accuracy degrades &gt;5%</span>
                     </li>
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-check-circle"/></svg>
+                        <span class="feature-icon">✓</span>
                         <span class="feature-text"><strong>Audit Trail:</strong> Complete permanent log of every decision for regulatory compliance</span>
                     </li>
                 </ul>
@@ -901,22 +809,14 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <div class="card-icon">
-                            <svg class="circuit-icon active">
-                                <use href="../circuit-icons.svg#icon-architecture"/>
-                            </svg>
-                        </div>
+                        <div class="card-icon">🏗️</div>
                         CircuitOS AI Platform Architecture
                     </div>
                 </div>
 
                 <div class="architecture-container">
                     <div class="architecture-box">
-                        <div class="architecture-title">
-                            <svg class="circuit-icon" style="margin-right: 8px;">
-                                <use href="../circuit-icons.svg#icon-analytics"/>
-                            </svg>
-                            Data Layer</div>
+                        <div class="architecture-title">📊 Data Layer</div>
                         <div class="architecture-desc">
                             GoHighLevel CRM → Lead Data → Customer Data → Activity Tracking
                         </div>
@@ -925,11 +825,7 @@
                     <div class="flow-arrow">↓</div>
 
                     <div class="architecture-box">
-                        <div class="architecture-title">
-                            <svg class="circuit-icon" style="margin-right: 8px;">
-                                <use href="../circuit-icons.svg#icon-processing"/>
-                            </svg>
-                            ML Processing Layer</div>
+                        <div class="architecture-title">🤖 ML Processing Layer</div>
                         <div class="architecture-desc">
                             Random Forest Classifier (90% accuracy) → Feature Engineering → Confidence Scoring → Explainability Engine
                         </div>
@@ -938,11 +834,7 @@
                     <div class="flow-arrow">↓</div>
 
                     <div class="architecture-box">
-                        <div class="architecture-title">
-                            <svg class="circuit-icon" style="margin-right: 8px;">
-                                <use href="../circuit-icons.svg#icon-shield"/>
-                            </svg>
-                            Governance Layer</div>
+                        <div class="architecture-title">🛡️ Governance Layer</div>
                         <div class="architecture-desc">
                             Human Review Queue → Bias Audit Engine → Performance Monitor → Audit Logger
                         </div>
@@ -951,11 +843,7 @@
                     <div class="flow-arrow">↓</div>
 
                     <div class="architecture-box">
-                        <div class="architecture-title">
-                            <svg class="circuit-icon" style="margin-right: 8px;">
-                                <use href="../circuit-icons.svg#icon-dashboard"/>
-                            </svg>
-                            Presentation Layer</div>
+                        <div class="architecture-title">📱 Presentation Layer</div>
                         <div class="architecture-desc">
                             Sales Dashboard → Executive BI → Architecture Docs → CAIO Training
                         </div>
@@ -966,22 +854,14 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <div class="card-icon">
-                            <svg class="circuit-icon active">
-                                <use href="../circuit-icons.svg#icon-tools"/>
-                            </svg>
-                        </div>
+                        <div class="card-icon">🔧</div>
                         Technology Stack
                     </div>
                 </div>
 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-icon">
-                            <svg class="circuit-icon large active">
-                                <use href="../circuit-icons.svg#icon-code"/>
-                            </svg>
-                        </div>
+                        <div class="stat-icon">🐍</div>
                         <div class="stat-details">
                             <div class="stat-label">Backend</div>
                             <div class="stat-value" style="font-size: 18px;">Python 3.14</div>
@@ -989,11 +869,7 @@
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">
-                            <svg class="circuit-icon large active">
-                                <use href="../circuit-icons.svg#icon-web"/>
-                            </svg>
-                        </div>
+                        <div class="stat-icon">🌐</div>
                         <div class="stat-details">
                             <div class="stat-label">Frontend</div>
                             <div class="stat-value" style="font-size: 18px;">HTML/CSS/JS</div>
@@ -1001,11 +877,7 @@
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">
-                            <svg class="circuit-icon large active">
-                                <use href="../circuit-icons.svg#icon-processing"/>
-                            </svg>
-                        </div>
+                        <div class="stat-icon">🤖</div>
                         <div class="stat-details">
                             <div class="stat-label">AI/ML</div>
                             <div class="stat-value" style="font-size: 18px;">Random Forest</div>
@@ -1013,11 +885,7 @@
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">
-                            <svg class="circuit-icon large active">
-                                <use href="../circuit-icons.svg#icon-link"/>
-                            </svg>
-                        </div>
+                        <div class="stat-icon">🔗</div>
                         <div class="stat-details">
                             <div class="stat-label">Integration</div>
                             <div class="stat-value" style="font-size: 18px;">GoHighLevel</div>
@@ -1030,42 +898,38 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <div class="card-icon">
-                            <svg class="circuit-icon active">
-                                <use href="../circuit-icons.svg#icon-diamond"/>
-                            </svg>
-                        </div>
+                        <div class="card-icon">💎</div>
                         Proprietary Moat (Competitive Advantages)
                     </div>
                 </div>
 
                 <ul class="feature-list">
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-shield"/></svg>
+                        <span class="feature-icon">🛡️</span>
                         <span class="feature-text"><strong>AI Governance First:</strong> Every decision explained in plain English (competitors use "black box" AI)</span>
                     </li>
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-team"/></svg>
+                        <span class="feature-icon">👥</span>
                         <span class="feature-text"><strong>Human-in-the-Loop:</strong> 85% automation + 15% human review (competitors are all-or-nothing)</span>
                     </li>
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-analytics"/></svg>
+                        <span class="feature-icon">📊</span>
                         <span class="feature-text"><strong>BI Integration:</strong> ML + Business Intelligence in one platform (competitors separate tools)</span>
                     </li>
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-education"/></svg>
+                        <span class="feature-icon">🎓</span>
                         <span class="feature-text"><strong>Training Platform:</strong> CAIO University certification included (competitors no training)</span>
                     </li>
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-link"/></svg>
+                        <span class="feature-icon">🔗</span>
                         <span class="feature-text"><strong>CRM Integration:</strong> Native GoHighLevel integration (competitors require complex APIs)</span>
                     </li>
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-decision"/></svg>
+                        <span class="feature-icon">🎯</span>
                         <span class="feature-text"><strong>Explainability at Scale:</strong> Not just accuracy, but "why" for every decision (regulatory compliance)</span>
                     </li>
                     <li class="feature-item">
-                        <svg class="circuit-icon small active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-diamond"/></svg>
+                        <span class="feature-icon">🎨</span>
                         <span class="feature-text"><strong>Military-Grade Design:</strong> Industrial aesthetic, executive presentation ready (competitors consumer-grade UI)</span>
                     </li>
                 </ul>
@@ -1076,7 +940,7 @@
     <!-- Footer -->
     <div class="footer">
         <p>
-            <strong>Circuit OS AI Platform</strong> | Enterprise Business Intelligence System |
+            <strong>CircuitOS AI Platform</strong> | Military-Grade Business Intelligence System |
             <strong>Accuracy:</strong> 92% | <strong>Automation:</strong> 68% | <strong>Governance:</strong> 100% Compliant
         </p>
         <p style="margin-top: 8px; font-size: 11px;">
@@ -1096,14 +960,11 @@
 
             // Show selected tab
             document.getElementById(tabName + '-tab').classList.add('active');
-            event.target.classList.add('active');// Smooth scroll to top
+            event.target.classList.add('active');
+
+            // Smooth scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        function assignToCloser() {
-            alert('✓ Lead assigned to senior closer\n📅 Demo scheduled for tomorrow 2PM\n📧 Confirmation email sent');}
-
-        function trackButtonClick(action) {}
 
         // Animate progress bars on load
         window.addEventListener('load', () => {
