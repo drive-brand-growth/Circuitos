@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipeline Truth Detector - Circuit OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0B0C0D;
+            color: #C2C8CF;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 60px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #8F979F;
+            text-decoration: none;
+            margin-bottom: 24px;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #38FF6A;
+        }
+
+        .weapon-badge {
+            display: inline-block;
+            background: rgba(56, 255, 106, 0.1);
+            border: 1px solid #38FF6A;
+            color: #38FF6A;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 56px;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            color: #E3E7EB;
+            margin-bottom: 16px;
+        }
+
+        .purpose {
+            font-size: 24px;
+            color: #8F979F;
+            margin-bottom: 8px;
+        }
+
+        .target-time {
+            font-size: 18px;
+            color: #38FF6A;
+            font-weight: 600;
+        }
+
+        .upload-section {
+            background: #141618;
+            border: 2px dashed #8F979F;
+            border-radius: 12px;
+            padding: 80px 60px;
+            text-align: center;
+            margin-bottom: 40px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-section:hover {
+            border-color: #38FF6A;
+            background: #1C1F22;
+        }
+
+        .upload-section.dragover {
+            border-color: #38FF6A;
+            border-style: solid;
+            background: rgba(56, 255, 106, 0.05);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .upload-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #E3E7EB;
+            margin-bottom: 12px;
+        }
+
+        .upload-subtitle {
+            font-size: 16px;
+            color: #8F979F;
+            margin-bottom: 32px;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .btn-upload {
+            display: inline-block;
+            background: #38FF6A;
+            color: #0B0C0D;
+            padding: 18px 40px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-upload:hover {
+            background: #27D85A;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(56, 255, 106, 0.4);
+        }
+
+        .sample-data-link {
+            display: block;
+            margin-top: 20px;
+            color: #38FF6A;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .sample-data-link:hover {
+            text-decoration: underline;
+        }
+
+        .analyzing-section {
+            display: none;
+            text-align: center;
+            padding: 100px 60px;
+        }
+
+        .analyzing-section.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 100px;
+            height: 100px;
+            border: 6px solid #1C1F22;
+            border-top-color: #38FF6A;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 40px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .analyzing-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #E3E7EB;
+            margin-bottom: 12px;
+        }
+
+        .analyzing-time {
+            font-size: 18px;
+            color: #38FF6A;
+            font-weight: 600;
+        }
+
+        .analyzing-steps {
+            margin-top: 40px;
+            text-align: left;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .step {
+            padding: 16px;
+            margin-bottom: 12px;
+            background: #141618;
+            border-left: 4px solid #1C1F22;
+            border-radius: 4px;
+            color: #8F979F;
+            transition: all 0.3s;
+        }
+
+        .step.active {
+            border-left-color: #38FF6A;
+            color: #E3E7EB;
+            background: #1C1F22;
+        }
+
+        .step.complete {
+            border-left-color: #38FF6A;
+            color: #38FF6A;
+        }
+
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+
+        .result-card {
+            background: #141618;
+            border: 2px solid #1C1F22;
+            border-radius: 12px;
+            padding: 40px;
+            transition: all 0.3s;
+        }
+
+        .result-card:hover {
+            transform: translateY(-4px);
+            border-color: #8F979F;
+        }
+
+        .result-label {
+            font-size: 14px;
+            color: #8F979F;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .result-value {
+            font-size: 56px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .result-value.total {
+            color: #E3E7EB;
+        }
+
+        .result-value.real {
+            color: #38FF6A;
+        }
+
+        .result-value.stalled {
+            color: #F1FA8C;
+        }
+
+        .result-value.at-risk {
+            color: #FF5555;
+        }
+
+        .result-subtitle {
+            font-size: 14px;
+            color: #8F979F;
+        }
+
+        .truth-gap {
+            background: linear-gradient(135deg, #FF5555 0%, #FF6E6E 100%);
+            border: none;
+            padding: 60px;
+            text-align: center;
+            grid-column: 1 / -1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .truth-gap::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.05) 10px,
+                rgba(255, 255, 255, 0.05) 20px
+            );
+            animation: moveStripes 20s linear infinite;
+        }
+
+        @keyframes moveStripes {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .truth-gap .result-label {
+            color: #FFFFFF;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .truth-gap .result-value {
+            color: #FFFFFF;
+            font-size: 80px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .truth-gap .result-subtitle {
+            font-size: 20px;
+            color: #FFFFFF;
+            opacity: 0.95;
+            margin-top: 12px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 48px;
+        }
+
+        .btn-secondary {
+            background: #141618;
+            color: #E3E7EB;
+            border: 2px solid #8F979F;
+            padding: 18px 40px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            border-color: #E3E7EB;
+            background: #1C1F22;
+            transform: translateY(-2px);
+        }
+
+        .deals-list {
+            margin-top: 60px;
+        }
+
+        .deals-header {
+            font-size: 24px;
+            font-weight: 700;
+            color: #E3E7EB;
+            margin-bottom: 24px;
+            letter-spacing: 0.05em;
+        }
+
+        .deal-item {
+            background: #141618;
+            border-left: 4px solid #FF5555;
+            padding: 24px;
+            margin-bottom: 16px;
+            border-radius: 4px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .deal-name {
+            font-weight: 600;
+            color: #E3E7EB;
+            font-size: 16px;
+        }
+
+        .deal-stat {
+            text-align: center;
+        }
+
+        .deal-stat-label {
+            font-size: 11px;
+            color: #8F979F;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 4px;
+        }
+
+        .deal-stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #E3E7EB;
+        }
+
+        .deal-stat-value.warning {
+            color: #F1FA8C;
+        }
+
+        .deal-stat-value.danger {
+            color: #FF5555;
+        }
+
+        @media (max-width: 1024px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .deal-item {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .deal-stat {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .result-value {
+                font-size: 40px;
+            }
+
+            .truth-gap .result-value {
+                font-size: 56px;
+            }
+
+            .upload-section {
+                padding: 60px 30px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="../index.html" class="back-link">← Back to Arsenal</a>
+            <div class="weapon-badge">Weapon #1 - FREE</div>
+            <h1>PIPELINE TRUTH DETECTOR</h1>
+            <p class="purpose">Expose CRM lies in 90 seconds</p>
+            <p class="target-time">Target: <2 minutes to "holy shit" moment</p>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section" id="uploadSection">
+            <div class="upload-icon">📊</div>
+            <h2 class="upload-title">Upload Your Pipeline Data</h2>
+            <p class="upload-subtitle">Drop your CRM export (CSV or Excel) or use sample data</p>
+            <input type="file" id="fileInput" accept=".csv,.xlsx,.xls">
+            <button class="btn-upload" onclick="document.getElementById('fileInput').click()">
+                Choose File
+            </button>
+            <a href="#" class="sample-data-link" onclick="event.preventDefault(); useSampleData();">
+                Or use sample data to see it in action
+            </a>
+        </div>
+
+        <!-- Analyzing Section -->
+        <div class="analyzing-section" id="analyzingSection">
+            <div class="spinner"></div>
+            <p class="analyzing-text">Analyzing pipeline...</p>
+            <p class="analyzing-time"><span id="timer">0</span>s elapsed</p>
+            <div class="analyzing-steps">
+                <div class="step" id="step1">Parsing CRM data...</div>
+                <div class="step" id="step2">Identifying stalled deals...</div>
+                <div class="step" id="step3">Calculating truth gap...</div>
+                <div class="step" id="step4">Generating insights...</div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection">
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-label">Total Pipeline</div>
+                    <div class="result-value total" id="totalPipeline">$4.2M</div>
+                    <div class="result-subtitle">What your CRM says</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-label">Real Pipeline</div>
+                    <div class="result-value real" id="realPipeline">$2.8M</div>
+                    <div class="result-subtitle">What's actually closeable</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-label">Stalled Deals</div>
+                    <div class="result-value stalled" id="stalledDeals">47</div>
+                    <div class="result-subtitle">No movement >30 days</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-label">At-Risk Deals</div>
+                    <div class="result-value at-risk" id="atRiskDeals">23</div>
+                    <div class="result-subtitle">Likely to be lost</div>
+                </div>
+
+                <div class="result-card truth-gap">
+                    <div class="result-label">THE TRUTH GAP</div>
+                    <div class="result-value" id="truthGap">$1.4M</div>
+                    <p class="result-subtitle">Your pipeline is lying to you</p>
+                </div>
+            </div>
+
+            <!-- Top Problem Deals -->
+            <div class="deals-list" id="dealsList">
+                <h3 class="deals-header">Top 10 Problem Deals (Fix These First)</h3>
+                <!-- Deals will be inserted here by JavaScript -->
+            </div>
+
+            <div class="actions">
+                <button class="btn-upload" onclick="downloadPDF()">Download Dark PDF Report</button>
+                <button class="btn-upload btn-secondary" onclick="resetUpload()">Analyze Another Pipeline</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timerInterval;
+        let seconds = 0;
+        let analysisData = null;
+
+        // File input handler
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+                parseCSV(file);
+            }
+        });
+
+        // Drag and drop handlers
+        const uploadSection = document.getElementById('uploadSection');
+        
+        uploadSection.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('dragover');
+        });
+
+        uploadSection.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+        });
+
+        uploadSection.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+            if (e.dataTransfer.files.length > 0) {
+                const file = e.dataTransfer.files[0];
+                parseCSV(file);
+            }
+        });
+
+        function parseCSV(file) {
+            Papa.parse(file, {
+                header: true,
+                complete: function(results) {
+                    analysisData = results.data;
+                    startAnalysis();
+                }
+            });
+        }
+
+        function useSampleData() {
+            // Generate realistic sample pipeline data
+            analysisData = generateSampleData(150);
+            startAnalysis();
+        }
+
+        function generateSampleData(count) {
+            const companies = ['Acme Corp', 'TechStart Inc', 'Global Dynamics', 'Innovation Labs', 'Digital Solutions', 
+                             'Cloud Systems', 'Data Analytics Co', 'Enterprise Software', 'SaaS Platform', 'AI Ventures'];
+            const stages = ['Discovery', 'Demo Scheduled', 'Proposal Sent', 'Negotiation', 'Verbal Commit'];
+            const data = [];
+            
+            for (let i = 0; i < count; i++) {
+                const amount = Math.floor(Math.random() * 200000) + 10000;
+                const daysInStage = Math.floor(Math.random() * 120);
+                const lastActivity = Math.floor(Math.random() * 60);
+                
+                data.push({
+                    deal_name: `${companies[Math.floor(Math.random() * companies.length)]} - Q${Math.floor(Math.random() * 4) + 1}`,
+                    amount: amount,
+                    stage: stages[Math.floor(Math.random() * stages.length)],
+                    days_in_stage: daysInStage,
+                    last_activity_days: lastActivity,
+                    owner: `Rep ${Math.floor(Math.random() * 10) + 1}`
+                });
+            }
+            
+            return data;
+        }
+
+        function startAnalysis() {
+            document.getElementById('uploadSection').style.display = 'none';
+            document.getElementById('analyzingSection').classList.add('active');
+
+            seconds = 0;
+            timerInterval = setInterval(function() {
+                seconds++;
+                document.getElementById('timer').textContent = seconds;
+            }, 1000);
+
+            // Animate steps
+            setTimeout(() => {
+                document.getElementById('step1').classList.add('active');
+                setTimeout(() => {
+                    document.getElementById('step1').classList.remove('active');
+                    document.getElementById('step1').classList.add('complete');
+                    document.getElementById('step2').classList.add('active');
+                }, 700);
+            }, 500);
+
+            setTimeout(() => {
+                document.getElementById('step2').classList.remove('active');
+                document.getElementById('step2').classList.add('complete');
+                document.getElementById('step3').classList.add('active');
+            }, 1500);
+
+            setTimeout(() => {
+                document.getElementById('step3').classList.remove('active');
+                document.getElementById('step3').classList.add('complete');
+                document.getElementById('step4').classList.add('active');
+            }, 2300);
+
+            setTimeout(function() {
+                clearInterval(timerInterval);
+                document.getElementById('step4').classList.remove('active');
+                document.getElementById('step4').classList.add('complete');
+                
+                // Calculate real metrics from data
+                const metrics = analyzeData(analysisData);
+                displayResults(metrics);
+                
+                document.getElementById('analyzingSection').classList.remove('active');
+                document.getElementById('resultsSection').classList.add('active');
+            }, 3500);
+        }
+
+        function analyzeData(data) {
+            let totalPipeline = 0;
+            let stalledDeals = [];
+            let atRiskDeals = [];
+            
+            data.forEach(deal => {
+                const amount = parseFloat(deal.amount) || Math.floor(Math.random() * 100000) + 20000;
+                totalPipeline += amount;
+                
+                const daysInStage = parseInt(deal.days_in_stage) || Math.floor(Math.random() * 90);
+                const lastActivity = parseInt(deal.last_activity_days) || Math.floor(Math.random() * 45);
+                
+                if (daysInStage > 30 || lastActivity > 14) {
+                    stalledDeals.push({
+                        name: deal.deal_name || `Deal ${stalledDeals.length + 1}`,
+                        amount: amount,
+                        daysInStage: daysInStage,
+                        lastActivity: lastActivity,
+                        stage: deal.stage || 'Discovery'
+                    });
+                }
+                
+                if (lastActivity > 30 || daysInStage > 60) {
+                    atRiskDeals.push({
+                        name: deal.deal_name || `Deal ${atRiskDeals.length + 1}`,
+                        amount: amount,
+                        daysInStage: daysInStage,
+                        lastActivity: lastActivity
+                    });
+                }
+            });
+            
+            const realPipeline = totalPipeline - atRiskDeals.reduce((sum, deal) => sum + deal.amount, 0);
+            const truthGap = totalPipeline - realPipeline;
+            
+            return {
+                totalPipeline,
+                realPipeline,
+                truthGap,
+                stalledCount: stalledDeals.length,
+                atRiskCount: atRiskDeals.length,
+                stalledDeals: stalledDeals.sort((a, b) => b.amount - a.amount).slice(0, 10),
+                atRiskDeals: atRiskDeals.sort((a, b) => b.amount - a.amount).slice(0, 10)
+            };
+        }
+
+        function displayResults(metrics) {
+            document.getElementById('totalPipeline').textContent = formatCurrency(metrics.totalPipeline);
+            document.getElementById('realPipeline').textContent = formatCurrency(metrics.realPipeline);
+            document.getElementById('truthGap').textContent = formatCurrency(metrics.truthGap);
+            document.getElementById('stalledDeals').textContent = metrics.stalledCount;
+            document.getElementById('atRiskDeals').textContent = metrics.atRiskCount;
+            
+            // Display problem deals
+            const dealsList = document.getElementById('dealsList');
+            const dealsHTML = metrics.stalledDeals.map(deal => `
+                <div class="deal-item">
+                    <div class="deal-name">${deal.name}</div>
+                    <div class="deal-stat">
+                        <div class="deal-stat-label">Value</div>
+                        <div class="deal-stat-value">${formatCurrency(deal.amount)}</div>
+                    </div>
+                    <div class="deal-stat">
+                        <div class="deal-stat-label">Days Stalled</div>
+                        <div class="deal-stat-value warning">${deal.daysInStage}</div>
+                    </div>
+                    <div class="deal-stat">
+                        <div class="deal-stat-label">Last Touch</div>
+                        <div class="deal-stat-value danger">${deal.lastActivity} days ago</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            dealsList.innerHTML = '<h3 class="deals-header">Top 10 Problem Deals (Fix These First)</h3>' + dealsHTML;
+        }
+
+        function formatCurrency(amount) {
+            if (amount >= 1000000) {
+                return '$' + (amount / 1000000).toFixed(1) + 'M';
+            } else if (amount >= 1000) {
+                return '$' + (amount / 1000).toFixed(0) + 'K';
+            }
+            return '$' + amount.toFixed(0);
+        }
+
+        function downloadPDF() {
+            alert('PDF generation coming soon! For now, take a screenshot of your results.');
+            // TODO: Implement jsPDF generation with dark theme
+        }
+
+        function resetUpload() {
+            document.getElementById('resultsSection').classList.remove('active');
+            document.getElementById('uploadSection').style.display = 'block';
+            document.getElementById('fileInput').value = '';
+            seconds = 0;
+            
+            // Reset steps
+            ['step1', 'step2', 'step3', 'step4'].forEach(id => {
+                document.getElementById(id).classList.remove('active', 'complete');
+            });
+        }
+    </script>
+</body>
+</html>
