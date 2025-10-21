@@ -2532,9 +2532,7 @@ export default async function handler(req, res) {
         role: 'user',
         content: prompt
       }],
-      system: \`You are an AI assistant for a fitness business.
-                Context: \${JSON.stringify(context)}
-                Use this context to provide accurate, personalized responses.\`
+      system: 'You are an AI assistant for a fitness business. Context: ' + JSON.stringify(context) + ' Use this context to provide accurate, personalized responses.'
     });
 
     return res.json({
@@ -2810,7 +2808,7 @@ ML Recommendation:
 // Input: DMN approval + ML predictions + member profile
 
 Prompt to Claude 3.5 Sonnet:
-\`\`\`
+---
 You are generating a retention email for a gym member who wants to cancel.
 
 BUSINESS RULES (DMN):
@@ -2840,10 +2838,10 @@ INSTRUCTIONS:
 6. Length: 150-200 words
 
 Generate the email:
-\`\`\`
+---
 
 Claude 3.5 Output:
-\`\`\`
+---
 Subject: Sarah, We'd Love to Keep You 💚
 
 Hi Sarah,
@@ -2867,7 +2865,7 @@ Thanks for being awesome,
 The Metroflex Team
 
 P.S. Your friends Emma and Lisa would love to keep training with you! 💪
-\`\`\`
+---
 
 ↓ Pass to Stage 4 (DMN Validation)
 </pre>
@@ -2969,9 +2967,7 @@ export default async function handler(req, res) {
 
     // STAGE 3: LLM - Generate personalized email
     const claude = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY });
-    const prompt = \`Generate retention email...
-      [Full prompt with DMN + ML + member data]
-    \`;
+    const prompt = 'Generate retention email... [Full prompt with DMN + ML + member data]';
 
     const llmResponse = await claude.messages.create({
       model: 'claude-3-5-sonnet-20241022',
@@ -3216,15 +3212,15 @@ export default async function handler(req, res) {
 
             // Add this GHL account to their account list
             ghl_account_ids: supabase.raw(
-              \`ARRAY_APPEND(COALESCE(ghl_account_ids, ARRAY[]), '\${accountId}')\`
+              'ARRAY_APPEND(COALESCE(ghl_account_ids, ARRAY[]), \\'' + accountId + '\\')'
             ),
 
             // Update aggregate data
             total_lifetime_value: supabase.raw(
-              \`COALESCE(total_lifetime_value, 0) + \${contact.ltv}\`
+              'COALESCE(total_lifetime_value, 0) + ' + contact.ltv
             ),
             total_revenue: supabase.raw(
-              \`COALESCE(total_revenue, 0) + \${contact.revenue}\`
+              'COALESCE(total_revenue, 0) + ' + contact.revenue
             )
           }, {
             onConflict: 'email'  // Merge by email (deduplication)
@@ -3366,7 +3362,7 @@ export default async function handler(req, res) {
 
   return res.json({
     analysis: insights,
-    actions_taken: `Deployed best practices to ${bottomPerformers.length} locations`
+    actions_taken: 'Deployed best practices to ' + bottomPerformers.length + ' locations'
   });
 }
 </pre>
@@ -3725,7 +3721,7 @@ export default async function qualityControlAgent() {
   if (currentAccuracy < baselineAccuracy - 0.05) {  // 5% drop
     await alert({
       severity: 'high',
-      message: \`Lead scoring accuracy dropped to \${currentAccuracy:.1%} (baseline: 87%).\`,
+      message: 'Lead scoring accuracy dropped to ' + (currentAccuracy * 100).toFixed(1) + '% (baseline: 87%).',
       action: 'Retrain model with fresh data'
     });
   }
@@ -3736,7 +3732,7 @@ export default async function qualityControlAgent() {
     if (metrics.false_positive_rate > 0.20) {  // 20% threshold
       await alert({
         severity: 'critical',
-        message: \`Churn model biased against \${group}: \${metrics.fpr:.1%} FPR\`,
+        message: 'Churn model biased against ' + group + ': ' + (metrics.fpr * 100).toFixed(1) + '% FPR',
         action: 'Immediate model review required (compliance risk)'
       });
     }
@@ -3762,7 +3758,7 @@ export default async function qualityControlAgent() {
   if (avgLatency > 5000) {  // 5 seconds
     await alert({
       severity: 'medium',
-      message: \`Hybrid pipeline latency: \${avgLatency}ms (target: <2000ms)\`,
+      message: 'Hybrid pipeline latency: ' + avgLatency + 'ms (target: <2000ms)',
       action: 'Optimize slow stages or scale infrastructure'
     });
   }
@@ -3774,7 +3770,7 @@ export default async function qualityControlAgent() {
   if (todayLLMCost > avgDailyCost * 3) {  // 3x spike
     await alert({
       severity: 'medium',
-      message: \`LLM costs 3x higher than average: $\${todayLLMCost} vs $\${avgDailyCost}\`,
+      message: 'LLM costs 3x higher than average: $' + todayLLMCost + ' vs $' + avgDailyCost,
       action: 'Check for inefficient prompts or token bloat'
     });
   }
