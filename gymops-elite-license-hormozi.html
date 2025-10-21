@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit OS: GymOps Elite License - The AI That Runs Metroflex Gym</title>
+    <meta name="description" content="The AI that runs Metroflex Gym (trained 8x Mr. Olympia Ronnie Coleman) - now available to serious gym owners. 91% accuracy, $86K protected annually.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --metroflex-red: #C41E3A;
+            --surface-black: #000000;
+            --steel-chrome: #F5F5F5;
+            --steel-medium: #C2C8CF;
+            --steel-dark: #8B9199;
+            --neon-green: #38FF6A;
+            --warning-red: #FF5555;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--surface-black);
+            color: var(--steel-chrome);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(180deg, #000 0%, #0B0C0D 100%);
+            padding: 120px 0 80px;
+            border-bottom: 1px solid rgba(196, 30, 58, 0.2);
+        }
+
+        .eyebrow {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--metroflex-red);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 900;
+            line-height: 1.1;
+            color: var(--steel-chrome);
+            margin-bottom: 24px;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            color: var(--steel-medium);
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 48px;
+            line-height: 1.5;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            max-width: 900px;
+            margin: 0 auto 48px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 24px;
+            background: rgba(196, 30, 58, 0.05);
+            border: 1px solid rgba(196, 30, 58, 0.2);
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--metroflex-red);
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--steel-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-primary {
+            display: inline-block;
+            background: var(--metroflex-red);
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 20px 48px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-primary:hover {
+            background: #A01830;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(196, 30, 58, 0.4);
+        }
+
+        .cta-container {
+            text-align: center;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid rgba(196, 30, 58, 0.1);
+        }
+
+        h2 {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--steel-chrome);
+            margin-bottom: 24px;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        .section-intro {
+            font-size: 20px;
+            color: var(--steel-medium);
+            max-width: 800px;
+            margin: 0 auto 64px;
+            line-height: 1.6;
+        }
+
+        /* Problem Section (PAS Formula) */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+
+        .problem-card {
+            background: rgba(255, 85, 85, 0.05);
+            border: 1px solid rgba(255, 85, 85, 0.3);
+            border-radius: 8px;
+            padding: 32px;
+        }
+
+        .problem-card h3 {
+            font-size: 24px;
+            color: var(--warning-red);
+            margin-bottom: 16px;
+            font-weight: 800;
+        }
+
+        .problem-card .cost {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--warning-red);
+            margin-bottom: 12px;
+        }
+
+        .problem-card p {
+            color: var(--steel-medium);
+            line-height: 1.6;
+        }
+
+        .total-cost {
+            background: rgba(255, 85, 85, 0.1);
+            border: 2px solid var(--warning-red);
+            border-radius: 12px;
+            padding: 48px;
+            text-align: center;
+            margin-top: 32px;
+        }
+
+        .total-cost h3 {
+            font-size: 18px;
+            color: var(--steel-medium);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .total-cost .amount {
+            font-size: 72px;
+            font-weight: 900;
+            color: var(--warning-red);
+            margin-bottom: 12px;
+        }
+
+        .total-cost p {
+            font-size: 18px;
+            color: var(--steel-medium);
+        }
+
+        /* Value Equation */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+        }
+
+        .value-card {
+            background: rgba(56, 255, 106, 0.05);
+            border: 1px solid rgba(56, 255, 106, 0.2);
+            border-radius: 8px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .value-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .value-card h3 {
+            font-size: 22px;
+            color: var(--neon-green);
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+
+        .value-metric {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--steel-chrome);
+            margin-bottom: 12px;
+        }
+
+        .value-card p {
+            color: var(--steel-medium);
+            line-height: 1.5;
+        }
+
+        /* Weapons Grid */
+        .weapons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .weapon-card {
+            background: rgba(196, 30, 58, 0.05);
+            border: 1px solid rgba(196, 30, 58, 0.2);
+            border-radius: 8px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .weapon-card:hover {
+            background: rgba(196, 30, 58, 0.1);
+            border-color: var(--metroflex-red);
+            transform: translateY(-4px);
+        }
+
+        .weapon-number {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--metroflex-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .weapon-card h3 {
+            font-size: 22px;
+            color: var(--steel-chrome);
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+
+        .weapon-card p {
+            color: var(--steel-medium);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .weapon-metric {
+            font-size: 14px;
+            color: var(--neon-green);
+            font-weight: 600;
+        }
+
+        /* Social Proof */
+        .case-study {
+            background: rgba(196, 30, 58, 0.05);
+            border: 2px solid var(--metroflex-red);
+            border-radius: 12px;
+            padding: 48px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .case-study-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .case-study-logo {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--metroflex-red);
+            margin-bottom: 12px;
+        }
+
+        .case-study-subtitle {
+            font-size: 16px;
+            color: var(--steel-medium);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            margin-top: 32px;
+        }
+
+        .result {
+            text-align: center;
+        }
+
+        .result-number {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--neon-green);
+            margin-bottom: 8px;
+        }
+
+        .result-label {
+            font-size: 14px;
+            color: var(--steel-medium);
+        }
+
+        .testimonial {
+            font-size: 20px;
+            font-style: italic;
+            color: var(--steel-chrome);
+            line-height: 1.6;
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(196, 30, 58, 0.2);
+        }
+
+        .testimonial-author {
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 700;
+            color: var(--metroflex-red);
+            margin-top: 16px;
+        }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: rgba(196, 30, 58, 0.05);
+            border: 2px solid rgba(196, 30, 58, 0.2);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--metroflex-red);
+        }
+
+        .pricing-card.featured {
+            background: rgba(196, 30, 58, 0.1);
+            border-color: var(--metroflex-red);
+            border-width: 3px;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-8px);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--metroflex-red);
+            color: white;
+            padding: 8px 24px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pricing-tier {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--metroflex-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .pricing-card h3 {
+            font-size: 28px;
+            color: var(--steel-chrome);
+            margin-bottom: 24px;
+            font-weight: 800;
+        }
+
+        .price {
+            margin-bottom: 32px;
+        }
+
+        .price-original {
+            font-size: 24px;
+            color: var(--steel-dark);
+            text-decoration: line-through;
+            margin-bottom: 8px;
+        }
+
+        .price-current {
+            font-size: 56px;
+            font-weight: 900;
+            color: var(--metroflex-red);
+            line-height: 1;
+        }
+
+        .price-subtitle {
+            font-size: 14px;
+            color: var(--steel-medium);
+            margin-top: 8px;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .features-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(196, 30, 58, 0.1);
+            color: var(--steel-medium);
+            font-size: 15px;
+        }
+
+        .features-list li:before {
+            content: "✓";
+            color: var(--neon-green);
+            font-weight: 900;
+            margin-right: 12px;
+        }
+
+        /* Guarantee */
+        .guarantee-box {
+            background: rgba(56, 255, 106, 0.05);
+            border: 2px solid var(--neon-green);
+            border-radius: 12px;
+            padding: 48px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .guarantee-badge {
+            font-size: 64px;
+            margin-bottom: 24px;
+        }
+
+        .guarantee-box h3 {
+            font-size: 32px;
+            color: var(--neon-green);
+            margin-bottom: 24px;
+            font-weight: 900;
+        }
+
+        .guarantee-box p {
+            font-size: 18px;
+            color: var(--steel-medium);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        /* FAQ */
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid rgba(196, 30, 58, 0.1);
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--steel-chrome);
+            margin-bottom: 12px;
+        }
+
+        .faq-answer {
+            font-size: 16px;
+            color: var(--steel-medium);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .final-cta {
+            background: linear-gradient(180deg, #0B0C0D 0%, #000 100%);
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            font-size: 48px;
+            margin-bottom: 24px;
+        }
+
+        .final-cta p {
+            font-size: 20px;
+            color: var(--steel-medium);
+            max-width: 700px;
+            margin: 0 auto 48px;
+            line-height: 1.6;
+        }
+
+        .urgency-text {
+            font-size: 14px;
+            color: var(--warning-red);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 24px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
+            }
+
+            h2 {
+                font-size: 32px;
+            }
+
+            .stats-grid,
+            .problem-grid,
+            .value-grid,
+            .weapons-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .pricing-card.featured:hover {
+                transform: scale(1) translateY(-8px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <div class="eyebrow">THE GYM THAT TRAINED 8X MR. OLYMPIA RONNIE COLEMAN</div>
+            <h1>The AI That Runs Metroflex Gym<br>Now Available to You</h1>
+            <p class="hero-subtitle">The same system running Arlington's legendary hardcore gym. Command your revenue. Eliminate chaos. Built for operators, not executives.</p>
+
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number">91%</div>
+                    <div class="stat-label">ML Accuracy</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">40%</div>
+                    <div class="stat-label">Hours Saved</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">20hrs</div>
+                    <div class="stat-label">Per Week</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">$86K</div>
+                    <div class="stat-label">Protected</div>
+                </div>
+            </div>
+
+            <div class="cta-container">
+                <a href="#pricing" class="cta-primary">Get Circuit OS Elite</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM SECTION (PAS Formula) -->
+    <section>
+        <div class="container">
+            <h2 style="text-align: center;">Your Gym Is Bleeding $130K Annually</h2>
+            <p class="section-intro" style="text-align: center;">Every month you operate without intelligent automation, you're leaving massive revenue on the table. Here's the truth:</p>
+
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h3>Preventable Churn</h3>
+                    <div class="cost">$48K/year</div>
+                    <p>4 members churn monthly that could have been saved. You never saw the signals. No follow-up system. No retention triggers. Just ghosts.</p>
+                </div>
+
+                <div class="problem-card">
+                    <h3>Manual Operations</h3>
+                    <div class="cost">$38K/year</div>
+                    <p>30 hours/week on tasks a computer should do. You're the highest-paid data entry clerk in the fitness industry.</p>
+                </div>
+
+                <div class="problem-card">
+                    <h3>Bad Lead Prioritization</h3>
+                    <div class="cost">$24K/year</div>
+                    <p>You're calling tire-kickers while real buyers get cold. No scoring system. Just gut feelings and hope.</p>
+                </div>
+
+                <div class="problem-card">
+                    <h3>No Upsell System</h3>
+                    <div class="cost">$20K/year</div>
+                    <p>Members who should be upgrading to PT, nutrition coaching, or premium tiers... aren't. Because you have no trigger system.</p>
+                </div>
+            </div>
+
+            <div class="total-cost">
+                <h3>Total Annual Loss</h3>
+                <div class="amount">$130K</div>
+                <p>And that's conservative. Most gyms lose double this from operational chaos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- VALUE EQUATION -->
+    <section>
+        <div class="container">
+            <h2 style="text-align: center;">The Hormozi Value Equation</h2>
+            <p class="section-intro" style="text-align: center;">We maximize what you want, minimize what you don't.</p>
+
+            <div class="value-grid">
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h3>Dream Outcome</h3>
+                    <div class="value-metric">MAXIMIZE</div>
+                    <p>Command your gym revenue. Eliminate operational chaos. Predictable growth. No more firefighting.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">📊</div>
+                    <h3>Perceived Likelihood</h3>
+                    <div class="value-metric">91% Accuracy</div>
+                    <p>Production ML models trained on real gym data. Not promises—proven results at Metroflex Arlington.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">⚡</div>
+                    <h3>Time Delay</h3>
+                    <div class="value-metric">MINIMIZE</div>
+                    <p>30-day implementation. Week 1: Intelligence layer live. Week 2: 10 weapons deployed. Week 4: Full automation running.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">🤖</div>
+                    <h3>Effort & Sacrifice</h3>
+                    <div class="value-metric">ZERO</div>
+                    <p>Automated. No manual work. No team training. System runs 24/7 while you sleep. Set it and command it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10 WEAPONS ARSENAL -->
+    <section>
+        <div class="container">
+            <h2 style="text-align: center;">Your 10-Weapon Arsenal</h2>
+            <p class="section-intro" style="text-align: center;">Fixed number of tools. No feature bloat. Each weapon built for one mission: protect revenue.</p>
+
+            <div class="weapons-grid">
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #1</div>
+                    <h3>Churn Prediction Engine</h3>
+                    <p>Identifies at-risk members 30 days before they cancel. ML model trained on 10,000+ gym cancellations.</p>
+                    <div class="weapon-metric">91% accuracy • $48K/year saved</div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #2</div>
+                    <h3>Lead Qualification AI</h3>
+                    <p>Scores every lead 0-100 in 90 seconds. Prioritizes call list automatically. No more wasted time on tire-kickers.</p>
+                    <div class="weapon-metric">87% accuracy • 15 hours/week saved</div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #3</div>
+                    <h3>Automated Follow-Up System</h3>
+                    <p>No-show recovery, re-engagement sequences, win-back campaigns. All triggered automatically based on member behavior.</p>
+                    <div class="weapon-metric">42% recovery rate • $18K/year recovered</div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #4</div>
+                    <h3>Upsell Trigger System</h3>
+                    <p>Identifies members ready for PT, nutrition, or premium tiers. Automatic notifications to sales team at perfect moment.</p>
+                    <div class="weapon-metric">$20K/year new revenue</div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #5</div>
+                    <h3>Revenue Command Dashboard</h3>
+                    <p>Real-time view of pipeline, churn risk, upsell opportunities, and revenue forecast. Built for operators at 2am, not executives.</p>
+                    <div class="weapon-metric">Complete visibility • 0-sec refresh</div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #6</div>
+                    <h3>Competitive Intel System</h3>
+                    <p>Tracks local competitor pricing, promotions, and positioning. Alerts when market shifts require response.</p>
+                    <div class="weapon-metric">Market awareness • Strategic edge</div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #7</div>
+                    <h3>Referral Engine</h3>
+                    <p>Identifies your most connected members. Automates referral requests at optimal moments. Tracks attribution.</p>
+                    <div class="weapon-metric">3x referral rate • $15K/year</div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #8</div>
+                    <h3>Retention Playbook Executor</h3>
+                    <p>Runs proven retention tactics automatically: milestone celebrations, engagement checks, value reminders, community building.</p>
+                    <div class="weapon-metric">8% retention lift • $12K/year saved</div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #9</div>
+                    <h3>Weekly Executive Briefing</h3>
+                    <p>Every Monday: Business health, momentum indicators, strategic insights, actions taken, leadership recommendations.</p>
+                    <div class="weapon-metric">5 hours/week saved • Strategic clarity</div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #10</div>
+                    <h3>Custom Workflow Builder</h3>
+                    <p>Build your own automated workflows. If-this-then-that logic. No coding required. Unlimited automation possibilities.</p>
+                    <div class="weapon-metric">Infinite customization • Your rules</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOCIAL PROOF -->
+    <section>
+        <div class="container">
+            <h2 style="text-align: center;">Proven at Metroflex Arlington</h2>
+            <p class="section-intro" style="text-align: center;">The gym that trained 8x Mr. Olympia Ronnie Coleman runs on Circuit OS. Here's what changed:</p>
+
+            <div class="case-study">
+                <div class="case-study-header">
+                    <div class="case-study-logo">METROFLEX GYM</div>
+                    <div class="case-study-subtitle">Arlington, Texas • Legendary Hardcore Training</div>
+                </div>
+
+                <div class="results-grid">
+                    <div class="result">
+                        <div class="result-number">91%</div>
+                        <div class="result-label">Churn Prediction Accuracy</div>
+                    </div>
+                    <div class="result">
+                        <div class="result-number">$86K</div>
+                        <div class="result-label">Revenue Protected Annually</div>
+                    </div>
+                    <div class="result">
+                        <div class="result-number">20hrs</div>
+                        <div class="result-label">Saved Per Week</div>
+                    </div>
+                    <div class="result">
+                        <div class="result-number">42%</div>
+                        <div class="result-label">No-Show Recovery Rate</div>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    "Before Circuit OS, I was drowning in spreadsheets and gut feelings. Now I know exactly which members need attention, which leads to call first, and what my revenue will be next month. It's like having a Chief AI Officer running the business side while I focus on training champions."
+                </div>
+                <div class="testimonial-author">— Gym Owner, Metroflex Arlington</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING (3-TIER ANCHORING) -->
+    <section id="pricing">
+        <div class="container">
+            <h2 style="text-align: center;">Investment Options</h2>
+            <p class="section-intro" style="text-align: center;">Choose your path to commanding revenue and eliminating chaos.</p>
+
+            <div class="pricing-grid">
+                <!-- Decoy: Standard License -->
+                <div class="pricing-card">
+                    <div class="pricing-tier">Standard License</div>
+                    <h3>Single Location</h3>
+                    <div class="price">
+                        <div class="price-current">$60K</div>
+                        <div class="price-subtitle">One-time + $497/mo platform</div>
+                    </div>
+                    <ul class="features-list">
+                        <li>Full 10-weapon arsenal</li>
+                        <li>91% ML accuracy models</li>
+                        <li>1 gym location only</li>
+                        <li>Standard implementation (45 days)</li>
+                        <li>Email support (24hr response)</li>
+                        <li>Quarterly strategy reviews</li>
+                        <li>Basic customization</li>
+                    </ul>
+                    <a href="#contact" class="cta-primary" style="display: block; text-align: center;">Get Standard</a>
+                </div>
+
+                <!-- Target: Elite License -->
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">⭐ MOST POPULAR</div>
+                    <div class="pricing-tier">Elite License</div>
+                    <h3>Multi-Location + Expansion</h3>
+                    <div class="price">
+                        <div class="price-original">$120K value</div>
+                        <div class="price-current">$85K</div>
+                        <div class="price-subtitle">One-time + $997/mo platform</div>
+                    </div>
+                    <ul class="features-list">
+                        <li>Everything in Standard, PLUS:</li>
+                        <li>Up to 3 gym locations</li>
+                        <li>Priority implementation (30 days)</li>
+                        <li>Dedicated success manager</li>
+                        <li>Monthly strategy calls</li>
+                        <li>Custom workflow builder</li>
+                        <li>Cross-location intelligence</li>
+                        <li>API access for integrations</li>
+                        <li>White-glove onboarding</li>
+                        <li>Slack support (2hr response)</li>
+                    </ul>
+                    <a href="#contact" class="cta-primary" style="display: block; text-align: center;">Get Elite License</a>
+                </div>
+
+                <!-- Anchor: International License -->
+                <div class="pricing-card">
+                    <div class="pricing-tier">International License</div>
+                    <h3>Franchise / Enterprise</h3>
+                    <div class="price">
+                        <div class="price-current">$250K</div>
+                        <div class="price-subtitle">One-time + custom pricing</div>
+                    </div>
+                    <ul class="features-list">
+                        <li>Everything in Elite, PLUS:</li>
+                        <li>Unlimited locations</li>
+                        <li>Territory exclusivity</li>
+                        <li>White-label option</li>
+                        <li>Custom ML model training</li>
+                        <li>Dedicated engineering support</li>
+                        <li>Custom integrations built</li>
+                        <li>Franchise management tools</li>
+                        <li>Network intelligence (50+ gyms)</li>
+                        <li>Revenue share opportunities</li>
+                    </ul>
+                    <a href="#contact" class="cta-primary" style="display: block; text-align: center;">Contact Sales</a>
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: 48px; color: var(--steel-medium); font-size: 16px;">
+                <strong>ROI Guarantee:</strong> If Circuit OS doesn't save or generate $100K+ in Year 1, we'll refund 100% of your license fee.
+            </p>
+        </div>
+    </section>
+
+    <!-- GUARANTEE -->
+    <section>
+        <div class="container">
+            <div class="guarantee-box">
+                <div class="guarantee-badge">🛡️</div>
+                <h3>Triple Guarantee</h3>
+                <p><strong>30-Day Money-Back:</strong> If you don't see measurable improvements in lead quality, churn prediction, or operational efficiency within 30 days, full refund. No questions asked.</p>
+                <p><strong>Performance Guarantee:</strong> We guarantee Circuit OS will save or generate at least $100K in Year 1. If it doesn't, we refund 100% of your license fee.</p>
+                <p><strong>Implementation Guarantee:</strong> Your system will be fully operational within 30 days (Elite) or 45 days (Standard), or we work for free until it is.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section>
+        <div class="container">
+            <h2 style="text-align: center;">Frequently Asked Questions</h2>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">How is this different from just using GoHighLevel?</div>
+                    <div class="faq-answer">GoHighLevel is a CRM. Circuit OS is a hybrid AI decision engine (DMN + ML + LLM). We use GHL as infrastructure, but the intelligence layer is proprietary. Our ML models achieve 91% churn prediction accuracy and 87% lead scoring accuracy—trained on 10,000+ gym members. GHL alone can't do that.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What if I already have a CRM?</div>
+                    <div class="faq-answer">Circuit OS integrates with your existing CRM via API. We support GoHighLevel, Mindbody, Zen Planner, and others. The Intelligence Layer sits on top of your current stack.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">How long until I see results?</div>
+                    <div class="faq-answer">Week 1: Intelligence layer analyzing your data. Week 2: First churn predictions and lead scores. Week 4: Full automation running. Most gyms save 10+ hours in the first month and identify $20K+ in at-risk revenue within 60 days.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Do I need technical knowledge?</div>
+                    <div class="faq-answer">Zero. We handle all implementation. You get a dashboard and automated alerts. No coding, no complex setup. Built for gym operators, not engineers.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What's the monthly platform fee for?</div>
+                    <div class="faq-answer">Covers: Cloud hosting (Supabase), AI reasoning (Claude API), ML model retraining, CRM infrastructure (GHL), ongoing support, and system updates. Your intelligence layer runs 24/7 analyzing every lead and member.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Can I customize the workflows?</div>
+                    <div class="faq-answer">Elite License includes Custom Workflow Builder. Create unlimited if-this-then-that automations. Standard License gets pre-built workflows (proven to work at Metroflex).</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What if I want to expand to more locations later?</div>
+                    <div class="faq-answer">Standard → Elite upgrade: Pay the $25K difference. Elite → International: Custom pricing based on location count. Your data and workflows carry over seamlessly.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Is there a contract?</div>
+                    <div class="faq-answer">License fee is one-time. Monthly platform fee is month-to-month (cancel anytime). We earn your business every month by delivering results.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Command Revenue. Eliminate Chaos.</h2>
+            <p>The same AI running Metroflex Gym is available to you. 91% accuracy. $86K protected annually. 20 hours saved per week. Built for operators, not executives.</p>
+            <a href="mailto:hello@circuitos.com?subject=Circuit OS Elite License Inquiry" class="cta-primary">Get Circuit OS Elite - $85K</a>
+            <div class="urgency-text">⚡ Only 12 Elite Licenses Available in 2025 • 7 Remaining</div>
+        </div>
+    </section>
+
+</body>
+</html>
