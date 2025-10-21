@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAIO University - Fortune 100 Chief AI Officer Certification</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0B0C0D 0%, #1a1b1d 100%);
+            color: #E3E7EB;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(56, 255, 106, 0.05) 0%, rgba(56, 255, 106, 0.02) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(56, 255, 106, 0.2);
+        }
+
+        h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #38FF6A 0%, #E3E7EB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: #C2C8CF;
+            margin-bottom: 30px;
+        }
+
+        .credential-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .badge {
+            background: rgba(56, 255, 106, 0.1);
+            border: 1px solid rgba(56, 255, 106, 0.3);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #38FF6A;
+        }
+
+        /* Stats Banner */
+        .stats-banner {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .stat-card {
+            background: rgba(20, 21, 23, 0.6);
+            border: 1px solid rgba(56, 255, 106, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(56, 255, 106, 0.5);
+            box-shadow: 0 10px 30px rgba(56, 255, 106, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: 700;
+            color: #38FF6A;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            color: #C2C8CF;
+        }
+
+        /* Learning Paths */
+        .learning-paths {
+            margin-bottom: 60px;
+        }
+
+        .path-selector {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .path-button {
+            flex: 1;
+            min-width: 250px;
+            padding: 25px;
+            background: rgba(20, 21, 23, 0.6);
+            border: 2px solid rgba(56, 255, 106, 0.2);
+            border-radius: 15px;
+            color: #E3E7EB;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .path-button:hover {
+            border-color: rgba(56, 255, 106, 0.5);
+            background: rgba(56, 255, 106, 0.1);
+        }
+
+        .path-button.active {
+            border-color: #38FF6A;
+            background: rgba(56, 255, 106, 0.15);
+        }
+
+        .path-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .path-name {
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+
+        .path-duration {
+            font-size: 0.9em;
+            color: #C2C8CF;
+        }
+
+        /* Module Cards */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .module-card {
+            background: rgba(20, 21, 23, 0.8);
+            border: 1px solid rgba(56, 255, 106, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(56, 255, 106, 0.5);
+            box-shadow: 0 15px 40px rgba(56, 255, 106, 0.2);
+        }
+
+        .module-card.completed {
+            border-color: rgba(56, 255, 106, 0.6);
+            background: rgba(56, 255, 106, 0.05);
+        }
+
+        .module-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .module-number {
+            font-size: 3em;
+            font-weight: 700;
+            color: rgba(56, 255, 106, 0.3);
+            line-height: 1;
+        }
+
+        .module-status {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-locked {
+            background: rgba(255, 255, 255, 0.1);
+            color: #C2C8CF;
+        }
+
+        .status-in-progress {
+            background: rgba(255, 200, 0, 0.2);
+            color: #FFC800;
+        }
+
+        .status-completed {
+            background: rgba(56, 255, 106, 0.2);
+            color: #38FF6A;
+        }
+
+        .module-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #E3E7EB;
+        }
+
+        .module-description {
+            font-size: 1em;
+            color: #C2C8CF;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            color: #C2C8CF;
+        }
+
+        .module-topics {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(56, 255, 106, 0.1);
+        }
+
+        .topics-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .topic-tag {
+            background: rgba(56, 255, 106, 0.1);
+            border: 1px solid rgba(56, 255, 106, 0.2);
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            color: #38FF6A;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(56, 255, 106, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #38FF6A 0%, #2ecc71 100%);
+            transition: width 0.3s ease;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .modal-content {
+            background: #0B0C0D;
+            border: 1px solid rgba(56, 255, 106, 0.3);
+            border-radius: 20px;
+            max-width: 1200px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 50px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+        }
+
+        .close-button {
+            background: rgba(255, 85, 85, 0.2);
+            border: 1px solid #FF5555;
+            color: #FF5555;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .close-button:hover {
+            background: rgba(255, 85, 85, 0.3);
+        }
+
+        .lesson-content {
+            margin-bottom: 40px;
+        }
+
+        .lesson-section {
+            margin-bottom: 40px;
+        }
+
+        .lesson-section h2 {
+            font-size: 2em;
+            color: #38FF6A;
+            margin-bottom: 20px;
+        }
+
+        .lesson-section h3 {
+            font-size: 1.5em;
+            color: #E3E7EB;
+            margin: 30px 0 15px 0;
+        }
+
+        .lesson-section p {
+            font-size: 1.1em;
+            color: #C2C8CF;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .lesson-section ul, .lesson-section ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .lesson-section li {
+            font-size: 1.05em;
+            color: #C2C8CF;
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+
+        .code-block {
+            background: rgba(20, 21, 23, 0.8);
+            border: 1px solid rgba(56, 255, 106, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            color: #E3E7EB;
+            margin: 0;
+        }
+
+        .highlight-box {
+            background: rgba(56, 255, 106, 0.1);
+            border-left: 4px solid #38FF6A;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+
+        .highlight-box strong {
+            color: #38FF6A;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .resource-card {
+            background: rgba(20, 21, 23, 0.6);
+            border: 1px solid rgba(56, 255, 106, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            border-color: rgba(56, 255, 106, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .resource-type {
+            display: inline-block;
+            background: rgba(56, 255, 106, 0.2);
+            color: #38FF6A;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .resource-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #E3E7EB;
+            margin-bottom: 10px;
+        }
+
+        .resource-description {
+            font-size: 0.95em;
+            color: #C2C8CF;
+            margin-bottom: 15px;
+        }
+
+        .resource-link {
+            display: inline-block;
+            color: #38FF6A;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .resource-link:hover {
+            color: #2ecc71;
+        }
+
+        .quiz-container {
+            margin-top: 40px;
+        }
+
+        .quiz-question {
+            background: rgba(20, 21, 23, 0.6);
+            border: 1px solid rgba(56, 255, 106, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #E3E7EB;
+            margin-bottom: 20px;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .quiz-option {
+            background: rgba(30, 31, 33, 0.8);
+            border: 2px solid rgba(56, 255, 106, 0.2);
+            border-radius: 10px;
+            padding: 18px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.05em;
+        }
+
+        .quiz-option:hover {
+            border-color: rgba(56, 255, 106, 0.5);
+            background: rgba(56, 255, 106, 0.05);
+        }
+
+        .quiz-option.selected {
+            border-color: #38FF6A;
+            background: rgba(56, 255, 106, 0.1);
+        }
+
+        .quiz-option.correct {
+            border-color: #38FF6A;
+            background: rgba(56, 255, 106, 0.2);
+        }
+
+        .quiz-option.incorrect {
+            border-color: #FF5555;
+            background: rgba(255, 85, 85, 0.1);
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, #38FF6A 0%, #2ecc71 100%);
+            border: none;
+            color: #0B0C0D;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(56, 255, 106, 0.3);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Overall Progress */
+        .overall-progress {
+            background: rgba(20, 21, 23, 0.8);
+            border: 1px solid rgba(56, 255, 106, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 60px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .progress-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: #E3E7EB;
+        }
+
+        .progress-percentage {
+            font-size: 3em;
+            font-weight: 700;
+            color: #38FF6A;
+        }
+
+        .certification-info {
+            background: rgba(56, 255, 106, 0.05);
+            border: 1px solid rgba(56, 255, 106, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 60px;
+        }
+
+        .certification-info h2 {
+            font-size: 2em;
+            color: #38FF6A;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .subtitle {
+                font-size: 1.2em;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Chief AI Officer University</h1>
+            <p class="subtitle">Fortune 100 Executive AI Leadership Certification</p>
+            <div class="credential-badges">
+                <div class="badge">MIT AI Executive Framework</div>
+                <div class="badge">Stanford HAI Leadership</div>
+                <div class="badge">DMN Method & Style</div>
+                <div class="badge">$500K-$1M Salary Target</div>
+            </div>
+        </header>
+
+        <div class="stats-banner">
+            <div class="stat-card">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Comprehensive Modules</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">40+</div>
+                <div class="stat-label">Hours of Training</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">95%</div>
+                <div class="stat-label">ML Model Accuracy Target</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">$1M+</div>
+                <div class="stat-label">Target Compensation</div>
+            </div>
+        </div>
+
+        <div class="overall-progress">
+            <div class="progress-header">
+                <div class="progress-title">Your Progress</div>
+                <div class="progress-percentage" id="overall-percentage">0%</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="overall-progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="learning-paths">
+            <h2 style="font-size: 2.5em; margin-bottom: 30px; color: #E3E7EB;">Learning Paths</h2>
+            <div class="path-selector">
+                <div class="path-button active" data-path="executive">
+                    <div class="path-icon">🎯</div>
+                    <div class="path-name">Executive Strategy</div>
+                    <div class="path-duration">4 modules • 12-15 hours</div>
+                </div>
+                <div class="path-button" data-path="technical">
+                    <div class="path-icon">⚙️</div>
+                    <div class="path-name">Technical Mastery</div>
+                    <div class="path-duration">4 modules • 16-20 hours</div>
+                </div>
+                <div class="path-button" data-path="implementation">
+                    <div class="path-icon">🚀</div>
+                    <div class="path-name">Implementation</div>
+                    <div class="path-duration">4 modules • 12-15 hours</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modules-grid" id="modules-container">
+            <!-- Modules will be dynamically inserted here -->
+        </div>
+
+        <div class="certification-info">
+            <h2>Fortune 100 CAIO Certification Track</h2>
+            <p style="font-size: 1.1em; color: #C2C8CF; margin-bottom: 20px;">
+                This program prepares you for Chief AI Officer roles at Fortune 100 tech companies including Google, Microsoft, Amazon, Meta, and Apple.
+                Successful completion positions you for compensation packages ranging from $500,000 to over $1,000,000 annually.
+            </p>
+            <p style="font-size: 1.05em; color: #C2C8CF;">
+                <strong style="color: #38FF6A;">Certification Requirements:</strong> Complete all 12 modules, pass all knowledge checks with 90%+ accuracy,
+                and complete the final capstone project demonstrating hybrid DMN+ML+LLM architecture implementation.
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal for Module Content -->
+    <div class="modal" id="module-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title" style="font-size: 2.5em; color: #38FF6A;">Module Title</h2>
+                <button class="close-button" onclick="closeModal()">Close</button>
+            </div>
+            <div class="lesson-content" id="lesson-content">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+            <button class="submit-button" id="complete-button" onclick="completeModule()">Mark Complete & Continue</button>
+        </div>
+    </div>
+
+    <script>
+        // Module Data
+        const modules = [
+            // Path 1: Executive Strategy
+            {
+                id: 1,
+                path: 'executive',
+                number: '01',
+                title: 'Fortune 100 CAIO Role & Expectations',
+                description: 'Understanding the Chief AI Officer role at top tech companies: responsibilities, success metrics, and compensation structure ($500K-$1M packages).',
+                duration: '3 hours',
+                topics: ['Role Definition', 'Board Communication', 'KPI Design', 'Compensation Structure'],
+                difficulty: 'Foundation',
+                locked: false,
+                content: `
+                    <div class="lesson-section">
+                        <h2>The Fortune 100 Chief AI Officer Role</h2>
+                        <p>The Chief AI Officer (CAIO) is one of the newest and most strategic executive roles in Fortune 100 technology companies. As CAIO, you'll report directly to the CEO and sit on the executive leadership team alongside the CFO, CTO, and COO.</p>
+
+                        <h3>Role Responsibilities</h3>
+                        <ul>
+                            <li><strong>AI Strategy & Vision:</strong> Define 3-5 year AI roadmap aligned with business objectives ($100M+ AI investment decisions)</li>
+                            <li><strong>Cross-Functional Leadership:</strong> Lead 50-500 person AI organization (ML engineers, data scientists, AI researchers)</li>
+                            <li><strong>Revenue Impact:</strong> Drive AI initiatives generating $100M-$1B+ in annual revenue or cost savings</li>
+                            <li><strong>Board-Level Communication:</strong> Present AI strategy quarterly to board of directors and investors</li>
+                            <li><strong>Risk Management:</strong> Oversee AI governance, ethics, compliance, and regulatory requirements</li>
+                            <li><strong>Talent Development:</strong> Build world-class AI teams, recruit top ML talent from MIT/Stanford/CMU</li>
+                        </ul>
+
+                        <h3>Success Metrics (Your Performance Review)</h3>
+                        <div class="highlight-box">
+                            <strong>Revenue Metrics:</strong>
+                            <ul>
+                                <li>AI-driven revenue: $100M+ year 1, $500M+ year 3</li>
+                                <li>Cost optimization: $50M-$200M annual savings from AI automation</li>
+                                <li>Market valuation impact: $1B-$10B from AI capabilities</li>
+                            </ul>
+                        </div>
+
+                        <div class="highlight-box">
+                            <strong>Technical Metrics:</strong>
+                            <ul>
+                                <li>ML model deployment velocity: 20-50 models in production per quarter</li>
+                                <li>Model accuracy: 90%+ for business-critical predictions</li>
+                                <li>Infrastructure ROI: 300-700% return on AI infrastructure investment</li>
+                                <li>Time-to-market: Deploy AI features in weeks, not years</li>
+                            </ul>
+                        </div>
+
+                        <div class="highlight-box">
+                            <strong>Organizational Metrics:</strong>
+                            <ul>
+                                <li>Team growth: Build 100-500 person AI org in 2-3 years</li>
+                                <li>Talent quality: Recruit PhDs from top 10 CS programs</li>
+                                <li>Cross-functional adoption: AI used by 80%+ of product teams</li>
+                                <li>Innovation metrics: 10+ AI patents filed per year</li>
+                            </ul>
+                        </div>
+
+                        <h3>Compensation Structure</h3>
+                        <p>Fortune 100 CAIO compensation packages typically include:</p>
+                        <ul>
+                            <li><strong>Base Salary:</strong> $350,000-$500,000/year</li>
+                            <li><strong>Annual Bonus:</strong> $200,000-$500,000 (40-100% of base)</li>
+                            <li><strong>Equity/Stock Options:</strong> $500,000-$2,000,000/year (vesting over 4 years)</li>
+                            <li><strong>Sign-On Bonus:</strong> $100,000-$500,000 (one-time)</li>
+                            <li><strong>Total Compensation:</strong> $1,000,000-$3,000,000+ per year at top companies</li>
+                        </ul>
+
+                        <h3>Top Companies Hiring CAIOs (2025)</h3>
+                        <div class="resources-grid">
+                            <div class="resource-card">
+                                <div class="resource-type">Tech Giant</div>
+                                <div class="resource-title">Google/Alphabet</div>
+                                <div class="resource-description">Leading AI research (DeepMind), CAIO salary range: $1.2M-$2.5M</div>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-type">Tech Giant</div>
+                                <div class="resource-title">Microsoft</div>
+                                <div class="resource-description">OpenAI partnership, Azure AI, CAIO salary: $1M-$2M</div>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-type">Tech Giant</div>
+                                <div class="resource-title">Amazon/AWS</div>
+                                <div class="resource-description">AWS AI/ML services, CAIO salary: $1M-$2.2M</div>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-type">Tech Giant</div>
+                                <div class="resource-title">Meta (Facebook)</div>
+                                <div class="resource-description">LLaMA, AI research labs, CAIO salary: $1.1M-$2M</div>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-type">Tech Giant</div>
+                                <div class="resource-title">Apple</div>
+                                <div class="resource-description">On-device AI, Siri, CAIO salary: $1M-$1.8M</div>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-type">Finance</div>
+                                <div class="resource-title">JPMorgan Chase</div>
+                                <div class="resource-description">AI-driven trading/risk, CAIO salary: $800K-$1.5M</div>
+                            </div>
+                        </div>
+
+                        <h3>Your Proprietary Moat: Hybrid DMN+ML+LLM</h3>
+                        <p>What sets YOU apart from other CAIO candidates:</p>
+                        <div class="highlight-box">
+                            <strong>Unique Differentiator:</strong> You understand and have implemented hybrid AI architectures that combine:
+                            <ul>
+                                <li><strong>DMN (Decision Model & Notation):</strong> Business rules as code, auditable, versionable</li>
+                                <li><strong>ML (Machine Learning):</strong> Custom predictive models with 90%+ accuracy</li>
+                                <li><strong>LLM (Large Language Models):</strong> Claude/GPT integration for reasoning</li>
+                            </ul>
+                            <p>This three-stage decision pipeline delivers 3-10x better outcomes than generic AI approaches. No other CAIO candidate has this production experience.</p>
+                        </div>
+                    </div>
+
+                    <div class="quiz-container">
+                        <h2 style="color: #38FF6A; margin-bottom: 30px;">Knowledge Check</h2>
+                        <div class="quiz-question">
+                            <div class="question-text">1. What is the typical total compensation range for a CAIO at a Fortune 100 tech company?</div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">A) $200,000-$400,000/year</div>
+                                <div class="quiz-option" data-correct="false">B) $500,000-$750,000/year</div>
+                                <div class="quiz-option" data-correct="true">C) $1,000,000-$3,000,000+/year</div>
+                                <div class="quiz-option" data-correct="false">D) $5,000,000+/year</div>
+                            </div>
+                        </div>
+                        <div class="quiz-question">
+                            <div class="question-text">2. What are the three components of the hybrid AI architecture that gives you a competitive moat?</div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">A) Python, JavaScript, SQL</div>
+                                <div class="quiz-option" data-correct="true">B) DMN (Business Rules), ML (Predictions), LLM (Reasoning)</div>
+                                <div class="quiz-option" data-correct="false">C) Cloud, Edge, Mobile</div>
+                                <div class="quiz-option" data-correct="false">D) Supervised, Unsupervised, Reinforcement Learning</div>
+                            </div>
+                        </div>
+                        <div class="quiz-question">
+                            <div class="question-text">3. What is a primary success metric for a CAIO role?</div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">A) Number of meetings attended</div>
+                                <div class="quiz-option" data-correct="true">B) AI-driven revenue ($100M+ year 1, $500M+ year 3)</div>
+                                <div class="quiz-option" data-correct="false">C) Team size only</div>
+                                <div class="quiz-option" data-correct="false">D) Social media followers</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 2,
+                path: 'executive',
+                number: '02',
+                title: 'MIT/Stanford AI Strategy Frameworks',
+                description: 'Master AI strategy frameworks from MIT AI Executive Academy and Stanford HAI used by Fortune 100 executives.',
+                duration: '4 hours',
+                topics: ['MIT Framework', 'Stanford HAI', 'Board Communication', 'Strategic Planning'],
+                difficulty: 'Intermediate',
+                locked: false,
+                content: `
+                    <div class="lesson-section">
+                        <h2>MIT AI Executive Academy Framework</h2>
+                        <p>The MIT AI Executive Academy ($15,000-$30,000 program) teaches a structured 5-phase approach to AI transformation:</p>
+
+                        <h3>Phase 1: AI Readiness Assessment</h3>
+                        <ul>
+                            <li><strong>Data Maturity:</strong> Assess data quality, volume, governance (Scale 1-5)</li>
+                            <li><strong>Talent Inventory:</strong> Current ML/AI capabilities in organization</li>
+                            <li><strong>Infrastructure Audit:</strong> Cloud, compute, storage capacity</li>
+                            <li><strong>Culture Assessment:</strong> Willingness to adopt AI-driven decisions</li>
+                        </ul>
+
+                        <div class="code-block">
+<pre>
+# MIT AI Readiness Scorecard Template
+
+Data Maturity:
+  - Data quality: 4/5 (clean, structured)
+  - Data volume: 3/5 (millions of records)
+  - Data governance: 2/5 (basic policies)
+  - Real-time access: 3/5 (batch + some streaming)
+  → Overall Data Score: 3.0/5.0
+
+Talent Inventory:
+  - ML engineers: 5 (need 20+)
+  - Data scientists: 3 (need 10+)
+  - AI researchers: 0 (need 2-5)
+  - MLOps engineers: 1 (need 5+)
+  → Talent Gap: Critical (need to hire 30+ people)
+
+Infrastructure:
+  - Cloud compute: AWS/Azure ✓
+  - GPU clusters: Limited (need 10x scale-up)
+  - ML platforms: None (need MLflow/Kubeflow)
+  - Data pipelines: Manual (need automation)
+  → Infrastructure Score: 2.5/5.0
+
+Recommendation: Invest $10M in infrastructure + hire 30 AI specialists before launching production ML.
+</pre>
+                        </div>
+
+                        <h3>Phase 2: Strategic AI Vision (3-5 Year Roadmap)</h3>
+                        <div class="highlight-box">
+                            <strong>MIT Framework: 3 Horizons Model</strong>
+                            <ul>
+                                <li><strong>Horizon 1 (Year 1):</strong> Quick wins, low-hanging fruit ($10M-$50M impact)
+                                    <ul>
+                                        <li>Example: Lead scoring model (15% conversion improvement)</li>
+                                        <li>Example: Churn prediction (20% retention improvement)</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Horizon 2 (Years 2-3):</strong> Core business transformation ($100M-$500M impact)
+                                    <ul>
+                                        <li>Example: AI-powered product recommendations (30% revenue lift)</li>
+                                        <li>Example: Dynamic pricing optimization (15% margin improvement)</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Horizon 3 (Years 4-5):</strong> New business models ($1B+ impact)
+                                    <ul>
+                                        <li>Example: AI-as-a-Service platform (new revenue stream)</li>
+                                        <li>Example: Autonomous operations (80% cost reduction)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <h3>Phase 3: Use Case Prioritization</h3>
+                        <p>MIT teaches the 2x2 Impact-Feasibility Matrix for prioritizing AI projects:</p>
+
+                        <div class="code-block">
+<pre>
+High Impact, High Feasibility (DO FIRST):
+  1. Lead Scoring Model
+     - Impact: $25M/year revenue increase
+     - Feasibility: 3 months, existing data
+     - ROI: 625%
+
+  2. Churn Prediction
+     - Impact: $15M/year retention
+     - Feasibility: 2 months, CRM data available
+     - ROI: 750%
+
+High Impact, Low Feasibility (LONG-TERM):
+  3. Autonomous Customer Service
+     - Impact: $100M/year cost savings
+     - Feasibility: 18-24 months, complex integration
+     - ROI: 500% (but longer timeline)
+
+Low Impact, High Feasibility (QUICK WINS):
+  4. Email Subject Line Optimization
+     - Impact: $2M/year open rate improvement
+     - Feasibility: 2 weeks, A/B testing
+     - ROI: 200%
+
+Low Impact, Low Feasibility (SKIP):
+  5. Experimental AI features with unclear value
+</pre>
+                        </div>
+
+                        <h3>Phase 4: Build-Buy-Partner Decision Framework</h3>
+                        <ul>
+                            <li><strong>Build:</strong> Core competitive advantage (e.g., your hybrid DMN+ML+LLM moat)</li>
+                            <li><strong>Buy:</strong> Commodity infrastructure (e.g., cloud platforms, database tools)</li>
+                            <li><strong>Partner:</strong> Specialized capabilities (e.g., LLM providers like OpenAI/Anthropic)</li>
+                        </ul>
+
+                        <h3>Phase 5: Change Management & Organizational Adoption</h3>
+                        <p>MIT's proven 4-step change management process:</p>
+                        <ol>
+                            <li><strong>Executive Sponsorship:</strong> CEO/Board commitment ($50M+ budget approval)</li>
+                            <li><strong>Pilot Programs:</strong> 2-3 high-visibility AI projects with measurable ROI</li>
+                            <li><strong>Training & Enablement:</strong> Upskill 500+ employees on AI tools</li>
+                            <li><strong>Scaling & Governance:</strong> Establish AI Center of Excellence (CoE)</li>
+                        </ol>
+
+                        <h2>Stanford HAI (Human-Centered AI) Framework</h2>
+                        <p>Stanford's approach emphasizes ethical AI, human augmentation (not replacement), and responsible deployment:</p>
+
+                        <h3>1. Human-Centered Design Principles</h3>
+                        <div class="highlight-box">
+                            <strong>Stanford's 5 Principles:</strong>
+                            <ul>
+                                <li><strong>Augmentation over Replacement:</strong> AI should enhance human capabilities, not eliminate jobs wholesale</li>
+                                <li><strong>Transparency:</strong> Users must understand when AI is making decisions</li>
+                                <li><strong>Fairness:</strong> Eliminate bias in training data and model outputs</li>
+                                <li><strong>Privacy:</strong> Protect user data, comply with GDPR/CCPA</li>
+                                <li><strong>Accountability:</strong> Humans remain responsible for AI decisions</li>
+                            </ul>
+                        </div>
+
+                        <h3>2. AI Ethics Framework</h3>
+                        <p>Stanford's AI Ethics Checklist (use this for every AI project):</p>
+                        <ul>
+                            <li>✓ Bias Audit: Is training data representative? Are protected classes treated fairly?</li>
+                            <li>✓ Explainability: Can we explain why the model made a decision? (SHAP, LIME)</li>
+                            <li>✓ Safety: What happens if the model fails? (Fallback mechanisms)</li>
+                            <li>✓ Privacy: Do we comply with data protection regulations?</li>
+                            <li>✓ Human Oversight: Is there human-in-the-loop for high-stakes decisions?</li>
+                        </ul>
+
+                        <h3>3. Board-Level Communication Framework</h3>
+                        <p>How to present AI strategy to board of directors (Stanford's proven template):</p>
+
+                        <div class="code-block">
+<pre>
+Board Presentation Structure (30 minutes):
+
+Slide 1: Executive Summary (2 min)
+  - AI investment ask: $50M
+  - Expected return: $200M over 3 years (400% ROI)
+  - Key risks: Talent shortage, technical complexity
+
+Slides 2-5: Market Context (5 min)
+  - Competitor AI capabilities
+  - Industry trends (70% of Fortune 500 have CAIO)
+  - Regulatory landscape (EU AI Act, US guidelines)
+
+Slides 6-10: AI Strategy (10 min)
+  - 3-year roadmap (Horizons 1, 2, 3)
+  - Top 5 use cases with ROI projections
+  - Organization structure (50-person AI team year 1 → 200 by year 3)
+
+Slides 11-13: Financial Model (8 min)
+  - Year 1: $10M investment → $25M return
+  - Year 2: $20M investment → $75M return
+  - Year 3: $20M investment → $100M return
+  - Total ROI: 400%
+
+Slides 14-15: Risks & Mitigation (5 min)
+  - Risk 1: Talent shortage → Partner with MIT/Stanford for recruiting
+  - Risk 2: Technical failure → Start with low-risk pilots
+  - Risk 3: Regulatory changes → Proactive ethics framework
+
+Q&A (15 min)
+</pre>
+                        </div>
+
+                        <h2>Resources</h2>
+                        <div class="resources-grid">
+                            <div class="resource-card">
+                                <div class="resource-type">Certificate Program</div>
+                                <div class="resource-title">MIT AI Executive Academy</div>
+                                <div class="resource-description">3-day intensive program, $15,000-$30,000, covers AI strategy, use case prioritization, organizational change</div>
+                                <a href="https://executive.mit.edu/course/artificial-intelligence-implications-for-business-strategy/" class="resource-link" target="_blank">Learn More →</a>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-type">Research Institute</div>
+                                <div class="resource-title">Stanford HAI</div>
+                                <div class="resource-description">Human-centered AI research, ethical frameworks, board-level communication templates</div>
+                                <a href="https://hai.stanford.edu/" class="resource-link" target="_blank">Explore →</a>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-type">Course</div>
+                                <div class="resource-title">Harvard Business School: AI for Leaders</div>
+                                <div class="resource-description">8-week online program, $2,850, executive AI decision-making</div>
+                                <a href="https://online.hbs.edu/courses/artificial-intelligence/" class="resource-link" target="_blank">Enroll →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-container">
+                        <h2 style="color: #38FF6A; margin-bottom: 30px;">Knowledge Check</h2>
+                        <div class="quiz-question">
+                            <div class="question-text">1. In MIT's 3 Horizons Model, what is the expected impact of Horizon 1 (Year 1) projects?</div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="true">A) $10M-$50M impact (quick wins)</div>
+                                <div class="quiz-option" data-correct="false">B) $1B+ impact (new business models)</div>
+                                <div class="quiz-option" data-correct="false">C) $0 (exploratory research only)</div>
+                                <div class="quiz-option" data-correct="false">D) $500M-$1B impact</div>
+                            </div>
+                        </div>
+                        <div class="quiz-question">
+                            <div class="question-text">2. According to Stanford HAI, what is the primary principle of human-centered AI?</div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">A) Replace all human workers with AI</div>
+                                <div class="quiz-option" data-correct="true">B) Augment human capabilities, not replace jobs wholesale</div>
+                                <div class="quiz-option" data-correct="false">C) Maximize automation at any cost</div>
+                                <div class="quiz-option" data-correct="false">D) AI should make all decisions without human oversight</div>
+                            </div>
+                        </div>
+                        <div class="quiz-question">
+                            <div class="question-text">3. In MIT's Build-Buy-Partner framework, when should you BUILD instead of buying?</div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">A) For commodity infrastructure like cloud platforms</div>
+                                <div class="quiz-option" data-correct="true">B) For core competitive advantages (e.g., hybrid DMN+ML+LLM moat)</div>
+                                <div class="quiz-option" data-correct="false">C) For all AI features to save money</div>
+                                <div class="quiz-option" data-correct="false">D) Never build, always buy</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 3,
+                path: 'technical',
+                number: '03',
+                title: 'DMN Mastery: Business Rules as Code',
+                description: 'Master DMN (Decision Model & Notation) and FEEL expressions - the industry standard for business rules (Method & Style certification level).',
+                duration: '5 hours',
+                topics: ['DMN Fundamentals', 'FEEL Expressions', 'Decision Tables', 'Production DMN'],
+                difficulty: 'Advanced',
+                locked: false,
+                content: `
+                    <div class="lesson-section">
+                        <h2>What is DMN (Decision Model & Notation)?</h2>
+                        <p>DMN is an industry standard (OMG specification) for modeling, documenting, and executing business decisions as code. Unlike traditional if/then logic buried in application code, DMN separates business rules from implementation.</p>
+
+                        <h3>Why DMN Matters for CAIOs</h3>
+                        <div class="highlight-box">
+                            <strong>The Problem with Traditional Business Logic:</strong>
+                            <ul>
+                                <li>❌ Business rules buried in code (can't be audited by non-technical stakeholders)</li>
+                                <li>❌ Changes require developer involvement (slow, expensive)</li>
+                                <li>❌ No version control for business logic</li>
+                                <li>❌ Testing is manual and incomplete</li>
+                            </ul>
+                        </div>
+
+                        <div class="highlight-box">
+                            <strong>The DMN Solution:</strong>
+                            <ul>
+                                <li>✅ Visual decision diagrams (DRDs) - business stakeholders can understand</li>
+                                <li>✅ Executable business rules (FEEL expressions)</li>
+                                <li>✅ Version controlled, testable, auditable</li>
+                                <li>✅ Change policies in minutes (not days/weeks)</li>
+                                <li>✅ Required for regulated industries (finance, healthcare)</li>
+                            </ul>
+                        </div>
+
+                        <h3>DMN Components</h3>
+                        <p>A complete DMN model has 3 layers:</p>
+
+                        <h4>1. Decision Requirements Diagram (DRD)</h4>
+                        <p>Visual map showing how decisions depend on each other and input data:</p>
+                        <div class="code-block">
+<pre>
+Example: Gym Membership Pricing Decision
+
+┌─────────────────────────────────────────────────────────┐
+│          Input Data (Rectangles)                        │
+├─────────────────────────────────────────────────────────┤
+│  Member Tenure    Referrals Made    Attendance Rate     │
+│  Payment History  Lifetime Value    Current Capacity    │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│          Sub-Decisions (Rounded Rectangles)             │
+├─────────────────────────────────────────────────────────┤
+│  → Loyalty Tier Calculation (Gold/Silver/Bronze)        │
+│  → Risk Assessment (High/Medium/Low Churn Risk)         │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│          Final Decision (Rectangle with Bold Border)    │
+├─────────────────────────────────────────────────────────┤
+│  → Membership Discount Percentage (0%-35%)              │
+└─────────────────────────────────────────────────────────┘
+</pre>
+                        </div>
+
+                        <h4>2. Decision Tables</h4>
+                        <p>Tabular format for complex multi-input decisions:</p>
+                        <div class="code-block">
+<pre>
+Decision Table: Calculate Membership Discount
+
+┌────────────┬───────────┬─────────────┬──────────────┬──────────┬──────────┐
+│ Input 1    │ Input 2   │ Input 3     │ Input 4      │ Input 5  │ Output   │
+│ Tenure     │ Referrals │ Attendance  │ Payment      │ LTV      │ Discount │
+│ (months)   │ Made      │ Rate (%)    │ History      │ ($)      │ (%)      │
+├────────────┼───────────┼─────────────┼──────────────┼──────────┼──────────┤
+│ ≥ 24       │ ≥ 5       │ ≥ 80        │ "Perfect"    │ ≥ 5000   │ 35       │
+│ ≥ 12       │ ≥ 3       │ ≥ 80        │ "Perfect"    │ ≥ 3000   │ 25       │
+│ ≥ 6        │ ≥ 1       │ ≥ 70        │ "Good"       │ ≥ 2000   │ 15       │
+│ ≥ 6        │ -         │ ≥ 90        │ "Perfect"    │ ≥ 2500   │ 20       │
+│ ≥ 3        │ ≥ 2       │ ≥ 60        │ "Perfect"    │ ≥ 1500   │ 10       │
+│ < 3        │ -         │ -           │ -            │ -        │ 0        │
+└────────────┴───────────┴─────────────┴──────────────┴──────────┴──────────┘
+
+Hit Policy: First match wins (evaluate top to bottom)
+</pre>
+                        </div>
+
+                        <h4>3. FEEL Expressions (Friendly Enough Expression Language)</h4>
+                        <p>The programming language of DMN. It's designed to be readable by business analysts:</p>
+
+                        <div class="code-block">
+<pre>
+// Example 1: Simple calculation
+discount percentage =
+  if member.tenure >= 12 months and
+     member.referrals >= 3 and
+     member.attendance rate > 0.8
+  then 25
+  else if member.tenure >= 6 months
+  then 15
+  else 0
+
+// Example 2: Complex business rule
+eligible for VIP offer =
+  member.lifetime value >= 3000 and
+  member.churn risk score > 0.7 and
+  member.tenure >= 6 months and
+  member.payment history in ["Perfect", "Good"]
+
+// Example 3: List operations
+high value segments =
+  contacts[lifetime value > 5000 and churn risk < 0.3]
+
+total potential revenue =
+  sum(high value segments.lifetime value)
+
+// Example 4: Date/time calculations
+membership expired =
+  member.last payment date + duration("P30D") < today()
+
+days until renewal =
+  days between(today(), member.renewal date)
+</pre>
+                        </div>
+
+                        <h3>Your Hybrid DMN+ML+LLM Architecture</h3>
+                        <p>This is your proprietary moat - combining DMN with ML and LLM in a 4-stage pipeline:</p>
+
+                        <div class="code-block">
+<pre>
+Stage 1: DMN Rules (Business Policy Enforcement)
+-----------------------------------------------
+Input: Member cancellation request
+
+DMN Evaluation:
+  - tenure >= 6 months? ✓ (8 months)
+  - payment history = "Perfect"? ✓
+  - max discount allowed = 30% (policy rule)
+  - eligible for retention offer? ✓
+
+Output: Member qualifies, max discount = 30%
+
+↓
+
+Stage 2: ML Prediction (Data-Driven Intelligence)
+--------------------------------------------------
+Input: Member profile + historical data
+
+ML Model Predictions:
+  - Churn risk score: 0.85 (85% likely to cancel)
+  - Lifetime value: $3,200
+  - Retention probability with 25% offer: 68%
+  - Retention probability with 30% offer: 72%
+
+Output: Recommend 25% discount (optimal ROI)
+
+↓
+
+Stage 3: LLM Generation (Personalized Communication)
+----------------------------------------------------
+Input: DMN result + ML scores + member profile
+
+Claude Prompt:
+  "Generate personalized retention offer for:
+   - Name: Sarah Johnson
+   - Tenure: 8 months
+   - Attendance: 5x/week (very active)
+   - Referrals: 2 friends
+   - Churn risk: 85%
+   - Offer: 25% discount + VIP coaching
+
+   Tone: Warm, appreciative, motivating"
+
+LLM Output:
+  "Hi Sarah, we'd hate to see you go! As one of our
+   most dedicated members (5x/week is incredible!),
+   we value you immensely. We'd like to offer you 25%
+   off for the next 6 months, plus VIP coaching twice
+   a month. You've already referred 2 friends - you're
+   part of the Metroflex family!"
+
+↓
+
+Stage 4: DMN Validation (Final Approval)
+-----------------------------------------
+Input: LLM-generated offer
+
+DMN Checks:
+  - Discount = 25% (within max 30% policy) ✓
+  - VIP coaching cost = $200/mo
+  - Member LTV = $3,200
+  - Cost/benefit ratio = 6.4% ($200 / $3,200) ✓
+  - Approval: APPROVED
+
+Final Output: Send offer to Sarah
+</pre>
+                        </div>
+
+                        <h3>Production DMN Implementation</h3>
+                        <p>How to deploy DMN in production systems:</p>
+
+                        <h4>DMN Engines (Open Source)</h4>
+                        <ul>
+                            <li><strong>Camunda DMN Engine:</strong> Most popular, Java-based, supports full DMN 1.3 spec</li>
+                            <li><strong>KIE (Drools):</strong> Red Hat's decision engine, integrates with business rules</li>
+                            <li><strong>Flowable:</strong> Lightweight, supports DMN + BPMN workflows</li>
+                        </ul>
+
+                        <h4>DMN as a Service (Your Implementation)</h4>
+                        <div class="code-block">
+<pre>
+// Vercel API endpoint for DMN evaluation
+// File: api/dmn/evaluate.ts
+
+import { CamundaDMN } from 'camunda-dmn-js';
+
+export default async function handler(req, res) {
+  const { decision_id, context } = req.body;
+
+  // Load DMN model from database
+  const dmnModel = await loadDMNModel(decision_id);
+
+  // Evaluate decision
+  const engine = new CamundaDMN();
+  const result = await engine.evaluate(dmnModel, context);
+
+  // Log for audit trail
+  await logDMNExecution({
+    decision_id,
+    context,
+    result,
+    timestamp: new Date(),
+    version: dmnModel.version
+  });
+
+  return res.json(result);
+}
+
+// Example API call:
+POST /api/dmn/evaluate
+{
+  "decision_id": "membership-discount",
+  "context": {
+    "tenure": 8,
+    "referrals": 2,
+    "attendance_rate": 0.83,
+    "payment_history": "Perfect",
+    "lifetime_value": 3200
+  }
+}
+
+// Response:
+{
+  "discount_percentage": 25,
+  "eligible": true,
+  "max_discount": 30,
+  "explanation": "Member qualifies for 25% discount based on 8-month tenure, 2 referrals, and perfect payment history"
+}
+</pre>
+                        </div>
+
+                        <h3>DMN Best Practices (Method & Style)</h3>
+                        <p>Bruce Silver's "Method & Style" is the industry standard DMN certification:</p>
+
+                        <ol>
+                            <li><strong>One Decision per DRD:</strong> Keep decision models focused and understandable</li>
+                            <li><strong>Hit Policies:</strong> Use "First" (F) for priority-based rules, "Collect" (C+) for scoring</li>
+                            <li><strong>Completeness:</strong> Ensure decision tables cover all possible inputs (no gaps)</li>
+                            <li><strong>Consistency:</strong> No overlapping rules with different outputs</li>
+                            <li><strong>Testing:</strong> Automated tests for every decision table row</li>
+                            <li><strong>Version Control:</strong> Git for DMN XML files, semantic versioning</li>
+                        </ol>
+
+                        <h3>Resources</h3>
+                        <div class="resources-grid">
+                            <div class="resource-card">
+                                <div class="resource-type">Certification</div>
+                                <div class="resource-title">DMN Method & Style by Bruce Silver</div>
+                                <div class="resource-description">Industry standard DMN certification, $395, online course + exam</div>
+                                <a href="https://methodandstyle.com/" class="resource-link" target="_blank">Enroll →</a>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-type">Tool</div>
+                                <div class="resource-title">Camunda Modeler</div>
+                                <div class="resource-description">Free visual DMN editor, supports decision tables and FEEL</div>
+                                <a href="https://camunda.com/download/modeler/" class="resource-link" target="_blank">Download →</a>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-type">Specification</div>
+                                <div class="resource-title">DMN 1.3 Spec (OMG)</div>
+                                <div class="resource-description">Official DMN specification, comprehensive reference</div>
+                                <a href="https://www.omg.org/spec/DMN/1.3/" class="resource-link" target="_blank">Read →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-container">
+                        <h2 style="color: #38FF6A; margin-bottom: 30px;">Knowledge Check</h2>
+                        <div class="quiz-question">
+                            <div class="question-text">1. What are the 4 stages of the hybrid DMN+ML+LLM pipeline?</div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">A) Design, Build, Test, Deploy</div>
+                                <div class="quiz-option" data-correct="true">B) DMN Rules → ML Prediction → LLM Generation → DMN Validation</div>
+                                <div class="quiz-option" data-correct="false">C) Input, Process, Output, Feedback</div>
+                                <div class="quiz-option" data-correct="false">D) Data Collection, Training, Inference, Monitoring</div>
+                            </div>
+                        </div>
+                        <div class="quiz-question">
+                            <div class="question-text">2. What is FEEL in the context of DMN?</div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">A) A sentiment analysis algorithm</div>
+                                <div class="quiz-option" data-correct="true">B) Friendly Enough Expression Language - the programming language of DMN</div>
+                                <div class="quiz-option" data-correct="false">C) A database query language</div>
+                                <div class="quiz-option" data-correct="false">D) A machine learning framework</div>
+                            </div>
+                        </div>
+                        <div class="quiz-question">
+                            <div class="question-text">3. What is the primary benefit of using DMN instead of traditional if/then logic in code?</div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">A) Faster execution speed</div>
+                                <div class="quiz-option" data-correct="false">B) Uses less memory</div>
+                                <div class="quiz-option" data-correct="true">C) Business rules are visual, auditable, version-controlled, and changeable by non-developers</div>
+                                <div class="quiz-option" data-correct="false">D) No benefits, it's just a trend</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 4,
+                path: 'executive',
+                number: '04',
+                title: 'AI ROI & Financial Modeling',
+                description: 'Calculate AI project ROI (400-700% targets), build business cases for $50M+ investments, and present to CFOs and boards.',
+                duration: '4 hours',
+                topics: ['ROI Calculation', 'Business Cases', 'CFO Presentations', 'Financial Models'],
+                difficulty: 'Advanced',
+                locked: false,
+                content: `
+                    <div class="lesson-section">
+                        <h2>AI ROI Fundamentals for CAIOs</h2>
+                        <p>As Chief AI Officer, your primary responsibility is demonstrating clear financial returns on AI investments. Fortune 100 boards expect 400-700% ROI in years 1-3, with detailed financial models backing every claim.</p>
+
+                        <h3>The CAIO's ROI Framework (4 Categories)</h3>
+
+                        <h4>1. Revenue Generation (Direct)</h4>
+                        <div class="highlight-box">
+                            <strong>Examples from Hybrid DMN+ML+LLM Moat:</strong>
+                            <ul>
+                                <li><strong>Lead Scoring Optimization:</strong> 87% → 95% accuracy
+                                    <ul>
+                                        <li>Before: 15% conversion rate on 100 leads/month = 15 new members</li>
+                                        <li>After: 25% conversion rate = 25 new members</li>
+                                        <li>Additional 10 members × $89/mo × 12 months = $10,680/mo</li>
+                                        <li><strong>Annual Impact: $128,160</strong></li>
+                                    </ul>
+                                </li>
+                                <li><strong>Dynamic Pricing Model:</strong> ML-optimized pricing
+                                    <ul>
+                                        <li>Current: $200k/month revenue at fixed pricing</li>
+                                        <li>With AI: 15% revenue increase = $30k/month additional</li>
+                                        <li><strong>Annual Impact: $360,000</strong></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <h4>2. Cost Reduction (Efficiency)</h4>
+                        <div class="highlight-box">
+                            <strong>Examples:</strong>
+                            <ul>
+                                <li><strong>Demand Forecasting:</strong> 95% accuracy staffing optimization
+                                    <ul>
+                                        <li>Labor savings from accurate scheduling: $4,000/month</li>
+                                        <li><strong>Annual Impact: $48,000</strong></li>
+                                    </ul>
+                                </li>
+                                <li><strong>Automated Customer Service:</strong> AI handles 70% of inquiries
+                                    <ul>
+                                        <li>Before: 3 FTE customer service @ $50k/year = $150k</li>
+                                        <li>After: 1 FTE + AI system @ $80k/year total</li>
+                                        <li><strong>Annual Savings: $70,000</strong></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <h4>3. Risk Mitigation (Retention)</h4>
+                        <div class="highlight-box">
+                            <strong>Example - Churn Prevention:</strong>
+                            <ul>
+                                <li><strong>Churn Prediction Model:</strong> 91% accuracy, 30-day warning
+                                    <ul>
+                                        <li>Current: 50 cancellations/month, 20% retained = 10 saves</li>
+                                        <li>With AI: 68% retention rate = 34 saves</li>
+                                        <li>Additional 24 members × $89/mo = $2,136/mo</li>
+                                        <li><strong>Annual Impact: $25,632</strong></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <h4>4. Strategic Value (Competitive Advantage)</h4>
+                        <div class="highlight-box">
+                            <strong>Network Effects (Cross-Account Intelligence):</strong>
+                            <ul>
+                                <li>1 location: Good baseline (5k training samples)</li>
+                                <li>50 locations: 50x training data = 95% accuracy vs 70%</li>
+                                <li>Bottom 50% of locations improve 20% by adopting best practices</li>
+                                <li>25 locations × $50k/month × 20% = $250k/month increase</li>
+                                <li><strong>Annual Impact: $3M across franchise</strong></li>
+                            </ul>
+                        </div>
+
+                        <h3>Building the Financial Model (Excel/Google Sheets)</h3>
+
+                        <div class="code-block">
+<pre>
+AI Investment Financial Model Template
+=======================================
+
+ASSUMPTIONS (Year 1)
+-------------------
+Initial Investment:
+  - ML engineering team (3 people): $450k
+  - Data infrastructure: $100k
+  - AI platform licenses: $50k
+  - Training & consulting: $50k
+  Total Year 1 Investment: $650k
+
+REVENUE IMPACTS
+--------------
+1. Lead Conversion Improvement
+   - Current leads/month: 1,000
+   - Current conversion: 15% → New: 25%
+   - Additional conversions: 100/month
+   - Average customer value: $1,200/year
+   - Monthly impact: $10,000
+   - Annual impact: $120,000
+
+2. Churn Reduction
+   - Current churn: 50/month (10% rate)
+   - AI retention rate: 68%
+   - Members saved: 24/month
+   - LTV per member: $1,068 (12 months)
+   - Monthly impact: $25,632
+   - Annual impact: $307,584
+
+3. Dynamic Pricing
+   - Current revenue: $2.4M/year
+   - Price optimization: 15% increase
+   - Annual impact: $360,000
+
+4. Upsell Optimization
+   - Current upsell rate: 10%
+   - AI-driven upsells: 18%
+   - Additional upsells: 8% × 500 members = 40/month
+   - Average upsell value: $50/month
+   - Monthly impact: $2,000
+   - Annual impact: $24,000
+
+Total Revenue Impact Year 1: $811,584
+
+COST SAVINGS
+------------
+1. Labor Efficiency
+   - Customer service automation: $70,000
+   - Sales team efficiency: $40,000
+   - Operations optimization: $48,000
+   Total Savings: $158,000
+
+Total Financial Impact Year 1: $969,584
+
+ROI CALCULATION
+--------------
+Investment: $650,000
+Return: $969,584
+Net Benefit: $319,584
+ROI: 49% (Year 1)
+
+YEAR 2-3 PROJECTIONS
+-------------------
+Year 2:
+  - Investment: $200k (incremental)
+  - Return: $1.8M (models mature, scale effects)
+  - ROI: 900%
+
+Year 3:
+  - Investment: $200k
+  - Return: $3.2M (full maturity, network effects)
+  - ROI: 1,600%
+
+3-Year Total:
+  - Investment: $1,050,000
+  - Return: $5,969,584
+  - Net Benefit: $4,919,584
+  - 3-Year ROI: 468%
+</pre>
+                        </div>
+
+                        <h3>CFO/Board Presentation Framework</h3>
+                        <p>How to present AI investments to financial stakeholders:</p>
+
+                        <div class="code-block">
+<pre>
+Board Presentation: AI Investment Proposal
+==========================================
+
+SLIDE 1: Executive Summary (1 minute)
+- Ask: $650k Year 1 AI investment
+- Return: $970k Year 1, $6M over 3 years
+- ROI: 468% (3-year)
+- Risk: Low (pilot approach, proven technology)
+
+SLIDE 2: Business Context (2 minutes)
+- Market pressure: Competitors investing heavily in AI
+- Customer expectations: 24/7 personalized service
+- Efficiency demands: Must reduce costs 20%
+- Growth mandate: 30% revenue growth target
+
+SLIDE 3: The Opportunity (3 minutes)
+Three high-impact AI use cases:
+  1. Churn Prediction (91% accuracy) → $308k/year
+  2. Lead Optimization (87% accuracy) → $120k/year
+  3. Dynamic Pricing (15% revenue lift) → $360k/year
+
+SLIDE 4: Competitive Advantage (2 minutes)
+Our Proprietary Moat: Hybrid DMN+ML+LLM
+- No competitor has this architecture
+- 50 locations = 50x training data advantage
+- Network effects = sustainable moat
+
+SLIDE 5: Financial Model - Year 1 (3 minutes)
+[Show detailed model from above]
+- Investment: $650k
+- Return: $970k
+- ROI: 49%
+
+SLIDES 6-7: Years 2-3 Projections (3 minutes)
+- Year 2: 900% ROI ($1.8M return on $200k investment)
+- Year 3: 1,600% ROI ($3.2M return on $200k)
+- Explain scaling effects and model maturity
+
+SLIDE 8: Implementation Plan (2 minutes)
+- Phase 1 (Months 1-3): Pilot with 5 locations
+- Phase 2 (Months 4-6): Scale to 25 locations
+- Phase 3 (Months 7-12): Full deployment (50 locations)
+
+SLIDE 9: Risk Mitigation (2 minutes)
+Risk 1: Technology failure
+  → Mitigation: Pilot approach, proven ML techniques
+
+Risk 2: Talent shortage
+  → Mitigation: Partner with MIT/Stanford for recruiting
+
+Risk 3: Data quality issues
+  → Mitigation: 6-month data cleanup completed
+
+SLIDE 10: Team & Resources (2 minutes)
+- Hire 3 ML engineers: $450k
+- Data infrastructure: $100k
+- Platforms/licenses: $50k
+- Training: $50k
+
+SLIDE 11: Success Metrics (2 minutes)
+Technical KPIs:
+  - ML model accuracy: 90%+
+  - System uptime: 99.9%
+  - Response time: <200ms
+
+Business KPIs:
+  - Churn rate: 10% → 7%
+  - Lead conversion: 15% → 25%
+  - Revenue per member: +15%
+
+SLIDE 12: Competitive Benchmarking (2 minutes)
+- Industry average AI ROI: 200-300%
+- Our projected ROI: 468% (above market)
+- Competitors: 2 of top 5 invested $10M+ in AI
+
+SLIDE 13: Go/No-Go Decision (1 minute)
+If YES:
+  - Start hiring immediately
+  - Pilot launches in 60 days
+  - First ROI metrics in 90 days
+
+If NO:
+  - Competitive risk increases
+  - Miss $6M opportunity over 3 years
+  - Talent harder to acquire later
+
+SLIDE 14: Recommendation (1 minute)
+Approve $650k Year 1 investment
+Expected return: $970k (49% ROI)
+3-year return: $6M (468% ROI)
+
+SLIDE 15: Q&A
+
+Q&A Preparation (anticipate these questions):
+1. "What if the models don't achieve 90% accuracy?"
+   → We have fallback: Even at 80% accuracy, ROI is 300%+
+
+2. "How long until we see results?"
+   → Pilot results in 90 days, full ROI within 12 months
+
+3. "Can we do this for less money?"
+   → Yes, but slower timeline and lower ROI (explain trade-offs)
+
+4. "What's the ongoing cost after Year 1?"
+   → $200k/year (mostly salaries), but returns scale to $3M+
+
+5. "How does this compare to other AI vendors?"
+   → Off-the-shelf AI: 100-150% ROI (our custom models: 468%)
+</pre>
+                        </div>
+
+                        <h3>Video Resources</h3>
+                        <div class="video-resources">
+                            <div class="resources-grid">
+                                <div class="resource-card">
+                                    <div class="resource-type">Video Course</div>
+                                    <div class="resource-title">Financial Modeling for AI Projects</div>
+                                    <div class="resource-description">Wall Street Prep, 8 hours, comprehensive Excel modeling for technology investments</div>
+                                    <a href="https://www.wallstreetprep.com/" class="resource-link" target="_blank">Watch →</a>
+                                </div>
+                                <div class="resource-card">
+                                    <div class="resource-type">Video Course</div>
+                                    <div class="resource-title">Board Presentation Mastery</div>
+                                    <div class="resource-description">Harvard Business School Executive Education, techniques for C-suite communication</div>
+                                    <a href="https://online.hbs.edu/" class="resource-link" target="_blank">Watch →</a>
+                                </div>
+                                <div class="resource-card">
+                                    <div class="resource-type">Video Tutorial</div>
+                                    <div class="resource-title">ROI Calculation for ML Projects</div>
+                                    <div class="resource-description">Google Cloud AI, 2 hours, real-world examples and templates</div>
+                                    <a href="https://cloud.google.com/learn/training" class="resource-link" target="_blank">Watch →</a>
+                                </div>
+                                <div class="resource-card">
+                                    <div class="resource-type">Video Course</div>
+                                    <div class="resource-title">Financial Storytelling</div>
+                                    <div class="resource-description">CFO Leadership Council, 4 hours, how to present complex financial data</div>
+                                    <a href="https://www.youtube.com/results?search_query=financial+storytelling+for+executives" class="resource-link" target="_blank">Watch →</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>External Resources</h3>
+                        <div class="resources-grid">
+                            <div class="resource-card">
+                                <div class="resource-type">Template</div>
+                                <div class="resource-title">AI Investment Financial Model (Excel)</div>
+                                <div class="resource-description">Complete Excel template with formulas for AI ROI calculation</div>
+                                <a href="https://www.mckinsey.com/capabilities/quantumblack/how-we-help-clients" class="resource-link" target="_blank">Download →</a>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-type">Report</div>
+                                <div class="resource-title">McKinsey: AI ROI Benchmarks 2024</div>
+                                <div class="resource-description">Industry benchmarks for AI investment returns across sectors</div>
+                                <a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights" class="resource-link" target="_blank">Read →</a>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-type">Guide</div>
+                                <div class="resource-title">Deloitte: Building the Business Case for AI</div>
+                                <div class="resource-description">Step-by-step guide for CFO-level AI business cases</div>
+                                <a href="https://www2.deloitte.com/us/en/insights/focus/cognitive-technologies.html" class="resource-link" target="_blank">Read →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-container">
+                        <h2 style="color: #38FF6A; margin-bottom: 30px;">Knowledge Check</h2>
+                        <div class="quiz-question">
+                            <div class="question-text">1. What are the 4 categories of AI ROI for a CAIO?</div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="true">A) Revenue Generation, Cost Reduction, Risk Mitigation, Strategic Value</div>
+                                <div class="quiz-option" data-correct="false">B) Technology, People, Process, Data</div>
+                                <div class="quiz-option" data-correct="false">C) Build, Buy, Partner, Wait</div>
+                                <div class="quiz-option" data-correct="false">D) Cloud, Edge, Mobile, Desktop</div>
+                            </div>
+                        </div>
+                        <div class="quiz-question">
+                            <div class="question-text">2. In the example financial model, what is the 3-year ROI for a $1.05M AI investment that returns $5.97M?</div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">A) 200%</div>
+                                <div class="quiz-option" data-correct="false">B) 350%</div>
+                                <div class="quiz-option" data-correct="true">C) 468%</div>
+                                <div class="quiz-option" data-correct="false">D) 600%</div>
+                            </div>
+                        </div>
+                        <div class="quiz-question">
+                            <div class="question-text">3. What is a key risk mitigation strategy when presenting AI investments to the board?</div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">A) Promise 1000%+ ROI to make it compelling</div>
+                                <div class="quiz-option" data-correct="true">B) Start with pilot approach using proven technology and show fallback scenarios</div>
+                                <div class="quiz-option" data-correct="false">C) Avoid discussing risks entirely</div>
+                                <div class="quiz-option" data-correct="false">D) Blame external factors if it fails</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 5,
+                path: 'technical',
+                number: '05',
+                title: 'Machine Learning Fundamentals',
+                description: 'Master ML core concepts from Stanford CS229: supervised/unsupervised/reinforcement learning, training pipelines, and evaluation.',
+                duration: '5 hours',
+                topics: ['Supervised Learning', 'Unsupervised Learning', 'Training Pipeline', 'Model Evaluation'],
+                difficulty: 'Foundation',
+                locked: false,
+                content: `
+                    <div class="lesson-section">
+                        <h2>Machine Learning Fundamentals for CAIOs</h2>
+                        <p>As a Chief AI Officer, you must understand machine learning at a technical level to make informed decisions about model selection, team hiring, and architecture design. This module covers Stanford CS229 core concepts.</p>
+
+                        <h3>What is Machine Learning?</h3>
+                        <div class="highlight-box">
+                            <strong>Definition (Tom Mitchell, CMU):</strong>
+                            <p>"A computer program is said to learn from experience E with respect to some task T and performance measure P, if its performance on T, as measured by P, improves with experience E."</p>
+
+                            <strong>Example - Lead Scoring:</strong>
+                            <ul>
+                                <li><strong>Task (T):</strong> Predict if a lead will convert to paying customer</li>
+                                <li><strong>Experience (E):</strong> Historical data of 10,000 leads (features + outcomes)</li>
+                                <li><strong>Performance (P):</strong> Accuracy (87% correct predictions)</li>
+                            </ul>
+                        </div>
+
+                        <h3>Three Types of Machine Learning</h3>
+
+                        <h4>1. Supervised Learning (Most Common - 90% of Business ML)</h4>
+                        <p><strong>Definition:</strong> Learning from labeled data (input → output pairs)</p>
+
+                        <div class="code-block">
+<pre>
+Training Data Structure:
+┌─────────────────────────────────────────────────────────┐
+│ Features (X)                        │ Label (y)         │
+├─────────────────────────────────────┼───────────────────┤
+│ Distance: 2 miles                   │                   │
+│ Age: 28                             │ Converted: YES    │
+│ Income: $65k                        │                   │
+│ Website visits: 5                   │                   │
+├─────────────────────────────────────┼───────────────────┤
+│ Distance: 15 miles                  │                   │
+│ Age: 45                             │ Converted: NO     │
+│ Income: $45k                        │                   │
+│ Website visits: 1                   │                   │
+├─────────────────────────────────────┼───────────────────┤
+│ ... 9,998 more examples             │ ...               │
+└─────────────────────────────────────┴───────────────────┘
+
+ML Algorithm learns pattern:
+IF (distance < 5 miles AND website_visits > 3 AND age < 35)
+   THEN predict: Converted = YES (90% confidence)
+ELSE predict: NO
+</pre>
+                        </div>
+
+                        <p><strong>Use Cases in Your Hybrid AI Moat:</strong></p>
+                        <ul>
+                            <li><strong>Lead Scoring:</strong> Predict conversion probability (87% accuracy)</li>
+                            <li><strong>Churn Prediction:</strong> Predict cancellation risk (91% accuracy)</li>
+                            <li><strong>Demand Forecasting:</strong> Predict class attendance (95% accuracy)</li>
+                            <li><strong>Lifetime Value:</strong> Predict total customer value</li>
+                        </ul>
+
+                        <h4>2. Unsupervised Learning (Pattern Discovery)</h4>
+                        <p><strong>Definition:</strong> Learning from unlabeled data (find hidden patterns)</p>
+
+                        <div class="code-block">
+<pre>
+Training Data (No Labels):
+┌──────────────────────────────────────────────┐
+│ Member behaviors (no predefined categories)  │
+├──────────────────────────────────────────────┤
+│ Person 1: Trains 6am, yoga, protein shakes   │
+│ Person 2: Trains 6pm, weights, social        │
+│ Person 3: Trains 6am, yoga, smoothies        │
+│ Person 4: Trains 6pm, cardio, social         │
+│ ... 1,000 more members                       │
+└──────────────────────────────────────────────┘
+
+ML Algorithm discovers clusters:
+Cluster 1: "Morning Warriors" (early, yoga, health-focused)
+Cluster 2: "Evening Social" (late, group classes, community)
+Cluster 3: "Hardcore Lifters" (midday, solo, strength)
+
+Use: Target each cluster with personalized marketing
+</pre>
+                        </div>
+
+                        <p><strong>Use Cases:</strong></p>
+                        <ul>
+                            <li><strong>Customer Segmentation:</strong> Group members by behavior patterns</li>
+                            <li><strong>Anomaly Detection:</strong> Identify unusual patterns (fraud, errors)</li>
+                            <li><strong>Recommendation Systems:</strong> "Members like you also enjoy..."</li>
+                        </ul>
+
+                        <h4>3. Reinforcement Learning (Sequential Decisions)</h4>
+                        <p><strong>Definition:</strong> Learning through trial-and-error with rewards/penalties</p>
+
+                        <div class="highlight-box">
+                            <strong>Example - Dynamic Pricing Agent:</strong>
+                            <ul>
+                                <li><strong>State:</strong> Current capacity (80% full), day (Friday), season (summer)</li>
+                                <li><strong>Action:</strong> Set price ($79, $89, $99, or $109)</li>
+                                <li><strong>Reward:</strong> Revenue × member satisfaction (maximize both)</li>
+                                <li><strong>Learning:</strong> Agent tries different prices, learns optimal strategy</li>
+                            </ul>
+                            <p>After 10,000 pricing decisions, agent learns: "Friday evenings in summer → charge $99 (maximizes revenue without losing members)"</p>
+                        </div>
+
+                        <p><strong>Use Cases (Advanced):</strong></p>
+                        <ul>
+                            <li><strong>Dynamic Pricing:</strong> Optimize prices in real-time</li>
+                            <li><strong>Resource Allocation:</strong> Staff scheduling optimization</li>
+                            <li><strong>Conversation AI:</strong> Multi-turn dialogue optimization</li>
+                        </ul>
+
+                        <h3>The ML Training Pipeline (5 Stages)</h3>
+
+                        <div class="code-block">
+<pre>
+Stage 1: Data Collection
+-------------------------
+Source: CRM, website analytics, payment systems, attendance logs
+Volume: 10,000+ examples for basic model, 100,000+ for production
+Quality: Clean, accurate, representative of real-world
+
+↓
+
+Stage 2: Feature Engineering
+-----------------------------
+Raw data → ML-ready features
+
+Example - Lead Scoring:
+  Raw: "Email: john@gmail.com"
+  → Feature: email_domain_quality = 0.8 (gmail = trusted)
+
+  Raw: "Form submitted: Jan 15, 2025, 11:47pm"
+  → Feature: submission_hour = 23 (late night = lower quality)
+
+  Raw: "Clicked 5 pages, spent 8 minutes"
+  → Feature: engagement_score = 0.9 (high engagement)
+
+↓
+
+Stage 3: Model Training
+------------------------
+Split data: 70% training, 15% validation, 15% test
+
+Training process (iterative):
+1. Initialize model with random weights
+2. Feed training data through model
+3. Calculate error (prediction vs actual)
+4. Adjust weights to reduce error
+5. Repeat 100-1000 times (epochs)
+
+Result: Model learns patterns in training data
+
+↓
+
+Stage 4: Model Evaluation
+--------------------------
+Test on held-out data (never seen during training)
+
+Metrics:
+  - Accuracy: 87% (correct predictions)
+  - Precision: 85% (of predicted "yes", how many were actually yes)
+  - Recall: 90% (of actual "yes", how many did we catch)
+  - F1 Score: 87.4% (harmonic mean of precision & recall)
+
+↓
+
+Stage 5: Model Deployment
+--------------------------
+Package model for production:
+  - API endpoint: POST /api/ml/predict/lead-score
+  - Input: Lead features (JSON)
+  - Output: Prediction + confidence score
+  - Latency: <50ms response time
+  - Monitoring: Track accuracy drift over time
+</pre>
+                        </div>
+
+                        <h3>Common ML Pitfalls (and How to Avoid Them)</h3>
+
+                        <h4>1. Overfitting (Model Memorizes Training Data)</h4>
+                        <div class="highlight-box">
+                            <strong>Problem:</strong>
+                            <ul>
+                                <li>Training accuracy: 99%</li>
+                                <li>Test accuracy: 65%</li>
+                                <li>Model memorized training data, can't generalize</li>
+                            </ul>
+                            <strong>Solution:</strong>
+                            <ul>
+                                <li>Use more training data (10x more = better generalization)</li>
+                                <li>Regularization (penalize complex models)</li>
+                                <li>Cross-validation (test on multiple data splits)</li>
+                                <li>Early stopping (stop training before memorization)</li>
+                            </ul>
+                        </div>
+
+                        <h4>2. Underfitting (Model Too Simple)</h4>
+                        <div class="highlight-box">
+                            <strong>Problem:</strong>
+                            <ul>
+                                <li>Training accuracy: 60%</li>
+                                <li>Test accuracy: 58%</li>
+                                <li>Model can't capture complex patterns</li>
+                            </ul>
+                            <strong>Solution:</strong>
+                            <ul>
+                                <li>Use more complex model (e.g., neural network vs linear regression)</li>
+                                <li>Add more features (capture more information)</li>
+                                <li>Train longer (more epochs)</li>
+                            </ul>
+                        </div>
+
+                        <h4>3. Bias-Variance Tradeoff</h4>
+                        <div class="code-block">
+<pre>
+High Bias (Underfitting):
+  - Model too simple
+  - Poor performance on training AND test data
+  - Example: Linear model for complex nonlinear data
+
+High Variance (Overfitting):
+  - Model too complex
+  - Great on training, poor on test data
+  - Example: 1000-parameter model trained on 100 examples
+
+Sweet Spot:
+  - Right complexity for the data
+  - Good on training AND test data
+  - Achieved through: cross-validation, regularization, proper data volume
+</pre>
+                        </div>
+
+                        <h3>Cross-Validation (Gold Standard for Model Evaluation)</h3>
+                        <div class="code-block">
+<pre>
+K-Fold Cross-Validation (k=5 example):
+
+Data split into 5 folds:
+┌────┬────┬────┬────┬────┐
+│ F1 │ F2 │ F3 │ F4 │ F5 │
+└────┴────┴────┴────┴────┘
+
+Round 1: Train on F2,F3,F4,F5 → Test on F1 → Accuracy: 85%
+Round 2: Train on F1,F3,F4,F5 → Test on F2 → Accuracy: 88%
+Round 3: Train on F1,F2,F4,F5 → Test on F3 → Accuracy: 86%
+Round 4: Train on F1,F2,F3,F5 → Test on F4 → Accuracy: 89%
+Round 5: Train on F1,F2,F3,F4 → Test on F5 → Accuracy: 87%
+
+Average accuracy: 87% (± 1.5% std dev)
+
+Benefit: More robust estimate than single train/test split
+</pre>
+                        </div>
+
+                        <h3>Hyperparameter Tuning (Model Optimization)</h3>
+                        <p>Hyperparameters = settings you choose BEFORE training (not learned from data)</p>
+
+                        <div class="code-block">
+<pre>
+Example - Random Forest Model:
+
+Hyperparameters to tune:
+  - n_estimators: How many trees? (50, 100, 200, 500)
+  - max_depth: How deep each tree? (5, 10, 20, None)
+  - min_samples_split: Min samples to split node? (2, 5, 10)
+  - max_features: Features per split? (sqrt, log2, all)
+
+Grid Search (try all combinations):
+┌────────────┬───────────┬────────────────┬─────────────┐
+│ n_estimators│ max_depth │ min_samples    │ Accuracy    │
+├────────────┼───────────┼────────────────┼─────────────┤
+│ 50         │ 5         │ 2              │ 82%         │
+│ 50         │ 10        │ 2              │ 85%         │
+│ 100        │ 10        │ 5              │ 87% ← Best  │
+│ 200        │ 20        │ 2              │ 86%         │
+│ ... (test 100+ combinations)              │             │
+└────────────┴───────────┴────────────────┴─────────────┘
+
+Result: Best hyperparameters = n_estimators=100, max_depth=10, min_samples_split=5
+</pre>
+                        </div>
+
+                        <h3>Video Resources</h3>
+                        <div class="video-resources">
+                            <div class="resources-grid">
+                                <div class="resource-card">
+                                    <div class="resource-type">Video Course</div>
+                                    <div class="resource-title">Stanford CS229: Machine Learning (Andrew Ng)</div>
+                                    <div class="resource-description">Complete Stanford course, 20 hours, covers all ML fundamentals with math</div>
+                                    <a href="https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU" class="resource-link" target="_blank">Watch →</a>
+                                </div>
+                                <div class="resource-card">
+                                    <div class="resource-type">Video Course</div>
+                                    <div class="resource-title">Machine Learning Specialization (Coursera)</div>
+                                    <div class="resource-description">Andrew Ng, 3-month program, hands-on projects and quizzes</div>
+                                    <a href="https://www.coursera.org/specializations/machine-learning-introduction" class="resource-link" target="_blank">Watch →</a>
+                                </div>
+                                <div class="resource-card">
+                                    <div class="resource-type">Video Tutorial</div>
+                                    <div class="resource-title">ML Fundamentals (StatQuest)</div>
+                                    <div class="resource-description">Intuitive explanations of ML concepts, 5-15 min videos, visual learning</div>
+                                    <a href="https://www.youtube.com/@statquest" class="resource-link" target="_blank">Watch →</a>
+                                </div>
+                                <div class="resource-card">
+                                    <div class="resource-type">Video Course</div>
+                                    <div class="resource-title">Practical Deep Learning (fast.ai)</div>
+                                    <div class="resource-description">Top-down approach, 7 weeks, build real models from day 1</div>
+                                    <a href="https://course.fast.ai/" class="resource-link" target="_blank">Watch →</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>External Resources</h3>
+                        <div class="resources-grid">
+                            <div class="resource-card">
+                                <div class="resource-type">Textbook</div>
+                                <div class="resource-title">Hands-On Machine Learning (Aurélien Géron)</div>
+                                <div class="resource-description">Best-selling ML book, Python code examples, Scikit-Learn & TensorFlow</div>
+                                <a href="https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/" class="resource-link" target="_blank">Read →</a>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-type">Tool</div>
+                                <div class="resource-title">Scikit-Learn Documentation</div>
+                                <div class="resource-description">Python ML library, comprehensive tutorials and examples</div>
+                                <a href="https://scikit-learn.org/stable/" class="resource-link" target="_blank">Explore →</a>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-type">Interactive</div>
+                                <div class="resource-title">ML Playground (TensorFlow)</div>
+                                <div class="resource-description">Visual tool to experiment with neural networks in browser</div>
+                                <a href="https://playground.tensorflow.org/" class="resource-link" target="_blank">Try →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-container">
+                        <h2 style="color: #38FF6A; margin-bottom: 30px;">Knowledge Check</h2>
+                        <div class="quiz-question">
+                            <div class="question-text">1. What are the three main types of machine learning?</div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="true">A) Supervised, Unsupervised, Reinforcement Learning</div>
+                                <div class="quiz-option" data-correct="false">B) Classification, Regression, Clustering</div>
+                                <div class="quiz-option" data-correct="false">C) Deep Learning, Shallow Learning, Transfer Learning</div>
+                                <div class="quiz-option" data-correct="false">D) Python, R, Julia</div>
+                            </div>
+                        </div>
+                        <div class="quiz-question">
+                            <div class="question-text">2. What is overfitting in machine learning?</div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">A) Model is too simple and performs poorly on all data</div>
+                                <div class="quiz-option" data-correct="true">B) Model memorizes training data and performs poorly on new data</div>
+                                <div class="quiz-option" data-correct="false">C) Model trains too quickly</div>
+                                <div class="quiz-option" data-correct="false">D) Model uses too much memory</div>
+                            </div>
+                        </div>
+                        <div class="quiz-question">
+                            <div class="question-text">3. What is the purpose of cross-validation?</div>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-correct="false">A) To train the model faster</div>
+                                <div class="quiz-option" data-correct="false">B) To reduce memory usage</div>
+                                <div class="quiz-option" data-correct="true">C) To get a more robust estimate of model performance by testing on multiple data splits</div>
+                                <div class="quiz-option" data-correct="false">D) To validate the data quality</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+            // Additional modules 6-12 will continue...
+        ];
+
+        // State management
+        let currentPath = 'executive';
+        let completedModules = JSON.parse(localStorage.getItem('completedModules') || '[]');
+        let currentModuleId = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderModules();
+            updateProgress();
+
+            // Path selector event listeners
+            document.querySelectorAll('.path-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.path-button').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentPath = this.dataset.path;
+                    renderModules();
+                });
+            });
+        });
+
+        function renderModules() {
+            const container = document.getElementById('modules-container');
+            const pathModules = modules.filter(m => m.path === currentPath);
+
+            container.innerHTML = pathModules.map(module => {
+                const isCompleted = completedModules.includes(module.id);
+                const statusClass = isCompleted ? 'completed' : 'in-progress';
+                const statusText = isCompleted ? 'Completed' : 'In Progress';
+
+                return `
+                    <div class="module-card ${statusClass}" onclick="openModule(${module.id})">
+                        <div class="module-header">
+                            <div class="module-number">${module.number}</div>
+                            <div class="module-status status-${statusClass.replace('-', '')}">${statusText}</div>
+                        </div>
+                        <div class="module-title">${module.title}</div>
+                        <div class="module-description">${module.description}</div>
+                        <div class="module-meta">
+                            <div class="meta-item">
+                                <span>⏱️</span> ${module.duration}
+                            </div>
+                            <div class="meta-item">
+                                <span>📊</span> ${module.difficulty}
+                            </div>
+                        </div>
+                        <div class="module-topics">
+                            <div class="topics-list">
+                                ${module.topics.map(topic => `<div class="topic-tag">${topic}</div>`).join('')}
+                            </div>
+                        </div>
+                        ${isCompleted ? '<div class="progress-bar"><div class="progress-fill" style="width: 100%"></div></div>' : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openModule(moduleId) {
+            const module = modules.find(m => m.id === moduleId);
+            if (!module) return;
+
+            currentModuleId = moduleId;
+            document.getElementById('modal-title').textContent = `Module ${module.number}: ${module.title}`;
+            document.getElementById('lesson-content').innerHTML = module.content;
+            document.getElementById('module-modal').classList.add('active');
+
+            // Setup quiz interaction
+            setupQuiz();
+
+            // Update complete button text
+            const isCompleted = completedModules.includes(moduleId);
+            document.getElementById('complete-button').textContent = isCompleted ? 'Continue to Next Module' : 'Mark Complete & Continue';
+        }
+
+        function closeModal() {
+            document.getElementById('module-modal').classList.remove('active');
+        }
+
+        function setupQuiz() {
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach(option => {
+                option.onclick = function() {
+                    // Remove previous selections in same question
+                    const question = this.closest('.quiz-question');
+                    question.querySelectorAll('.quiz-option').forEach(opt => {
+                        opt.classList.remove('selected', 'correct', 'incorrect');
+                    });
+
+                    // Mark this option
+                    this.classList.add('selected');
+                    const isCorrect = this.dataset.correct === 'true';
+                    this.classList.add(isCorrect ? 'correct' : 'incorrect');
+                };
+            });
+        }
+
+        function completeModule() {
+            if (!currentModuleId) return;
+
+            // Check if quiz is completed (all questions answered correctly)
+            const questions = document.querySelectorAll('.quiz-question');
+            let allCorrect = true;
+
+            questions.forEach(question => {
+                const selectedOption = question.querySelector('.quiz-option.selected');
+                if (!selectedOption || selectedOption.dataset.correct !== 'true') {
+                    allCorrect = false;
+                }
+            });
+
+            if (!allCorrect && questions.length > 0) {
+                alert('Please answer all quiz questions correctly before proceeding.');
+                return;
+            }
+
+            // Mark as completed
+            if (!completedModules.includes(currentModuleId)) {
+                completedModules.push(currentModuleId);
+                localStorage.setItem('completedModules', JSON.stringify(completedModules));
+            }
+
+            // Update UI
+            renderModules();
+            updateProgress();
+            closeModal();
+
+            // Find next module
+            const currentModule = modules.find(m => m.id === currentModuleId);
+            const nextModule = modules.find(m => m.path === currentModule.path && m.id === currentModuleId + 1);
+
+            if (nextModule) {
+                setTimeout(() => openModule(nextModule.id), 500);
+            }
+        }
+
+        function updateProgress() {
+            const totalModules = modules.length;
+            const completed = completedModules.length;
+            const percentage = Math.round((completed / totalModules) * 100);
+
+            document.getElementById('overall-percentage').textContent = percentage + '%';
+            document.getElementById('overall-progress-fill').style.width = percentage + '%';
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>
