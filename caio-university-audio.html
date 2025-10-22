@@ -371,9 +371,9 @@
         </header>
 
         <div class="info-banner">
-            <h3>📱 Audio Training Coming Soon</h3>
-            <p>Audio versions of all 16 modules are being generated using AI text-to-speech. Meanwhile, you can use your device's built-in text-to-speech to listen to the full training modules in the main platform.</p>
-            <p style="margin-top: 10px;"><strong>iOS:</strong> Select text → Speak | <strong>Android:</strong> Settings → Accessibility → Select to Speak</p>
+            <h3>🎧 Audio Training Now Available!</h3>
+            <p><strong>Module 01 is ready to play!</strong> Click the module below to start listening. Playback controls include play/pause, skip forward/backward (15 sec), speed adjustment (0.75x-2.0x), and progress seeking.</p>
+            <p style="margin-top: 10px;">Remaining modules (02-16) are being generated. Check back soon for the complete 70-hour audio certification!</p>
         </div>
 
         <div class="path-selector">
@@ -445,41 +445,105 @@
     <script>
         const modules = [
             // Executive Strategy Path
-            { id: 1, path: 'executive', number: '01', title: 'Fortune 100 CAIO Role & Expectations', duration: '3 hours', audioUrl: '#' },
-            { id: 2, path: 'executive', number: '02', title: 'MIT/Stanford AI Strategy Frameworks', duration: '4 hours', audioUrl: '#' },
-            { id: 3, path: 'executive', number: '03', title: 'DMN Mastery - Business Rules as Code', duration: '5 hours', audioUrl: '#' },
-            { id: 4, path: 'executive', number: '04', title: 'AI ROI & Financial Modeling', duration: '4 hours', audioUrl: '#' },
+            { id: 1, path: 'executive', number: '01', title: 'Fortune 100 CAIO Role & Expectations', duration: '3 hours', audioUrl: 'audio/module-01.mp3' },
+            { id: 2, path: 'executive', number: '02', title: 'MIT/Stanford AI Strategy Frameworks', duration: '4 hours', audioUrl: 'audio/module-02.mp3' },
+            { id: 3, path: 'executive', number: '03', title: 'DMN Mastery - Business Rules as Code', duration: '5 hours', audioUrl: 'audio/module-03.mp3' },
+            { id: 4, path: 'executive', number: '04', title: 'AI ROI & Financial Modeling', duration: '4 hours', audioUrl: 'audio/module-04.mp3' },
 
             // Technical Mastery Path
-            { id: 5, path: 'technical', number: '05', title: 'Machine Learning Fundamentals', duration: '5 hours', audioUrl: '#' },
-            { id: 6, path: 'technical', number: '06', title: 'Production ML Models (XGBoost, Prophet)', duration: '5 hours', audioUrl: '#' },
-            { id: 7, path: 'technical', number: '07', title: 'LLM Architecture & Integration', duration: '5 hours', audioUrl: '#' },
-            { id: 8, path: 'technical', number: '08', title: 'Hybrid AI Pipeline Architecture', duration: '5 hours', audioUrl: '#' },
+            { id: 5, path: 'technical', number: '05', title: 'Machine Learning Fundamentals', duration: '5 hours', audioUrl: 'audio/module-05.mp3' },
+            { id: 6, path: 'technical', number: '06', title: 'Production ML Models (XGBoost, Prophet)', duration: '5 hours', audioUrl: 'audio/module-06.mp3' },
+            { id: 7, path: 'technical', number: '07', title: 'LLM Architecture & Integration', duration: '5 hours', audioUrl: 'audio/module-07.mp3' },
+            { id: 8, path: 'technical', number: '08', title: 'Hybrid AI Pipeline Architecture', duration: '5 hours', audioUrl: 'audio/module-08.mp3' },
 
             // Implementation Path
-            { id: 9, path: 'implementation', number: '09', title: 'Cross-Account Intelligence Platform', duration: '3 hours', audioUrl: '#' },
-            { id: 10, path: 'implementation', number: '10', title: 'AI Governance & Compliance', duration: '3 hours', audioUrl: '#' },
-            { id: 11, path: 'implementation', number: '11', title: 'Board-Level AI Presentations', duration: '2 hours', audioUrl: '#' },
-            { id: 12, path: 'implementation', number: '12', title: 'Capstone: End-to-End AI System', duration: '7 hours', audioUrl: '#' },
+            { id: 9, path: 'implementation', number: '09', title: 'Cross-Account Intelligence Platform', duration: '3 hours', audioUrl: 'audio/module-09.mp3' },
+            { id: 10, path: 'implementation', number: '10', title: 'AI Governance & Compliance', duration: '3 hours', audioUrl: 'audio/module-10.mp3' },
+            { id: 11, path: 'implementation', number: '11', title: 'Board-Level AI Presentations', duration: '2 hours', audioUrl: 'audio/module-11.mp3' },
+            { id: 12, path: 'implementation', number: '12', title: 'Capstone: End-to-End AI System', duration: '7 hours', audioUrl: 'audio/module-12.mp3' },
 
             // Python for AI Path
-            { id: 13, path: 'python', number: '13', title: 'Python Fundamentals for AI', duration: '4 hours', audioUrl: '#' },
-            { id: 14, path: 'python', number: '14', title: 'NumPy & Pandas for Data Science', duration: '4 hours', audioUrl: '#' },
-            { id: 15, path: 'python', number: '15', title: 'Python ML Libraries (scikit-learn, XGBoost)', duration: '5 hours', audioUrl: '#' },
-            { id: 16, path: 'python', number: '16', title: 'Building AI Agents with Python', duration: '6 hours', audioUrl: '#' }
+            { id: 13, path: 'python', number: '13', title: 'Python Fundamentals for AI', duration: '4 hours', audioUrl: 'audio/module-13.mp3' },
+            { id: 14, path: 'python', number: '14', title: 'NumPy & Pandas for Data Science', duration: '4 hours', audioUrl: 'audio/module-14.mp3' },
+            { id: 15, path: 'python', number: '15', title: 'Python ML Libraries (scikit-learn, XGBoost)', duration: '5 hours', audioUrl: 'audio/module-15.mp3' },
+            { id: 16, path: 'python', number: '16', title: 'Building AI Agents with Python', duration: '6 hours', audioUrl: 'audio/module-16.mp3' }
         ];
 
         let currentPath = 'executive';
         let currentModuleId = 1;
         let isPlaying = false;
 
+        const audio = document.getElementById('audio-element');
+        const progressBar = document.getElementById('progress-bar');
+        const progressFill = document.getElementById('progress-fill');
+        const currentTimeDisplay = document.getElementById('current-time');
+        const totalTimeDisplay = document.getElementById('total-time');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
+
+        audio.addEventListener('timeupdate', () => {
+            const percent = (audio.currentTime / audio.duration) * 100;
+            progressFill.style.width = percent + '%';
+            currentTimeDisplay.textContent = formatTime(audio.currentTime);
+        });
+
+        audio.addEventListener('loadedmetadata', () => {
+            totalTimeDisplay.textContent = formatTime(audio.duration);
+        });
+
+        audio.addEventListener('ended', () => {
+            const pathModules = modules.filter(m => m.path === currentPath);
+            const currentIndex = pathModules.findIndex(m => m.id === currentModuleId);
+            if (currentIndex < pathModules.length - 1) {
+                playModule(pathModules[currentIndex + 1].id);
+            } else {
+                isPlaying = false;
+                playPauseBtn.textContent = '▶️';
+            }
+        });
+
+        audio.addEventListener('error', (e) => {
+            let errorMsg = 'Audio failed to load. ';
+            if (audio.error) {
+                switch(audio.error.code) {
+                    case 1: errorMsg += 'Download aborted.'; break;
+                    case 2: errorMsg += 'Network error.'; break;
+                    case 3: errorMsg += 'Decoding error.'; break;
+                    case 4: errorMsg += 'Audio format not supported.'; break;
+                }
+            }
+            console.error('Audio error:', errorMsg);
+            isPlaying = false;
+            playPauseBtn.textContent = '▶️';
+        });
+
+        audio.addEventListener('waiting', () => {
+            playPauseBtn.textContent = '⏳';
+        });
+
+        audio.addEventListener('canplay', () => {
+            playPauseBtn.textContent = isPlaying ? '⏸' : '▶️';
+        });
+
+        progressBar.addEventListener('click', (e) => {
+            const rect = progressBar.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = percent * audio.duration;
+        });
+
         function renderModules() {
             const container = document.getElementById('modules-container');
             const pathModules = modules.filter(m => m.path === currentPath);
 
             container.innerHTML = pathModules.map(module => {
-                const isPlaying = module.id === currentModuleId;
-                return '<div class="module-card ' + (isPlaying ? 'playing' : '') + '" onclick="playModule(' + module.id + ')"><div class="module-number">' + module.number + '</div><div class="module-info"><div class="module-title">' + module.title + '</div><div class="module-duration">' + module.duration + '</div></div><div class="play-icon">' + (isPlaying ? '🔊' : '▶️') + '</div></div>';
+                const isCurrentlyPlaying = module.id === currentModuleId && isPlaying;
+                return '<div class="module-card ' + (isCurrentlyPlaying ? 'playing' : '') + '" onclick="playModule(' + module.id + ')"><div class="module-number">' + module.number + '</div><div class="module-info"><div class="module-title">' + module.title + '</div><div class="module-duration">' + module.duration + '</div></div><div class="play-icon">' + (isCurrentlyPlaying ? '🔊' : '▶️') + '</div></div>';
             }).join('');
         }
 
@@ -487,46 +551,71 @@
             currentModuleId = moduleId;
             const module = modules.find(m => m.id === moduleId);
 
+            audio.src = module.audioUrl;
+            audio.load();
+
             document.getElementById('current-module-title').textContent = 'Module ' + module.number + ': ' + module.title;
             document.getElementById('audio-player').classList.add('active');
+            playPauseBtn.textContent = '⏳';
 
-            renderModules();
-
-            // Show info since audio files aren't ready yet
-            alert('🎧 Audio Version Coming Soon!\n\nAudio files for all 16 modules are being generated. For now:\n\n📱 iOS: Use Safari Reader Mode + Speak Screen\n📱 Android: Enable Select to Speak in Accessibility\n💻 Desktop: Use browser text-to-speech extensions\n\nOr visit the main CAIO University platform for full interactive training!');
+            audio.play().then(() => {
+                isPlaying = true;
+                playPauseBtn.textContent = '⏸';
+                renderModules();
+            }).catch(err => {
+                console.error('Playback failed:', err);
+                alert('Module ' + module.number + ' audio not yet available.\\n\\nOnly Module 01 is currently generated.\\nRemaining modules will be added soon!');
+                isPlaying = false;
+                playPauseBtn.textContent = '▶️';
+            });
         }
 
         function togglePlayPause() {
-            isPlaying = !isPlaying;
-            document.getElementById('play-pause-btn').textContent = isPlaying ? '⏸' : '▶️';
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                playPauseBtn.textContent = '▶️';
+            } else {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    playPauseBtn.textContent = '⏸';
+                }).catch(err => {
+                    console.error('Playback failed:', err);
+                });
+            }
+            renderModules();
         }
 
         function previousModule() {
-            if (currentModuleId > 1) {
-                playModule(currentModuleId - 1);
+            const pathModules = modules.filter(m => m.path === currentPath);
+            const currentIndex = pathModules.findIndex(m => m.id === currentModuleId);
+            if (currentIndex > 0) {
+                playModule(pathModules[currentIndex - 1].id);
             }
         }
 
         function nextModule() {
-            if (currentModuleId < modules.length) {
-                playModule(currentModuleId + 1);
+            const pathModules = modules.filter(m => m.path === currentPath);
+            const currentIndex = pathModules.findIndex(m => m.id === currentModuleId);
+            if (currentIndex < pathModules.length - 1) {
+                playModule(pathModules[currentIndex + 1].id);
             }
         }
 
         function skipBackward() {
-            alert('⏪ Skip 15 seconds back (audio playback coming soon)');
+            audio.currentTime = Math.max(0, audio.currentTime - 15);
         }
 
         function skipForward() {
-            alert('⏩ Skip 15 seconds forward (audio playback coming soon)');
+            audio.currentTime = Math.min(audio.duration, audio.currentTime + 15);
         }
 
         function setSpeed(speed) {
+            audio.playbackRate = speed;
             document.querySelectorAll('.speed-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
         }
 
-        // Path selector
         document.querySelectorAll('.path-button').forEach(button => {
             button.addEventListener('click', function() {
                 document.querySelectorAll('.path-button').forEach(b => b.classList.remove('active'));
@@ -536,7 +625,6 @@
             });
         });
 
-        // Initialize
         renderModules();
     </script>
 </body>
