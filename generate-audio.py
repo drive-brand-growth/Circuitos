@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CAIO University Audio Generator
+Chief AI Officer University Audio Generator
 Generates high-quality audio for all 16 modules
 
 Options:
