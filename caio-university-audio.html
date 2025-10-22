@@ -371,9 +371,9 @@
         </header>
 
         <div class="info-banner">
-            <h3>🎧 Audio Training Now Available!</h3>
-            <p><strong>Module 01 is ready to play!</strong> Click the module below to start listening. Playback controls include play/pause, skip forward/backward (15 sec), speed adjustment (0.75x-2.0x), and progress seeking.</p>
-            <p style="margin-top: 10px;">Remaining modules (02-16) are being generated. Check back soon for the complete 70-hour audio certification!</p>
+            <h3>🎧 Complete Audio Library Available!</h3>
+            <p><strong>All 16 modules are ready to play!</strong> Click any module below to start listening. Playback controls include play/pause, skip forward/backward (15 sec), speed adjustment (0.75x-2.0x), and progress seeking.</p>
+            <p style="margin-top: 10px;">Complete 70-hour Fortune 100 Chief AI Officer certification - Listen anywhere, anytime on your mobile device!</p>
         </div>
 
         <div class="path-selector">
@@ -564,7 +564,7 @@
                 renderModules();
             }).catch(err => {
                 console.error('Playback failed:', err);
-                alert('Module ' + module.number + ' audio not yet available.\\n\\nOnly Module 01 is currently generated.\\nRemaining modules will be added soon!');
+                alert('Module ' + module.number + ' audio failed to load.\\n\\nPlease check your internet connection and try again.');
                 isPlaying = false;
                 playPauseBtn.textContent = '▶️';
             });
