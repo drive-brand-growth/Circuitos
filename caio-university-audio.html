@@ -356,11 +356,11 @@
             <p class="subtitle">Fortune 100 Chief AI Officer Certification - Listen Anywhere</p>
             <div class="stats">
                 <div class="stat">
-                    <div class="stat-number">16</div>
+                    <div class="stat-number">28</div>
                     <div class="stat-label">Modules</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-number">70</div>
+                    <div class="stat-number">48</div>
                     <div class="stat-label">Hours</div>
                 </div>
                 <div class="stat">
@@ -372,30 +372,40 @@
 
         <div class="info-banner">
             <h3>🎧 Complete Audio Library Available!</h3>
-            <p><strong>All 16 modules are ready to play!</strong> Click any module below to start listening. Playback controls include play/pause, skip forward/backward (15 sec), speed adjustment (0.75x-2.0x), and progress seeking.</p>
-            <p style="margin-top: 10px;">Complete 70-hour Fortune 100 Chief AI Officer certification - Listen anywhere, anytime on your mobile device!</p>
+            <p><strong>All 28 modules are ready to play!</strong> Click any module below to start listening. Playback controls include play/pause, skip forward/backward (15 sec), speed adjustment (0.75x-2.0x), and progress seeking.</p>
+            <p style="margin-top: 10px;">Complete 48-hour Fortune 100 Chief AI Officer certification covering DMN, ML, LLM systems, governance, leadership & more - Listen anywhere, anytime on your mobile device!</p>
         </div>
 
         <div class="path-selector">
-            <div class="path-button active" data-path="executive">
-                <div class="path-icon">🎯</div>
-                <div class="path-name">Executive Strategy</div>
-                <div class="path-duration">4 modules • 16 hrs</div>
+            <div class="path-button active" data-path="foundations">
+                <div class="path-icon">🚀</div>
+                <div class="path-name">Foundations</div>
+                <div class="path-duration">2 modules • 3 hrs</div>
             </div>
             <div class="path-button" data-path="technical">
                 <div class="path-icon">⚙️</div>
                 <div class="path-name">Technical Mastery</div>
-                <div class="path-duration">4 modules • 20 hrs</div>
+                <div class="path-duration">11 modules • 14 hrs</div>
             </div>
-            <div class="path-button" data-path="implementation">
-                <div class="path-icon">🚀</div>
-                <div class="path-name">Implementation</div>
-                <div class="path-duration">4 modules • 15 hrs</div>
+            <div class="path-button" data-path="governance">
+                <div class="path-icon">⚖️</div>
+                <div class="path-name">Governance & Ethics</div>
+                <div class="path-duration">3 modules • 5 hrs</div>
             </div>
-            <div class="path-button" data-path="python">
-                <div class="path-icon">🐍</div>
-                <div class="path-name">Python for AI</div>
-                <div class="path-duration">4 modules • 19 hrs</div>
+            <div class="path-button" data-path="data">
+                <div class="path-icon">📊</div>
+                <div class="path-name">Data Strategy</div>
+                <div class="path-duration">2 modules • 3.5 hrs</div>
+            </div>
+            <div class="path-button" data-path="leadership">
+                <div class="path-icon">👔</div>
+                <div class="path-name">Leadership</div>
+                <div class="path-duration">6 modules • 10 hrs</div>
+            </div>
+            <div class="path-button" data-path="capstone">
+                <div class="path-icon">🎓</div>
+                <div class="path-name">Capstone</div>
+                <div class="path-duration">4 modules • 12 hrs</div>
             </div>
         </div>
 
@@ -444,32 +454,56 @@
 
     <script>
         const modules = [
-            // Executive Strategy Path
-            { id: 1, path: 'executive', number: '01', title: 'Fortune 100 CAIO Role & Expectations', duration: '3 hours', audioUrl: 'audio/module-01.mp3' },
-            { id: 2, path: 'executive', number: '02', title: 'MIT/Stanford AI Strategy Frameworks', duration: '4 hours', audioUrl: 'audio/module-02.mp3' },
-            { id: 3, path: 'executive', number: '03', title: 'DMN Mastery - Business Rules as Code', duration: '5 hours', audioUrl: 'audio/module-03.mp3' },
-            { id: 4, path: 'executive', number: '04', title: 'AI ROI & Financial Modeling', duration: '4 hours', audioUrl: 'audio/module-04.mp3' },
+            // Module 1: Welcome & Orientation
+            { id: 1, path: 'foundations', number: '01', title: 'Welcome to CAIO University', duration: '1 hour', audioUrl: 'audio/module-01.mp3' },
 
-            // Technical Mastery Path
-            { id: 5, path: 'technical', number: '05', title: 'Machine Learning Fundamentals', duration: '5 hours', audioUrl: 'audio/module-05.mp3' },
-            { id: 6, path: 'technical', number: '06', title: 'Production ML Models (XGBoost, Prophet)', duration: '5 hours', audioUrl: 'audio/module-06.mp3' },
-            { id: 7, path: 'technical', number: '07', title: 'LLM Architecture & Integration', duration: '5 hours', audioUrl: 'audio/module-07.mp3' },
-            { id: 8, path: 'technical', number: '08', title: 'Hybrid AI Pipeline Architecture', duration: '5 hours', audioUrl: 'audio/module-08.mp3' },
+            // Module 2: AI Strategy & Vision
+            { id: 2, path: 'foundations', number: '02', title: 'Building AI Strategy from First Principles', duration: '2 hours', audioUrl: 'audio/module-02.mp3' },
 
-            // Implementation Path
-            { id: 9, path: 'implementation', number: '09', title: 'Cross-Account Intelligence Platform', duration: '3 hours', audioUrl: 'audio/module-09.mp3' },
-            { id: 10, path: 'implementation', number: '10', title: 'AI Governance & Compliance', duration: '3 hours', audioUrl: 'audio/module-10.mp3' },
-            { id: 11, path: 'implementation', number: '11', title: 'Board-Level AI Presentations', duration: '2 hours', audioUrl: 'audio/module-11.mp3' },
-            { id: 12, path: 'implementation', number: '12', title: 'Capstone: End-to-End AI System', duration: '7 hours', audioUrl: 'audio/module-12.mp3' },
+            // Module 3: Technical Mastery - DMN+ML+LLM (9 lessons)
+            { id: 3, path: 'technical', number: '03', title: 'Introduction to DMN (Decision Model & Notation)', duration: '45 min', audioUrl: 'audio/module-03.mp3' },
+            { id: 4, path: 'technical', number: '04', title: 'Building Decision Tables', duration: '90 min', audioUrl: 'audio/module-04.mp3' },
+            { id: 5, path: 'technical', number: '05', title: 'FEEL Expressions & Advanced DMN', duration: '60 min', audioUrl: 'audio/module-05.mp3' },
+            { id: 6, path: 'technical', number: '06', title: 'ML vs Rules: When to Use Each', duration: '45 min', audioUrl: 'audio/module-06.mp3' },
+            { id: 7, path: 'technical', number: '07', title: 'Understanding ML Models for Business', duration: '90 min', audioUrl: 'audio/module-07.mp3' },
+            { id: 8, path: 'technical', number: '08', title: 'ML in Production Systems', duration: '75 min', audioUrl: 'audio/module-08.mp3' },
+            { id: 9, path: 'technical', number: '09', title: 'What LLMs Add to Decision Systems', duration: '60 min', audioUrl: 'audio/module-09.mp3' },
+            { id: 10, path: 'technical', number: '10', title: 'Prompt Engineering for Structured Outputs', duration: '90 min', audioUrl: 'audio/module-10.mp3' },
+            { id: 11, path: 'technical', number: '11', title: 'LLM in Production: Reliability & Cost', duration: '75 min', audioUrl: 'audio/module-11.mp3' },
 
-            // Python for AI Path
-            { id: 13, path: 'python', number: '13', title: 'Python Fundamentals for AI', duration: '4 hours', audioUrl: 'audio/module-13.mp3' },
-            { id: 14, path: 'python', number: '14', title: 'NumPy & Pandas for Data Science', duration: '4 hours', audioUrl: 'audio/module-14.mp3' },
-            { id: 15, path: 'python', number: '15', title: 'Python ML Libraries (scikit-learn, XGBoost)', duration: '5 hours', audioUrl: 'audio/module-15.mp3' },
-            { id: 16, path: 'python', number: '16', title: 'Building AI Agents with Python', duration: '6 hours', audioUrl: 'audio/module-16.mp3' }
+            // Module 4: Hybrid Systems (2 lessons)
+            { id: 12, path: 'technical', number: '12', title: 'Hybrid System Architecture', duration: '90 min', audioUrl: 'audio/module-12.mp3' },
+            { id: 13, path: 'technical', number: '13', title: 'Weighting & Conflict Resolution', duration: '75 min', audioUrl: 'audio/module-13.mp3' },
+
+            // Module 5: AI Governance & Ethics
+            { id: 14, path: 'governance', number: '14', title: 'AI Governance Frameworks', duration: '2 hours', audioUrl: 'audio/module-14.mp3' },
+            { id: 15, path: 'governance', number: '15', title: 'Bias Detection & Mitigation', duration: '90 min', audioUrl: 'audio/module-15.mp3' },
+            { id: 16, path: 'governance', number: '16', title: 'Security & Privacy in AI Systems', duration: '90 min', audioUrl: 'audio/module-16.mp3' },
+
+            // Module 6: Data Strategy
+            { id: 17, path: 'data', number: '17', title: 'Building AI-Ready Data Infrastructure', duration: '2 hours', audioUrl: 'audio/module-17.mp3' },
+            { id: 18, path: 'data', number: '18', title: 'Data Quality & Feature Engineering', duration: '90 min', audioUrl: 'audio/module-18.mp3' },
+
+            // Module 7: Change Management
+            { id: 19, path: 'leadership', number: '19', title: 'Driving AI Adoption Across Organization', duration: '2 hours', audioUrl: 'audio/module-19.mp3' },
+            { id: 20, path: 'leadership', number: '20', title: 'Building AI-Ready Culture', duration: '90 min', audioUrl: 'audio/module-20.mp3' },
+
+            // Module 8: AI ROI & Business Value
+            { id: 21, path: 'leadership', number: '21', title: 'Measuring AI Business Impact', duration: '2 hours', audioUrl: 'audio/module-21.mp3' },
+            { id: 22, path: 'leadership', number: '22', title: 'AI Financial Modeling & Budgeting', duration: '90 min', audioUrl: 'audio/module-22.mp3' },
+
+            // Module 9: Executive Communication
+            { id: 23, path: 'leadership', number: '23', title: 'Board-Level AI Presentations', duration: '2 hours', audioUrl: 'audio/module-23.mp3' },
+            { id: 24, path: 'leadership', number: '24', title: 'Stakeholder Management for AI Initiatives', duration: '90 min', audioUrl: 'audio/module-24.mp3' },
+
+            // Module 10: Capstone Project
+            { id: 25, path: 'capstone', number: '25', title: 'Capstone Part 1: System Design', duration: '3 hours', audioUrl: 'audio/module-25.mp3' },
+            { id: 26, path: 'capstone', number: '26', title: 'Capstone Part 2: Implementation', duration: '4 hours', audioUrl: 'audio/module-26.mp3' },
+            { id: 27, path: 'capstone', number: '27', title: 'Capstone Part 3: Testing & Deployment', duration: '3 hours', audioUrl: 'audio/module-27.mp3' },
+            { id: 28, path: 'capstone', number: '28', title: 'Final Certification Exam', duration: '2 hours', audioUrl: 'audio/module-28.mp3' }
         ];
 
-        let currentPath = 'executive';
+        let currentPath = 'foundations';
         let currentModuleId = 1;
         let isPlaying = false;
 
