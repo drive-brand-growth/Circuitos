@@ -1,0 +1,130 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Darker metallic gradient for light backgrounds -->
+    <linearGradient id="metalGradientDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#606060;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#404040;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a2a2a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Softer green orb for light theme -->
+    <radialGradient id="orbGradientSoft" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00cc66;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#009944;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#007733;stop-opacity:1" />
+    </radialGradient>
+
+    <!-- Softer orb glow for light backgrounds -->
+    <filter id="orbGlowSoft">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="outerGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Highlight -->
+    <linearGradient id="highlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Metallic C letterform (darker for light bg) -->
+  <g id="c-letter">
+    <path d="M 140 100
+             C 140 66, 122 40, 100 40
+             C 78 40, 60 66, 60 100
+             C 60 134, 78 160, 100 160
+             C 112 160, 122 155, 130 145"
+          fill="url(#metalGradientDark)"
+          stroke="#1a1a1a"
+          stroke-width="3"
+          stroke-linecap="round"
+          filter="url(#outerGlow)"
+          opacity="0.95"/>
+
+    <!-- Highlight for 3D effect -->
+    <path d="M 135 100
+             C 135 70, 119 48, 100 48
+             C 81 48, 65 70, 65 100
+             C 65 130, 81 152, 100 152
+             C 110 152, 118 148, 125 140"
+          fill="none"
+          stroke="url(#highlight)"
+          stroke-width="2"
+          stroke-linecap="round"
+          opacity="0.5"/>
+
+    <!-- Inner C for depth -->
+    <path d="M 125 100
+             C 125 76, 114 60, 100 60
+             C 86 60, 75 76, 75 100
+             C 75 124, 86 140, 100 140
+             C 108 140, 115 136, 120 128"
+          fill="#e8e8e8"
+          stroke="#c0c0c0"
+          stroke-width="1"
+          opacity="0.4"/>
+  </g>
+
+  <!-- Softer green orb for light backgrounds -->
+  <g id="green-orb">
+    <!-- Outer glow halo (softer) -->
+    <circle cx="130" cy="100" r="16"
+            fill="url(#orbGradientSoft)"
+            opacity="0.15"
+            filter="url(#orbGlowSoft)"/>
+
+    <!-- Main orb -->
+    <circle cx="130" cy="100" r="10"
+            fill="url(#orbGradientSoft)"
+            filter="url(#orbGlowSoft)"/>
+
+    <!-- Highlight -->
+    <circle cx="127" cy="97" r="4"
+            fill="#ffffff"
+            opacity="0.7"/>
+
+    <!-- Inner glow -->
+    <circle cx="130" cy="100" r="6"
+            fill="#00dd77"
+            opacity="0.5"/>
+  </g>
+
+  <!-- Animations -->
+  <style>
+    @keyframes orbPulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.7;
+        transform: scale(1.1);
+      }
+    }
+
+    #green-orb {
+      animation: orbPulse 3s ease-in-out infinite;
+      transform-origin: 130px 100px;
+    }
+
+    @keyframes cShine {
+      0%, 100% { opacity: 0.95; }
+      50% { opacity: 1; }
+    }
+
+    #c-letter {
+      animation: cShine 4s ease-in-out infinite;
+    }
+  </style>
+</svg>

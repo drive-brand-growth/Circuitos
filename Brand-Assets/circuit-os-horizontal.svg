@@ -1,0 +1,72 @@
+<svg width="1200" height="300" viewBox="0 0 1200 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="steelGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#B8BCC2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8a8e94;stop-opacity:1" />
+    </linearGradient>
+
+    <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#38FF6A;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#38FF6A;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#38FF6A;stop-opacity:0" />
+    </radialGradient>
+
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="300" fill="#0a0a0a"/>
+
+  <!-- Glow effect -->
+  <circle cx="180" cy="120" r="60" fill="url(#glowGradient)" opacity="0.6"/>
+
+  <!-- Steel "C" -->
+  <path d="M 100 50
+           C 160 50, 200 90, 200 150
+           C 200 210, 160 250, 100 250
+           L 100 210
+           C 140 210, 170 180, 170 150
+           C 170 120, 140 90, 100 90
+           L 100 50 Z"
+        fill="url(#steelGradient)"
+        stroke="#7a7e84"
+        stroke-width="2"/>
+
+  <!-- Inner curve detail -->
+  <path d="M 100 70
+           C 150 70, 185 105, 185 150
+           C 185 195, 150 230, 100 230"
+        fill="none"
+        stroke="#d0d4d8"
+        stroke-width="1"
+        opacity="0.3"/>
+
+  <!-- Signal Dot -->
+  <circle cx="180" cy="120" r="16" fill="#38FF6A" filter="url(#glow)"/>
+  <circle cx="180" cy="120" r="12" fill="#5aff88" opacity="0.8"/>
+  <circle cx="176" cy="116" r="5" fill="#ffffff" opacity="0.6"/>
+
+  <!-- Typography: CIRCUIT OS -->
+  <text x="250" y="170"
+        font-family="'Segoe UI', sans-serif"
+        font-size="80"
+        font-weight="700"
+        letter-spacing="16"
+        fill="#E8EAED"
+        text-anchor="start">CIRCUIT OS</text>
+
+  <!-- Tagline -->
+  <text x="250" y="210"
+        font-family="'Segoe UI', sans-serif"
+        font-size="20"
+        font-weight="400"
+        letter-spacing="4"
+        fill="#B8BCC2"
+        text-anchor="start">COMMAND REVENUE. ELIMINATE CHAOS.</text>
+</svg>

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Knight + Subtle Neon - Color Palette Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark Knight Theme */
+            --gotham-black: #000000;
+            --knight-dark: #0A0A0B;
+            --shadow-gray: #141415;
+            --steel-gray: #1E1E20;
+            --armor-gray: #2A2A2D;
+
+            /* Subtle Neon Green */
+            --neon-green-subtle: #00FF88;
+            --neon-green-dark: #00CC6E;
+            --neon-green-dim: rgba(0, 255, 136, 0.15);
+            --neon-green-glow: rgba(0, 255, 136, 0.25);
+            --neon-green-border: rgba(0, 255, 136, 0.3);
+
+            /* Gold Accents */
+            --gold-primary: #D4AF37;
+            --gold-dark: #B8941E;
+            --gold-light: #E5C158;
+            --gold-dim: rgba(212, 175, 55, 0.15);
+            --gold-glow: rgba(212, 175, 55, 0.25);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--gotham-black);
+            color: #FFFFFF;
+            padding: 60px 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--gold-primary), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.05em;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #B0B0B0;
+            margin-bottom: 60px;
+            letter-spacing: 0.1em;
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--neon-green-subtle);
+            letter-spacing: 0.05em;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .color-card {
+            background: linear-gradient(135deg, var(--armor-gray) 0%, var(--steel-gray) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .color-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--neon-green-border);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+        }
+
+        .color-swatch {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+        }
+
+        .color-info {
+            padding: 20px;
+        }
+
+        .color-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #FFFFFF;
+        }
+
+        .color-value {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #B0B0B0;
+            margin-bottom: 12px;
+        }
+
+        .color-usage {
+            font-size: 13px;
+            color: #808080;
+            line-height: 1.6;
+        }
+
+        .visual-weight {
+            background: var(--steel-gray);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .weight-bars {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .weight-bar {
+            flex: 1;
+            text-align: center;
+        }
+
+        .bar-fill {
+            height: 200px;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 20px;
+            font-size: 32px;
+            font-weight: 800;
+            color: #FFFFFF;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .bar-label {
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #B0B0B0;
+        }
+
+        .usage-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .example-card {
+            background: var(--steel-gray);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .example-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--gold-primary);
+        }
+
+        .example-demo {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--knight-dark);
+            border-radius: 8px;
+        }
+
+        /* Specific color swatches */
+        .swatch-gotham-black { background: var(--gotham-black); color: #FFFFFF; }
+        .swatch-knight-dark { background: var(--knight-dark); color: #FFFFFF; }
+        .swatch-shadow-gray { background: var(--shadow-gray); color: #FFFFFF; }
+        .swatch-steel-gray { background: var(--steel-gray); color: #FFFFFF; }
+        .swatch-armor-gray { background: var(--armor-gray); color: #FFFFFF; }
+
+        .swatch-neon-subtle { background: var(--neon-green-subtle); color: #000000; }
+        .swatch-neon-dark { background: var(--neon-green-dark); color: #000000; }
+        .swatch-neon-dim { background: var(--neon-green-dim); color: #FFFFFF; border: 1px solid var(--neon-green-border); }
+        .swatch-neon-glow { background: var(--neon-green-glow); color: #FFFFFF; border: 1px solid var(--neon-green-border); }
+        .swatch-neon-border { background: var(--neon-green-border); color: #FFFFFF; border: 1px solid var(--neon-green-subtle); }
+
+        .swatch-gold-primary { background: var(--gold-primary); color: #000000; }
+        .swatch-gold-dark { background: var(--gold-dark); color: #FFFFFF; }
+        .swatch-gold-light { background: var(--gold-light); color: #000000; }
+        .swatch-gold-dim { background: var(--gold-dim); color: #FFFFFF; border: 1px solid var(--gold-primary); }
+        .swatch-gold-glow { background: var(--gold-glow); color: #FFFFFF; border: 1px solid var(--gold-primary); }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: var(--neon-green-dim);
+            border: 1px solid var(--neon-green-border);
+            border-radius: 50px;
+            color: var(--neon-green-subtle);
+            box-shadow: 0 0 12px var(--neon-green-glow);
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            font-size: 12px;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--neon-green-subtle);
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(0, 255, 136, 0.6);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        .btn-neon {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 255, 136, 0.08));
+            border: 1px solid var(--neon-green-border);
+            color: var(--neon-green-subtle);
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px var(--neon-green-dim);
+        }
+
+        .btn-neon:hover {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.25), rgba(0, 255, 136, 0.15));
+            box-shadow: 0 6px 20px var(--neon-green-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary));
+            color: #000000;
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px var(--gold-dim);
+            border: none;
+        }
+
+        .btn-gold:hover {
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
+            box-shadow: 0 6px 20px var(--gold-glow);
+            transform: translateY(-2px);
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(42, 42, 45, 0.7), rgba(20, 20, 21, 0.5));
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--neon-green-border);
+            box-shadow: 0 8px 24px var(--neon-green-glow);
+            transform: translateY(-2px);
+        }
+
+        .stat-value-neon {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--neon-green-subtle);
+            text-shadow: 0 0 12px var(--neon-green-glow);
+        }
+
+        .stat-value-gold {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--gold-primary);
+            text-shadow: 0 0 12px var(--gold-glow);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #B0B0B0;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DARK KNIGHT + SUBTLE NEON</h1>
+        <p class="subtitle">Executive Theme Color Palette Guide</p>
+
+        <!-- Visual Weight Distribution -->
+        <div class="section">
+            <h2 class="section-title">Visual Weight Distribution</h2>
+            <div class="visual-weight">
+                <div class="weight-bars">
+                    <div class="weight-bar">
+                        <div class="bar-fill" style="background: linear-gradient(to top, #000000, #2A2A2D); height: 140px;">70%</div>
+                        <div class="bar-label">Dark Knight</div>
+                    </div>
+                    <div class="weight-bar">
+                        <div class="bar-fill" style="background: linear-gradient(to top, rgba(0, 255, 136, 0.3), rgba(0, 255, 136, 0.8)); height: 108px;">18%</div>
+                        <div class="bar-label">Subtle Neon</div>
+                    </div>
+                    <div class="weight-bar">
+                        <div class="bar-fill" style="background: linear-gradient(to top, #B8941E, #E5C158); height: 96px;">12%</div>
+                        <div class="bar-label">Gold</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dark Knight Colors -->
+        <div class="section">
+            <h2 class="section-title">Dark Knight Foundation (70%)</h2>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch swatch-gotham-black">Gotham Black</div>
+                    <div class="color-info">
+                        <div class="color-name">Gotham Black</div>
+                        <div class="color-value">#000000</div>
+                        <div class="color-usage">Page backgrounds, hero sections, primary dark layer</div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch swatch-knight-dark">Knight Dark</div>
+                    <div class="color-info">
+                        <div class="color-name">Knight Dark</div>
+                        <div class="color-value">#0A0A0B</div>
+                        <div class="color-usage">Secondary backgrounds, navigation panels</div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch swatch-shadow-gray">Shadow Gray</div>
+                    <div class="color-info">
+                        <div class="color-name">Shadow Gray</div>
+                        <div class="color-value">#141415</div>
+                        <div class="color-usage">Card backgrounds, content sections</div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch swatch-steel-gray">Steel Gray</div>
+                    <div class="color-info">
+                        <div class="color-name">Steel Gray</div>
+                        <div class="color-value">#1E1E20</div>
+                        <div class="color-usage">Elevated surfaces, modals, panels</div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch swatch-armor-gray">Armor Gray</div>
+                    <div class="color-info">
+                        <div class="color-name">Armor Gray</div>
+                        <div class="color-value">#2A2A2D</div>
+                        <div class="color-usage">Highest elevation, popups, tooltips</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subtle Neon Green -->
+        <div class="section">
+            <h2 class="section-title">Subtle Neon Green (18%)</h2>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch swatch-neon-subtle">Neon Green Subtle</div>
+                    <div class="color-info">
+                        <div class="color-name">Neon Green Subtle</div>
+                        <div class="color-value">#00FF88</div>
+                        <div class="color-usage">Primary interactive color, active states, status indicators</div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch swatch-neon-dark">Neon Green Dark</div>
+                    <div class="color-info">
+                        <div class="color-name">Neon Green Dark</div>
+                        <div class="color-value">#00CC6E</div>
+                        <div class="color-usage">Hover states, pressed buttons, active links</div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch swatch-neon-dim">Neon Green Dim</div>
+                    <div class="color-info">
+                        <div class="color-name">Neon Green Dim</div>
+                        <div class="color-value">rgba(0, 255, 136, 0.15)</div>
+                        <div class="color-usage">Very subtle backgrounds, button fills</div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch swatch-neon-glow">Neon Green Glow</div>
+                    <div class="color-info">
+                        <div class="color-name">Neon Green Glow</div>
+                        <div class="color-value">rgba(0, 255, 136, 0.25)</div>
+                        <div class="color-usage">Box shadows, glow effects, hover halos</div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch swatch-neon-border">Neon Green Border</div>
+                    <div class="color-info">
+                        <div class="color-name">Neon Green Border</div>
+                        <div class="color-value">rgba(0, 255, 136, 0.3)</div>
+                        <div class="color-usage">Border accents, dividers, underlines</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gold Accents -->
+        <div class="section">
+            <h2 class="section-title">Gold Accents (12%)</h2>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch swatch-gold-primary">Gold Primary</div>
+                    <div class="color-info">
+                        <div class="color-name">Gold Primary</div>
+                        <div class="color-value">#D4AF37</div>
+                        <div class="color-usage">Logo, revenue stats, premium badges</div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch swatch-gold-dark">Gold Dark</div>
+                    <div class="color-info">
+                        <div class="color-name">Gold Dark</div>
+                        <div class="color-value">#B8941E</div>
+                        <div class="color-usage">Gold shadows, gradient stops</div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch swatch-gold-light">Gold Light</div>
+                    <div class="color-info">
+                        <div class="color-name">Gold Light</div>
+                        <div class="color-value">#E5C158</div>
+                        <div class="color-usage">Gold highlights, shimmer effects</div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch swatch-gold-dim">Gold Dim</div>
+                    <div class="color-info">
+                        <div class="color-name">Gold Dim</div>
+                        <div class="color-value">rgba(212, 175, 55, 0.15)</div>
+                        <div class="color-usage">Subtle gold backgrounds</div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch swatch-gold-glow">Gold Glow</div>
+                    <div class="color-info">
+                        <div class="color-name">Gold Glow</div>
+                        <div class="color-value">rgba(212, 175, 55, 0.25)</div>
+                        <div class="color-usage">Gold glow effects, shadows</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage Examples -->
+        <div class="section">
+            <h2 class="section-title">Live Component Examples</h2>
+            <div class="usage-examples">
+                <!-- Status Indicator -->
+                <div class="example-card">
+                    <div class="example-title">Status Indicator (Neon Green)</div>
+                    <p style="color: #B0B0B0; font-size: 14px; margin-bottom: 20px;">
+                        Use neon green for system operational status and real-time indicators.
+                    </p>
+                    <div class="example-demo">
+                        <div class="status-indicator">
+                            <span class="pulse-dot"></span>
+                            SYSTEM OPERATIONAL
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="example-card">
+                    <div class="example-title">Button Styles</div>
+                    <p style="color: #B0B0B0; font-size: 14px; margin-bottom: 20px;">
+                        Neon green for primary actions, gold for premium features.
+                    </p>
+                    <div class="example-demo" style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <button class="btn-neon">Launch Demo</button>
+                        <button class="btn-gold">Upgrade to Premium</button>
+                    </div>
+                </div>
+
+                <!-- Stat Cards -->
+                <div class="example-card">
+                    <div class="example-title">Metric Cards</div>
+                    <p style="color: #B0B0B0; font-size: 14px; margin-bottom: 20px;">
+                        Neon green for metrics/confidence, gold for revenue.
+                    </p>
+                    <div class="example-demo" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="stat-card">
+                            <div class="stat-value-neon">92%</div>
+                            <div class="stat-label">Confidence Score</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value-gold">$2.4M</div>
+                            <div class="stat-label">Annual Revenue</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage Guidelines -->
+        <div class="section">
+            <h2 class="section-title">Quick Reference Guide</h2>
+            <div style="background: var(--steel-gray); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 40px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;">
+                    <div>
+                        <h3 style="color: var(--neon-green-subtle); font-size: 20px; margin-bottom: 15px;">Use Neon Green For:</h3>
+                        <ul style="color: #B0B0B0; line-height: 2; list-style-position: inside;">
+                            <li>Active/selected states</li>
+                            <li>System operational status</li>
+                            <li>Real-time indicators</li>
+                            <li>Confidence scores > 85%</li>
+                            <li>Progress bars</li>
+                            <li>Primary CTAs</li>
+                            <li>Interactive hover states</li>
+                            <li>Success confirmations</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 style="color: var(--gold-primary); font-size: 20px; margin-bottom: 15px;">Use Gold For:</h3>
+                        <ul style="color: #B0B0B0; line-height: 2; list-style-position: inside;">
+                            <li>Logo frames & branding</li>
+                            <li>Revenue/money statistics</li>
+                            <li>Premium tier badges</li>
+                            <li>Executive titles</li>
+                            <li>Certification badges</li>
+                            <li>High-value indicators</li>
+                            <li>Luxury features</li>
+                            <li>Brand typography (titles)</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 style="color: #FFFFFF; font-size: 20px; margin-bottom: 15px;">Use Dark Knight For:</h3>
+                        <ul style="color: #B0B0B0; line-height: 2; list-style-position: inside;">
+                            <li>All page backgrounds (100%)</li>
+                            <li>Card containers</li>
+                            <li>Navigation panels</li>
+                            <li>Modal backgrounds</li>
+                            <li>Content sections</li>
+                            <li>Footer areas</li>
+                            <li>Sidebar panels</li>
+                            <li>Base UI layer</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="margin-top: 80px; padding-top: 40px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; color: #6B6B6B;">
+            <p style="margin-bottom: 10px;"><strong style="color: var(--gold-primary);">Dark Knight + Subtle Neon Theme</strong></p>
+            <p>Executive Color Palette - Circuit OS MVP v1.0</p>
+            <p style="margin-top: 20px;">Created with Claude Code</p>
+        </div>
+    </div>
+</body>
+</html>

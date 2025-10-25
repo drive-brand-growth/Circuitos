@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Processing Demo - Circuit OS</title>
+    <style>
+        :root {
+            /* Neon Green (Primary Interactive) */
+            --neon-green: #38FF6A;
+            --neon-green-bright: #5aff88;
+            --neon-green-dark: #2ecc54;
+            --neon-green-light: #5aff88;
+            --neon-green-glow: rgba(56, 255, 106, 0.4);
+            --neon-glow: rgba(56, 255, 106, 0.6);
+            --neon-glow-subtle: rgba(56, 255, 106, 0.3);
+            --neon-green-subtle: rgba(56, 255, 106, 0.15);
+
+            /* Steel Gray (Secondary Structure) */
+            --steel-gray: #8B9198;
+            --steel-light: #B8BCC2;
+            --steel-dark: #6B6F75;
+            --steel-metallic: linear-gradient(135deg, #B8BCC2 0%, #8B9198 50%, #6B6F75 100%);
+
+            /* Backgrounds - Pure blacks for maximum contrast */
+            --bg-black: #000000;
+            --bg-dark: #0a0a0a;
+            --bg-medium: #141414;
+            --bg-light: #1a1a1a;
+            --bg-card: #1a1a1a;
+
+            /* Text - High contrast white */
+            --text-primary: #FFFFFF;
+            --text-secondary: #CCCCCC;
+            --text-muted: #999999;
+
+            /* Borders */
+            --border: rgba(56, 255, 106, 0.1);
+            --border-medium: rgba(56, 255, 106, 0.2);
+            --border-strong: rgba(56, 255, 106, 0.3);
+            --border-color: rgba(56, 255, 106, 0.15);
+
+            /* Status colors */
+            --success: #38FF6A;
+            --warning: #FFB800;
+            --error: #DC3545;
+
+            /* Legacy compatibility */
+            --gotham-black: #000000;
+            --knight-dark: #0a0a0a;
+            --shadow-gray: #141414;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            border-bottom: 2px solid var(--neon-green);
+        }
+
+        header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            color: var(--neon-green);
+            text-shadow: 0 0 24px rgba(0, 255, 136, 0.25);
+        }
+
+        header p {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 350px 1fr 450px;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Input Panel */
+        .input-panel {
+            background: var(--bg-medium);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .input-panel h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--neon-green);
+        }
+
+        .input-panel form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .input-panel input,
+        .input-panel select {
+            padding: 12px;
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .input-panel input:focus,
+        .input-panel select:focus {
+            outline: none;
+            border-color: var(--neon-green);
+            box-shadow: 0 0 12px rgba(0, 255, 136, 0.25);
+        }
+
+        .input-panel button[type="submit"] {
+            padding: 15px;
+            background: linear-gradient(135deg, var(--neon-green) 0%, var(--neon-green-dark) 100%);
+            color: #000000;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3), 0 2px 4px rgba(0, 0, 0, 0.4);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-panel button[type="submit"]:hover {
+            background: linear-gradient(135deg, var(--neon-green-light) 0%, var(--neon-green) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4), 0 3px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .demo-actions {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .demo-actions button {
+            padding: 12px;
+            background: var(--bg-light);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .demo-actions button:hover {
+            border-color: var(--neon-green);
+            background: var(--neon-green-subtle);
+        }
+
+        /* Pipeline Section */
+        .pipeline-section {
+            background: var(--bg-medium);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .pipeline {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin: 40px 0;
+            padding: 20px 0;
+        }
+
+        .stage {
+            text-align: center;
+            opacity: 0.3;
+            transition: all 0.5s ease;
+            flex: 1;
+        }
+
+        .stage.active {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .stage-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            filter: grayscale(100%);
+            transition: all 0.3s ease;
+        }
+
+        .stage.active .stage-icon {
+            filter: grayscale(0%);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .stage h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+
+        .stage-status {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .stage.active .stage-status {
+            color: var(--neon-green);
+            font-weight: bold;
+        }
+
+        .stage-connector {
+            width: 60px;
+            height: 3px;
+            background: var(--border-color);
+            margin: 0 10px;
+            position: relative;
+            top: -30px;
+        }
+
+        .stage.active + .stage-connector {
+            background: var(--neon-green);
+            animation: flowRight 1s ease;
+        }
+
+        @keyframes flowRight {
+            from { width: 0; }
+            to { width: 60px; }
+        }
+
+        /* PREMIUM NEON + STEEL ANIMATIONS */
+        @keyframes neonPulse {
+            0%, 100% {
+                filter: drop-shadow(0 0 8px rgba(56, 255, 106, 0.8))
+                        drop-shadow(0 0 16px rgba(56, 255, 106, 0.4));
+                opacity: 1;
+            }
+            50% {
+                filter: drop-shadow(0 0 12px rgba(56, 255, 106, 1))
+                        drop-shadow(0 0 24px rgba(56, 255, 106, 0.6));
+                opacity: 0.9;
+            }
+        }
+
+        @keyframes circuitFlow {
+            0% {
+                stroke-dashoffset: 1000;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes neonProgress {
+            0% {
+                width: 0%;
+                box-shadow: 0 0 10px rgba(56, 255, 106, 0.8);
+            }
+            100% {
+                width: 100%;
+                box-shadow: 0 0 20px rgba(56, 255, 106, 1);
+            }
+        }
+
+        .circuit-line {
+            stroke: var(--neon-green);
+            stroke-width: 2;
+            stroke-dasharray: 10 5;
+            animation: circuitFlow 20s linear infinite;
+            opacity: 0.6;
+        }
+
+        /* Processing Log */
+        .processing-log {
+            background: var(--bg-dark);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-top: 30px;
+        }
+
+        .processing-log h3 {
+            margin-bottom: 15px;
+            color: var(--neon-green);
+        }
+
+        #logOutput {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: var(--text-secondary);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        #logOutput p {
+            margin: 5px 0;
+            padding: 3px 0;
+        }
+
+        #logOutput p.success {
+            color: var(--neon-green);
+            font-weight: bold;
+        }
+
+        #logOutput p.error {
+            color: #ff4444;
+            font-weight: bold;
+        }
+
+        /* Results Panel */
+        .results-panel {
+            background: var(--bg-medium);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            max-height: 900px;
+            overflow-y: auto;
+        }
+
+        .results-panel.hidden {
+            display: none;
+        }
+
+        .result-card {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+        }
+
+        .result-card.qualified {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 24px rgba(0, 255, 136, 0.25), 0 0 12px rgba(0, 255, 136, 0.15);
+        }
+
+        .result-card.review {
+            border-color: #FFA500;
+            box-shadow: 0 0 20px rgba(255, 165, 0, 0.3);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .result-header h2 {
+            font-size: 28px;
+        }
+
+        .confidence-score {
+            font-size: 48px;
+            color: var(--neon-green);
+            font-weight: bold;
+        }
+
+        .lead-details {
+            margin-bottom: 25px;
+        }
+
+        .lead-details h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .lead-details p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .decision-reasoning {
+            margin: 25px 0;
+        }
+
+        .decision-reasoning h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--neon-green);
+        }
+
+        .reason-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--bg-dark);
+            border-radius: 8px;
+        }
+
+        .reason-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .reason-bar-container {
+            position: relative;
+            width: 100%;
+            height: 20px;
+            background: var(--bg-medium);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .reason-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-green) 0%, var(--neon-green-dark) 100%);
+            border-radius: 10px;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+        }
+
+        .reason-value {
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--bg-dark);
+        }
+
+        .reason-detail {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .moat-highlight {
+            background: var(--neon-green-subtle);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--neon-green);
+            margin: 25px 0;
+        }
+
+        .moat-highlight h4 {
+            color: var(--neon-green);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .moat-highlight p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .generated-outreach {
+            margin-top: 25px;
+        }
+
+        .generated-outreach h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--neon-green);
+        }
+
+        .email-preview {
+            background: var(--bg-dark);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 15px;
+        }
+
+        .email-header {
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .email-header strong {
+            color: var(--text-primary);
+        }
+
+        .email-body {
+            font-size: 14px;
+            line-height: 1.8;
+            white-space: pre-line;
+        }
+
+        .outreach-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .outreach-actions button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-email {
+            background: var(--bg-light);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .copy-email:hover {
+            border-color: var(--neon-green);
+            background: var(--neon-green-subtle);
+        }
+
+        .send-demo {
+            background: linear-gradient(135deg, var(--neon-green) 0%, var(--neon-green-dark) 100%);
+            color: #000000;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3), 0 2px 4px rgba(0, 0, 0, 0.4);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .send-demo:hover {
+            background: linear-gradient(135deg, var(--neon-green-light) 0%, var(--neon-green) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4), 0 3px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-medium);
+            padding: 40px;
+            border-radius: 12px;
+            border: 2px solid var(--neon-green);
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.25);
+        }
+
+        .modal-content h2 {
+            color: var(--neon-green);
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+
+        .dropzone {
+            border: 3px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 60px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .dropzone:hover,
+        .dropzone.dragover {
+            border-color: var(--neon-green);
+            background: var(--neon-green-subtle);
+        }
+
+        .dropzone input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .modal-actions button,
+        .modal-actions a {
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        #processCsv {
+            background: linear-gradient(135deg, var(--neon-green) 0%, var(--neon-green-dark) 100%);
+            color: #000000;
+            border: none;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3), 0 2px 4px rgba(0, 0, 0, 0.4);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        #processCsv:hover {
+            background: linear-gradient(135deg, var(--neon-green-light) 0%, var(--neon-green) 100%);
+        }
+
+        .download-template {
+            background: var(--bg-light);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .download-template:hover {
+            border-color: var(--neon-green);
+        }
+
+        .close-modal {
+            background: #ff4444;
+            color: white;
+            border: none;
+        }
+
+        .close-modal:hover {
+            background: #cc0000;
+        }
+
+        /* Placeholder state */
+        .placeholder-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .placeholder-state h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .placeholder-state p {
+            font-size: 16px;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-green);
+        }
+
+        /* Circuit OS Custom Icon System */
+        .circuit-icon {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            vertical-align: middle;
+            color: #8B9198;
+            transition: all 0.3s ease;
+        }
+
+        .circuit-icon.active,
+        .circuit-icon:hover {
+            color: var(--neon-green);
+            filter: drop-shadow(0 0 6px rgba(0, 255, 136, 0.5));
+        }
+
+        .circuit-icon.large {
+            width: 48px;
+            height: 48px;
+        }
+
+        .circuit-icon.small {
+            width: 16px;
+            height: 16px;
+        }
+
+        @keyframes icon-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .circuit-icon.processing {
+            animation: icon-pulse 1.5s infinite;
+            color: var(--neon-green);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .results-panel {
+                max-height: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Lead Processing Demo</h1>
+            <p>Experience Circuit OS's AI-Powered Workflow with Full Explainability</p>
+        </header>
+
+        <div class="main-layout">
+            <!-- Input Panel -->
+            <div class="input-panel">
+                <h2>Add Lead Manually</h2>
+                <form id="manualLeadForm">
+                    <input type="text" id="leadName" placeholder="Full Name" required>
+                    <input type="email" id="leadEmail" placeholder="Email" required>
+                    <input type="text" id="leadCompany" placeholder="Company Name" required>
+                    <select id="leadIndustry" required>
+                        <option value="">Select Industry</option>
+                        <option value="SaaS/Technology">SaaS/Technology</option>
+                        <option value="Financial Services">Financial Services</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Manufacturing">Manufacturing</option>
+                        <option value="Retail/E-commerce">Retail/E-commerce</option>
+                    </select>
+                    <input type="number" id="leadBudget" placeholder="Budget ($)" min="0" required>
+                    <input type="number" id="leadEngagement" placeholder="Email Engagement Score (0-100)" min="0" max="100" required>
+                    <button type="submit">Process Lead →</button>
+                </form>
+
+                <div class="demo-actions">
+                    <button id="fillDemoData">Fill Demo Data</button>
+                    <button id="csvUploadBtn">Upload CSV</button>
+                </div>
+            </div>
+
+            <!-- Pipeline Section -->
+            <div class="pipeline-section">
+                <div class="pipeline">
+                    <div class="stage" id="stage1">
+                        <div class="stage-icon">
+                            <svg class="circuit-icon large">
+                                <use href="../circuit-icons.svg#icon-data-input"/>
+                            </svg>
+                        </div>
+                        <h3>Data Received</h3>
+                        <p class="stage-status">Waiting...</p>
+                    </div>
+
+                    <div class="stage-connector"></div>
+
+                    <div class="stage" id="stage2">
+                        <div class="stage-icon">
+                            <svg class="circuit-icon large">
+                                <use href="../circuit-icons.svg#icon-processing"/>
+                            </svg>
+                        </div>
+                        <h3>AI Analysis</h3>
+                        <p class="stage-status">Waiting...</p>
+                    </div>
+
+                    <div class="stage-connector"></div>
+
+                    <div class="stage" id="stage3">
+                        <div class="stage-icon">
+                            <svg class="circuit-icon large">
+                                <use href="../circuit-icons.svg#icon-decision"/>
+                            </svg>
+                        </div>
+                        <h3>Decision</h3>
+                        <p class="stage-status">Waiting...</p>
+                    </div>
+
+                    <div class="stage-connector"></div>
+
+                    <div class="stage" id="stage4">
+                        <div class="stage-icon">
+                            <svg class="circuit-icon large">
+                                <use href="../circuit-icons.svg#icon-outreach"/>
+                            </svg>
+                        </div>
+                        <h3>Outreach</h3>
+                        <p class="stage-status">Waiting...</p>
+                    </div>
+                </div>
+
+                <div class="processing-log">
+                    <h3>Live Processing</h3>
+                    <div id="logOutput">
+                        <p>Ready to process leads. Submit a form or upload CSV to begin.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="results-panel hidden" id="resultsPanel">
+                <div class="placeholder-state">
+                    <h3>No Results Yet</h3>
+                    <p>Process a lead to see AI decision-making in action</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CSV Upload Modal -->
+    <div id="csvModal" class="modal">
+        <div class="modal-content">
+            <h2>Upload CSV File</h2>
+            <p>Format: name, email, company, industry, budget, engagement</p>
+
+            <div class="dropzone" id="dropzone">
+                Drag & drop CSV here or click to browse
+                <input type="file" accept=".csv" id="csvFileInput">
+            </div>
+
+            <div class="modal-actions">
+                <button id="processCsv">Process Uploaded Leads</button>
+                <a href="#" class="download-template" id="downloadTemplate">Download Template CSV</a>
+                <button class="close-modal" id="closeModal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Utility Functions
+        function timestamp() {
+            const now = new Date();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            return `${minutes}:${seconds}`;
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function addLog(message, type = 'normal') {
+            const log = document.getElementById('logOutput');
+            const p = document.createElement('p');
+            p.textContent = `[${timestamp()}] ${message}`;
+            if (type === 'success') p.classList.add('success');
+            if (type === 'error') p.classList.add('error');
+            log.appendChild(p);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function resetPipeline() {
+            const stages = document.querySelectorAll('.stage');
+            stages.forEach(stage => {
+                stage.classList.remove('active');
+                stage.querySelector('.stage-status').textContent = 'Waiting...';
+            });
+        }
+
+        function activateStage(stageNum, status = 'Processing...') {
+            const stage = document.getElementById(`stage${stageNum}`);
+            stage.classList.add('active');
+            stage.querySelector('.stage-status').textContent = status;
+        }
+
+        // Feature Extraction
+        function extractFeatures(leadData) {
+            const engagement = parseInt(leadData.engagement);
+            const budget = parseInt(leadData.budget);
+
+            // Company size estimation based on budget
+            let companySize = 'Small';
+            if (budget > 1000000) companySize = 'Enterprise';
+            else if (budget > 100000) companySize = 'Mid-Market';
+
+            // Industry match score
+            const preferredIndustries = ['SaaS/Technology', 'Financial Services'];
+            const industryMatch = preferredIndustries.includes(leadData.industry) ? 90 : 60;
+
+            // Response time simulation (random for demo)
+            const responseTime = Math.random() < 0.7 ? 'fast' : 'slow';
+
+            return {
+                engagement,
+                budget,
+                companySize,
+                industryMatch,
+                responseTime,
+                emailDomain: leadData.email.split('@')[1]
+            };
+        }
+
+        // Lead Scoring Algorithm
+        function calculateLeadScore(features) {
+            let score = 0;
+            const weights = {
+                engagement: 0.46,
+                companySize: 0.16,
+                budget: 0.16,
+                industry: 0.12,
+                responseTime: 0.10
+            };
+
+            // Email engagement (0-100 scale)
+            const engagementScore = features.engagement;
+            score += (engagementScore / 100) * weights.engagement * 100;
+
+            // Company size
+            const companySizeScore = {
+                'Enterprise': 100,
+                'Mid-Market': 75,
+                'Small': 50
+            }[features.companySize];
+            score += (companySizeScore / 100) * weights.companySize * 100;
+
+            // Budget signals
+            const budgetScore = Math.min((features.budget / 2000000) * 100, 100);
+            score += (budgetScore / 100) * weights.budget * 100;
+
+            // Industry match
+            score += (features.industryMatch / 100) * weights.industry * 100;
+
+            // Response time
+            const responseTimeScore = features.responseTime === 'fast' ? 100 : 50;
+            score += (responseTimeScore / 100) * weights.responseTime * 100;
+
+            return {
+                confidence: Math.round(score),
+                breakdown: {
+                    engagement: Math.round((engagementScore / 100) * weights.engagement * 100),
+                    companySize: Math.round((companySizeScore / 100) * weights.companySize * 100),
+                    budget: Math.round((budgetScore / 100) * weights.budget * 100),
+                    industry: Math.round((features.industryMatch / 100) * weights.industry * 100),
+                    responseTime: Math.round((responseTimeScore / 100) * weights.responseTime * 100)
+                },
+                features
+            };
+        }
+
+        // Generate Reasoning
+        function generateReasoning(features, score) {
+            const reasons = [];
+
+            // Email Engagement
+            const engagementLevel = features.engagement > 70 ? 'high' : features.engagement > 40 ? 'moderate' : 'low';
+            reasons.push({
+                label: 'Email Engagement',
+                impact: 46,
+                score: score.breakdown.engagement,
+                detail: features.engagement > 70 ? `${features.engagement}+ engagement score, highly active` :
+                        features.engagement > 40 ? `${features.engagement} engagement score, moderately active` :
+                        `${features.engagement} engagement score, needs improvement`,
+                status: features.engagement > 70 ? 'positive' : 'neutral'
+            });
+
+            // Company Size
+            reasons.push({
+                label: 'Company Size',
+                impact: 16,
+                score: score.breakdown.companySize,
+                detail: features.companySize === 'Enterprise' ? 'Fortune 100 enterprise scale' :
+                        features.companySize === 'Mid-Market' ? 'Growing mid-market company' :
+                        'Small business, growth potential',
+                status: features.companySize === 'Enterprise' ? 'positive' : 'neutral'
+            });
+
+            // Budget Signals
+            reasons.push({
+                label: 'Budget Signals',
+                impact: 16,
+                score: score.breakdown.budget,
+                detail: features.budget > 2000000 ? `$${(features.budget / 1000000).toFixed(1)}M+ budget signals detected` :
+                        features.budget > 500000 ? `$${(features.budget / 1000).toFixed(0)}K budget confirmed` :
+                        `$${(features.budget / 1000).toFixed(0)}K budget, moderate opportunity`,
+                status: features.budget > 1000000 ? 'positive' : 'neutral'
+            });
+
+            // Industry Match
+            reasons.push({
+                label: 'Industry Match',
+                impact: 12,
+                score: score.breakdown.industry,
+                detail: features.industryMatch > 80 ? 'Perfect industry alignment' : 'Good industry fit',
+                status: features.industryMatch > 80 ? 'positive' : 'neutral'
+            });
+
+            // Response Time
+            reasons.push({
+                label: 'Response Time',
+                impact: 10,
+                score: score.breakdown.responseTime,
+                detail: features.responseTime === 'fast' ? 'Quick responder (<2 hours average)' : 'Standard response time',
+                status: features.responseTime === 'fast' ? 'positive' : 'neutral'
+            });
+
+            return reasons;
+        }
+
+        // Generate Outreach Message
+        function generateOutreach(leadData, score, reasoning) {
+            const topFactors = reasoning
+                .filter(r => r.status === 'positive')
+                .slice(0, 3)
+                .map(r => `• ${r.label}: ${r.impact}% impact - ${r.detail}`)
+                .join('\n');
+
+            const subject = `${leadData.company} + Circuit OS: Explainable AI for Revenue Ops`;
+
+            const body = `Hi ${leadData.name.split(' ')[0]},
+
+I noticed ${leadData.company} is scaling in the ${leadData.industry} space. Most revenue teams we work with face a common challenge: AI tools that work great but no one understands WHY they make decisions.
+
+Circuit OS is different. We're the only platform that shows plain-English reasoning for every AI decision:
+
+✓ ${score.confidence}% accuracy with full explainability
+✓ Human-in-the-loop for edge cases (not all-or-nothing automation)
+✓ BI + ML unified (save $400K/year vs separate tools like Tableau + DataRobot)
+
+Your lead profile scored ${score.confidence}% confidence based on:
+${topFactors}
+
+This is exactly what Circuit OS does for every lead, opportunity, and customer decision. Unlike Salesforce Einstein or HubSpot's AI (black boxes), we show your team the "why" behind every recommendation.
+
+Your compliance team can audit any decision. Your sales team understands the reasoning. Your executives see transparent ROI.
+
+Worth a 15-minute demo? I can show you our live system processing real leads.
+
+Best,
+Alex Chen
+Circuit OS Sales Team
+alex@circuitos.ai | calendly.com/circuitos-demo`;
+
+            return { subject, body };
+        }
+
+        // Display Results
+        function displayResults(leadData, score, reasoning, outreach) {
+            const panel = document.getElementById('resultsPanel');
+            panel.classList.remove('hidden');
+
+            const qualified = score.confidence >= 85;
+            const statusIcon = qualified ?
+                `<svg class="circuit-icon large active" style="margin-right: 8px;"><use href="../circuit-icons.svg#icon-check-circle"/></svg>` :
+                `<svg class="circuit-icon large" style="margin-right: 8px; color: #FFA500;"><use href="../circuit-icons.svg#icon-alert"/></svg>`;
+            const statusText = qualified ? 'QUALIFIED' : 'NEEDS REVIEW';
+            const cardClass = qualified ? 'qualified' : 'review';
+
+            const reasonsHTML = reasoning.map(r => `
+                <div class="reason-item">
+                    <div class="reason-label">${r.label}</div>
+                    <div class="reason-bar-container">
+                        <div class="reason-bar" style="width: ${r.impact}%">
+                            <span class="reason-value">${r.impact}% impact</span>
+                        </div>
+                    </div>
+                    <div class="reason-detail">${r.detail} ${r.status === 'positive' ? '✓' : ''}</div>
+                </div>
+            `).join('');
+
+            const moatText = qualified ?
+                `Unlike black-box AI solutions (Salesforce Einstein, HubSpot AI, Marketo), Circuit OS provides plain-English reasoning for every decision. Your compliance team can audit any qualification, your sales team understands the logic, and your executives see transparent ROI. This is our competitive moat: explainability at scale.` :
+                `This lead scored ${score.confidence}%, just below our 85% auto-qualification threshold. Circuit OS uses human-in-the-loop workflows for these cases—combining AI efficiency with human judgment. This prevents both false positives (wasted sales time) and false negatives (missed opportunities). Your team makes the final call with full context.`;
+
+            panel.innerHTML = `
+                <div class="result-card ${cardClass}">
+                    <div class="result-header">
+                        <h2>${statusIcon}${statusText}</h2>
+                        <div class="confidence-score">${score.confidence}%</div>
+                    </div>
+
+                    <div class="lead-details">
+                        <h3>${leadData.name} - ${leadData.company}</h3>
+                        <p>${leadData.email} | ${leadData.industry} | $${leadData.budget.toLocaleString()} Budget</p>
+                    </div>
+
+                    <div class="decision-reasoning">
+                        <h3>Why This Decision?</h3>
+                        ${reasonsHTML}
+                    </div>
+
+                    <div class="moat-highlight">
+                        <h4>Circuit OS Competitive Advantage</h4>
+                        <p>${moatText}</p>
+                    </div>
+
+                    <div class="generated-outreach">
+                        <h3>Generated Outreach Message</h3>
+                        <div class="email-preview">
+                            <div class="email-header">
+                                <strong>To:</strong> ${leadData.email}<br>
+                                <strong>Subject:</strong> ${outreach.subject}
+                            </div>
+                            <div class="email-body">${outreach.body}</div>
+                        </div>
+                        <div class="outreach-actions">
+                            <button class="copy-email" onclick="copyToClipboard()">
+                                <svg class="circuit-icon" style="margin-right: 6px;">
+                                    <use href="../circuit-icons.svg#icon-copy"/>
+                                </svg>
+                                Copy to Clipboard
+                            </button>
+                            <button class="send-demo" onclick="sendDemo()">
+                                <svg class="circuit-icon" style="margin-right: 6px;">
+                                    <use href="../circuit-icons.svg#icon-outreach"/>
+                                </svg>
+                                Send (Demo)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Store current outreach for copy functionality
+            window.currentOutreach = outreach;
+        }
+
+        // Main Lead Processing Function
+        async function processLead(leadData) {
+            resetPipeline();
+            document.getElementById('logOutput').innerHTML = '';
+
+            // Stage 1: Data Received
+            addLog(`Received lead data for ${leadData.name}`);
+            activateStage(1, 'Processing...');
+            await sleep(1000);
+
+            addLog(`Company: ${leadData.company} | Industry: ${leadData.industry}`);
+            addLog(`Budget: $${leadData.budget.toLocaleString()} | Engagement: ${leadData.engagement}%`);
+            activateStage(1, 'Complete ✓');
+            await sleep(800);
+
+            // Stage 2: AI Analysis
+            addLog('Extracting features from lead data...');
+            activateStage(2, 'Analyzing...');
+            await sleep(1500);
+
+            const features = extractFeatures(leadData);
+            addLog(`Features extracted: engagement=${features.engagement}, company=${features.companySize}, budget=$${features.budget.toLocaleString()}`);
+
+            addLog('Running Random Forest classification model...');
+            await sleep(2000);
+
+            const score = calculateLeadScore(features);
+            addLog(`Model computation complete: ${score.confidence}% confidence`);
+            activateStage(2, 'Complete ✓');
+            await sleep(800);
+
+            // Stage 3: Decision
+            addLog('Applying decision logic...');
+            activateStage(3, 'Deciding...');
+            await sleep(1000);
+
+            const decision = score.confidence >= 85 ? 'AUTO-QUALIFIED' : 'NEEDS HUMAN REVIEW';
+            addLog(`Decision threshold check: ${score.confidence}% >= 85%`);
+            addLog(`Result: ${decision} ✓`, 'success');
+            activateStage(3, 'Complete ✓');
+            await sleep(1000);
+
+            // Generate explainability
+            addLog('Generating explainability report...');
+            const reasoning = generateReasoning(features, score);
+            addLog(`Explainability: ${reasoning.length} decision factors identified`);
+            await sleep(1500);
+
+            // Stage 4: Outreach Generation
+            addLog('Creating personalized outreach message...');
+            activateStage(4, 'Generating...');
+            await sleep(1500);
+
+            const outreach = generateOutreach(leadData, score, reasoning);
+            addLog('Outreach email generated with Circuit OS moat positioning');
+            addLog('Personalization applied: company name, industry, decision factors');
+            await sleep(1000);
+
+            activateStage(4, 'Complete ✓');
+            addLog('✅ Lead processing complete! View results on the right.', 'success');
+
+            // Display results
+            displayResults(leadData, score, reasoning, outreach);
+        }
+
+        // Copy to Clipboard
+        function copyToClipboard() {
+            if (!window.currentOutreach) return;
+
+            const fullEmail = `Subject: ${window.currentOutreach.subject}\n\n${window.currentOutreach.body}`;
+            navigator.clipboard.writeText(fullEmail).then(() => {
+                addLog('✓ Email copied to clipboard!', 'success');
+                alert('Email copied to clipboard!');
+            }).catch(err => {
+                addLog('✗ Failed to copy email', 'error');
+                console.error('Copy failed:', err);
+            });
+        }
+
+        // Send Demo
+        function sendDemo() {
+            addLog('📧 Demo email sent! (Simulated)', 'success');
+            alert('In production, this would integrate with your email system (SendGrid, Mailgun, etc.)');
+        }
+
+        // Form Submission
+        document.getElementById('manualLeadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const leadData = {
+                name: document.getElementById('leadName').value,
+                email: document.getElementById('leadEmail').value,
+                company: document.getElementById('leadCompany').value,
+                industry: document.getElementById('leadIndustry').value,
+                budget: parseInt(document.getElementById('leadBudget').value),
+                engagement: parseInt(document.getElementById('leadEngagement').value)
+            };
+
+            await processLead(leadData);
+        });
+
+        // Fill Demo Data
+        document.getElementById('fillDemoData').addEventListener('click', () => {
+            const demoProfiles = [
+                {
+                    name: 'Sarah Johnson',
+                    email: 'sarah.johnson@salesforce.com',
+                    company: 'Salesforce',
+                    industry: 'SaaS/Technology',
+                    budget: 2500000,
+                    engagement: 87
+                },
+                {
+                    name: 'Michael Chen',
+                    email: 'mchen@jpmorgan.com',
+                    company: 'JPMorgan Chase',
+                    industry: 'Financial Services',
+                    budget: 5000000,
+                    engagement: 92
+                },
+                {
+                    name: 'Emily Rodriguez',
+                    email: 'e.rodriguez@startupco.io',
+                    company: 'StartupCo',
+                    industry: 'SaaS/Technology',
+                    budget: 75000,
+                    engagement: 45
+                }
+            ];
+
+            const demo = demoProfiles[Math.floor(Math.random() * demoProfiles.length)];
+
+            document.getElementById('leadName').value = demo.name;
+            document.getElementById('leadEmail').value = demo.email;
+            document.getElementById('leadCompany').value = demo.company;
+            document.getElementById('leadIndustry').value = demo.industry;
+            document.getElementById('leadBudget').value = demo.budget;
+            document.getElementById('leadEngagement').value = demo.engagement;
+
+            addLog(`Demo data loaded: ${demo.name} from ${demo.company}`);
+        });
+
+        // CSV Upload Modal
+        const csvModal = document.getElementById('csvModal');
+        const csvUploadBtn = document.getElementById('csvUploadBtn');
+        const closeModal = document.getElementById('closeModal');
+        const dropzone = document.getElementById('dropzone');
+        const csvFileInput = document.getElementById('csvFileInput');
+
+        csvUploadBtn.addEventListener('click', () => {
+            csvModal.classList.add('active');
+        });
+
+        closeModal.addEventListener('click', () => {
+            csvModal.classList.remove('active');
+        });
+
+        // Drag and drop
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('dragover');
+        });
+
+        dropzone.addEventListener('dragleave', () => {
+            dropzone.classList.remove('dragover');
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && file.name.endsWith('.csv')) {
+                csvFileInput.files = e.dataTransfer.files;
+                dropzone.innerHTML = `<strong>File ready:</strong> ${file.name}`;
+            }
+        });
+
+        csvFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                dropzone.innerHTML = `<strong>File ready:</strong> ${e.target.files[0].name}`;
+            }
+        });
+
+        // Process CSV
+        document.getElementById('processCsv').addEventListener('click', async () => {
+            const file = csvFileInput.files[0];
+            if (!file) {
+                alert('Please select a CSV file first');
+                return;
+            }
+
+            csvModal.classList.remove('active');
+            addLog(`Processing CSV file: ${file.name}`);
+
+            const text = await file.text();
+            const lines = text.split('\n').filter(line => line.trim());
+
+            // Skip header
+            const leads = lines.slice(1).map(line => {
+                const [name, email, company, industry, budget, engagement] = line.split(',').map(s => s.trim());
+                return { name, email, company, industry, budget: parseInt(budget), engagement: parseInt(engagement) };
+            });
+
+            addLog(`Found ${leads.length} leads in CSV`);
+
+            // Process first lead as demo (in production, would batch process)
+            if (leads.length > 0) {
+                await processLead(leads[0]);
+                if (leads.length > 1) {
+                    addLog(`Note: Processing first lead only. Production version would batch process all ${leads.length} leads.`);
+                }
+            }
+        });
+
+        // Download Template CSV
+        document.getElementById('downloadTemplate').addEventListener('click', (e) => {
+            e.preventDefault();
+            const csvContent = `name,email,company,industry,budget,engagement
+Sarah Johnson,sarah.johnson@salesforce.com,Salesforce,SaaS/Technology,2500000,87
+Michael Chen,mchen@jpmorgan.com,JPMorgan Chase,Financial Services,5000000,92
+Emily Rodriguez,e.rodriguez@startupco.io,StartupCo,SaaS/Technology,75000,45`;
+
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'circuit-os-lead-template.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        });
+
+        // Initial state
+        addLog('Lead processing system ready. Submit a lead to begin.');
+    </script>
+
+    <!-- Neon + Steel Animation System -->
+    <script src="../circuit-animations.js"></script>
+</body>
+</html>

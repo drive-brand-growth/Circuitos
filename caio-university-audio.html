@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chief AI Officer University Audio Training - Fortune 100 Certification</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0B0C0D 0%, #1a1b1d 100%);
+            color: #E3E7EB;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: 120px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, rgba(56, 255, 106, 0.05) 0%, rgba(56, 255, 106, 0.02) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(56, 255, 106, 0.2);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #38FF6A 0%, #E3E7EB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #C2C8CF;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #38FF6A;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #C2C8CF;
+        }
+
+        .path-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .path-button {
+            background: rgba(20, 21, 23, 0.6);
+            border: 2px solid rgba(56, 255, 106, 0.2);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .path-button:hover {
+            border-color: rgba(56, 255, 106, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .path-button.active {
+            border-color: #38FF6A;
+            background: rgba(56, 255, 106, 0.1);
+        }
+
+        .path-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .path-name {
+            font-weight: 600;
+            color: #E3E7EB;
+            margin-bottom: 5px;
+        }
+
+        .path-duration {
+            font-size: 0.85em;
+            color: #C2C8CF;
+        }
+
+        .module-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .module-card {
+            background: rgba(20, 21, 23, 0.6);
+            border: 1px solid rgba(56, 255, 106, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .module-card:hover {
+            border-color: rgba(56, 255, 106, 0.5);
+            transform: translateX(5px);
+        }
+
+        .module-card.playing {
+            border-color: #38FF6A;
+            background: rgba(56, 255, 106, 0.05);
+        }
+
+        .module-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #38FF6A;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .module-info {
+            flex: 1;
+        }
+
+        .module-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #E3E7EB;
+            margin-bottom: 5px;
+        }
+
+        .module-duration {
+            font-size: 0.9em;
+            color: #C2C8CF;
+        }
+
+        .play-icon {
+            font-size: 2em;
+            color: #38FF6A;
+        }
+
+        /* Audio Player (Fixed Bottom) */
+        .audio-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(11, 12, 13, 0.98);
+            border-top: 2px solid rgba(56, 255, 106, 0.3);
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .audio-player.active {
+            display: block;
+        }
+
+        .player-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .now-playing {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .now-playing-label {
+            font-size: 0.8em;
+            color: #C2C8CF;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .now-playing-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #38FF6A;
+            margin-top: 5px;
+        }
+
+        .progress-container {
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(56, 255, 106, 0.2);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #38FF6A;
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85em;
+            color: #C2C8CF;
+            margin-top: 5px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .control-btn {
+            background: rgba(56, 255, 106, 0.1);
+            border: 1px solid rgba(56, 255, 106, 0.3);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.5em;
+            color: #38FF6A;
+        }
+
+        .control-btn:hover {
+            background: rgba(56, 255, 106, 0.2);
+            border-color: #38FF6A;
+            transform: scale(1.1);
+        }
+
+        .control-btn.play-pause {
+            width: 60px;
+            height: 60px;
+            font-size: 2em;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .speed-btn {
+            background: rgba(56, 255, 106, 0.1);
+            border: 1px solid rgba(56, 255, 106, 0.3);
+            border-radius: 20px;
+            padding: 5px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #C2C8CF;
+            font-size: 0.9em;
+        }
+
+        .speed-btn.active {
+            background: #38FF6A;
+            color: #0B0C0D;
+            font-weight: 600;
+        }
+
+        .info-banner {
+            background: rgba(56, 255, 106, 0.1);
+            border: 1px solid rgba(56, 255, 106, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .info-banner h3 {
+            color: #38FF6A;
+            margin-bottom: 10px;
+        }
+
+        .info-banner p {
+            color: #C2C8CF;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .stats {
+                gap: 20px;
+            }
+
+            .controls {
+                gap: 15px;
+            }
+
+            .control-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3em;
+            }
+
+            .control-btn.play-pause {
+                width: 55px;
+                height: 55px;
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎧 Chief AI Officer University Audio Training</h1>
+            <p class="subtitle">Fortune 100 Chief AI Officer Certification - Listen Anywhere</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">16</div>
+                    <div class="stat-label">Modules</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">70</div>
+                    <div class="stat-label">Hours</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">$1M+</div>
+                    <div class="stat-label">Target Salary</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="info-banner">
+            <h3>🎧 Complete Audio Library Available!</h3>
+            <p><strong>All 16 modules are ready to play!</strong> Click any module below to start listening. Playback controls include play/pause, skip forward/backward (15 sec), speed adjustment (0.75x-2.0x), and progress seeking.</p>
+            <p style="margin-top: 10px;">Complete 70-hour Fortune 100 Chief AI Officer certification - Listen anywhere, anytime on your mobile device!</p>
+        </div>
+
+        <div class="path-selector">
+            <div class="path-button active" data-path="executive">
+                <div class="path-icon">🎯</div>
+                <div class="path-name">Executive Strategy</div>
+                <div class="path-duration">4 modules • 16 hrs</div>
+            </div>
+            <div class="path-button" data-path="technical">
+                <div class="path-icon">⚙️</div>
+                <div class="path-name">Technical Mastery</div>
+                <div class="path-duration">4 modules • 20 hrs</div>
+            </div>
+            <div class="path-button" data-path="implementation">
+                <div class="path-icon">🚀</div>
+                <div class="path-name">Implementation</div>
+                <div class="path-duration">4 modules • 15 hrs</div>
+            </div>
+            <div class="path-button" data-path="python">
+                <div class="path-icon">🐍</div>
+                <div class="path-name">Python for AI</div>
+                <div class="path-duration">4 modules • 19 hrs</div>
+            </div>
+        </div>
+
+        <div class="module-list" id="modules-container">
+            <!-- Modules will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <div class="audio-player" id="audio-player">
+        <div class="player-container">
+            <div class="now-playing">
+                <div class="now-playing-label">Now Playing</div>
+                <div class="now-playing-title" id="current-module-title">Module 01: Fortune 100 CAIO Role</div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="time-display">
+                    <span id="current-time">0:00</span>
+                    <span id="total-time">45:00</span>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="control-btn" onclick="previousModule()">⏮</div>
+                <div class="control-btn" onclick="skipBackward()">⏪</div>
+                <div class="control-btn play-pause" onclick="togglePlayPause()" id="play-pause-btn">▶️</div>
+                <div class="control-btn" onclick="skipForward()">⏩</div>
+                <div class="control-btn" onclick="nextModule()">⏭</div>
+            </div>
+
+            <div class="speed-control">
+                <span style="color: #C2C8CF; font-size: 0.9em;">Speed:</span>
+                <div class="speed-btn" onclick="setSpeed(0.75)">0.75x</div>
+                <div class="speed-btn active" onclick="setSpeed(1.0)">1.0x</div>
+                <div class="speed-btn" onclick="setSpeed(1.25)">1.25x</div>
+                <div class="speed-btn" onclick="setSpeed(1.5)">1.5x</div>
+                <div class="speed-btn" onclick="setSpeed(2.0)">2.0x</div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="audio-element" style="display: none;"></audio>
+
+    <script>
+        const modules = [
+            // Executive Strategy Path
+            { id: 1, path: 'executive', number: '01', title: 'Fortune 100 CAIO Role & Expectations', duration: '3 hours', audioUrl: 'audio/module-01.mp3' },
+            { id: 2, path: 'executive', number: '02', title: 'MIT/Stanford AI Strategy Frameworks', duration: '4 hours', audioUrl: 'audio/module-02.mp3' },
+            { id: 3, path: 'executive', number: '03', title: 'DMN Mastery - Business Rules as Code', duration: '5 hours', audioUrl: 'audio/module-03.mp3' },
+            { id: 4, path: 'executive', number: '04', title: 'AI ROI & Financial Modeling', duration: '4 hours', audioUrl: 'audio/module-04.mp3' },
+
+            // Technical Mastery Path
+            { id: 5, path: 'technical', number: '05', title: 'Machine Learning Fundamentals', duration: '5 hours', audioUrl: 'audio/module-05.mp3' },
+            { id: 6, path: 'technical', number: '06', title: 'Production ML Models (XGBoost, Prophet)', duration: '5 hours', audioUrl: 'audio/module-06.mp3' },
+            { id: 7, path: 'technical', number: '07', title: 'LLM Architecture & Integration', duration: '5 hours', audioUrl: 'audio/module-07.mp3' },
+            { id: 8, path: 'technical', number: '08', title: 'Hybrid AI Pipeline Architecture', duration: '5 hours', audioUrl: 'audio/module-08.mp3' },
+
+            // Implementation Path
+            { id: 9, path: 'implementation', number: '09', title: 'Cross-Account Intelligence Platform', duration: '3 hours', audioUrl: 'audio/module-09.mp3' },
+            { id: 10, path: 'implementation', number: '10', title: 'AI Governance & Compliance', duration: '3 hours', audioUrl: 'audio/module-10.mp3' },
+            { id: 11, path: 'implementation', number: '11', title: 'Board-Level AI Presentations', duration: '2 hours', audioUrl: 'audio/module-11.mp3' },
+            { id: 12, path: 'implementation', number: '12', title: 'Capstone: End-to-End AI System', duration: '7 hours', audioUrl: 'audio/module-12.mp3' },
+
+            // Python for AI Path
+            { id: 13, path: 'python', number: '13', title: 'Python Fundamentals for AI', duration: '4 hours', audioUrl: 'audio/module-13.mp3' },
+            { id: 14, path: 'python', number: '14', title: 'NumPy & Pandas for Data Science', duration: '4 hours', audioUrl: 'audio/module-14.mp3' },
+            { id: 15, path: 'python', number: '15', title: 'Python ML Libraries (scikit-learn, XGBoost)', duration: '5 hours', audioUrl: 'audio/module-15.mp3' },
+            { id: 16, path: 'python', number: '16', title: 'Building AI Agents with Python', duration: '6 hours', audioUrl: 'audio/module-16.mp3' }
+        ];
+
+        let currentPath = 'executive';
+        let currentModuleId = 1;
+        let isPlaying = false;
+
+        const audio = document.getElementById('audio-element');
+        const progressBar = document.getElementById('progress-bar');
+        const progressFill = document.getElementById('progress-fill');
+        const currentTimeDisplay = document.getElementById('current-time');
+        const totalTimeDisplay = document.getElementById('total-time');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
+
+        audio.addEventListener('timeupdate', () => {
+            const percent = (audio.currentTime / audio.duration) * 100;
+            progressFill.style.width = percent + '%';
+            currentTimeDisplay.textContent = formatTime(audio.currentTime);
+        });
+
+        audio.addEventListener('loadedmetadata', () => {
+            totalTimeDisplay.textContent = formatTime(audio.duration);
+        });
+
+        audio.addEventListener('ended', () => {
+            const pathModules = modules.filter(m => m.path === currentPath);
+            const currentIndex = pathModules.findIndex(m => m.id === currentModuleId);
+            if (currentIndex < pathModules.length - 1) {
+                playModule(pathModules[currentIndex + 1].id);
+            } else {
+                isPlaying = false;
+                playPauseBtn.textContent = '▶️';
+            }
+        });
+
+        audio.addEventListener('error', (e) => {
+            let errorMsg = 'Audio failed to load. ';
+            if (audio.error) {
+                switch(audio.error.code) {
+                    case 1: errorMsg += 'Download aborted.'; break;
+                    case 2: errorMsg += 'Network error.'; break;
+                    case 3: errorMsg += 'Decoding error.'; break;
+                    case 4: errorMsg += 'Audio format not supported.'; break;
+                }
+            }
+            console.error('Audio error:', errorMsg);
+            isPlaying = false;
+            playPauseBtn.textContent = '▶️';
+        });
+
+        audio.addEventListener('waiting', () => {
+            playPauseBtn.textContent = '⏳';
+        });
+
+        audio.addEventListener('canplay', () => {
+            playPauseBtn.textContent = isPlaying ? '⏸' : '▶️';
+        });
+
+        progressBar.addEventListener('click', (e) => {
+            const rect = progressBar.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = percent * audio.duration;
+        });
+
+        function renderModules() {
+            const container = document.getElementById('modules-container');
+            const pathModules = modules.filter(m => m.path === currentPath);
+
+            container.innerHTML = pathModules.map(module => {
+                const isCurrentlyPlaying = module.id === currentModuleId && isPlaying;
+                return '<div class="module-card ' + (isCurrentlyPlaying ? 'playing' : '') + '" onclick="playModule(' + module.id + ')"><div class="module-number">' + module.number + '</div><div class="module-info"><div class="module-title">' + module.title + '</div><div class="module-duration">' + module.duration + '</div></div><div class="play-icon">' + (isCurrentlyPlaying ? '🔊' : '▶️') + '</div></div>';
+            }).join('');
+        }
+
+        function playModule(moduleId) {
+            currentModuleId = moduleId;
+            const module = modules.find(m => m.id === moduleId);
+
+            audio.src = module.audioUrl;
+            audio.load();
+
+            document.getElementById('current-module-title').textContent = 'Module ' + module.number + ': ' + module.title;
+            document.getElementById('audio-player').classList.add('active');
+            playPauseBtn.textContent = '⏳';
+
+            audio.play().then(() => {
+                isPlaying = true;
+                playPauseBtn.textContent = '⏸';
+                renderModules();
+            }).catch(err => {
+                console.error('Playback failed:', err);
+                alert('Module ' + module.number + ' audio failed to load.\\n\\nPlease check your internet connection and try again.');
+                isPlaying = false;
+                playPauseBtn.textContent = '▶️';
+            });
+        }
+
+        function togglePlayPause() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                playPauseBtn.textContent = '▶️';
+            } else {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    playPauseBtn.textContent = '⏸';
+                }).catch(err => {
+                    console.error('Playback failed:', err);
+                });
+            }
+            renderModules();
+        }
+
+        function previousModule() {
+            const pathModules = modules.filter(m => m.path === currentPath);
+            const currentIndex = pathModules.findIndex(m => m.id === currentModuleId);
+            if (currentIndex > 0) {
+                playModule(pathModules[currentIndex - 1].id);
+            }
+        }
+
+        function nextModule() {
+            const pathModules = modules.filter(m => m.path === currentPath);
+            const currentIndex = pathModules.findIndex(m => m.id === currentModuleId);
+            if (currentIndex < pathModules.length - 1) {
+                playModule(pathModules[currentIndex + 1].id);
+            }
+        }
+
+        function skipBackward() {
+            audio.currentTime = Math.max(0, audio.currentTime - 15);
+        }
+
+        function skipForward() {
+            audio.currentTime = Math.min(audio.duration, audio.currentTime + 15);
+        }
+
+        function setSpeed(speed) {
+            audio.playbackRate = speed;
+            document.querySelectorAll('.speed-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        document.querySelectorAll('.path-button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.path-button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentPath = this.dataset.path;
+                renderModules();
+            });
+        });
+
+        renderModules();
+    </script>
+</body>
+</html>

@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit OS: GymOps - Metroflex Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Metroflex Red Brand Colors */
+            --metroflex-red: #C41E3A;
+            --metroflex-red-light: #DC2626;
+            --metroflex-red-dark: #991B2E;
+            --metroflex-red-glow: #FF1744;
+            
+            /* Pure Black Foundation */
+            --surface-black: #000000;
+            --surface-graphite: #0A0A0A;
+            --surface-slate: #141414;
+            
+            /* Steel/Chrome Typography */
+            --steel-chrome: #F5F5F5;
+            --steel-light: #E3E7EB;
+            --steel-base: #C2C8CF;
+            --steel-mid: #A8AFB6;
+            --steel-dark: #7B848E;
+            
+            /* Status Colors */
+            --status-active: #C41E3A;
+            --status-at-risk: #F1FA8C;
+            --status-cancelled: #666666;
+            --status-critical: #991B2E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--surface-black);
+            color: var(--steel-base);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Header/Navigation */
+        .header {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--surface-slate);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            color: var(--steel-chrome);
+        }
+
+        .logo-highlight {
+            color: var(--metroflex-red);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--steel-mid);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--steel-chrome);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--metroflex-red-glow) 0%, var(--metroflex-red) 50%, var(--metroflex-red-dark) 100%);
+            color: var(--steel-chrome);
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(196, 30, 58, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(196, 30, 58, 0.6);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 80px;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            color: var(--steel-chrome);
+            margin-bottom: 24px;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+
+        .hero .highlight {
+            background: linear-gradient(135deg, var(--metroflex-red-glow) 0%, var(--metroflex-red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 28px;
+            color: var(--steel-mid);
+            margin-bottom: 16px;
+        }
+
+        .hero-metroflex {
+            font-size: 20px;
+            color: var(--steel-dark);
+            margin-bottom: 48px;
+        }
+
+        .hero-metroflex-highlight {
+            color: var(--metroflex-red);
+            font-weight: 700;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-top: 48px;
+        }
+
+        .btn-secondary {
+            background: var(--surface-graphite);
+            color: var(--steel-chrome);
+            border: 2px solid var(--steel-dark);
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--metroflex-red);
+            background: var(--surface-slate);
+        }
+
+        /* Arsenal Section */
+        .arsenal {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 56px;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            color: var(--steel-chrome);
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 20px;
+            color: var(--steel-mid);
+        }
+
+        .weapons-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+
+        .weapon-card {
+            background: var(--surface-graphite);
+            border: 2px solid var(--surface-slate);
+            border-radius: 16px;
+            padding: 40px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .weapon-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--metroflex-red-glow), var(--metroflex-red-dark));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .weapon-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--metroflex-red);
+            box-shadow: 0 16px 48px rgba(196, 30, 58, 0.2);
+        }
+
+        .weapon-card:hover::before {
+            opacity: 1;
+        }
+
+        .weapon-number {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--metroflex-red);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .weapon-title {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            color: var(--steel-chrome);
+            margin-bottom: 16px;
+        }
+
+        .weapon-purpose {
+            font-size: 16px;
+            color: var(--steel-mid);
+            margin-bottom: 24px;
+        }
+
+        .weapon-features {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .weapon-features li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            color: var(--steel-light);
+            font-size: 14px;
+        }
+
+        .weapon-features li::before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+            color: var(--metroflex-red);
+        }
+
+        .weapon-metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px;
+            background: var(--surface-black);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .weapon-metric-label {
+            font-size: 12px;
+            color: var(--steel-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .weapon-metric-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--metroflex-red);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 0;
+            background: var(--surface-graphite);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .pricing-card {
+            background: var(--surface-black);
+            border: 2px solid var(--surface-slate);
+            border-radius: 16px;
+            padding: 48px;
+            text-align: center;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--metroflex-red);
+            transform: scale(1.05);
+            box-shadow: 0 16px 48px rgba(196, 30, 58, 0.3);
+        }
+
+        .pricing-tier {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--metroflex-red);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .pricing-amount {
+            font-size: 64px;
+            font-weight: 900;
+            color: var(--steel-chrome);
+            margin-bottom: 8px;
+        }
+
+        .pricing-period {
+            font-size: 16px;
+            color: var(--steel-dark);
+            margin-bottom: 32px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .pricing-features li {
+            padding: 12px 0;
+            color: var(--steel-light);
+            font-size: 14px;
+            border-bottom: 1px solid var(--surface-slate);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+            border-top: 1px solid var(--surface-slate);
+            text-align: center;
+        }
+
+        .footer-content {
+            color: var(--steel-dark);
+            font-size: 14px;
+        }
+
+        .footer-metroflex {
+            color: var(--metroflex-red);
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .weapons-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    CIRCUIT OS: <span class="logo-highlight">GYMOPS</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#arsenal" class="nav-link">Arsenal</a>
+                    <a href="#pricing" class="nav-link">Pricing</a>
+                    <a href="#" class="btn-primary">Start Free</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>
+                <span class="highlight">COMMAND MEMBERS.</span><br>
+                ELIMINATE CHAOS.
+            </h1>
+            <p class="hero-subtitle">The Operating System for Hardcore Gym Operators</p>
+            <p class="hero-metroflex">
+                Trained by <span class="hero-metroflex-highlight">Metroflex Arlington</span> - Where 8x Mr. Olympia Ronnie Coleman Built His Legacy
+            </p>
+            <div class="hero-cta">
+                <a href="#" class="btn-primary">Get Started Free</a>
+                <a href="#arsenal" class="btn-secondary">See The Arsenal</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arsenal Section -->
+    <section class="arsenal" id="arsenal">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">THE ARSENAL</h2>
+                <p class="section-subtitle">10 AI weapons. No bloat. Just results.</p>
+            </div>
+
+            <div class="weapons-grid">
+                <!-- Weapon #1 -->
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #1</div>
+                    <h3 class="weapon-title">AI Lead Qualification</h3>
+                    <p class="weapon-purpose">Research and score every gym lead automatically</p>
+                    <ul class="weapon-features">
+                        <li>Exa API searches social profiles</li>
+                        <li>Perplexity analyzes fitness background</li>
+                        <li>ML model scores likelihood to join (0-100)</li>
+                        <li>GPT-4 writes personalized first email</li>
+                    </ul>
+                    <div class="weapon-metric">
+                        <span class="weapon-metric-label">Accuracy</span>
+                        <span class="weapon-metric-value">87%</span>
+                    </div>
+                </div>
+
+                <!-- Weapon #2 -->
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #2</div>
+                    <h3 class="weapon-title">24/7 Voice & Chat AI</h3>
+                    <p class="weapon-purpose">Never miss a lead - answer calls/chats 24/7</p>
+                    <ul class="weapon-features">
+                        <li>GoHighLevel Conversation AI answers</li>
+                        <li>Handles pricing, tours, class schedules</li>
+                        <li>Books trial sessions automatically</li>
+                        <li>Escalates complex questions to staff</li>
+                    </ul>
+                    <div class="weapon-metric">
+                        <span class="weapon-metric-label">After-Hours Capture Rate</span>
+                        <span class="weapon-metric-value">+40%</span>
+                    </div>
+                </div>
+
+                <!-- Weapon #3 -->
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #3</div>
+                    <h3 class="weapon-title">Email Automation (7 Sequences)</h3>
+                    <p class="weapon-purpose">Automated email campaigns that convert</p>
+                    <ul class="weapon-features">
+                        <li>Nurture (7 emails over 14 days)</li>
+                        <li>Trial Conversion (5 emails over 7 days)</li>
+                        <li>Retention & Win-back campaigns</li>
+                        <li>Referral & Renewal sequences</li>
+                    </ul>
+                    <div class="weapon-metric">
+                        <span class="weapon-metric-label">Email-to-Action Rate</span>
+                        <span class="weapon-metric-value">22%</span>
+                    </div>
+                </div>
+
+                <!-- Weapon #4 -->
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #4</div>
+                    <h3 class="weapon-title">AI Churn Prevention</h3>
+                    <p class="weapon-purpose">Predict which members will cancel, save them first</p>
+                    <ul class="weapon-features">
+                        <li>ML model predicts cancellation risk (91% accuracy)</li>
+                        <li>Triggers when risk score > 70%</li>
+                        <li>Auto-generates personalized retention offers</li>
+                        <li>Sends via email/SMS/in-app</li>
+                    </ul>
+                    <div class="weapon-metric">
+                        <span class="weapon-metric-label">Members Saved</span>
+                        <span class="weapon-metric-value">30-40%</span>
+                    </div>
+                    <div class="weapon-metric">
+                        <span class="weapon-metric-label">Revenue Recovered</span>
+                        <span class="weapon-metric-value">$4,272+/year</span>
+                    </div>
+                </div>
+
+                <!-- Weapon #5 -->
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #5</div>
+                    <h3 class="weapon-title">Local SEO Domination</h3>
+                    <p class="weapon-purpose">Rank top 3 for "gym near me" searches</p>
+                    <ul class="weapon-features">
+                        <li>Citation building to 50+ directories</li>
+                        <li>AI generates local landing pages</li>
+                        <li>Monthly ranking reports</li>
+                        <li>Ahrefs competitor analysis</li>
+                    </ul>
+                    <div class="weapon-metric">
+                        <span class="weapon-metric-label">Target Ranking</span>
+                        <span class="weapon-metric-value">Top 3 in 6 months</span>
+                    </div>
+                </div>
+
+                <!-- Weapon #6 -->
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #6</div>
+                    <h3 class="weapon-title">AI Search Engine Optimization (AEO)</h3>
+                    <p class="weapon-purpose">Get cited by ChatGPT, Perplexity, Claude</p>
+                    <ul class="weapon-features">
+                        <li>Generate 25 FAQ pages optimized for AI</li>
+                        <li>Structure content for AI consumption</li>
+                        <li>Monitor AI citation rate monthly</li>
+                        <li>Custom schema markup</li>
+                    </ul>
+                    <div class="weapon-metric">
+                        <span class="weapon-metric-label">AI Mention Rate</span>
+                        <span class="weapon-metric-value">60-80% in 6 months</span>
+                    </div>
+                </div>
+
+                <!-- Weapon #7 -->
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #7</div>
+                    <h3 class="weapon-title">Automated Content Marketing</h3>
+                    <p class="weapon-purpose">Publish 4 blog posts per month, zero manual work</p>
+                    <ul class="weapon-features">
+                        <li>AI generates monthly content calendar</li>
+                        <li>Writes 1,400-word blog posts</li>
+                        <li>Optimizes for SEO + AI search</li>
+                        <li>Publishes to WordPress automatically</li>
+                    </ul>
+                    <div class="weapon-metric">
+                        <span class="weapon-metric-label">Organic Traffic Growth</span>
+                        <span class="weapon-metric-value">+40-60% in 6 months</span>
+                    </div>
+                </div>
+
+                <!-- Weapon #8 -->
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #8</div>
+                    <h3 class="weapon-title">Review Generation System</h3>
+                    <p class="weapon-purpose">Get 3-5 new Google reviews every month automatically</p>
+                    <ul class="weapon-features">
+                        <li>Auto-sends review requests via SMS/email</li>
+                        <li>Timing: right after positive experiences</li>
+                        <li>AI responds to negative reviews within 2 hours</li>
+                        <li>Reputation management dashboard</li>
+                    </ul>
+                    <div class="weapon-metric">
+                        <span class="weapon-metric-label">Rating Improvement</span>
+                        <span class="weapon-metric-value">4.2 → 4.7+</span>
+                    </div>
+                </div>
+
+                <!-- Weapon #9 -->
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #9</div>
+                    <h3 class="weapon-title">Social Media Automation</h3>
+                    <p class="weapon-purpose">Post 12-20 times per month on Instagram, Facebook, Twitter</p>
+                    <ul class="weapon-features">
+                        <li>AI creates monthly content calendar</li>
+                        <li>Generates captions and hashtags</li>
+                        <li>Schedules posts automatically</li>
+                        <li>Monitors engagement metrics</li>
+                    </ul>
+                    <div class="weapon-metric">
+                        <span class="weapon-metric-label">Time Saved</span>
+                        <span class="weapon-metric-value">15+ hours/week</span>
+                    </div>
+                </div>
+
+                <!-- Weapon #10 -->
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #10</div>
+                    <h3 class="weapon-title">Competitor Intelligence</h3>
+                    <p class="weapon-purpose">Track competitor pricing, SEO, social media monthly</p>
+                    <ul class="weapon-features">
+                        <li>Scrape competitor websites (pricing, classes)</li>
+                        <li>Track SEO rankings</li>
+                        <li>Monitor social media activity</li>
+                        <li>Generate strategic recommendations</li>
+                    </ul>
+                    <div class="weapon-metric">
+                        <span class="weapon-metric-label">Report Frequency</span>
+                        <span class="weapon-metric-value">Monthly</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">PRICING</h2>
+                <p class="section-subtitle">No contracts. Cancel anytime. ROI guaranteed.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Starter -->
+                <div class="pricing-card">
+                    <div class="pricing-tier">Starter</div>
+                    <div class="pricing-amount">$497</div>
+                    <div class="pricing-period">per month</div>
+                    <ul class="pricing-features">
+                        <li>✅ Weapons #1-5</li>
+                        <li>✅ AI Lead Qualification</li>
+                        <li>✅ 24/7 Voice & Chat AI</li>
+                        <li>✅ Email Automation (7 sequences)</li>
+                        <li>✅ AI Churn Prevention</li>
+                        <li>✅ Local SEO Domination</li>
+                        <li>✅ Monthly reports</li>
+                        <li>✅ Email support</li>
+                    </ul>
+                    <a href="#" class="btn-secondary">Start Now</a>
+                </div>
+
+                <!-- Pro (Featured) -->
+                <div class="pricing-card featured">
+                    <div class="pricing-tier">Pro (Most Popular)</div>
+                    <div class="pricing-amount">$997</div>
+                    <div class="pricing-period">per month</div>
+                    <ul class="pricing-features">
+                        <li>✅ ALL 10 Weapons</li>
+                        <li>✅ Everything in Starter</li>
+                        <li>✅ AI Search Optimization (AEO)</li>
+                        <li>✅ Automated Content Marketing</li>
+                        <li>✅ Review Generation System</li>
+                        <li>✅ Social Media Automation</li>
+                        <li>✅ Competitor Intelligence</li>
+                        <li>✅ White-glove setup</li>
+                        <li>✅ Priority support</li>
+                        <li>✅ Custom integrations</li>
+                    </ul>
+                    <a href="#" class="btn-primary">Start Now</a>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="pricing-card">
+                    <div class="pricing-tier">Enterprise</div>
+                    <div class="pricing-amount">Custom</div>
+                    <div class="pricing-period">let's talk</div>
+                    <ul class="pricing-features">
+                        <li>✅ Everything in Pro</li>
+                        <li>✅ Multi-location support</li>
+                        <li>✅ Custom ML models</li>
+                        <li>✅ Dedicated account manager</li>
+                        <li>✅ Custom workflows</li>
+                        <li>✅ API access</li>
+                        <li>✅ Data exports</li>
+                        <li>✅ SLA guarantees</li>
+                    </ul>
+                    <a href="#" class="btn-secondary">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>Built for gym operators. Not for executives.</p>
+                <p>Powered by <span class="footer-metroflex">Metroflex</span> - 40 years of hardcore training excellence.</p>
+                <p>© 2025 Circuit OS: GymOps. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

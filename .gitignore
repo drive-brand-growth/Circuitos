@@ -1,0 +1,23 @@
+# API Keys and Secrets
+*.key
+*.pem
+.env
+.env.local
+.env.production
+*-secret.sh
+*secret*.sh
+fix-content-type.sh
+
+# Credentials
+credentials.json
+service-account.json
+*-credentials.*
+
+# Supabase
+.supabase/
+
+# Mac
+.DS_Store
+
+# Logs
+*.log

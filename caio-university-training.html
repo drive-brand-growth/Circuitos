@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAIO University - Chief AI Officer Certification</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0B0C0D;
+            --bg-medium: #141618;
+            --bg-light: #1C1F22;
+            --accent-green: #38FF6A;
+            --text-primary: #E3E7EB;
+            --text-secondary: #C2C8CF;
+            --text-muted: #8F979F;
+            --border: rgba(90, 97, 106, 0.2);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-medium);
+            border-bottom: 2px solid var(--accent-green);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .progress-header {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 2rem;
+        }
+
+        .progress-bar {
+            background: var(--bg-light);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--accent-green);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--bg-medium);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .sidebar h3 {
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .module-list {
+            list-style: none;
+        }
+
+        .module-item {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+            font-size: 0.9rem;
+        }
+
+        .module-item:hover {
+            background: var(--bg-dark);
+            border-left-color: var(--accent-green);
+            transform: translateX(5px);
+        }
+
+        .module-item.active {
+            background: var(--bg-dark);
+            border-left-color: var(--accent-green);
+        }
+
+        .module-item.completed {
+            opacity: 0.6;
+        }
+
+        .module-icon {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+
+        .module-status {
+            float: right;
+            color: var(--accent-green);
+        }
+
+        /* Content Area */
+        .content {
+            background: var(--bg-medium);
+            border-radius: 12px;
+            padding: 3rem;
+            min-height: 600px;
+        }
+
+        .content h1 {
+            color: var(--accent-green);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .content h2 {
+            color: var(--text-primary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .content h3 {
+            color: var(--text-secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.4rem;
+        }
+
+        .content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        .content ul, .content ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .content a {
+            color: var(--accent-green);
+            text-decoration: none;
+        }
+
+        .content a:hover {
+            text-decoration: underline;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: var(--bg-light);
+            border-left: 4px solid var(--accent-green);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .info-box.success {
+            border-left-color: var(--success);
+        }
+
+        .info-box.warning {
+            border-left-color: var(--warning);
+        }
+
+        .info-box.error {
+            border-left-color: var(--error);
+        }
+
+        .info-box h4 {
+            color: var(--accent-green);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Code Examples */
+        .code-example {
+            background: #000;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+
+        .code-example pre {
+            color: var(--text-primary);
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Lesson Navigation */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn {
+            background: var(--accent-green);
+            color: var(--bg-dark);
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(56, 255, 106, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: var(--bg-light);
+            color: var(--text-primary);
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--accent-green);
+        }
+
+        .quiz-question {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question h4 {
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .quiz-options {
+            list-style: none;
+        }
+
+        .quiz-option {
+            background: var(--bg-dark);
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .quiz-option:hover {
+            border-left-color: var(--accent-green);
+            transform: translateX(5px);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-left-color: var(--success);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-left-color: var(--error);
+        }
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .progress-header {
+                width: 100%;
+                margin: 1rem 0 0 0;
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-light);
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        td {
+            color: var(--text-secondary);
+        }
+
+        strong {
+            color: var(--text-primary);
+        }
+
+        .lead {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>🎓</span>
+                <span>CAIO University</span>
+            </div>
+            <div class="progress-header">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">0% Complete</div>
+            </div>
+            <button class="btn" onclick="showDashboard()">📊 Dashboard</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>Training Modules</h3>
+            <ul class="module-list" id="moduleList"></ul>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content" id="contentArea">
+            <h1>Welcome to CAIO University</h1>
+            <p class="lead">Loading your world-class Chief AI Officer certification program...</p>
+        </main>
+    </div>
+
+    <script src="curriculum.js"></script>
+    <script>
+        // Progress tracking
+        let userProgress = JSON.parse(localStorage.getItem('caio_progress')) || {
+            currentModule: 'intro',
+            currentLesson: 0,
+            completed: [],
+            quizScores: {},
+            startDate: new Date().toISOString()
+        };
+
+        // Save progress
+        function saveProgress() {
+            localStorage.setItem('caio_progress', JSON.stringify(userProgress));
+            updateProgressBar();
+        }
+
+        // Update progress bar
+        function updateProgressBar() {
+            const totalLessons = courseData.modules.reduce((sum, mod) => sum + mod.lessons.length, 0);
+            const completedLessons = userProgress.completed.length;
+            const percentage = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
+
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = percentage + '% Complete';
+        }
+
+        // Load module list
+        function loadModuleList() {
+            const list = document.getElementById('moduleList');
+            list.innerHTML = '';
+
+            courseData.modules.forEach(module => {
+                const item = document.createElement('li');
+                item.className = 'module-item';
+
+                if (module.id === userProgress.currentModule) {
+                    item.classList.add('active');
+                }
+
+                const completed = module.lessons && module.lessons.length > 0 &&
+                    module.lessons.every(lesson => userProgress.completed.includes(module.id + '-' + lesson.id));
+
+                if (completed) {
+                    item.classList.add('completed');
+                }
+
+                item.innerHTML = `
+                    <span class="module-icon">${module.icon}</span>
+                    <span>${module.title}</span>
+                    <span class="module-status">${completed ? '✓' : ''}</span>
+                `;
+
+                item.onclick = () => loadModule(module.id);
+                list.appendChild(item);
+            });
+        }
+
+        // Load module
+        function loadModule(moduleId) {
+            userProgress.currentModule = moduleId;
+            userProgress.currentLesson = 0;
+            saveProgress();
+            loadModuleList();
+            loadLesson(moduleId, 0);
+        }
+
+        // Load lesson
+        function loadLesson(moduleId, lessonIndex) {
+            const module = courseData.modules.find(m => m.id === moduleId);
+            if (!module || !module.lessons || lessonIndex >= module.lessons.length) {
+                loadModuleOverview(moduleId);
+                return;
+            }
+
+            const lesson = module.lessons[lessonIndex];
+            const contentArea = document.getElementById('contentArea');
+
+            let html = lesson.content;
+
+            // Add quiz if exists
+            if (lesson.quiz && lesson.quiz.length > 0) {
+                html += '<div class="quiz-container"><h2>Knowledge Check</h2>';
+                lesson.quiz.forEach((q, index) => {
+                    html += `
+                        <div class="quiz-question" data-question="${index}">
+                            <h4>Question ${index + 1}: ${q.question}</h4>
+                            <ul class="quiz-options">
+                                ${q.options.map((opt, optIndex) =>
+                                    `<li class="quiz-option" onclick="selectQuizOption(${index}, ${optIndex}, ${q.correct}, '${q.explanation}')">${String.fromCharCode(65 + optIndex)}. ${opt}</li>`
+                                ).join('')}
+                            </ul>
+                            <div class="quiz-feedback"></div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            }
+
+            // Add navigation
+            html += '<div class="lesson-nav">';
+            if (lessonIndex > 0) {
+                html += `<button class="btn btn-secondary" onclick="loadLesson('${moduleId}', ${lessonIndex - 1})">← Previous Lesson</button>`;
+            } else {
+                html += '<div></div>';
+            }
+
+            if (lessonIndex < module.lessons.length - 1) {
+                html += `<button class="btn" onclick="completeLesson('${moduleId}', '${lesson.id}', ${lessonIndex + 1})">Next Lesson →</button>`;
+            } else {
+                html += `<button class="btn" onclick="completeLesson('${moduleId}', '${lesson.id}', -1)">Complete Module ✓</button>`;
+            }
+            html += '</div>';
+
+            contentArea.innerHTML = html;
+            window.scrollTo(0, 0);
+        }
+
+        // Load module overview
+        function loadModuleOverview(moduleId) {
+            const module = courseData.modules.find(m => m.id === moduleId);
+            if (!module) return;
+
+            const contentArea = document.getElementById('contentArea');
+            contentArea.innerHTML = `
+                <h1>${module.icon} ${module.title}</h1>
+                <p class="lead">${module.description || 'No description available yet.'}</p>
+
+                <div class="info-box warning">
+                    <h4>🚧 Module Under Construction</h4>
+                    <p>This module is currently being built out with comprehensive content. Check back soon!</p>
+                </div>
+
+                <div class="lesson-nav">
+                    <div></div>
+                    ${module.lessons && module.lessons.length > 0 ?
+                        `<button class="btn" onclick="loadLesson('${moduleId}', 0)">Start Module →</button>` :
+                        '<button class="btn" disabled>Coming Soon</button>'
+                    }
+                </div>
+            `;
+        }
+
+        // Quiz option selection
+        function selectQuizOption(questionIndex, optionIndex, correctIndex, explanation) {
+            const question = document.querySelectorAll('.quiz-question')[questionIndex];
+            const options = question.querySelectorAll('.quiz-option');
+            const feedback = question.querySelector('.quiz-feedback');
+
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+                opt.style.pointerEvents = 'none';
+            });
+
+            if (optionIndex === correctIndex) {
+                options[optionIndex].classList.add('correct');
+                feedback.innerHTML = `<strong style="color: var(--success);">✓ Correct!</strong> ${explanation}`;
+                feedback.style.background = 'rgba(16, 185, 129, 0.1)';
+            } else {
+                options[optionIndex].classList.add('incorrect');
+                options[correctIndex].classList.add('correct');
+                feedback.innerHTML = `<strong style="color: var(--error);">✗ Incorrect.</strong> ${explanation}`;
+                feedback.style.background = 'rgba(239, 68, 68, 0.1)';
+            }
+        }
+
+        // Complete lesson
+        function completeLesson(moduleId, lessonId, nextLessonIndex) {
+            const lessonKey = moduleId + '-' + lessonId;
+            if (!userProgress.completed.includes(lessonKey)) {
+                userProgress.completed.push(lessonKey);
+                saveProgress();
+            }
+
+            if (nextLessonIndex >= 0) {
+                loadLesson(moduleId, nextLessonIndex);
+            } else {
+                loadModuleList();
+                showDashboard();
+            }
+        }
+
+        // Show dashboard
+        function showDashboard() {
+            const contentArea = document.getElementById('contentArea');
+            const totalLessons = courseData.modules.reduce((sum, mod) => sum + (mod.lessons ? mod.lessons.length : 0), 0);
+            const completedLessons = userProgress.completed.length;
+            const percentage = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
+
+            contentArea.innerHTML = `
+                <h1>📊 Your Progress Dashboard</h1>
+                <p class="lead">Track your journey to becoming a world-class Chief AI Officer</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">${percentage}%</div>
+                        <div class="stat-label">Complete</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${completedLessons}</div>
+                        <div class="stat-label">Lessons Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${totalLessons}</div>
+                        <div class="stat-label">Total Lessons</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${courseData.modules.length}</div>
+                        <div class="stat-label">Modules</div>
+                    </div>
+                </div>
+
+                <h2>Module Progress</h2>
+                ${courseData.modules.map(module => {
+                    const modCompleted = module.lessons ? module.lessons.filter(l => userProgress.completed.includes(module.id + '-' + l.id)).length : 0;
+                    const modTotal = module.lessons ? module.lessons.length : 0;
+                    const modPercentage = modTotal > 0 ? Math.round((modCompleted / modTotal) * 100) : 0;
+
+                    return `
+                        <div class="stat-card" style="text-align: left; cursor: pointer; margin-bottom: 1rem;" onclick="loadModule('${module.id}')">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                <strong>${module.icon} ${module.title}</strong>
+                                <span style="color: var(--accent-green);">${modPercentage}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${modPercentage}%;"></div>
+                            </div>
+                            <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">
+                                ${modCompleted} of ${modTotal} lessons ${modTotal === 0 ? '(Coming Soon)' : 'completed'}
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+
+                <div class="lesson-nav">
+                    <div></div>
+                    <button class="btn" onclick="loadModule(userProgress.currentModule)">Resume Learning →</button>
+                </div>
+            `;
+        }
+
+        // Initialize
+        function init() {
+            loadModuleList();
+            loadLesson(userProgress.currentModule, userProgress.currentLesson);
+            updateProgressBar();
+        }
+
+        // Start app when curriculum loads
+        if (typeof courseData !== 'undefined') {
+            init();
+        } else {
+            window.addEventListener('curriculumLoaded', init);
+        }
+    </script>
+</body>
+</html>

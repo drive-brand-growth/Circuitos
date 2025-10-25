@@ -1,0 +1,130 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Metallic gradient for C -->
+    <linearGradient id="metalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8e8e8;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#a0a0a0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#707070;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Inner shadow for 3D depth -->
+    <filter id="innerShadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="2" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.6"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Green orb radial gradient -->
+    <radialGradient id="orbGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#00dd66;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc44;stop-opacity:1" />
+    </radialGradient>
+
+    <!-- Green glow filter -->
+    <filter id="greenGlow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Top highlight -->
+    <linearGradient id="topHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+
+  <!-- THE LETTER "C" - circular ring with opening on RIGHT -->
+  <g id="letter-c">
+    <!-- This creates a "C" shape: Start at top of opening, go around the circle (270 degrees), end at bottom of opening -->
+
+    <!-- Outer ring of C -->
+    <path d="M 160 60
+             A 60 60 0 1 1 160 140"
+          fill="none"
+          stroke="url(#metalGradient)"
+          stroke-width="20"
+          stroke-linecap="round"
+          filter="url(#innerShadow)"/>
+
+    <!-- Inner highlight for 3D bevel effect (top arc only) -->
+    <path d="M 160 65
+             A 55 55 0 0 1 45 100"
+          fill="none"
+          stroke="url(#topHighlight)"
+          stroke-width="8"
+          stroke-linecap="round"
+          opacity="0.7"/>
+
+    <!-- Darker inner edge for depth -->
+    <path d="M 160 135
+             A 55 55 0 0 1 45 100"
+          fill="none"
+          stroke="#505050"
+          stroke-width="3"
+          stroke-linecap="round"
+          opacity="0.4"/>
+  </g>
+
+  <!-- Green orb - positioned at the opening (right side) -->
+  <g id="green-orb">
+    <!-- Outer glow halo -->
+    <circle cx="160" cy="100" r="18"
+            fill="#00ff88"
+            opacity="0.15"
+            filter="url(#greenGlow)"/>
+
+    <!-- Main green orb -->
+    <circle cx="160" cy="100" r="10"
+            fill="url(#orbGradient)"
+            filter="url(#greenGlow)"/>
+
+    <!-- Bright highlight -->
+    <circle cx="157" cy="97" r="4"
+            fill="#ffffff"
+            opacity="0.95"/>
+
+    <!-- Inner glow -->
+    <circle cx="160" cy="100" r="6"
+            fill="#00ff88"
+            opacity="0.7"/>
+  </g>
+
+  <!-- Pulsing animation -->
+  <style>
+    @keyframes orbPulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.75;
+        transform: scale(1.12);
+      }
+    }
+
+    #green-orb {
+      animation: orbPulse 3s ease-in-out infinite;
+      transform-origin: 160px 100px;
+    }
+
+    @keyframes metalShine {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.96; }
+    }
+
+    #letter-c {
+      animation: metalShine 4s ease-in-out infinite;
+    }
+  </style>
+</svg>

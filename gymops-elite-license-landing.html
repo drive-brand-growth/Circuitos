@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit OS: GymOps - Elite License | The AI That Runs Ronnie Coleman's Gym</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --metroflex-red: #C41E3A;
+            --metroflex-red-light: #DC2626;
+            --surface-black: #000000;
+            --surface-graphite: #0A0A0A;
+            --surface-slate: #141414;
+            --steel-chrome: #F5F5F5;
+            --steel-light: #E3E7EB;
+            --steel-base: #C2C8CF;
+            --steel-mid: #8F979F;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--surface-black);
+            color: var(--steel-base);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(180deg, var(--surface-black) 0%, var(--surface-graphite) 100%);
+            padding: 80px 0 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(196, 30, 58, 0.15), transparent);
+            pointer-events: none;
+        }
+
+        .eyebrow {
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--metroflex-red);
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            color: var(--steel-chrome);
+            margin-bottom: 32px;
+            line-height: 1.1;
+        }
+
+        .hero h1 .highlight {
+            color: var(--metroflex-red);
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            color: var(--steel-mid);
+            margin-bottom: 48px;
+            max-width: 800px;
+        }
+
+        .hero-proof {
+            display: flex;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .proof-stat {
+            text-align: center;
+        }
+
+        .proof-number {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--metroflex-red);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .proof-label {
+            font-size: 14px;
+            color: var(--steel-mid);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .cta-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--metroflex-red-light) 0%, var(--metroflex-red) 100%);
+            color: var(--steel-chrome);
+            padding: 24px 48px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 0 30px rgba(196, 30, 58, 0.4);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(196, 30, 58, 0.6);
+        }
+
+        /* Problem Section */
+        .problem {
+            padding: 100px 0;
+            background: var(--surface-graphite);
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--steel-chrome);
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .problem-card {
+            background: var(--surface-black);
+            border-left: 4px solid var(--metroflex-red);
+            padding: 32px;
+            border-radius: 4px;
+        }
+
+        .problem-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--steel-chrome);
+            margin-bottom: 16px;
+        }
+
+        .problem-cost {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--metroflex-red);
+            margin-bottom: 12px;
+        }
+
+        .problem-description {
+            color: var(--steel-mid);
+            line-height: 1.8;
+        }
+
+        /* Value Equation Section */
+        .value-equation {
+            padding: 100px 0;
+            background: var(--surface-black);
+        }
+
+        .equation-container {
+            background: var(--surface-slate);
+            border: 2px solid var(--metroflex-red);
+            border-radius: 12px;
+            padding: 60px;
+            margin-top: 60px;
+        }
+
+        .equation-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(196, 30, 58, 0.2);
+        }
+
+        .equation-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .equation-label {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--steel-mid);
+            flex: 1;
+        }
+
+        .equation-value {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--metroflex-red);
+            flex: 2;
+        }
+
+        .equation-description {
+            font-size: 14px;
+            color: var(--steel-mid);
+            margin-top: 8px;
+        }
+
+        /* Weapons Section */
+        .weapons {
+            padding: 100px 0;
+            background: var(--surface-graphite);
+        }
+
+        .weapons-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .weapon-card {
+            background: var(--surface-black);
+            border: 2px solid var(--surface-slate);
+            border-radius: 12px;
+            padding: 40px;
+            transition: all 0.3s;
+        }
+
+        .weapon-card:hover {
+            border-color: var(--metroflex-red);
+            transform: translateY(-4px);
+        }
+
+        .weapon-number {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--metroflex-red);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .weapon-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--steel-chrome);
+            margin-bottom: 16px;
+        }
+
+        .weapon-description {
+            color: var(--steel-mid);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .weapon-roi {
+            background: rgba(196, 30, 58, 0.1);
+            border-left: 3px solid var(--metroflex-red);
+            padding: 16px;
+            border-radius: 4px;
+        }
+
+        .weapon-roi-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--steel-mid);
+            margin-bottom: 4px;
+        }
+
+        .weapon-roi-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--metroflex-red);
+        }
+
+        /* Social Proof Section */
+        .social-proof {
+            padding: 100px 0;
+            background: var(--surface-black);
+        }
+
+        .case-study {
+            background: var(--surface-slate);
+            border-left: 4px solid var(--metroflex-red);
+            padding: 60px;
+            border-radius: 4px;
+            margin-top: 60px;
+        }
+
+        .case-study-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .case-study-logo {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--metroflex-red);
+        }
+
+        .case-study-location {
+            font-size: 18px;
+            color: var(--steel-mid);
+        }
+
+        .case-study-quote {
+            font-size: 24px;
+            font-style: italic;
+            color: var(--steel-chrome);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .case-study-results {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .result-stat {
+            text-align: center;
+        }
+
+        .result-number {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--metroflex-red);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .result-label {
+            font-size: 14px;
+            color: var(--steel-mid);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 0;
+            background: var(--surface-graphite);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .pricing-card {
+            background: var(--surface-black);
+            border: 2px solid var(--surface-slate);
+            border-radius: 12px;
+            padding: 48px;
+            text-align: center;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--metroflex-red);
+            transform: scale(1.05);
+            box-shadow: 0 16px 48px rgba(196, 30, 58, 0.3);
+        }
+
+        .pricing-tier {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--metroflex-red);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .pricing-amount {
+            font-size: 64px;
+            font-weight: 900;
+            color: var(--steel-chrome);
+            margin-bottom: 8px;
+        }
+
+        .pricing-period {
+            font-size: 16px;
+            color: var(--steel-mid);
+            margin-bottom: 8px;
+        }
+
+        .pricing-savings {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--metroflex-red);
+            margin-bottom: 32px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .pricing-features li {
+            padding: 12px 0;
+            color: var(--steel-light);
+            font-size: 14px;
+            border-bottom: 1px solid var(--surface-slate);
+        }
+
+        .pricing-features li::before {
+            content: '✓ ';
+            color: var(--metroflex-red);
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        /* Guarantee Section */
+        .guarantee {
+            padding: 100px 0;
+            background: var(--surface-black);
+        }
+
+        .guarantee-box {
+            background: linear-gradient(135deg, var(--metroflex-red) 0%, #991B2E 100%);
+            border-radius: 12px;
+            padding: 60px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .guarantee-title {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--steel-chrome);
+            margin-bottom: 24px;
+        }
+
+        .guarantee-text {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+
+        .guarantee-cta {
+            background: var(--steel-chrome);
+            color: var(--metroflex-red);
+            padding: 24px 48px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .guarantee-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 100px 0;
+            background: var(--surface-graphite);
+        }
+
+        .faq-grid {
+            margin-top: 60px;
+        }
+
+        .faq-item {
+            background: var(--surface-black);
+            border-left: 4px solid var(--metroflex-red);
+            padding: 32px;
+            margin-bottom: 24px;
+            border-radius: 4px;
+        }
+
+        .faq-question {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--steel-chrome);
+            margin-bottom: 16px;
+        }
+
+        .faq-answer {
+            color: var(--steel-mid);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 0;
+            background: var(--surface-black);
+            text-align: center;
+            border-top: 1px solid var(--surface-slate);
+        }
+
+        .footer-text {
+            color: var(--steel-mid);
+            font-size: 14px;
+        }
+
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 56px;
+            }
+
+            .problem-grid,
+            .weapons-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="eyebrow">THE GYM THAT TRAINED 8X MR. OLYMPIA RONNIE COLEMAN</div>
+            <h1>
+                The AI That Runs<br>
+                <span class="highlight">Metroflex Gym</span><br>
+                Now Available to You
+            </h1>
+            <p class="hero-subtitle">
+                Circuit OS: GymOps. Built by Brian Dobson at Metroflex Arlington. 
+                40 years of hardcore gym operations, now automated with production-grade AI.
+            </p>
+
+            <div class="hero-proof">
+                <div class="proof-stat">
+                    <span class="proof-number">91%</span>
+                    <span class="proof-label">Churn Prediction Accuracy</span>
+                </div>
+                <div class="proof-stat">
+                    <span class="proof-number">40%</span>
+                    <span class="proof-label">At-Risk Members Saved</span>
+                </div>
+                <div class="proof-stat">
+                    <span class="proof-number">20hrs</span>
+                    <span class="proof-label">Saved Per Week</span>
+                </div>
+                <div class="proof-stat">
+                    <span class="proof-number">$86K</span>
+                    <span class="proof-label">Revenue Protected Annually</span>
+                </div>
+            </div>
+
+            <a href="#pricing" class="cta-primary">Get Elite License - $85K (Save $90K)</a>
+        </div>
+    </section>
+
+    <!-- Problem Section (PAS Formula) -->
+    <section class="problem">
+        <div class="container">
+            <h2 class="section-title">Your Gym Is Bleeding Money</h2>
+            <p style="text-align: center; font-size: 20px; color: var(--steel-mid); max-width: 800px; margin: 0 auto 60px;">
+                You don't have a revenue problem. You have a chaos problem.
+            </p>
+
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-title">Preventable Churn</div>
+                    <div class="problem-cost">$48K/year lost</div>
+                    <p class="problem-description">
+                        8% monthly churn rate. Members quit without warning. By the time you SEE the problem, 
+                        they're already gone. You're losing $4K/month to churn you could have prevented.
+                    </p>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-title">Manual Operations Hell</div>
+                    <div class="problem-cost">30 hours/week wasted</div>
+                    <p class="problem-description">
+                        You're drowning in spreadsheets, manual follow-ups, and reactive firefighting. 
+                        30 hours/week on operations that should be automated. That's $40K/year of YOUR time.
+                    </p>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-title">Bad Lead Prioritization</div>
+                    <div class="problem-cost">$24K/year wasted</div>
+                    <p class="problem-description">
+                        Your team wastes time on dead-end leads while high-value prospects slip through. 
+                        No lead scoring. No prioritization. Just chaos and missed conversions.
+                    </p>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-title">Blind Spot Operations</div>
+                    <div class="problem-cost">$18K/year overtime</div>
+                    <p class="problem-description">
+                        Staff working overtime because you can't predict demand. Overstaffed on slow days. 
+                        Understaffed on busy days. Pure reactive chaos costs you $18K/year in unnecessary labor.
+                    </p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 60px; padding: 40px; background: var(--surface-black); border-radius: 12px;">
+                <p style="font-size: 32px; font-weight: 900; color: var(--metroflex-red); margin-bottom: 16px;">
+                    Total Annual Cost of Chaos: $130,000
+                </p>
+                <p style="font-size: 18px; color: var(--steel-mid);">
+                    And that's just what you CAN measure. What about the opportunity cost?
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Equation Section (Hormozi Framework) -->
+    <section class="value-equation">
+        <div class="container">
+            <h2 class="section-title">The Hormozi Value Equation</h2>
+            <p style="text-align: center; font-size: 20px; color: var(--steel-mid); max-width: 800px; margin: 0 auto;">
+                How we deliver 10x value for your investment
+            </p>
+
+            <div class="equation-container">
+                <div class="equation-row">
+                    <div class="equation-label">
+                        DREAM OUTCOME<br>
+                        <span class="equation-description">What you ultimately want to achieve</span>
+                    </div>
+                    <div class="equation-value">
+                        Command Your Gym. Eliminate Chaos.<br>
+                        <span class="equation-description" style="font-size: 18px; color: var(--steel-mid);">
+                            Predict churn 30 days early. Automate operations. Recover $86K+ annually.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="equation-row">
+                    <div class="equation-label">
+                        PERCEIVED LIKELIHOOD OF SUCCESS<br>
+                        <span class="equation-description">How certain you are this will work</span>
+                    </div>
+                    <div class="equation-value">
+                        91% Churn Prediction Accuracy<br>
+                        <span class="equation-description" style="font-size: 18px; color: var(--steel-mid);">
+                            Production ML models trained on 500K+ gym member interactions. Not generic AI.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="equation-row">
+                    <div class="equation-label">
+                        TIME DELAY<br>
+                        <span class="equation-description">How long until you see results</span>
+                    </div>
+                    <div class="equation-value">
+                        30-Day Implementation<br>
+                        <span class="equation-description" style="font-size: 18px; color: var(--steel-mid);">
+                            White-glove setup. Live in 30 days. First churn prevention within 48 hours.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="equation-row">
+                    <div class="equation-label">
+                        EFFORT & SACRIFICE<br>
+                        <span class="equation-description">What you have to do to get results</span>
+                    </div>
+                    <div class="equation-value">
+                        Zero Effort. Fully Automated.<br>
+                        <span class="equation-description" style="font-size: 18px; color: var(--steel-mid);">
+                            No manual data entry. No CSV uploads. AI runs 24/7 in the background.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weapons Section (Grand Slam Offer) -->
+    <section class="weapons">
+        <div class="container">
+            <h2 class="section-title">The 10-Weapon Arsenal</h2>
+            <p style="text-align: center; font-size: 20px; color: var(--steel-mid); max-width: 800px; margin: 0 auto 60px;">
+                Not features. Not tools. Weapons. Built to eliminate chaos.
+            </p>
+
+            <div class="weapons-grid">
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #1</div>
+                    <h3 class="weapon-title">AI Churn Prediction</h3>
+                    <p class="weapon-description">
+                        Predict which members will cancel 30 days before they quit. 91% accuracy. 
+                        Custom ML model trained on your gym's data (not generic AI).
+                    </p>
+                    <div class="weapon-roi">
+                        <div class="weapon-roi-label">Annual Revenue Saved</div>
+                        <div class="weapon-roi-value">$25,632+</div>
+                    </div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #2</div>
+                    <h3 class="weapon-title">Lead Scoring AI</h3>
+                    <p class="weapon-description">
+                        Score every lead 0-100 based on conversion probability. 87% accuracy. 
+                        Your team focuses on high-value prospects, not dead ends.
+                    </p>
+                    <div class="weapon-roi">
+                        <div class="weapon-roi-label">Conversion Rate Increase</div>
+                        <div class="weapon-roi-value">+67% (15% → 25%)</div>
+                    </div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #3</div>
+                    <h3 class="weapon-title">Member Health Scores</h3>
+                    <p class="weapon-description">
+                        Track engagement, attendance trends, payment history. Real-time health scores 
+                        for every member. Spot problems before they become cancellations.
+                    </p>
+                    <div class="weapon-roi">
+                        <div class="weapon-roi-label">Early Warning System</div>
+                        <div class="weapon-roi-value">30-day advance notice</div>
+                    </div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #4</div>
+                    <h3 class="weapon-title">Pipeline Radar</h3>
+                    <p class="weapon-description">
+                        Visualize every member's lifecycle. See who's thriving, who's at risk, who's ghosting. 
+                        One dashboard. Total clarity.
+                    </p>
+                    <div class="weapon-roi">
+                        <div class="weapon-roi-label">Time Saved</div>
+                        <div class="weapon-roi-value">8 hours/week</div>
+                    </div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #5</div>
+                    <h3 class="weapon-title">Pattern Recognition</h3>
+                    <p class="weapon-description">
+                        AI identifies trends across your entire member base. What's working? What's not? 
+                        Spot opportunities before competitors do.
+                    </p>
+                    <div class="weapon-roi">
+                        <div class="weapon-roi-label">Competitive Advantage</div>
+                        <div class="weapon-roi-value">60-90 days ahead</div>
+                    </div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #6</div>
+                    <h3 class="weapon-title">Anomaly Alerts</h3>
+                    <p class="weapon-description">
+                        Get instant alerts when something unusual happens. Member attendance drops. 
+                        Payment fails. Engagement plummets. Act immediately.
+                    </p>
+                    <div class="weapon-roi">
+                        <div class="weapon-roi-label">Response Time</div>
+                        <div class="weapon-roi-value"><2 hours (vs 2 weeks)</div>
+                    </div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #7</div>
+                    <h3 class="weapon-title">Retention Autopilot</h3>
+                    <p class="weapon-description">
+                        AI generates personalized retention offers for at-risk members. Automated triggers. 
+                        Custom messaging. Saves 40% of members you'd otherwise lose.
+                    </p>
+                    <div class="weapon-roi">
+                        <div class="weapon-roi-label">Members Saved Annually</div>
+                        <div class="weapon-roi-value">240+ members</div>
+                    </div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #8</div>
+                    <h3 class="weapon-title">Smart Outreach</h3>
+                    <p class="weapon-description">
+                        AI-personalized emails and SMS for every member. Right message. Right time. 
+                        No manual work. Just results.
+                    </p>
+                    <div class="weapon-roi">
+                        <div class="weapon-roi-label">Engagement Rate</div>
+                        <div class="weapon-roi-value">3.8x higher</div>
+                    </div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #9</div>
+                    <h3 class="weapon-title">Calendar Weaponization</h3>
+                    <p class="weapon-description">
+                        Predict demand. Optimize staffing. No more overstaffing on slow days or 
+                        understaffing on busy days. 95% forecast accuracy.
+                    </p>
+                    <div class="weapon-roi">
+                        <div class="weapon-roi-label">Labor Cost Savings</div>
+                        <div class="weapon-roi-value">$48,000/year</div>
+                    </div>
+                </div>
+
+                <div class="weapon-card">
+                    <div class="weapon-number">Weapon #10</div>
+                    <h3 class="weapon-title">Performance Command Center</h3>
+                    <p class="weapon-description">
+                        Live operational dashboard. Every metric. Every alert. Every weapon. 
+                        One screen. Total command.
+                    </p>
+                    <div class="weapon-roi">
+                        <div class="weapon-roi-label">Decision Speed</div>
+                        <div class="weapon-roi-value">10x faster</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="social-proof">
+        <div class="container">
+            <h2 class="section-title">Metroflex Arlington: The Proof</h2>
+            
+            <div class="case-study">
+                <div class="case-study-header">
+                    <div class="case-study-logo">METROFLEX ARLINGTON</div>
+                    <div>
+                        <div style="font-size: 18px; color: var(--steel-chrome); font-weight: 700;">Brian Dobson, Owner</div>
+                        <div class="case-study-location">Arlington, Texas • Est. 1983</div>
+                    </div>
+                </div>
+
+                <blockquote class="case-study-quote">
+                    "We trained Ronnie Coleman for 8 Mr. Olympia wins. We know what elite performance looks like. 
+                    Circuit OS gives us the same level of precision in operations that we demand in training. 
+                    It's not software. It's our competitive weapon."
+                </blockquote>
+
+                <div class="case-study-results">
+                    <div class="result-stat">
+                        <span class="result-number">40%</span>
+                        <span class="result-label">Churn Reduction (90 Days)</span>
+                    </div>
+                    <div class="result-stat">
+                        <span class="result-number">20hrs</span>
+                        <span class="result-label">Weekly Time Savings</span>
+                    </div>
+                    <div class="result-stat">
+                        <span class="result-number">$87K</span>
+                        <span class="result-label">Revenue Protected (Year 1)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section (Anchoring + Decoy) -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Founding Member Pricing</h2>
+            <p style="text-align: center; font-size: 20px; color: var(--steel-mid); max-width: 800px; margin: 0 auto 20px;">
+                First 10 gyms only. Price increases $10K after February 1, 2025.
+            </p>
+            <p style="text-align: center; font-size: 16px; font-weight: 700; color: var(--metroflex-red);">
+                7 slots remaining
+            </p>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-tier">Standard License</div>
+                    <div class="pricing-amount">$60K</div>
+                    <div class="pricing-period">one-time + $697/mo</div>
+                    <div class="pricing-savings">Save $10K (Normally $70K)</div>
+                    <ul class="pricing-features">
+                        <li>7 of 10 weapons</li>
+                        <li>Email support only</li>
+                        <li>Setup: 60 days</li>
+                        <li>Training: Self-serve</li>
+                        <li>Updates: Quarterly</li>
+                        <li>API access: Limited</li>
+                    </ul>
+                    <a href="#" class="cta-primary" style="width: 100%; text-align: center; font-size: 16px; padding: 18px;">Select Standard</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div style="background: var(--metroflex-red); color: white; margin: -48px -48px 24px; padding: 12px; text-align: center; font-weight: 700; text-transform: uppercase; font-size: 12px; letter-spacing: 0.15em;">
+                        ⭐ MOST POPULAR
+                    </div>
+                    <div class="pricing-tier">Elite License</div>
+                    <div class="pricing-amount">$85K</div>
+                    <div class="pricing-period">one-time + $997/mo</div>
+                    <div class="pricing-savings">Save $10K (Normally $95K)</div>
+                    <ul class="pricing-features">
+                        <li>ALL 10 weapons</li>
+                        <li>Priority support (4hr response)</li>
+                        <li>Setup: 30 days</li>
+                        <li>Training: White-glove</li>
+                        <li>Updates: Real-time</li>
+                        <li>API access: Full</li>
+                        <li>Custom ML models</li>
+                        <li>Brian Dobson 1-on-1 strategy call</li>
+                    </ul>
+                    <a href="#" class="cta-primary" style="width: 100%; text-align: center; font-size: 16px; padding: 18px;">Select Elite</a>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-tier">International License</div>
+                    <div class="pricing-amount">$250K</div>
+                    <div class="pricing-period">one-time + $2,497/mo</div>
+                    <div class="pricing-savings">Save $25K (Normally $275K)</div>
+                    <ul class="pricing-features">
+                        <li>ALL 10 weapons</li>
+                        <li>Unlimited locations</li>
+                        <li>Dedicated account manager</li>
+                        <li>Setup: 14 days</li>
+                        <li>Training: Executive onboarding</li>
+                        <li>Custom integrations</li>
+                        <li>Multi-language support</li>
+                        <li>Franchise analytics</li>
+                    </ul>
+                    <a href="#" class="cta-primary" style="width: 100%; text-align: center; font-size: 16px; padding: 18px;">Contact Sales</a>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 60px; padding: 40px; background: var(--surface-black); border-radius: 12px;">
+                <p style="font-size: 24px; font-weight: 700; color: var(--steel-chrome); margin-bottom: 12px;">
+                    Compare: Elite License vs Hiring an Ops Manager
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; max-width: 800px; margin: 0 auto; text-align: left;">
+                    <div>
+                        <p style="font-size: 18px; font-weight: 700; color: var(--metroflex-red); margin-bottom: 16px;">Full-Time Ops Manager</p>
+                        <p style="color: var(--steel-mid); line-height: 1.8;">
+                            Salary: $65K/year<br>
+                            Benefits: $18K/year<br>
+                            Training: $5K/year<br>
+                            Your time managing: $12K/year<br>
+                            <strong style="color: var(--metroflex-red);">Total: $100K/year (forever)</strong>
+                        </p>
+                    </div>
+                    <div>
+                        <p style="font-size: 18px; font-weight: 700; color: var(--metroflex-red); margin-bottom: 16px;">Circuit OS: GymOps</p>
+                        <p style="color: var(--steel-mid); line-height: 1.8;">
+                            License: $85K (one-time)<br>
+                            Monthly: $997/mo ($12K/year)<br>
+                            Training: Included<br>
+                            Your time managing: $0<br>
+                            <strong style="color: var(--metroflex-red);">Year 1: $97K | Year 2+: $12K/year</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guarantee Section (Risk Reversal) -->
+    <section class="guarantee">
+        <div class="container">
+            <h2 class="section-title">30-Day Money-Back Guarantee</h2>
+            
+            <div class="guarantee-box">
+                <h3 class="guarantee-title">You Risk Nothing. We Risk Everything.</h3>
+                <p class="guarantee-text">
+                    If Circuit OS doesn't save you 20+ hours/week in the first 30 days, 
+                    we'll refund 100% of your payment. No questions asked. No hoops to jump through. 
+                    Just email us and we'll process your refund immediately.
+                </p>
+                <p class="guarantee-text">
+                    Plus: We track your results monthly. Hours saved. Members retained. Revenue protected. 
+                    If we miss targets 2 months in a row, you can cancel penalty-free.
+                </p>
+                <a href="#pricing" class="guarantee-cta">Get Started Risk-Free</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section (Objection Handling) -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">Why is this better than hiring an ops manager?</div>
+                    <div class="faq-answer">
+                        An ops manager costs $100K/year forever. Circuit OS costs $97K Year 1, then $12K/year. 
+                        Plus: AI works 24/7, never quits, never makes mistakes, and scales infinitely. 
+                        A human can help. AI can transform.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What if it doesn't work for my gym?</div>
+                    <div class="faq-answer">
+                        30-day money-back guarantee. If you don't save 20+ hours/week in the first month, 
+                        we refund 100%. No questions. Plus, we give you a dedicated success manager to ensure 
+                        it works. We fix problems within 4 hours or that month is free.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Can we start with a trial?</div>
+                    <div class="faq-answer">
+                        We don't offer trials because implementation takes 30 days and requires white-glove setup. 
+                        But you can: (1) Use our free Pipeline Truth Detector to see instant results, or 
+                        (2) Start with full guarantee-backed Elite License. Zero risk.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">How long does implementation take?</div>
+                    <div class="faq-answer">
+                        Elite License: 30 days white-glove setup. We handle everything. You'll see your first 
+                        churn predictions within 48 hours. Full system live in 30 days.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What makes this different from other gym software?</div>
+                    <div class="faq-answer">
+                        Most gym software REPORTS what happened. Circuit OS PREDICTS what's about to happen. 
+                        We use production ML models (91% churn prediction accuracy), DMN business rules engine, 
+                        and hybrid AI pipeline. This is NOT generic SaaS. This is the system that runs Metroflex.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Is this only for hardcore gyms like Metroflex?</div>
+                    <div class="faq-answer">
+                        Circuit OS works for any gym with 200+ members and $20K+ monthly recurring revenue. 
+                        Metroflex is hardcore. But the AI works for boutique studios, CrossFit boxes, 
+                        traditional gyms, and franchises. If you have members and churn, this works.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                Built for gym operators. Not for executives.<br>
+                Powered by Metroflex Arlington - 40 years of hardcore excellence.<br>
+                © 2025 Circuit OS: GymOps. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,3196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAIO University - Chief AI Officer Certification Program</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Neon Green (Primary Interactive) */
+            --neon-green: #38FF6A;
+            --neon-green-bright: #5aff88;
+            --neon-green-dark: #2ecc54;
+            --neon-green-light: #5aff88;
+            --neon-green-glow: rgba(56, 255, 106, 0.4);
+            --neon-glow: rgba(56, 255, 106, 0.6);
+            --neon-glow-subtle: rgba(56, 255, 106, 0.3);
+
+            /* Steel Gray (Secondary Structure) */
+            --steel-gray: #8B9198;
+            --steel-light: #B8BCC2;
+            --steel-dark: #6B6F75;
+            --steel-metallic: linear-gradient(135deg, #B8BCC2 0%, #8B9198 50%, #6B6F75 100%);
+
+            /* Backgrounds - Pure blacks for maximum contrast */
+            --bg-black: #000000;
+            --bg-dark: #0a0a0a;
+            --bg-medium: #141414;
+            --bg-light: #1a1a1a;
+            --bg-card: #1a1a1a;
+
+            /* Text - High contrast white */
+            --text-primary: #FFFFFF;
+            --text-secondary: #CCCCCC;
+            --text-muted: #999999;
+
+            /* Borders */
+            --border: rgba(56, 255, 106, 0.1);
+            --border-medium: rgba(56, 255, 106, 0.2);
+            --border-strong: rgba(56, 255, 106, 0.3);
+
+            /* Status colors */
+            --success: #38FF6A;
+            --warning: #FFB800;
+            --error: #DC3545;
+
+            /* Legacy compatibility */
+            --gotham-black: #000000;
+            --knight-dark: #0a0a0a;
+            --shadow-gray: #141414;
+            --accent-green: #38FF6A;
+            --accent-green-dark: #2ecc54;
+            --accent-green-light: #5aff88;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-medium);
+            border-bottom: 2px solid var(--accent-green);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent-green);
+        }
+
+        .progress-bar-header {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 2rem;
+        }
+
+        .progress-bar-bg {
+            background: var(--bg-light);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--accent-green) 0%, var(--accent-green-dark) 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 12px rgba(0, 255, 136, 0.25);
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--bg-medium);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar h3 {
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .module-list {
+            list-style: none;
+        }
+
+        .module-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: var(--bg-light);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+
+        .module-item:hover {
+            background: var(--bg-dark);
+            border-left-color: var(--accent-green);
+        }
+
+        .module-item.active {
+            background: var(--bg-dark);
+            border-left-color: var(--accent-green);
+        }
+
+        .module-item.completed {
+            opacity: 0.7;
+        }
+
+        .module-item .icon {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+
+        .module-item .status {
+            float: right;
+            font-size: 0.9rem;
+        }
+
+        /* Content Area */
+        .content-area {
+            background: var(--bg-medium);
+            border-radius: 12px;
+            padding: 2rem;
+            min-height: 600px;
+        }
+
+        .content-area h1 {
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+
+        .content-area h2 {
+            color: var(--accent-green);
+            margin: 2rem 0 1rem 0;
+            font-size: 1.8rem;
+        }
+
+        .content-area h3 {
+            color: var(--text-primary);
+            margin: 1.5rem 0 0.75rem 0;
+            font-size: 1.3rem;
+        }
+
+        .content-area h4 {
+            color: var(--text-secondary);
+            margin: 1rem 0 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .content-area p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .content-area ul, .content-area ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .content-area li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        /* Code Examples */
+        .code-example {
+            background: #000;
+            border: 1px solid var(--accent-green);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+
+        .code-example h5 {
+            color: var(--accent-green);
+            margin-bottom: 0.75rem;
+        }
+
+        .code-example pre {
+            color: var(--accent-green);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            white-space: pre;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: var(--bg-light);
+            border-left: 4px solid var(--accent-green);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 6px;
+        }
+
+        .info-box.warning {
+            border-left-color: var(--warning);
+        }
+
+        .info-box.success {
+            border-left-color: var(--success);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-green);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(56, 255, 106, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-light);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-dark);
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .quiz-question {
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question h4 {
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .quiz-option {
+            padding: 1rem;
+            background: var(--bg-medium);
+            border: 2px solid transparent;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--accent-green);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--accent-green);
+            background: var(--bg-dark);
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--error);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg-dark);
+            border-radius: 6px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        /* Lesson Navigation */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Stats Dashboard */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-green);
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* Certificate */
+        .certificate {
+            background: var(--bg-light);
+            border: 3px solid var(--accent-green);
+            border-radius: 12px;
+            padding: 3rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .certificate-badge {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Lab Integration */
+        .lab-container {
+            background: var(--bg-light);
+            border: 2px solid var(--accent-green);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .lab-container h3 {
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 8px;
+        }
+
+        /* Circuit OS Custom Icon System */
+        .circuit-icon {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            vertical-align: middle;
+            color: #8B9198;
+            transition: all 0.3s ease;
+        }
+
+        .circuit-icon.active,
+        .circuit-icon:hover {
+            color: var(--accent-green);
+            filter: drop-shadow(0 0 4px rgba(56, 255, 106, 0.6));
+        }
+
+        .circuit-icon.large {
+            width: 32px;
+            height: 32px;
+        }
+
+        .circuit-icon.small {
+            width: 18px;
+            height: 18px;
+        }
+
+        @keyframes icon-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .circuit-icon.processing {
+            animation: icon-pulse 1.5s infinite;
+            color: var(--accent-green);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo" style="display: flex; align-items: center; gap: 12px;">
+                <img src="../Brand-Assets/circuit-os-logo.svg" alt="Circuit OS" style="width: 180px; height: auto;">
+            </div>
+            <div class="progress-bar-header">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="overallProgress"></div>
+                </div>
+                <div class="progress-text" id="progressText">0% Complete</div>
+            </div>
+            <div>
+                <button class="btn btn-secondary" onclick="showDashboard()">📊 Dashboard</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>Training Modules</h3>
+            <ul class="module-list" id="moduleList">
+                <!-- Populated by JavaScript -->
+            </ul>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content-area" id="contentArea">
+            <!-- Content loaded dynamically -->
+        </main>
+    </div>
+
+    <script>
+        // Training Data Structure
+        const courseData = {
+            modules: [
+                {
+                    id: 'intro',
+                    title: '🚀 Welcome & Orientation',
+                    icon: '🚀',
+                    lessons: [
+                        {
+                            id: 'welcome',
+                            title: 'Welcome to CAIO University',
+                            content: `
+                                <h1>Welcome to CAIO University</h1>
+                                <p style="font-size: 1.2rem; color: var(--accent-green);">Your Journey to Becoming a World-Class Chief AI Officer Starts Here</p>
+
+                                <div class="info-box success">
+                                    <h3>🎯 What You'll Achieve</h3>
+                                    <p>This comprehensive certification program will transform you into a world-class Chief AI Officer, combining:</p>
+                                    <ul>
+                                        <li><strong>Technical Mastery:</strong> Deep expertise in DMN, ML, and LLM systems (unique to this program)</li>
+                                        <li><strong>Strategic Leadership:</strong> MIT/Stanford-level AI strategy frameworks</li>
+                                        <li><strong>Executive Skills:</strong> Board communication, change management, ROI measurement</li>
+                                        <li><strong>Practical Experience:</strong> Hands-on labs with real AI decision systems</li>
+                                    </ul>
+                                </div>
+
+                                <h2>Program Structure</h2>
+                                <p>This program consists of 9 comprehensive modules designed to make you an exceptional CAIO:</p>
+
+                                <div class="stats-grid">
+                                    <div class="stat-card">
+                                        <div class="stat-number">9</div>
+                                        <div class="stat-label">Complete Modules</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">80+</div>
+                                        <div class="stat-label">Hours of Training</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">100+</div>
+                                        <div class="stat-label">Quiz Questions</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">1</div>
+                                        <div class="stat-label">Professional Certificate</div>
+                                    </div>
+                                </div>
+
+                                <h2>What Makes This Program Unique</h2>
+
+                                <div class="info-box">
+                                    <h4>🔥 Your Competitive Advantage</h4>
+                                    <p>While other CAIO programs teach theory, YOU will master the <strong>practical implementation</strong> of hybrid AI decision systems:</p>
+                                    <ul>
+                                        <li><strong>DMN (Decision Model & Notation):</strong> Business rules engines - what top companies use</li>
+                                        <li><strong>Machine Learning:</strong> Predictive models and pattern recognition</li>
+                                        <li><strong>LLM Integration:</strong> Claude, GPT for strategic insights</li>
+                                        <li><strong>Hybrid Systems:</strong> Combining all three for 10x better decisions</li>
+                                    </ul>
+                                    <p style="margin-top: 1rem;"><strong>This technical depth is what separates world-class CAIOs from the rest.</strong></p>
+                                </div>
+
+                                <h2>The 9 Modules</h2>
+                                <ol>
+                                    <li><strong>AI Strategy & Vision</strong> - Building organization-wide AI roadmaps (MIT/Stanford-based)</li>
+                                    <li><strong>AI Governance & Ethics</strong> - Responsible AI frameworks and compliance</li>
+                                    <li><strong>Technical Fundamentals</strong> - Deep dive into DMN + ML + LLM (YOUR advantage)</li>
+                                    <li><strong>AI Risk Management</strong> - Security, bias, operational risks</li>
+                                    <li><strong>Data Strategy</strong> - Building AI-ready data infrastructure</li>
+                                    <li><strong>Change Management</strong> - Driving organizational AI adoption</li>
+                                    <li><strong>AI ROI & Business Value</strong> - Measuring and communicating impact</li>
+                                    <li><strong>Executive Communication</strong> - Board presentations and stakeholder management</li>
+                                    <li><strong>Capstone Project</strong> - Build a complete hybrid lead scoring system</li>
+                                </ol>
+
+                                <h2>How It Works</h2>
+                                <ul>
+                                    <li>📚 <strong>Learn:</strong> Video lessons, reading materials, case studies</li>
+                                    <li>💻 <strong>Practice:</strong> Hands-on labs with your Circuit OS demo</li>
+                                    <li>✅ <strong>Test:</strong> Quizzes after each lesson, exams per module</li>
+                                    <li>🏆 <strong>Certify:</strong> Final comprehensive exam (100 questions, 80% to pass)</li>
+                                </ul>
+
+                                <div class="info-box warning">
+                                    <h4>⏱️ Time Commitment</h4>
+                                    <p>Total program: <strong>80-100 hours</strong></p>
+                                    <p>Recommended pace: <strong>10-15 hours per week</strong> (complete in 6-8 weeks)</p>
+                                    <p>Fast track option: <strong>20+ hours per week</strong> (complete in 4 weeks)</p>
+                                </div>
+
+                                <h2>Your Career Transformation</h2>
+                                <p>Upon completion, you'll be qualified for:</p>
+                                <ul>
+                                    <li>Chief AI Officer positions ($200K - $500K+)</li>
+                                    <li>VP of AI & Machine Learning roles</li>
+                                    <li>AI Strategy Consultant (high-value clients)</li>
+                                    <li>AI Transformation Leader at Fortune 500 companies</li>
+                                    <li>Board advisor for AI initiatives</li>
+                                </ul>
+
+                                <div class="info-box success">
+                                    <h3>🚀 Ready to 10x Your Career?</h3>
+                                    <p>Click "Next" to begin Module 1: AI Strategy & Vision</p>
+                                    <p>Your journey to becoming a world-class CAIO starts now.</p>
+                                </div>
+                            `
+                        }
+                    ]
+                },
+                {
+                    id: 'strategy',
+                    title: '📋 AI Strategy & Vision',
+                    icon: '📋',
+                    lessons: [
+                        {
+                            id: 'strategy-intro',
+                            title: 'Introduction to AI Strategy',
+                            content: `
+                                <h1>AI Strategy & Vision</h1>
+                                <p class="subtitle">Based on MIT Sloan and Stanford AI Leadership Programs</p>
+
+                                <h2>What is AI Strategy?</h2>
+                                <p>AI Strategy is the systematic approach to identifying, prioritizing, and implementing AI initiatives that drive measurable business value and competitive advantage.</p>
+
+                                <div class="info-box">
+                                    <h4>Key Insight</h4>
+                                    <p>Most AI projects fail not because of technology, but because of poor strategic alignment. As CAIO, your #1 job is ensuring every AI investment directly supports business objectives.</p>
+                                </div>
+
+                                <h2>The CAIO's Strategic Responsibilities</h2>
+                                <ul>
+                                    <li><strong>Vision Setting:</strong> Define the long-term AI trajectory for the organization</li>
+                                    <li><strong>Opportunity Identification:</strong> Find high-value AI use cases across the business</li>
+                                    <li><strong>Roadmap Development:</strong> Sequence initiatives for maximum impact</li>
+                                    <li><strong>Resource Allocation:</strong> Prioritize investments in talent, tech, and data</li>
+                                    <li><strong>Stakeholder Alignment:</strong> Get buy-in from board, C-suite, and employees</li>
+                                    <li><strong>Value Realization:</strong> Ensure AI delivers measurable ROI</li>
+                                </ul>
+
+                                <h2>Strategic Framework: The AI Value Stack</h2>
+
+                                <div class="code-example">
+                                    <h5>The 5 Layers of AI Strategy</h5>
+                                    <pre>
+Layer 5: BUSINESS OUTCOMES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Revenue Growth | Cost Reduction | CX Improvement
+Customer Retention | Market Share | Innovation
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        ↑
+Layer 4: AI APPLICATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Lead Scoring | Churn Prediction | Personalization
+Fraud Detection | Demand Forecasting | Automation
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        ↑
+Layer 3: AI CAPABILITIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ML Models | LLMs | DMN Rules | Computer Vision
+NLP | Recommendation Engines | Optimization
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        ↑
+Layer 2: DATA FOUNDATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Data Warehouses | Data Lakes | Pipelines
+Data Quality | Governance | Feature Stores
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        ↑
+Layer 1: INFRASTRUCTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Cloud (AWS/Azure/GCP) | GPU Compute
+MLOps | APIs | Security | Monitoring
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<strong>CAIO Strategy: Build bottom-up, prioritize top-down</strong>
+                                    </pre>
+                                </div>
+
+                                <h2>The AI Maturity Model</h2>
+                                <p>Where is your organization today?</p>
+
+                                <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                                    <tr style="background: var(--bg-light);">
+                                        <th style="padding: 0.75rem; text-align: left; color: var(--accent-green);">Level</th>
+                                        <th style="padding: 0.75rem; text-align: left; color: var(--accent-green);">Stage</th>
+                                        <th style="padding: 0.75rem; text-align: left; color: var(--accent-green);">Characteristics</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.75rem; border-top: 1px solid var(--border);">1</td>
+                                        <td style="padding: 0.75rem; border-top: 1px solid var(--border);">Ad Hoc</td>
+                                        <td style="padding: 0.75rem; border-top: 1px solid var(--border);">No formal AI strategy, isolated experiments</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.75rem; border-top: 1px solid var(--border);">2</td>
+                                        <td style="padding: 0.75rem; border-top: 1px solid var(--border);">Opportunistic</td>
+                                        <td style="padding: 0.75rem; border-top: 1px solid var(--border);">Tactical AI projects, no unified vision</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.75rem; border-top: 1px solid var(--border);">3</td>
+                                        <td style="padding: 0.75rem; border-top: 1px solid var(--border);">Systematic</td>
+                                        <td style="padding: 0.75rem; border-top: 1px solid var(--border);">AI roadmap exists, cross-functional coordination</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.75rem; border-top: 1px solid var(--border);">4</td>
+                                        <td style="padding: 0.75rem; border-top: 1px solid var(--border);">Strategic</td>
+                                        <td style="padding: 0.75rem; border-top: 1px solid var(--border);">AI embedded in business strategy, scaled deployment</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.75rem; border-top: 1px solid var(--border);">5</td>
+                                        <td style="padding: 0.75rem; border-top: 1px solid var(--border);">Transformational</td>
+                                        <td style="padding: 0.75rem; border-top: 1px solid var(--border);">AI drives business model, continuous innovation</td>
+                                    </tr>
+                                </table>
+
+                                <div class="info-box warning">
+                                    <h4>Most Organizations Are at Level 2</h4>
+                                    <p>Your job as CAIO: Move them to Level 4-5 within 18-24 months</p>
+                                </div>
+
+                                <h2>Case Study: Netflix AI Strategy</h2>
+                                <p><strong>Business Objective:</strong> Reduce churn, increase engagement</p>
+                                <p><strong>AI Strategy:</strong></p>
+                                <ul>
+                                    <li>Personalization engine (content recommendations)</li>
+                                    <li>Predictive analytics (churn prediction)</li>
+                                    <li>Content creation AI (understanding what to produce)</li>
+                                    <li>Optimization AI (streaming quality, server allocation)</li>
+                                </ul>
+                                <p><strong>Result:</strong> 80% of watched content comes from AI recommendations, saved $1B annually in customer retention</p>
+
+                                <div class="info-box success">
+                                    <h4>Key Takeaway</h4>
+                                    <p>Netflix didn't build AI for AI's sake. Every initiative directly supported their core business model (engagement = retention = revenue).</p>
+                                    <p><strong>As CAIO, always ask: "How does this AI investment move the business metrics?"</strong></p>
+                                </div>
+                            `
+                        },
+                        {
+                            id: 'strategy-roadmap',
+                            title: 'Building Your AI Roadmap',
+                            content: `
+                                <h1>Building Your AI Roadmap</h1>
+                                <p class="subtitle">The step-by-step process for strategic AI planning</p>
+
+                                <h2>The AI Roadmap Development Process</h2>
+
+                                <div class="code-example">
+                                    <h5>6-Step Framework</h5>
+                                    <pre>
+Step 1: CURRENT STATE ASSESSMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Map existing AI capabilities
+• Assess data maturity
+• Evaluate technical infrastructure
+• Identify skills gaps
+• Benchmark against competitors
+Duration: 2-4 weeks
+
+Step 2: OPPORTUNITY IDENTIFICATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Workshop with business leaders
+• Identify pain points and opportunities
+• Generate 20-30 potential use cases
+• Align with strategic priorities
+Duration: 2-3 weeks
+
+Step 3: USE CASE PRIORITIZATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Score each use case on:
+  - Business Value (1-10)
+  - Technical Feasibility (1-10)
+  - Data Readiness (1-10)
+  - Time to Value (fast/medium/slow)
+• Calculate: Priority = (Value × Feasibility × Data) / Time
+Duration: 1-2 weeks
+
+Step 4: ROADMAP SEQUENCING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Quick wins (0-3 months): Build momentum
+• Foundation projects (3-9 months): Infrastructure
+• Transformation initiatives (9-24 months): Big bets
+Duration: 1 week
+
+Step 5: RESOURCE PLANNING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Budget allocation per quarter
+• Hiring plan (data scientists, ML engineers, etc.)
+• Technology stack decisions
+• Vendor selection
+Duration: 2-3 weeks
+
+Step 6: GOVERNANCE & METRICS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Define success metrics per initiative
+• Set up review cadence (monthly/quarterly)
+• Establish steering committee
+• Create risk management framework
+Duration: 1-2 weeks
+
+<strong>Total Roadmap Development: 8-12 weeks</strong>
+                                    </pre>
+                                </div>
+
+                                <h2>Use Case Prioritization Framework</h2>
+
+                                <h3>The 2x2 Matrix</h3>
+                                <div class="code-example">
+                                    <pre>
+High Value
+   ↑
+   │
+   │ FOUNDATIONAL        │ QUICK WINS ★
+   │ (Build later)       │ (Do now!)
+   │                     │
+   │─────────────────────│─────────────────────→
+   │                     │               High
+   │ DEPRIORITIZE        │ STRATEGIC BETS  Feasibility
+   │ (Skip for now)      │ (Plan carefully)
+   │                     │
+   ↓
+Low Value
+
+<strong>Always start with Quick Wins</strong> - builds credibility and momentum
+                                    </pre>
+                                </div>
+
+                                <h2>Example Roadmap: Retail Company</h2>
+
+                                <h3>Phase 1: Quick Wins (0-6 months)</h3>
+                                <ul>
+                                    <li><strong>Email Personalization:</strong> ML-driven subject lines and content (15% open rate increase)</li>
+                                    <li><strong>Inventory Optimization:</strong> Demand forecasting to reduce waste (10% cost savings)</li>
+                                    <li><strong>Customer Service Chatbot:</strong> Handle 60% of tier-1 support tickets</li>
+                                </ul>
+                                <p><strong>Investment:</strong> $200K | <strong>Expected ROI:</strong> $1.2M annually</p>
+
+                                <h3>Phase 2: Foundation (6-12 months)</h3>
+                                <ul>
+                                    <li><strong>Customer Data Platform:</strong> Unified view of all customer interactions</li>
+                                    <li><strong>ML Infrastructure:</strong> Model training pipeline, feature store, monitoring</li>
+                                    <li><strong>AI Governance Framework:</strong> Ethics board, risk policies, audit processes</li>
+                                </ul>
+                                <p><strong>Investment:</strong> $1.5M | <strong>Enables:</strong> All future AI initiatives</p>
+
+                                <h3>Phase 3: Transformation (12-24 months)</h3>
+                                <ul>
+                                    <li><strong>Hyper-Personalization Engine:</strong> Individual product recommendations across all channels</li>
+                                    <li><strong>Dynamic Pricing AI:</strong> Real-time price optimization by segment, time, inventory</li>
+                                    <li><strong>Supply Chain Intelligence:</strong> End-to-end predictive optimization</li>
+                                </ul>
+                                <p><strong>Investment:</strong> $3M | <strong>Expected Impact:</strong> 5-8% revenue increase ($20M+ for mid-size retailer)</p>
+
+                                <div class="info-box success">
+                                    <h4>The Roadmap Pattern</h4>
+                                    <p>Notice the pattern:</p>
+                                    <ul>
+                                        <li><strong>Phase 1:</strong> Prove value, build credibility</li>
+                                        <li><strong>Phase 2:</strong> Build the foundation for scale</li>
+                                        <li><strong>Phase 3:</strong> Transformational initiatives that leverage foundation</li>
+                                    </ul>
+                                    <p>This is the playbook used by successful CAIOs at Amazon, Google, and Netflix.</p>
+                                </div>
+
+                                <h2>Common Roadmap Mistakes</h2>
+                                <div class="info-box warning">
+                                    <h4>❌ Avoid These Pitfalls</h4>
+                                    <ol>
+                                        <li><strong>Starting with big, complex projects:</strong> Takes too long, high risk of failure</li>
+                                        <li><strong>No quick wins:</strong> Lose stakeholder confidence and momentum</li>
+                                        <li><strong>Technology-first thinking:</strong> "Let's use LLMs!" instead of "What problem are we solving?"</li>
+                                        <li><strong>Underestimating data work:</strong> 80% of AI effort is data cleaning and prep</li>
+                                        <li><strong>Ignoring change management:</strong> Great AI that nobody uses = $0 value</li>
+                                        <li><strong>No clear metrics:</strong> Can't measure success = can't prove ROI = budget cuts</li>
+                                    </ol>
+                                </div>
+
+                                <h2>Your Roadmap Template</h2>
+                                <p>Use this structure for any organization:</p>
+
+                                <div class="code-example">
+                                    <pre>
+┌─────────────────────────────────────────────────────┐
+│              YOUR AI STRATEGY ROADMAP               │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│ Q1-Q2: QUICK WINS (Prove Value)                   │
+│ ├─ Initiative 1: [Name]                            │
+│ │  Business Value: [Impact]                        │
+│ │  Investment: $XXK                                │
+│ │  Timeline: X months                              │
+│ │  Success Metric: [Specific KPI]                  │
+│ │                                                   │
+│ ├─ Initiative 2: [Name]                            │
+│ └─ Initiative 3: [Name]                            │
+│                                                     │
+│ Q3-Q4: FOUNDATION (Build Infrastructure)           │
+│ ├─ Data Platform                                   │
+│ ├─ ML Infrastructure                               │
+│ ├─ Team Building                                   │
+│ └─ Governance Framework                            │
+│                                                     │
+│ Year 2: TRANSFORMATION (Scale & Innovate)          │
+│ ├─ Enterprise-wide AI deployment                   │
+│ ├─ Advanced use cases                              │
+│ └─ Continuous innovation pipeline                  │
+│                                                     │
+│ METRICS DASHBOARD:                                 │
+│ • Revenue Impact: $XX M                            │
+│ • Cost Savings: $XX M                              │
+│ • Efficiency Gains: XX%                            │
+│ • AI Adoption Rate: XX%                            │
+│ • ROI: XXX%                                        │
+└─────────────────────────────────────────────────────┘
+                                    </pre>
+                                </div>
+                            `,
+                            quiz: [
+                                {
+                                    question: 'What should you prioritize in Phase 1 (0-6 months) of your AI roadmap?',
+                                    options: [
+                                        'Large transformational projects that take 18 months',
+                                        'Quick wins that prove value and build momentum',
+                                        'Building perfect data infrastructure first',
+                                        'Hiring 50 data scientists'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'Quick wins in Phase 1 are critical for proving value, building stakeholder confidence, and securing budget for larger initiatives. Start small, prove value, then scale.'
+                                },
+                                {
+                                    question: 'In the AI use case prioritization framework, what makes a "Quick Win"?',
+                                    options: [
+                                        'Low value + Low feasibility',
+                                        'High value + High feasibility',
+                                        'High value + Low feasibility',
+                                        'Low value + High feasibility'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'Quick Wins are projects with both HIGH business value AND HIGH technical feasibility. They deliver meaningful impact quickly, building momentum for your AI program.'
+                                },
+                                {
+                                    question: 'What percentage of AI project effort typically goes to data work?',
+                                    options: [
+                                        '20%',
+                                        '40%',
+                                        '60%',
+                                        '80%'
+                                    ],
+                                    correct: 3,
+                                    explanation: 'Industry data shows 80% of AI effort goes to data collection, cleaning, labeling, and preparation. CAIOs must plan for this reality and invest in data infrastructure.'
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'technical',
+                    title: '⚡ Technical Mastery: DMN+ML+LLM',
+                    icon: '⚡',
+                    lessons: [
+                        {
+                            id: 'dmn-intro',
+                            title: 'Introduction to DMN (Decision Model & Notation)',
+                            content: `
+                                <h1>Decision Model & Notation (DMN)</h1>
+                                <p class="lead">Master the industry-standard for modeling and executing business decisions</p>
+
+                                <div class="info-box success">
+                                    <h3>🎯 Why DMN Matters for CAIOs</h3>
+                                    <p>DMN is the <strong>international standard (OMG)</strong> for business decision modeling. As a CAIO, you'll use DMN to:</p>
+                                    <ul>
+                                        <li>Model complex business rules in a transparent, auditable way</li>
+                                        <li>Bridge the gap between business stakeholders and technical teams</li>
+                                        <li>Create deterministic decision logic that complies with regulations</li>
+                                        <li>Combine rule-based systems with ML/LLM for hybrid intelligence</li>
+                                    </ul>
+                                </div>
+
+                                <h2>What is DMN?</h2>
+                                <p>DMN is a visual notation for specifying business decisions. It consists of two main components:</p>
+
+                                <div class="stats-grid">
+                                    <div class="stat-card">
+                                        <div style="font-size: 3rem;">📊</div>
+                                        <h4>Decision Requirements Diagram (DRD)</h4>
+                                        <p>High-level view showing relationships between decisions</p>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div style="font-size: 3rem;">📋</div>
+                                        <h4>Decision Tables</h4>
+                                        <p>Detailed logic for how inputs map to outputs</p>
+                                    </div>
+                                </div>
+
+                                <h2>Key DMN Concepts</h2>
+
+                                <h3>1. Decision Requirements Diagram (DRD)</h3>
+                                <p>Think of this as the "blueprint" of your decision-making process:</p>
+                                <div class="code-example">
+                                    <pre>
+┌─────────────────┐
+│  Input Data     │
+│ (Lead Source,   │
+│  Budget, etc.)  │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐      ┌──────────────┐
+│   Lead Score    │◄─────│ Market Data  │
+│   Calculation   │      │  (External)  │
+└────────┬────────┘      └──────────────┘
+         │
+         ▼
+┌─────────────────┐
+│  Routing        │
+│  Decision       │
+└─────────────────┘
+                                    </pre>
+                                </div>
+
+                                <h3>2. Decision Tables</h3>
+                                <p>The core of DMN - structured if/then rules in table format:</p>
+                                <div class="code-example">
+                                    <pre>
+<strong>Lead Qualification Decision Table</strong>
+
+┌──────────────┬─────────────┬──────────────┬────────────┬──────────┐
+│ Lead Source  │   Budget    │  Engagement  │  Score     │  Action  │
+├──────────────┼─────────────┼──────────────┼────────────┼──────────┤
+│ "referral"   │ "confirmed" │  "very_high" │    95      │ "call"   │
+│ "referral"   │   "high"    │    "high"    │    80      │ "call"   │
+│ "organic"    │ "confirmed" │  "very_high" │    75      │ "email"  │
+│ "partnership"│   "medium"  │    "high"    │    70      │ "email"  │
+│ "paid"       │    "low"    │    "low"     │    30      │ "nurture"│
+│     -        │      -      │      -       │    0       │ "reject" │
+└──────────────┴─────────────┴──────────────┴────────────┴──────────┘
+
+<strong>Hit Policy:</strong> FIRST (returns first matching row)
+                                    </pre>
+                                </div>
+
+                                <h3>3. Hit Policies</h3>
+                                <p>DMN decision tables use "hit policies" to determine what happens when multiple rules match:</p>
+
+                                <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                                    <thead style="background: var(--bg-light);">
+                                        <tr>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Hit Policy</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Description</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Use Case</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>FIRST (F)</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Return first matching rule</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Priority-based decisions (most common)</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>UNIQUE (U)</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Only one rule can match (error if multiple)</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Mutually exclusive conditions</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>COLLECT (C)</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Return all matching rules</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Aggregate scores, gather all applicable tags</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>PRIORITY (P)</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Return highest priority match</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Ordered output values</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <h2>DMN in Your Circuit OS Demo</h2>
+                                <p>Your running CircuitOS demo (localhost:8081) uses DMN for <strong>Stage 3: Business Rules</strong>:</p>
+
+                                <div class="info-box">
+                                    <h4>🔗 Hands-On Exercise</h4>
+                                    <ol>
+                                        <li>Open <a href="http://localhost:8081" target="_blank" style="color: var(--accent-green);">Circuit OS Demo</a></li>
+                                        <li>Input a lead with: Source=Referral, Budget=Confirmed, Engagement=Very High</li>
+                                        <li>Click "Process Lead"</li>
+                                        <li>Watch <strong>Stage 3: DMN Business Rules</strong> - see the decision table in action</li>
+                                        <li>Note the DMN score (should be 95/100) and the rule explanation</li>
+                                    </ol>
+                                </div>
+
+                                <h2>Real-World CAIO Use Cases</h2>
+                                <div class="stats-grid">
+                                    <div class="stat-card">
+                                        <h4>🎯 Lead Routing</h4>
+                                        <p>Route leads to sales reps based on territory, deal size, industry</p>
+                                    </div>
+                                    <div class="stat-card">
+                                        <h4>✅ Loan Approval</h4>
+                                        <p>Credit decisions with transparent, auditable logic</p>
+                                    </div>
+                                    <div class="stat-card">
+                                        <h4>💰 Pricing</h4>
+                                        <p>Dynamic pricing based on customer segment, volume, contract terms</p>
+                                    </div>
+                                    <div class="stat-card">
+                                        <h4>🛡️ Fraud Detection</h4>
+                                        <p>Rule-based triggers combined with ML risk scores</p>
+                                    </div>
+                                </div>
+
+                                <h2>Key Takeaways</h2>
+                                <ul>
+                                    <li>✅ DMN is the <strong>international standard</strong> for business decision modeling</li>
+                                    <li>✅ Decision tables make complex logic <strong>transparent and auditable</strong></li>
+                                    <li>✅ Hit policies control what happens when multiple rules match</li>
+                                    <li>✅ DMN is <strong>complementary to ML/LLM</strong>, not a replacement</li>
+                                    <li>✅ Use DMN when you need <strong>deterministic, explainable decisions</strong></li>
+                                </ul>
+                            `,
+                            quiz: [
+                                {
+                                    question: 'What is the primary advantage of using DMN decision tables over traditional code?',
+                                    options: [
+                                        'Faster execution speed',
+                                        'Transparent, auditable logic that business users can understand',
+                                        'Requires less storage',
+                                        'Works better with databases'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'DMN decision tables create transparent, auditable logic that bridges business and technical teams. Non-technical stakeholders can review and validate the rules.'
+                                },
+                                {
+                                    question: 'Which hit policy should you use when you want to return the FIRST matching rule and stop?',
+                                    options: [
+                                        'UNIQUE',
+                                        'COLLECT',
+                                        'FIRST',
+                                        'PRIORITY'
+                                    ],
+                                    correct: 2,
+                                    explanation: 'FIRST (F) hit policy returns the first matching rule and stops evaluating. This is the most common hit policy for priority-based decisions.'
+                                },
+                                {
+                                    question: 'In your Circuit OS demo, what percentage weight does DMN have in the final decision?',
+                                    options: [
+                                        '60%',
+                                        '50%',
+                                        '40%',
+                                        '30%'
+                                    ],
+                                    correct: 2,
+                                    explanation: 'DMN has 40% weight in the Circuit OS hybrid system, with ML taking 60%. This balances data-driven predictions with business rule consistency.'
+                                },
+                                {
+                                    question: 'What are the two main components of DMN?',
+                                    options: [
+                                        'Inputs and Outputs',
+                                        'Decision Requirements Diagram (DRD) and Decision Tables',
+                                        'Rules and Conditions',
+                                        'Models and Predictions'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'DMN consists of Decision Requirements Diagrams (high-level relationships) and Decision Tables (detailed rule logic).'
+                                }
+                            ]
+                        },
+                        {
+                            id: 'dmn-feel',
+                            title: 'FEEL Expressions & Advanced DMN',
+                            content: `
+                                <h1>FEEL Expressions & Advanced DMN</h1>
+                                <p class="lead">Master the FEEL language for complex decision logic</p>
+
+                                <div class="info-box success">
+                                    <h3>🎯 Learning Objectives</h3>
+                                    <ul>
+                                        <li>Understand FEEL (Friendly Enough Expression Language)</li>
+                                        <li>Write complex conditions using FEEL operators</li>
+                                        <li>Use FEEL functions for dates, lists, and calculations</li>
+                                        <li>Build multi-level decision hierarchies</li>
+                                    </ul>
+                                </div>
+
+                                <h2>What is FEEL?</h2>
+                                <p><strong>FEEL (Friendly Enough Expression Language)</strong> is the expression language for DMN. It allows you to write complex conditions, calculations, and transformations within your decision tables.</p>
+
+                                <div class="info-box">
+                                    <p><strong>Think of FEEL as:</strong> Excel formulas + SQL WHERE clauses + Python expressions</p>
+                                </div>
+
+                                <h2>FEEL Basics</h2>
+
+                                <h3>1. Comparison Operators</h3>
+                                <div class="code-example">
+                                    <pre>
+<strong>Standard Comparisons:</strong>
+budget > 200000          // Greater than
+intent >= 8              // Greater than or equal
+score < 50               // Less than
+engagement != "low"      // Not equal
+
+<strong>Range Expressions:</strong>
+[50..75]                 // Inclusive range: 50 to 75
+]50..75[                 // Exclusive range: >50 and <75
+[50..75[                 // Half-open: 50 to <75
+
+<strong>Examples:</strong>
+financial_capacity in [150000..300000]    // Between 150K and 300K
+priority in ]7..10]                        // Greater than 7, up to 10
+                                    </pre>
+                                </div>
+
+                                <h3>2. Logical Operators</h3>
+                                <div class="code-example">
+                                    <pre>
+<strong>AND, OR, NOT:</strong>
+budget > 200000 and intent >= 8
+source = "referral" or source = "partnership"
+not(territory in ["CA", "NY", "TX"])
+
+<strong>Complex Conditions:</strong>
+(financial_capacity > 200000 and territory_available) or
+(persona = "Athlete Entrepreneur" and intent >= 9)
+                                    </pre>
+                                </div>
+
+                                <h3>3. FEEL Functions</h3>
+                                <p>FEEL includes built-in functions for common operations:</p>
+
+                                <h4>String Functions</h4>
+                                <div class="code-example">
+                                    <pre>
+upper case("hello")              // "HELLO"
+lower case("WORLD")              // "world"
+substring("Circuit OS", 1, 7)    // "Circuit"
+string length("CAIO")            // 4
+contains("CAIO University", "AI") // true
+starts with(email, "noel@")      // true
+                                    </pre>
+                                </div>
+
+                                <h4>Number Functions</h4>
+                                <div class="code-example">
+                                    <pre>
+sum([10, 20, 30])                // 60
+mean([10, 20, 30])               // 20
+min([10, 20, 30])                // 10
+max([10, 20, 30])                // 30
+round(3.7)                       // 4
+floor(3.7)                       // 3
+ceiling(3.2)                     // 4
+                                    </pre>
+                                </div>
+
+                                <h4>Date/Time Functions</h4>
+                                <div class="code-example">
+                                    <pre>
+today()                          // Current date
+now()                            // Current date and time
+date("2025-10-18")              // Create date
+date and time("2025-10-18T14:30:00") // Create datetime
+
+// Date calculations
+today() + duration("P30D")       // 30 days from today
+date diff(start_date, end_date)  // Days between dates
+
+// Seasonal logic
+month of(today()) in [1,2,3]     // Q1 (Jan-Mar)
+month of(today()) in [10,11,12]  // Q4 (Oct-Dec)
+                                    </pre>
+                                </div>
+
+                                <h4>List Functions</h4>
+                                <div class="code-example">
+                                    <pre>
+count([1, 2, 3, 4])              // 4
+list contains([1,2,3], 2)        // true
+append([1,2], 3)                 // [1,2,3]
+union([1,2], [2,3])              // [1,2,3]
+distinct values([1,2,2,3])       // [1,2,3]
+                                    </pre>
+                                </div>
+
+                                <h2>Advanced DMN Patterns</h2>
+
+                                <h3>Pattern 1: Weighted Scoring</h3>
+                                <p>Combine multiple factors with different weights:</p>
+                                <div class="code-example">
+                                    <pre>
+<strong>Decision Table: Lead Priority Score</strong>
+
+Inputs:
+- financial_score (0-100)
+- intent_score (0-100)
+- market_growth_score (0-100)
+- timing_score (0-100)
+
+Output:
+final_score = (financial_score * 0.35) +
+              (intent_score * 0.28) +
+              (market_growth_score * 0.18) +
+              (timing_score * 0.19)
+
+If final_score >= 75 then "Tier A"
+else if final_score >= 50 then "Tier B"
+else if final_score >= 25 then "Tier C"
+else "Tier D"
+                                    </pre>
+                                </div>
+
+                                <h3>Pattern 2: Seasonal Adjustments</h3>
+                                <div class="code-example">
+                                    <pre>
+<strong>Decision: Conversion Probability Adjustment</strong>
+
+if month of(today()) in [1,2,3] then
+    base_probability * 1.2      // Q1 boost (New Year)
+else if month of(today()) in [10,11,12] then
+    base_probability * 1.15     // Q4 boost (Year-end planning)
+else if month of(today()) in [6,7,8] then
+    base_probability * 0.9      // Q3 reduction (Summer slowdown)
+else
+    base_probability * 1.0      // Q2 baseline
+                                    </pre>
+                                </div>
+
+                                <h3>Pattern 3: Persona-Based Logic</h3>
+                                <div class="code-example">
+                                    <pre>
+<strong>Decision: Timeline Estimation</strong>
+
+if persona = "Military Veteran" then
+    base_timeline * 1.3 + 15    // Longer due diligence, add 15 days
+else if persona = "Fitness Professional" then
+    base_timeline * 0.8         // Faster decision (20% reduction)
+else if persona = "Real Estate Investor" then
+    base_timeline * 1.1 + 10    // Moderate increase
+else if persona = "Athlete Entrepreneur" then
+    base_timeline * 1.2         // Longer, but high intent
+else
+    base_timeline               // Default
+                                    </pre>
+                                </div>
+
+                                <h3>Pattern 4: Multi-Level Decisions</h3>
+                                <p>Chain decisions together for complex workflows:</p>
+                                <div class="code-example">
+                                    <pre>
+Decision 1: Calculate Financial Score
+├─ Input: annual_revenue, cash_reserves, credit_score
+└─ Output: financial_score (0-100)
+
+Decision 2: Calculate Intent Score
+├─ Input: engagement_level, website_visits, email_opens
+└─ Output: intent_score (0-100)
+
+Decision 3: Lead Qualification
+├─ Input: financial_score, intent_score, persona
+└─ Output: tier (A/B/C/D), priority (1-10)
+
+Decision 4: Routing & Assignment
+├─ Input: tier, priority, territory_available
+└─ Output: assigned_rep, sla_hours, campaign
+                                    </pre>
+                                </div>
+
+                                <h2>Real-World Example: Credit Approval</h2>
+                                <div class="code-example">
+                                    <pre>
+<strong>Decision Table: Loan Approval</strong>
+
+┌──────────────┬──────────────┬─────────────┬──────────────┬──────────┐
+│ Credit Score │ Debt-to-     │  Income     │  Down        │ Decision │
+│              │ Income Ratio │             │  Payment     │          │
+├──────────────┼──────────────┼─────────────┼──────────────┼──────────┤
+│  >= 750      │   <= 0.36    │  >= 100000  │   >= 0.20    │ Approved │
+│  [700..750[  │   <= 0.36    │  >= 80000   │   >= 0.25    │ Approved │
+│  [650..700[  │   <= 0.28    │  >= 60000   │   >= 0.30    │ Approved │
+│  >= 650      │   <= 0.36    │  >= 50000   │   >= 0.35    │ Manual   │
+│  < 650       │      -       │      -      │      -       │ Rejected │
+└──────────────┴──────────────┴─────────────┴──────────────┴──────────┘
+
+Hit Policy: FIRST
+                                    </pre>
+                                </div>
+
+                                <h2>FEEL Best Practices</h2>
+                                <ul>
+                                    <li>✅ Use <strong>range expressions</strong> instead of multiple comparisons: <code>[50..75]</code> not <code>>= 50 and <= 75</code></li>
+                                    <li>✅ Keep expressions <strong>readable</strong> - break complex logic into multiple decisions</li>
+                                    <li>✅ Use <strong>named constants</strong> for magic numbers: <code>MINIMUM_INVESTMENT = 150000</code></li>
+                                    <li>✅ Leverage <strong>list contains</strong> for set membership: <code>state in ["CA","NY","TX"]</code></li>
+                                    <li>✅ Use <strong>date functions</strong> for temporal logic instead of hardcoding dates</li>
+                                </ul>
+
+                                <div class="info-box warning">
+                                    <h4>⚠️ Common Pitfalls</h4>
+                                    <ul>
+                                        <li><strong>Case sensitivity:</strong> FEEL is case-sensitive for keywords (<code>and</code> not <code>AND</code>)</li>
+                                        <li><strong>Null handling:</strong> Missing values propagate (null + 5 = null)</li>
+                                        <li><strong>Type mismatches:</strong> "5" (string) != 5 (number)</li>
+                                    </ul>
+                                </div>
+
+                                <h2>Hands-On Exercise</h2>
+                                <div class="info-box">
+                                    <h4>🔗 Practice with Circuit OS</h4>
+                                    <ol>
+                                        <li>Open <a href="http://localhost:8081" target="_blank" style="color: var(--accent-green);">Circuit OS Demo</a></li>
+                                        <li>Try these scenarios and observe the DMN score calculations:</li>
+                                    </ol>
+                                    <ul>
+                                        <li><strong>Scenario A:</strong> Referral + Confirmed Budget + Very High Engagement (expect DMN: 95)</li>
+                                        <li><strong>Scenario B:</strong> Organic + Medium Budget + High Engagement (expect DMN: ~70)</li>
+                                        <li><strong>Scenario C:</strong> Paid + Low Budget + Low Engagement (expect DMN: ~45)</li>
+                                    </ul>
+                                    <p>Notice how the DMN rules combine lead source, budget, and engagement using weighted logic!</p>
+                                </div>
+
+                                <h2>Key Takeaways</h2>
+                                <ul>
+                                    <li>✅ FEEL enables <strong>complex decision logic</strong> beyond simple if/then rules</li>
+                                    <li>✅ Use range expressions, list operations, and date functions for readable rules</li>
+                                    <li>✅ Chain decisions together for <strong>multi-level workflows</strong></li>
+                                    <li>✅ FEEL expressions are <strong>portable across DMN engines</strong></li>
+                                    <li>✅ Combine FEEL with hit policies for powerful, auditable decisions</li>
+                                </ul>
+                            `,
+                            quiz: [
+                                {
+                                    question: 'Which FEEL expression correctly checks if a value is between 50 and 75 (inclusive)?',
+                                    options: [
+                                        'value > 50 and value < 75',
+                                        '[50..75]',
+                                        'range(50, 75)',
+                                        'between(value, 50, 75)'
+                                    ],
+                                    correct: 1,
+                                    explanation: '[50..75] is the correct FEEL range syntax for inclusive ranges (both endpoints included).'
+                                },
+                                {
+                                    question: 'What does the FEEL expression "month of(today()) in [1,2,3]" evaluate?',
+                                    options: [
+                                        'Whether today is the 1st, 2nd, or 3rd day of the month',
+                                        'Whether today is in Q1 (January, February, or March)',
+                                        'Whether the year is 2001, 2002, or 2003',
+                                        'The number of months in the quarter'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'This expression checks if the current month is 1 (Jan), 2 (Feb), or 3 (Mar), effectively checking for Q1.'
+                                },
+                                {
+                                    question: 'In a weighted scoring formula, why would you use FEEL instead of hardcoding in your application?',
+                                    options: [
+                                        'FEEL is faster than application code',
+                                        'Business users can modify weights without code changes',
+                                        'FEEL uses less memory',
+                                        'FEEL provides better security'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'DMN with FEEL allows business users to adjust decision logic (like scoring weights) without developer involvement, enabling faster iteration.'
+                                }
+                            ]
+                        },
+                        {
+                            id: 'ml-intro',
+                            title: 'Machine Learning for Business Leaders',
+                            content: `
+                                <h1>Machine Learning for Business Leaders</h1>
+                                <p class="lead">Understand ML fundamentals without the math PhD</p>
+
+                                <div class="info-box success">
+                                    <h3>🎯 Why CAIOs Need ML Knowledge</h3>
+                                    <p>As a CAIO, you don't need to code ML models, but you MUST understand:</p>
+                                    <ul>
+                                        <li>When to use ML vs. DMN vs. LLM</li>
+                                        <li>How to evaluate ML model performance</li>
+                                        <li>What questions to ask your data science team</li>
+                                        <li>How to explain ML to executives and boards</li>
+                                        <li>The risks and limitations of ML systems</li>
+                                    </ul>
+                                </div>
+
+                                <h2>What is Machine Learning?</h2>
+                                <p>Machine Learning is teaching computers to <strong>learn patterns from data</strong> rather than explicitly programming rules.</p>
+
+                                <div class="stats-grid">
+                                    <div class="stat-card">
+                                        <h4>📋 Traditional Programming</h4>
+                                        <p><strong>Rules + Data → Answers</strong></p>
+                                        <p style="font-size: 0.9rem; color: var(--text-muted);">Example: If credit_score > 700 then approve</p>
+                                    </div>
+                                    <div class="stat-card">
+                                        <h4>🤖 Machine Learning</h4>
+                                        <p><strong>Data + Answers → Rules</strong></p>
+                                        <p style="font-size: 0.9rem; color: var(--text-muted);">Example: Learn from 10,000 approved/rejected loans</p>
+                                    </div>
+                                </div>
+
+                                <h2>Key ML Concepts for CAIOs</h2>
+
+                                <h3>1. Supervised vs. Unsupervised Learning</h3>
+                                <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                                    <thead style="background: var(--bg-light);">
+                                        <tr>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Type</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Description</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Business Use Case</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Supervised</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Learn from labeled examples (you tell it the right answer)</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Lead scoring, fraud detection, churn prediction</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Unsupervised</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Find patterns in unlabeled data</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Customer segmentation, anomaly detection</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <h3>2. Classification vs. Regression</h3>
+                                <div class="stats-grid">
+                                    <div class="stat-card">
+                                        <h4>🏷️ Classification</h4>
+                                        <p><strong>Predict categories</strong></p>
+                                        <ul style="font-size: 0.9rem; text-align: left;">
+                                            <li>Will this lead convert? (Yes/No)</li>
+                                            <li>Is this fraud? (Yes/No)</li>
+                                            <li>Lead tier (A/B/C/D)</li>
+                                        </ul>
+                                    </div>
+                                    <div class="stat-card">
+                                        <h4>📊 Regression</h4>
+                                        <p><strong>Predict numbers</strong></p>
+                                        <ul style="font-size: 0.9rem; text-align: left;">
+                                            <li>Conversion probability (0-100%)</li>
+                                            <li>Customer lifetime value ($)</li>
+                                            <li>Days to close (30, 45, 60)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <h3>3. Common ML Algorithms (Executive Summary)</h3>
+
+                                <div class="code-example">
+                                    <pre>
+<strong>Decision Trees</strong>
+├─ How it works: Series of yes/no questions
+├─ Pros: Easy to explain, visualize
+├─ Cons: Can overfit (memorize training data)
+└─ Use when: You need explainability
+
+<strong>Random Forest</strong>
+├─ How it works: Many decision trees voting together
+├─ Pros: High accuracy, handles complex patterns
+├─ Cons: Harder to explain than single tree
+└─ Use when: Accuracy > explainability
+
+<strong>Gradient Boosting (XGBoost, LightGBM)</strong>
+├─ How it works: Sequential learning - each model fixes previous errors
+├─ Pros: Often highest accuracy
+├─ Cons: Slow to train, easy to overfit
+└─ Use when: Winning Kaggle competitions or maximum accuracy needed
+
+<strong>Logistic Regression</strong>
+├─ How it works: Linear combination of features → probability
+├─ Pros: Fast, explainable, stable
+├─ Cons: Can't capture complex patterns
+└─ Use when: Need simple, fast, interpretable model
+
+<strong>Neural Networks / Deep Learning</strong>
+├─ How it works: Layers of interconnected "neurons" learn patterns
+├─ Pros: Can learn very complex patterns
+├─ Cons: Needs lots of data, hard to explain, expensive
+└─ Use when: Images, text, massive datasets
+                                    </pre>
+                                </div>
+
+                                <h2>ML in Your Circuit OS Demo</h2>
+                                <p>Your running CircuitOS demo uses <strong>Stage 2: ML Prediction</strong> with Random Forest + Gradient Boosting:</p>
+
+                                <div class="info-box">
+                                    <h4>🔗 Hands-On Exercise</h4>
+                                    <ol>
+                                        <li>Open <a href="http://localhost:8081" target="_blank" style="color: var(--accent-green);">Circuit OS Demo</a></li>
+                                        <li>Input: Financial Capacity=$300K, Intent=90, Experience=10 years</li>
+                                        <li>Click "Process Lead"</li>
+                                        <li>Watch <strong>Stage 2: ML Prediction</strong></li>
+                                        <li>Observe:
+                                            <ul>
+                                                <li><strong>Conversion Probability:</strong> ML model's prediction (e.g., 85%)</li>
+                                                <li><strong>Tier Assignment:</strong> A/B/C/D based on probability</li>
+                                                <li><strong>Feature Importance:</strong> Which inputs mattered most</li>
+                                            </ul>
+                                        </li>
+                                    </ol>
+                                </div>
+
+                                <h2>Evaluating ML Models: Metrics CAIOs Must Know</h2>
+
+                                <h3>For Classification (Yes/No predictions)</h3>
+                                <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                                    <thead style="background: var(--bg-light);">
+                                        <tr>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Metric</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">What It Means</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Good Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Accuracy</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">% of predictions that were correct</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">> 80% (but can be misleading)</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Precision</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">When model says "yes", how often is it right?</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">> 70% (depends on use case)</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Recall</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Of all actual "yes" cases, how many did we catch?</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">> 70% (depends on use case)</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>AUC-ROC</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Overall ability to distinguish yes/no (0.5=random, 1.0=perfect)</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">> 0.80</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <h3>For Regression (Number predictions)</h3>
+                                <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                                    <thead style="background: var(--bg-light);">
+                                        <tr>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Metric</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">What It Means</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Good Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>MAE (Mean Absolute Error)</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Average difference between prediction and actual</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Lower is better (compare to baseline)</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>RMSE (Root Mean Squared Error)</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Like MAE but penalizes large errors more</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Lower is better</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>R² (R-squared)</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">% of variance explained by model (0-1)</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">> 0.70</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="info-box warning">
+                                    <h4>⚠️ The Accuracy Trap</h4>
+                                    <p><strong>Example:</strong> If only 5% of leads convert, a model that says "no one will convert" has 95% accuracy!</p>
+                                    <p><strong>Solution:</strong> For imbalanced data, use Precision, Recall, and AUC-ROC instead of accuracy.</p>
+                                </div>
+
+                                <h2>When to Use ML (vs. DMN or LLM)</h2>
+
+                                <div class="code-example">
+                                    <pre>
+<strong>Use DMN when:</strong>
+✅ Rules are clear and known ("If credit score < 650, reject")
+✅ Regulations require explainability (lending, healthcare)
+✅ Business logic changes frequently (pricing rules)
+✅ Domain experts can define the rules
+
+<strong>Use ML when:</strong>
+✅ Patterns are complex and non-obvious
+✅ You have lots of historical data with outcomes
+✅ Relationships between inputs are non-linear
+✅ You need probabilistic predictions
+✅ Human rules would have 100+ conditions
+
+<strong>Use LLM when:</strong>
+✅ Dealing with unstructured text (emails, notes)
+✅ Need nuanced interpretation (sentiment, intent)
+✅ Require strategic recommendations
+✅ Context and language understanding matter
+
+<strong>Use HYBRID (all three) when:</strong>
+✅ You want maximum decision quality
+✅ Different stakeholders need different explanations
+✅ Combine data-driven + rule-based + contextual intelligence
+                                    </pre>
+                                </div>
+
+                                <h2>Questions Every CAIO Should Ask Their Data Science Team</h2>
+
+                                <ol>
+                                    <li><strong>Data Quality:</strong> "How much training data do we have? Is it representative?"</li>
+                                    <li><strong>Performance:</strong> "What's the model's precision and recall on holdout data?"</li>
+                                    <li><strong>Features:</strong> "Which features are most important? Do they make business sense?"</li>
+                                    <li><strong>Overfitting:</strong> "What's the difference between training and test performance?"</li>
+                                    <li><strong>Bias:</strong> "Have we checked for demographic or historical bias?"</li>
+                                    <li><strong>Degradation:</strong> "How do we monitor if the model stops working?"</li>
+                                    <li><strong>Explainability:</strong> "Can we explain individual predictions to customers?"</li>
+                                    <li><strong>Deployment:</strong> "What's the latency? Can it handle production load?"</li>
+                                </ol>
+
+                                <h2>Key Takeaways</h2>
+                                <ul>
+                                    <li>✅ ML learns patterns from data vs. explicit programming</li>
+                                    <li>✅ Supervised learning (labeled data) is most common for business</li>
+                                    <li>✅ Random Forest and Gradient Boosting are top algorithms for tabular data</li>
+                                    <li>✅ Don't trust accuracy alone - check Precision, Recall, AUC-ROC</li>
+                                    <li>✅ Use DMN for known rules, ML for pattern discovery, LLM for language</li>
+                                    <li>✅ Your Circuit OS demo combines all three for optimal decisions</li>
+                                </ul>
+                            `,
+                            quiz: [
+                                {
+                                    question: 'What is the fundamental difference between traditional programming and machine learning?',
+                                    options: [
+                                        'ML is faster than traditional programming',
+                                        'ML learns patterns from data instead of using explicit rules',
+                                        'ML requires less code',
+                                        'ML is always more accurate'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'ML learns patterns from data (Data + Answers → Rules) while traditional programming uses explicit rules (Rules + Data → Answers).'
+                                },
+                                {
+                                    question: 'A model that predicts "will this customer churn?" is an example of:',
+                                    options: [
+                                        'Regression',
+                                        'Classification',
+                                        'Clustering',
+                                        'Reinforcement learning'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'Predicting categories (yes/no, will churn/won\'t churn) is classification. Regression predicts continuous numbers.'
+                                },
+                                {
+                                    question: 'Why can accuracy be misleading for imbalanced datasets?',
+                                    options: [
+                                        'Accuracy is only for regression problems',
+                                        'A model that always predicts the majority class can have high accuracy',
+                                        'Accuracy doesn\'t work with ML models',
+                                        'Accuracy requires too much data'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'If 95% of cases are negative, a model that always says "negative" achieves 95% accuracy but provides no value. Use Precision/Recall instead.'
+                                },
+                                {
+                                    question: 'In the Circuit OS hybrid system, what percentage weight does ML have?',
+                                    options: [
+                                        '40%',
+                                        '50%',
+                                        '60%',
+                                        '70%'
+                                    ],
+                                    correct: 2,
+                                    explanation: 'ML has 60% weight (data-driven predictions) while DMN has 40% weight (business rules) in the Circuit OS system.'
+                                }
+                            ]
+                        },
+                        {
+                            id: 'llm-intro',
+                            title: 'Large Language Models (LLMs) for Business',
+                            content: `
+                                <h1>Large Language Models for Business</h1>
+                                <p class="lead">Understand and leverage LLMs like Claude and GPT in enterprise systems</p>
+
+                                <div class="info-box success">
+                                    <h3>🎯 Why CAIOs Must Master LLMs</h3>
+                                    <p>LLMs are transforming business operations. As a CAIO, you need to understand:</p>
+                                    <ul>
+                                        <li>What LLMs can and cannot do reliably</li>
+                                        <li>How to integrate LLMs into decision systems</li>
+                                        <li>Prompt engineering for consistent business outputs</li>
+                                        <li>Cost, latency, and reliability tradeoffs</li>
+                                        <li>Security and data privacy considerations</li>
+                                    </ul>
+                                </div>
+
+                                <h2>What Are Large Language Models?</h2>
+                                <p>LLMs are neural networks trained on vast amounts of text to understand and generate human-like language. Unlike traditional ML or DMN, LLMs excel at:</p>
+
+                                <div class="stats-grid">
+                                    <div class="stat-card">
+                                        <h4>📝 Language Understanding</h4>
+                                        <p>Parse emails, notes, contracts, customer feedback</p>
+                                    </div>
+                                    <div class="stat-card">
+                                        <h4>🎯 Context & Nuance</h4>
+                                        <p>Understand sentiment, intent, and implicit meaning</p>
+                                    </div>
+                                    <div class="stat-card">
+                                        <h4>💡 Strategic Reasoning</h4>
+                                        <p>Generate insights, recommendations, explanations</p>
+                                    </div>
+                                    <div class="stat-card">
+                                        <h4>🔄 Flexible Outputs</h4>
+                                        <p>Structured data, summaries, classifications, analysis</p>
+                                    </div>
+                                </div>
+
+                                <h2>Leading Enterprise LLMs (October 2025)</h2>
+
+                                <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                                    <thead style="background: var(--bg-light);">
+                                        <tr>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Model</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Provider</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Best For</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Enterprise Features</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Claude 3.5 Sonnet</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Anthropic</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Analysis, reasoning, structured outputs</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">200K context, tool use, high accuracy</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>GPT-4</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">OpenAI</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">General purpose, broad capabilities</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Azure integration, function calling</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Gemini Pro</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Google</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Multimodal, GCP integration</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Vertex AI, long context</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Llama 3</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Meta (Open)</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Self-hosted, data privacy</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">On-premise deployment, customizable</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <h2>LLM Use Cases for CAIOs</h2>
+
+                                <h3>1. Unstructured Data Analysis</h3>
+                                <div class="code-example">
+                                    <pre>
+<strong>Input:</strong> Customer email, call transcript, or support ticket
+
+<strong>LLM Task:</strong> Extract structured insights
+- Sentiment: Positive/Negative/Neutral
+- Intent: Purchase, Support, Complaint, Inquiry
+- Urgency: Low/Medium/High
+- Key concerns: List of specific issues
+- Next best action: Recommended response
+
+<strong>Business Value:</strong> Convert unstructured text into actionable data
+                                    </pre>
+                                </div>
+
+                                <h3>2. Lead Qualification & Enrichment</h3>
+                                <p>Your Circuit OS demo uses LLMs in <strong>Stage 4: LLM Strategic Insights</strong></p>
+                                <div class="code-example">
+                                    <pre>
+<strong>Input:</strong> Lead data + context (financial capacity, intent, persona)
+
+<strong>LLM Analysis:</strong>
+- Strategic assessment of conversion likelihood
+- Identification of risk factors (market, timing, competition)
+- Recommended engagement strategy
+- Personalized talking points for sales team
+- Timeline and resource recommendations
+
+<strong>Output:</strong> Natural language insights + confidence score
+                                    </pre>
+                                </div>
+
+                                <h3>3. Document Processing</h3>
+                                <ul>
+                                    <li><strong>Contract Analysis:</strong> Extract terms, obligations, risks</li>
+                                    <li><strong>Compliance Checking:</strong> Flag regulatory concerns</li>
+                                    <li><strong>RFP Response:</strong> Analyze requirements, generate drafts</li>
+                                    <li><strong>Report Summarization:</strong> Executive summaries from long documents</li>
+                                </ul>
+
+                                <h3>4. Customer Communication</h3>
+                                <ul>
+                                    <li><strong>Email Classification:</strong> Route to correct department</li>
+                                    <li><strong>Sentiment Analysis:</strong> Identify unhappy customers early</li>
+                                    <li><strong>Response Drafting:</strong> Generate personalized replies</li>
+                                    <li><strong>Chatbots:</strong> Handle common inquiries</li>
+                                </ul>
+
+                                <h2>LLMs vs. Traditional ML</h2>
+
+                                <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                                    <thead style="background: var(--bg-light);">
+                                        <tr>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Dimension</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Traditional ML</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">LLMs</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Training Data</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Your labeled data (100s-1000s examples)</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Pre-trained on billions of tokens</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Setup Time</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Weeks to months (data prep + training)</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Hours to days (prompt engineering)</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Accuracy on Structured Tasks</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Very high (95%+)</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Good (80-90%, depends on prompt)</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Unstructured Data</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Requires heavy feature engineering</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Excellent out-of-the-box</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Cost per Prediction</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">$0.0001-0.001</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">$0.01-0.10</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Latency</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">1-10ms</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">500-5000ms</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Explainability</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Feature importance, SHAP values</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Can explain reasoning in natural language</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="info-box warning">
+                                    <h4>⚠️ When NOT to Use LLMs</h4>
+                                    <ul>
+                                        <li><strong>High-volume, low-latency:</strong> 1000s of predictions per second (use ML)</li>
+                                        <li><strong>Strict determinism required:</strong> Regulatory compliance (use DMN)</li>
+                                        <li><strong>Simple classification:</strong> If ML achieves 95%+ accuracy (cheaper)</li>
+                                        <li><strong>Real-time systems:</strong> Sub-100ms response needed (use ML or DMN)</li>
+                                    </ul>
+                                </div>
+
+                                <h2>LLM in Your Circuit OS Demo</h2>
+                                <div class="info-box">
+                                    <h4>🔗 Hands-On Exercise</h4>
+                                    <ol>
+                                        <li>Open <a href="http://localhost:8081" target="_blank" style="color: var(--accent-green);">Circuit OS Demo</a></li>
+                                        <li>Process a lead with high financial capacity but low intent</li>
+                                        <li>Watch <strong>Stage 4: LLM Strategic Insights</strong></li>
+                                        <li>Observe how the LLM:
+                                            <ul>
+                                                <li>Analyzes the mismatch between capacity and intent</li>
+                                                <li>Suggests nurture campaigns and timing strategies</li>
+                                                <li>Provides contextual reasoning (not just scores)</li>
+                                                <li>Recommends specific engagement tactics</li>
+                                            </ul>
+                                        </li>
+                                        <li>Compare LLM insights to the numeric ML score - notice the qualitative vs quantitative difference</li>
+                                    </ol>
+                                </div>
+
+                                <h2>Enterprise LLM Considerations</h2>
+
+                                <h3>Security & Privacy</h3>
+                                <ul>
+                                    <li>✅ <strong>Data Residency:</strong> Where is your data stored and processed?</li>
+                                    <li>✅ <strong>Training Data Usage:</strong> Will your inputs train future models?</li>
+                                    <li>✅ <strong>PII Handling:</strong> Can you send customer data to the API?</li>
+                                    <li>✅ <strong>Compliance:</strong> GDPR, HIPAA, SOC2 certifications</li>
+                                </ul>
+
+                                <h3>Cost Management</h3>
+                                <div class="code-example">
+                                    <pre>
+<strong>Typical LLM Pricing (October 2025):</strong>
+
+Claude 3.5 Sonnet:
+├─ Input: $3 per million tokens
+├─ Output: $15 per million tokens
+└─ Average lead analysis: ~2,000 tokens = $0.03 per lead
+
+GPT-4:
+├─ Input: $10 per million tokens
+├─ Output: $30 per million tokens
+└─ Average lead analysis: ~2,000 tokens = $0.08 per lead
+
+<strong>Cost Optimization Strategies:</strong>
+1. Use smaller models for simple tasks
+2. Cache system prompts
+3. Batch requests when latency allows
+4. Implement request throttling
+5. Use traditional ML for high-volume predictions
+                                    </pre>
+                                </div>
+
+                                <h3>Reliability & Error Handling</h3>
+                                <ul>
+                                    <li><strong>Rate Limits:</strong> Plan for API throttling (typically 10-100 req/min)</li>
+                                    <li><strong>Timeouts:</strong> LLMs can take 5-30 seconds for complex prompts</li>
+                                    <li><strong>Output Validation:</strong> Always validate structured outputs (use schemas)</li>
+                                    <li><strong>Fallback Logic:</strong> What happens if the API is down?</li>
+                                    <li><strong>Consistency:</strong> Same prompt can yield different outputs (use temperature=0 for determinism)</li>
+                                </ul>
+
+                                <h2>Key Takeaways</h2>
+                                <ul>
+                                    <li>✅ LLMs excel at <strong>unstructured data and language understanding</strong></li>
+                                    <li>✅ Use LLMs for <strong>context, nuance, and strategic reasoning</strong></li>
+                                    <li>✅ LLMs are <strong>slower and more expensive</strong> than traditional ML</li>
+                                    <li>✅ Enterprise considerations: security, cost, reliability, compliance</li>
+                                    <li>✅ Hybrid systems (DMN + ML + LLM) provide <strong>best of all worlds</strong></li>
+                                    <li>✅ Your Circuit OS demo shows LLM integration in a production system</li>
+                                </ul>
+                            `,
+                            quiz: [
+                                {
+                                    question: 'What is the primary advantage of LLMs over traditional ML models?',
+                                    options: [
+                                        'Lower cost per prediction',
+                                        'Faster inference speed',
+                                        'Better at understanding unstructured text and context',
+                                        'Higher accuracy on structured data'
+                                    ],
+                                    correct: 2,
+                                    explanation: 'LLMs excel at understanding unstructured text, context, and nuance. Traditional ML is typically faster, cheaper, and more accurate on structured tabular data.'
+                                },
+                                {
+                                    question: 'In the Circuit OS demo, what role does the LLM play?',
+                                    options: [
+                                        'Calculates the final score',
+                                        'Executes business rules',
+                                        'Provides strategic insights and contextual analysis',
+                                        'Routes the lead to sales reps'
+                                    ],
+                                    correct: 2,
+                                    explanation: 'The LLM in Stage 4 provides strategic insights and contextual analysis, complementing the numeric ML predictions and rule-based DMN logic.'
+                                },
+                                {
+                                    question: 'Why would you NOT use an LLM for a high-volume lead scoring system processing 10,000 leads per second?',
+                                    options: [
+                                        'LLMs cannot score leads',
+                                        'Latency and cost would be prohibitive',
+                                        'LLMs are less accurate than ML',
+                                        'LLMs require too much training data'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'LLMs have higher latency (500-5000ms) and cost ($0.01-0.10 per call) compared to ML ($0.0001-0.001, 1-10ms). At 10K/second, this becomes prohibitively expensive and slow.'
+                                },
+                                {
+                                    question: 'What should CAIOs prioritize when evaluating LLM providers for enterprise use?',
+                                    options: [
+                                        'Only cost per token',
+                                        'Security, compliance, data privacy, and reliability',
+                                        'Only model accuracy',
+                                        'Brand recognition'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'Enterprise LLM evaluation must prioritize security (data residency, PII handling), compliance (GDPR, HIPAA), data privacy (training data usage), and reliability (SLAs, uptime).'
+                                }
+                            ]
+                        },
+                        {
+                            id: 'prompt-engineering',
+                            title: 'Prompt Engineering for Business Systems',
+                            content: `
+                                <h1>Prompt Engineering for Business Systems</h1>
+                                <p class="lead">Master the art and science of getting reliable outputs from LLMs</p>
+
+                                <div class="info-box success">
+                                    <h3>🎯 Why Prompt Engineering Matters</h3>
+                                    <p>Prompt engineering is the #1 skill for integrating LLMs into production systems. Good prompts mean:</p>
+                                    <ul>
+                                        <li>Consistent, reliable outputs (not random responses)</li>
+                                        <li>Structured data that integrates with your systems</li>
+                                        <li>Reduced hallucinations and errors</li>
+                                        <li>Lower costs (fewer retries, shorter prompts)</li>
+                                    </ul>
+                                </div>
+
+                                <h2>Prompt Engineering Fundamentals</h2>
+
+                                <h3>Anatomy of a Good Prompt</h3>
+                                <div class="code-example">
+                                    <pre>
+<strong>Structure of an Effective Business Prompt:</strong>
+
+1. ROLE/CONTEXT
+   "You are an expert lead qualification analyst for a B2B SaaS company."
+
+2. TASK
+   "Analyze the following lead data and provide a qualification assessment."
+
+3. INPUT DATA
+   {lead_data}
+
+4. OUTPUT FORMAT (CRITICAL)
+   "Return a JSON object with these exact fields: {schema}"
+
+5. CONSTRAINTS/RULES
+   "Do not make assumptions about missing data. Flag uncertainties."
+
+6. EXAMPLES (Few-Shot Learning)
+   "Example 1: Input: {...} Output: {...}"
+                                    </pre>
+                                </div>
+
+                                <h2>Prompt Engineering Techniques</h2>
+
+                                <h3>1. Zero-Shot Prompting</h3>
+                                <p>Simplest approach - just describe the task</p>
+                                <div class="code-example">
+                                    <pre>
+<strong>Prompt:</strong>
+"Classify the sentiment of this customer email as Positive, Negative, or Neutral:
+
+Email: {email_text}
+
+Sentiment:"
+
+<strong>Use when:</strong> Simple, well-defined tasks
+<strong>Accuracy:</strong> 70-85%
+                                    </pre>
+                                </div>
+
+                                <h3>2. Few-Shot Prompting</h3>
+                                <p>Provide examples to guide the model</p>
+                                <div class="code-example">
+                                    <pre>
+<strong>Prompt:</strong>
+"Classify lead urgency based on email content.
+
+Example 1:
+Email: 'We need this implemented by end of quarter or we'll miss our targets'
+Urgency: HIGH
+
+Example 2:
+Email: 'Interested in learning more about your product sometime'
+Urgency: LOW
+
+Example 3:
+Email: 'Can we schedule a demo next week? Budget approved'
+Urgency: HIGH
+
+Now classify this email:
+Email: {new_email}
+Urgency:"
+
+<strong>Use when:</strong> Complex or nuanced tasks
+<strong>Accuracy:</strong> 80-95%
+                                    </pre>
+                                </div>
+
+                                <h3>3. Chain-of-Thought (CoT) Prompting</h3>
+                                <p>Ask the model to reason step-by-step</p>
+                                <div class="code-example">
+                                    <pre>
+<strong>Prompt:</strong>
+"Analyze this lead's conversion probability. Think through it step-by-step:
+
+1. Evaluate financial capacity
+2. Assess intent signals
+3. Consider timing factors
+4. Identify risk factors
+5. Calculate overall probability
+
+Lead Data: {data}
+
+Analysis:"
+
+<strong>Use when:</strong> Complex reasoning required
+<strong>Benefit:</strong> More accurate, explainable results
+                                    </pre>
+                                </div>
+
+                                <h3>4. Structured Output Prompting</h3>
+                                <p>Critical for production systems - enforce JSON/schema</p>
+                                <div class="code-example">
+                                    <pre>
+<strong>Prompt:</strong>
+"Analyze this lead and return ONLY a valid JSON object with no additional text.
+
+Schema:
+{
+  "conversion_probability": number (0-100),
+  "urgency": "LOW" | "MEDIUM" | "HIGH",
+  "risk_factors": string[],
+  "recommended_action": string,
+  "confidence": number (0-100),
+  "reasoning": string
+}
+
+Lead Data: {data}
+
+JSON Output:"
+
+<strong>Critical for:</strong> System integration, automated workflows
+<strong>Tip:</strong> Always validate the output with a JSON parser
+                                    </pre>
+                                </div>
+
+                                <h2>Real-World Example: Circuit OS Lead Analysis</h2>
+                                <p>Here's the actual prompt pattern used in your Circuit OS demo (Stage 4):</p>
+
+                                <div class="code-example">
+                                    <pre>
+<strong>System Prompt (Role + Context):</strong>
+"You are an expert business analyst for a franchise lead qualification system.
+Your goal is to provide strategic insights that complement ML predictions and DMN rules.
+Focus on contextual factors that numeric models might miss."
+
+<strong>User Prompt (Task + Data + Format):</strong>
+"Analyze this franchise lead and provide strategic insights.
+
+Lead Data:
+- Financial Capacity: ${financialCapacity}
+- Intent Score: ${intentScore}
+- Industry Experience: ${experience} years
+- Persona: ${persona}
+- Territory Available: ${territoryAvailable}
+- ML Prediction: ${mlScore}/100
+- DMN Score: ${dmnScore}/100
+
+Provide your analysis in this JSON format:
+{
+  "strategic_assessment": "2-3 sentence overall evaluation",
+  "risk_factors": ["list", "of", "risks"],
+  "opportunities": ["list", "of", "strengths"],
+  "recommended_strategy": "specific engagement approach",
+  "timeline_estimate": "estimated timeline to close",
+  "confidence_level": number (0-100)
+}
+
+Consider:
+1. Mismatches between capacity and intent
+2. Persona-specific conversion patterns
+3. Market timing and seasonal factors
+4. Territory availability impact
+
+Return ONLY the JSON object."
+
+<strong>Response:</strong>
+{
+  "strategic_assessment": "High-capacity prospect with moderate intent suggests...",
+  "risk_factors": ["Long sales cycle due to persona", "Market timing concerns"],
+  ...
+}
+                                    </pre>
+                                </div>
+
+                                <h2>Advanced Prompt Engineering</h2>
+
+                                <h3>Technique 5: Self-Consistency</h3>
+                                <p>Generate multiple outputs and take majority vote</p>
+                                <div class="code-example">
+                                    <pre>
+1. Run the same prompt 3-5 times (with temperature > 0)
+2. Parse all outputs
+3. Take majority vote or average
+4. Use when: Critical decisions requiring high confidence
+                                    </pre>
+                                </div>
+
+                                <h3>Technique 6: Retrieval-Augmented Generation (RAG)</h3>
+                                <p>Combine LLM with your business knowledge base</p>
+                                <div class="code-example">
+                                    <pre>
+<strong>Pattern:</strong>
+1. User query → Search your docs/database
+2. Retrieve relevant context
+3. Include context in prompt: "Based on these internal docs: {docs}"
+4. LLM generates answer grounded in your data
+
+<strong>Example:</strong>
+"Based on our franchise qualification guidelines:
+{retrieved_guidelines}
+
+Analyze this lead: {lead_data}
+Determine if they meet our qualification criteria."
+
+<strong>Benefit:</strong> LLM uses YOUR company knowledge, not just training data
+                                    </pre>
+                                </div>
+
+                                <h2>Common Prompt Engineering Mistakes</h2>
+
+                                <div class="info-box warning">
+                                    <h4>❌ Mistake 1: Vague Instructions</h4>
+                                    <p><strong>Bad:</strong> "Analyze this lead"</p>
+                                    <p><strong>Good:</strong> "Analyze financial capacity, intent signals, and risk factors. Return JSON with scores 0-100 and reasoning."</p>
+                                </div>
+
+                                <div class="info-box warning">
+                                    <h4>❌ Mistake 2: No Output Format</h4>
+                                    <p><strong>Bad:</strong> Letting LLM return freeform text</p>
+                                    <p><strong>Good:</strong> Specify exact JSON schema or structured format</p>
+                                </div>
+
+                                <div class="info-box warning">
+                                    <h4>❌ Mistake 3: Not Handling Missing Data</h4>
+                                    <p><strong>Bad:</strong> Assuming all fields are populated</p>
+                                    <p><strong>Good:</strong> "If financial_capacity is missing, set confidence to 'LOW' and flag in risk_factors"</p>
+                                </div>
+
+                                <div class="info-box warning">
+                                    <h4>❌ Mistake 4: Ignoring Token Limits</h4>
+                                    <p><strong>Bad:</strong> Sending entire 50-page contract</p>
+                                    <p><strong>Good:</strong> Chunk documents, extract key sections, summarize first</p>
+                                </div>
+
+                                <h2>Prompt Testing & Iteration</h2>
+
+                                <h3>Testing Framework</h3>
+                                <ol>
+                                    <li><strong>Create Test Cases:</strong> 20-50 representative examples with expected outputs</li>
+                                    <li><strong>Measure Performance:</strong>
+                                        <ul>
+                                            <li>Accuracy: % of correct outputs</li>
+                                            <li>Consistency: Run same input 5x, measure variance</li>
+                                            <li>Format Compliance: % of valid JSON/schema</li>
+                                            <li>Latency: Average response time</li>
+                                            <li>Cost: Tokens used per request</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Iterate:</strong> Adjust prompt, re-test, compare results</li>
+                                    <li><strong>Version Control:</strong> Track prompt versions and performance</li>
+                                </ol>
+
+                                <h2>Temperature & Other Parameters</h2>
+
+                                <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                                    <thead style="background: var(--bg-light);">
+                                        <tr>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Parameter</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Range</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Use Case</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Temperature</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">0.0 = deterministic<br>1.0 = creative</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Use 0.0-0.2 for business logic<br>Use 0.7-1.0 for creative content</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Max Tokens</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Output length limit</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Set to expected output size + 20% buffer</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Top P</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">0.0-1.0 (nucleus sampling)</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Alternative to temperature, use one or the other</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <h2>Prompt Engineering Best Practices</h2>
+                                <ul>
+                                    <li>✅ <strong>Be Specific:</strong> Precise instructions > vague descriptions</li>
+                                    <li>✅ <strong>Use Examples:</strong> Few-shot learning dramatically improves accuracy</li>
+                                    <li>✅ <strong>Enforce Structure:</strong> Always specify output format for production systems</li>
+                                    <li>✅ <strong>Think Step-by-Step:</strong> Chain-of-Thought for complex reasoning</li>
+                                    <li>✅ <strong>Test Thoroughly:</strong> 20-50 test cases before production</li>
+                                    <li>✅ <strong>Version Control:</strong> Track prompts like code</li>
+                                    <li>✅ <strong>Monitor Production:</strong> Log inputs/outputs, track accuracy over time</li>
+                                    <li>✅ <strong>Handle Failures:</strong> Validate outputs, have fallback logic</li>
+                                </ul>
+
+                                <h2>Hands-On Exercise</h2>
+                                <div class="info-box">
+                                    <h4>🔗 Explore Prompts in Circuit OS</h4>
+                                    <ol>
+                                        <li>Open <a href="http://localhost:8081" target="_blank" style="color: var(--accent-green);">Circuit OS Demo</a></li>
+                                        <li>Open browser DevTools (F12) → Console tab</li>
+                                        <li>Process a lead and watch the console logs</li>
+                                        <li>Find the LLM prompt that's sent to Claude (Stage 4)</li>
+                                        <li>Observe:
+                                            <ul>
+                                                <li>The system prompt defining role and context</li>
+                                                <li>The user prompt with lead data</li>
+                                                <li>The JSON schema specification</li>
+                                                <li>The structured response returned</li>
+                                            </ul>
+                                        </li>
+                                        <li>Try modifying inputs to see how LLM analysis changes</li>
+                                    </ol>
+                                </div>
+
+                                <h2>Key Takeaways</h2>
+                                <ul>
+                                    <li>✅ Good prompts are <strong>specific, structured, and tested</strong></li>
+                                    <li>✅ Few-shot learning (examples) dramatically improves accuracy</li>
+                                    <li>✅ Always enforce <strong>structured output formats</strong> for production</li>
+                                    <li>✅ Use temperature=0 for <strong>consistent business logic</strong></li>
+                                    <li>✅ Test with 20-50 cases before deploying to production</li>
+                                    <li>✅ Monitor and iterate - prompts are living artifacts</li>
+                                    <li>✅ Your Circuit OS demo shows <strong>production-grade prompt engineering</strong></li>
+                                </ul>
+                            `,
+                            quiz: [
+                                {
+                                    question: 'What is the most critical element to include in prompts for production business systems?',
+                                    options: [
+                                        'Creative language and metaphors',
+                                        'Structured output format specification (e.g., JSON schema)',
+                                        'Long, detailed background context',
+                                        'Multiple personality instructions'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'Production systems require structured, parseable outputs. Always specify exact JSON schemas or structured formats so the LLM output integrates reliably with your code.'
+                                },
+                                {
+                                    question: 'What temperature setting should you use for lead qualification in a production system?',
+                                    options: [
+                                        '1.0 (maximum creativity)',
+                                        '0.7-0.9 (balanced)',
+                                        '0.0-0.2 (deterministic)',
+                                        'Temperature doesn\'t matter'
+                                    ],
+                                    correct: 2,
+                                    explanation: 'Use temperature 0.0-0.2 for business logic to ensure consistent, deterministic outputs. High temperature (0.7-1.0) is for creative content generation.'
+                                },
+                                {
+                                    question: 'What is few-shot prompting?',
+                                    options: [
+                                        'Running the LLM multiple times and averaging results',
+                                        'Using a smaller, faster LLM model',
+                                        'Providing examples in the prompt to guide the model',
+                                        'Limiting the number of API calls'
+                                    ],
+                                    correct: 2,
+                                    explanation: 'Few-shot prompting means providing 2-5 examples in your prompt showing the model exactly what kind of output you expect. This dramatically improves accuracy.'
+                                },
+                                {
+                                    question: 'Why is prompt versioning and testing critical for CAIOs?',
+                                    options: [
+                                        'It\'s not critical - prompts always work the same way',
+                                        'LLM outputs can vary, so you must test thoroughly and track versions like code',
+                                        'Only for compliance reasons',
+                                        'To impress stakeholders'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'Prompts are code. They need version control, testing, and monitoring. LLM behavior can change with model updates, and good prompts require iteration and measurement.'
+                                }
+                            ]
+                        },
+                        {
+                            id: 'hybrid-systems',
+                            title: 'Hybrid Decision Systems Architecture',
+                            content: `
+                                <h1>Hybrid Decision Systems Architecture</h1>
+                                <p class="lead">Combine DMN + ML + LLM for world-class decision intelligence</p>
+
+                                <div class="info-box success">
+                                    <h3>🎯 Your Competitive Advantage</h3>
+                                    <p>This is what sets you apart from other CAIOs:</p>
+                                    <ul>
+                                        <li>Most CAIOs understand AI strategy but lack technical depth</li>
+                                        <li>Most data scientists understand ML but not business rules or LLMs</li>
+                                        <li><strong>You understand all three AND how to combine them</strong></li>
+                                        <li>This hybrid systems knowledge is rare and highly valuable</li>
+                                    </ul>
+                                </div>
+
+                                <h2>Why Hybrid Systems?</h2>
+                                <p>Each approach has strengths and weaknesses. Hybrid systems leverage the best of each:</p>
+
+                                <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                                    <thead style="background: var(--bg-light);">
+                                        <tr>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Approach</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Strengths</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Weaknesses</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>DMN Only</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Transparent, fast, deterministic</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Can't learn patterns, rigid rules</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>ML Only</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Learns complex patterns, data-driven</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Black box, ignores business rules</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>LLM Only</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Understands context, nuance, language</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Slow, expensive, non-deterministic</td>
+                                        </tr>
+                                        <tr style="background: rgba(56, 255, 106, 0.1);">
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>HYBRID</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>Best of all: Pattern learning + Business rules + Context</strong></td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">More complex to build and maintain</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <h2>Circuit OS: A Reference Hybrid Architecture</h2>
+                                <p>Your Circuit OS demo is a production-ready example of hybrid decision intelligence:</p>
+
+                                <div class="code-example">
+                                    <pre>
+<strong>5-Stage Hybrid Decision Pipeline:</strong>
+
+┌─────────────────────────────────────────────────────────────┐
+│  STAGE 1: INPUT VALIDATION                                  │
+│  Technology: Traditional Code                               │
+│  Purpose: Data quality, completeness, format checks         │
+│  Output: Validated lead data + quality flags               │
+└──────────────────┬──────────────────────────────────────────┘
+                   │
+                   ▼
+┌─────────────────────────────────────────────────────────────┐
+│  STAGE 2: ML PREDICTION                                     │
+│  Technology: Random Forest + Gradient Boosting              │
+│  Purpose: Data-driven conversion probability                │
+│  Output: ML Score (0-100), Tier (A/B/C/D), Feature Importance │
+│  Weight in Final Decision: 60%                              │
+└──────────────────┬──────────────────────────────────────────┘
+                   │
+                   ▼
+┌─────────────────────────────────────────────────────────────┐
+│  STAGE 3: DMN BUSINESS RULES                                │
+│  Technology: Decision Tables + FEEL                         │
+│  Purpose: Enforce business logic, compliance, policies      │
+│  Output: DMN Score (0-100), Rule Explanations               │
+│  Weight in Final Decision: 40%                              │
+└──────────────────┬──────────────────────────────────────────┘
+                   │
+                   ▼
+┌─────────────────────────────────────────────────────────────┐
+│  STAGE 4: LLM STRATEGIC INSIGHTS                            │
+│  Technology: Claude 3.5 Sonnet                              │
+│  Purpose: Contextual analysis, strategic recommendations    │
+│  Output: Risk factors, Opportunities, Strategy, Timeline    │
+│  Weight in Final Decision: Advisory (not weighted)          │
+└──────────────────┬──────────────────────────────────────────┘
+                   │
+                   ▼
+┌─────────────────────────────────────────────────────────────┐
+│  STAGE 5: FINAL DECISION                                    │
+│  Technology: Weighted Combination                           │
+│  Formula: Final = (ML × 0.60) + (DMN × 0.40)               │
+│  Output: Final Score, Tier, Action, Full Audit Trail       │
+└─────────────────────────────────────────────────────────────┘
+                                    </pre>
+                                </div>
+
+                                <h2>Key Design Decisions</h2>
+
+                                <h3>1. Why ML Gets 60% Weight</h3>
+                                <ul>
+                                    <li>ML is trained on thousands of historical conversions - proven predictive power</li>
+                                    <li>Data-driven predictions capture non-obvious patterns</li>
+                                    <li>ML continuously improves as more data is collected</li>
+                                </ul>
+
+                                <h3>2. Why DMN Gets 40% Weight</h3>
+                                <ul>
+                                    <li>Business rules encode domain expertise (e.g., "referrals convert 3x better")</li>
+                                    <li>Provides guardrails and compliance enforcement</li>
+                                    <li>Ensures business logic is transparent and auditable</li>
+                                    <li>Can override ML when regulations require it</li>
+                                </ul>
+
+                                <h3>3. Why LLM is Advisory (Not Weighted)</h3>
+                                <ul>
+                                    <li>LLMs are non-deterministic - same input can yield different outputs</li>
+                                    <li>Latency and cost make LLMs unsuitable for high-frequency scoring</li>
+                                    <li>LLM provides qualitative insights for sales teams, not numeric scores</li>
+                                    <li>Strategic context supplements but doesn't override quantitative scores</li>
+                                </ul>
+
+                                <h2>Alternative Hybrid Architectures</h2>
+
+                                <h3>Pattern 1: Sequential Filtering</h3>
+                                <div class="code-example">
+                                    <pre>
+Input → DMN (Hard Rules) → ML (Scoring) → LLM (Enrichment) → Output
+
+<strong>Use Case:</strong> Compliance-first systems (lending, healthcare)
+<strong>Flow:</strong>
+1. DMN: Apply hard reject rules (e.g., "if credit_score < 550 → REJECT")
+2. ML: Score remaining candidates
+3. LLM: Provide insights on top candidates only
+
+<strong>Advantage:</strong> Fast rejection of non-compliant cases
+<strong>Example:</strong> Loan applications, insurance underwriting
+                                    </pre>
+                                </div>
+
+                                <h3>Pattern 2: Ensemble Voting</h3>
+                                <div class="code-example">
+                                    <pre>
+Input → [DMN + ML + LLM] run in parallel → Majority Vote → Output
+
+<strong>Use Case:</strong> High-stakes decisions requiring consensus
+<strong>Flow:</strong>
+1. DMN says: APPROVE (score: 85)
+2. ML says: APPROVE (score: 78)
+3. LLM says: APPROVE WITH CONDITIONS (confidence: 75)
+→ Final: APPROVE (2/3 agree)
+
+<strong>Advantage:</strong> Robust to single-method failure
+<strong>Example:</strong> Fraud detection, hiring decisions
+                                    </pre>
+                                </div>
+
+                                <h3>Pattern 3: Hierarchical Decision</h3>
+                                <div class="code-example">
+                                    <pre>
+Input → DMN (Tier Classification) → ML (Tier-Specific Model) → Output
+
+<strong>Use Case:</strong> Different logic for different customer segments
+<strong>Flow:</strong>
+1. DMN: Classify into Tier (A/B/C/D) based on business rules
+2. ML: Use tier-specific model
+   - Tier A: High-touch model (emphasizes relationship signals)
+   - Tier B-D: Efficiency model (emphasizes ROI signals)
+3. LLM: Tier-specific prompts and analysis
+
+<strong>Advantage:</strong> Specialized logic per segment
+<strong>Example:</strong> Multi-product sales, tiered service models
+                                    </pre>
+                                </div>
+
+                                <h2>Building Your Own Hybrid System</h2>
+
+                                <h3>Step 1: Define Decision Requirements</h3>
+                                <ul>
+                                    <li>What decision are you automating?</li>
+                                    <li>What are the inputs and outputs?</li>
+                                    <li>What are the business rules (hard constraints)?</li>
+                                    <li>What data-driven patterns exist?</li>
+                                    <li>What contextual factors matter?</li>
+                                </ul>
+
+                                <h3>Step 2: Map Components</h3>
+                                <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                                    <thead style="background: var(--bg-light);">
+                                        <tr>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">If You Need...</th>
+                                            <th style="padding: 0.75rem; text-align: left; border: 1px solid var(--border);">Use...</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Hard reject rules, compliance checks</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>DMN</strong> (first in pipeline)</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Probability prediction from historical data</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>ML</strong> (core scoring)</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Analysis of unstructured text (emails, notes)</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>LLM</strong> (preprocessing)</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Strategic recommendations for humans</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>LLM</strong> (advisory output)</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);">Transparent, auditable logic</td>
+                                            <td style="padding: 0.75rem; border: 1px solid var(--border);"><strong>DMN</strong> (weighted in final)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <h3>Step 3: Determine Weighting</h3>
+                                <div class="code-example">
+                                    <pre>
+<strong>Factors to Consider:</strong>
+
+Data Availability:
+- Lots of historical data? → Weight ML higher (60-70%)
+- Limited data? → Weight DMN higher (60-70%)
+
+Regulatory Environment:
+- Strict compliance? → DMN minimum 40-50%
+- Flexible? → ML can go up to 80%
+
+Explainability Needs:
+- Need to explain to regulators? → DMN 50%+
+- Internal use only? → ML can be 70-80%
+
+<strong>Recommended Starting Point:</strong>
+ML: 60% (data-driven predictions)
+DMN: 40% (business rules + compliance)
+LLM: Advisory only (qualitative insights)
+
+<strong>Iterate Based on Results:</strong>
+Track performance over 3-6 months, adjust weights based on accuracy
+                                    </pre>
+                                </div>
+
+                                <h2>Hybrid System Governance</h2>
+
+                                <h3>Monitoring & Observability</h3>
+                                <p>You MUST monitor each component separately:</p>
+                                <ul>
+                                    <li><strong>ML Model:</strong> Precision, recall, AUC-ROC (weekly)</li>
+                                    <li><strong>DMN Rules:</strong> Rule hit rates, override frequency (weekly)</li>
+                                    <li><strong>LLM:</strong> Output format compliance, cost, latency (daily)</li>
+                                    <li><strong>Overall System:</strong> Final decision accuracy (daily)</li>
+                                </ul>
+
+                                <h3>Model Retraining & Rule Updates</h3>
+                                <div class="code-example">
+                                    <pre>
+<strong>ML Model:</strong>
+- Retrain: Every 3-6 months (or when performance degrades > 5%)
+- A/B test new model vs. current before full deployment
+
+<strong>DMN Rules:</strong>
+- Review: Quarterly business rule review with stakeholders
+- Update: Version control, test on historical data before deploy
+
+<strong>LLM Prompts:</strong>
+- Monitor: Daily output validation
+- Update: When new patterns emerge or model is upgraded
+- Test: 20-50 examples before deploying prompt changes
+                                    </pre>
+                                </div>
+
+                                <h2>Real-World Hybrid System Examples</h2>
+
+                                <h3>1. Credit Risk Assessment</h3>
+                                <ul>
+                                    <li><strong>DMN (30%):</strong> Hard rules (minimum credit score, max debt-to-income)</li>
+                                    <li><strong>ML (60%):</strong> Default probability based on 100+ features</li>
+                                    <li><strong>LLM (10%):</strong> Analyze written explanation of income sources, unusual patterns</li>
+                                </ul>
+
+                                <h3>2. Customer Support Routing</h3>
+                                <ul>
+                                    <li><strong>LLM (Primary):</strong> Parse customer message, extract intent and sentiment</li>
+                                    <li><strong>DMN (Secondary):</strong> Route based on account tier and SLA rules</li>
+                                    <li><strong>ML (Tertiary):</strong> Predict complexity and estimated resolution time</li>
+                                </ul>
+
+                                <h3>3. Fraud Detection</h3>
+                                <ul>
+                                    <li><strong>ML (70%):</strong> Real-time anomaly detection on transaction patterns</li>
+                                    <li><strong>DMN (20%):</strong> Known fraud patterns and blacklist rules</li>
+                                    <li><strong>LLM (10%):</strong> Analyze merchant descriptions and transaction narratives for suspicious language</li>
+                                </ul>
+
+                                <h2>Key Takeaways</h2>
+                                <ul>
+                                    <li>✅ Hybrid systems combine <strong>strengths of DMN + ML + LLM</strong></li>
+                                    <li>✅ Circuit OS demonstrates a <strong>production-ready 5-stage pipeline</strong></li>
+                                    <li>✅ ML typically gets 60-70% weight (data-driven), DMN 30-40% (rules)</li>
+                                    <li>✅ LLMs work best as <strong>advisory or preprocessing</strong>, not primary scoring</li>
+                                    <li>✅ Monitor each component separately + overall system performance</li>
+                                    <li>✅ This hybrid systems expertise is <strong>your competitive advantage</strong> as a CAIO</li>
+                                </ul>
+
+                                <h2>Final Hands-On Exercise</h2>
+                                <div class="info-box">
+                                    <h4>🔗 Master the Circuit OS Hybrid System</h4>
+                                    <ol>
+                                        <li>Open <a href="http://localhost:8081" target="_blank" style="color: var(--accent-green);">Circuit OS Demo</a></li>
+                                        <li>Run these test scenarios and observe how each stage contributes:</li>
+                                    </ol>
+
+                                    <p><strong>Scenario 1: ML and DMN Agree (Easy Case)</strong></p>
+                                    <ul>
+                                        <li>Input: Referral, $300K capacity, Very High intent, 10 years experience</li>
+                                        <li>Expected: ML ≈ 85, DMN ≈ 95 → Final ≈ 89 (Tier A)</li>
+                                        <li>LLM: Strong positive recommendation</li>
+                                    </ul>
+
+                                    <p><strong>Scenario 2: ML and DMN Disagree (Interesting Case)</strong></p>
+                                    <ul>
+                                        <li>Input: Paid ads, $250K capacity, Low intent, 15 years experience</li>
+                                        <li>Expected: ML ≈ 65 (experience is strong signal), DMN ≈ 45 (paid + low intent penalty)</li>
+                                        <li>Final: (65 × 0.6) + (45 × 0.4) = 57 (Tier B/C)</li>
+                                        <li>LLM: Flag low intent as risk, suggest nurture campaign</li>
+                                    </ul>
+
+                                    <p><strong>Scenario 3: LLM Adds Strategic Value</strong></p>
+                                    <ul>
+                                        <li>Input: High capacity, Medium intent, but competitive territory</li>
+                                        <li>Watch: ML/DMN give good scores, but LLM flags market saturation risk</li>
+                                        <li>Result: Numeric score is high, but strategy adjusts for competition</li>
+                                    </ul>
+
+                                    <p><strong>Observe:</strong> How the 60/40 weighting balances data-driven ML with rule-based DMN, while LLM provides contextual intelligence</p>
+                                </div>
+                            `,
+                            quiz: [
+                                {
+                                    question: 'In the Circuit OS hybrid system, why does ML have 60% weight while DMN has 40%?',
+                                    options: [
+                                        'ML is always more accurate than DMN',
+                                        'ML learns from historical data while DMN provides transparent business rules - the 60/40 balance optimizes for both accuracy and explainability',
+                                        'DMN is being phased out',
+                                        '60/40 is arbitrary and could be any ratio'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'The 60/40 weighting balances ML\'s data-driven predictive power (60%) with DMN\'s transparent, auditable business rules (40%), providing both accuracy and explainability.'
+                                },
+                                {
+                                    question: 'Why is the LLM component "advisory only" rather than weighted in the final score?',
+                                    options: [
+                                        'LLMs are less accurate than ML',
+                                        'LLMs are non-deterministic, slower, and more expensive - better for qualitative insights than numeric scoring',
+                                        'LLMs are only for text generation',
+                                        'LLMs cannot work with structured data'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'LLMs are non-deterministic (same input can yield different outputs), have higher latency and cost, making them unsuitable for weighted scoring. They excel at qualitative strategic insights.'
+                                },
+                                {
+                                    question: 'What is the key advantage of hybrid systems over using a single approach?',
+                                    options: [
+                                        'They are cheaper to build',
+                                        'They are simpler to maintain',
+                                        'They leverage complementary strengths: ML for patterns, DMN for rules, LLM for context',
+                                        'They require less data'
+                                    ],
+                                    correct: 2,
+                                    explanation: 'Hybrid systems combine the best of each approach: ML discovers patterns from data, DMN enforces transparent business rules, and LLMs understand language and context.'
+                                },
+                                {
+                                    question: 'In a compliance-heavy industry (e.g., lending), how should you adjust the hybrid system weights?',
+                                    options: [
+                                        'Increase ML to 80%, reduce DMN to 20%',
+                                        'Increase DMN to 50-60% to ensure business rules and compliance are strongly enforced',
+                                        'Remove DMN entirely',
+                                        'Make LLM the primary component'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'In compliance-heavy industries, increase DMN weight to 50-60% to ensure business rules and regulatory requirements are strongly enforced while still benefiting from ML predictions.'
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'governance',
+                    title: '⚖️ AI Governance & Ethics',
+                    icon: '⚖️',
+                    lessons: []
+                },
+                {
+                    id: 'risk',
+                    title: '🛡️ AI Risk Management',
+                    icon: '🛡️',
+                    lessons: []
+                },
+                {
+                    id: 'data',
+                    title: '💾 Data Strategy',
+                    icon: '💾',
+                    lessons: []
+                },
+                {
+                    id: 'change',
+                    title: '🔄 Change Management',
+                    icon: '🔄',
+                    lessons: []
+                },
+                {
+                    id: 'roi',
+                    title: '📊 AI ROI & Business Value',
+                    icon: '📊',
+                    lessons: []
+                },
+                {
+                    id: 'communication',
+                    title: '💼 Executive Communication',
+                    icon: '💼',
+                    lessons: []
+                }
+            ]
+        };
+
+        // Progress tracking
+        let userProgress = JSON.parse(localStorage.getItem('caio_progress')) || {
+            currentModule: 'intro',
+            currentLesson: 0,
+            completed: [],
+            quizScores: {},
+            startDate: new Date().toISOString()
+        };
+
+        // Save progress
+        function saveProgress() {
+            localStorage.setItem('caio_progress', JSON.stringify(userProgress));
+            updateProgressBar();
+        }
+
+        // Update overall progress bar
+        function updateProgressBar() {
+            const totalLessons = courseData.modules.reduce((sum, mod) => sum + mod.lessons.length, 0);
+            const completedLessons = userProgress.completed.length;
+            const percentage = Math.round((completedLessons / totalLessons) * 100);
+
+            document.getElementById('overallProgress').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = percentage + '% Complete';
+        }
+
+        // Load module list in sidebar
+        function loadModuleList() {
+            const list = document.getElementById('moduleList');
+            if (!list) {
+                console.error('moduleList element not found!');
+                return;
+            }
+
+            console.log('Loading modules...', courseData.modules.length);
+            list.innerHTML = '';
+
+            courseData.modules.forEach(module => {
+                const item = document.createElement('li');
+                item.className = 'module-item';
+                if (module.id === userProgress.currentModule) {
+                    item.classList.add('active');
+                }
+
+                const completed = module.lessons.every(lesson =>
+                    userProgress.completed.includes(`${module.id}-${lesson.id}`)
+                );
+                if (completed && module.lessons.length > 0) {
+                    item.classList.add('completed');
+                }
+
+                item.innerHTML = `
+                    <span class="icon">${module.icon}</span>
+                    ${module.title}
+                    <span class="status">${completed && module.lessons.length > 0 ? '✓' : ''}</span>
+                `;
+
+                item.onclick = () => loadModule(module.id);
+                list.appendChild(item);
+            });
+        }
+
+        // Load a module
+        function loadModule(moduleId) {
+            userProgress.currentModule = moduleId;
+            userProgress.currentLesson = 0;
+            saveProgress();
+            loadModuleList();
+            loadLesson(moduleId, 0);}
+
+        // Load a lesson
+        function loadLesson(moduleId, lessonIndex) {
+            const module = courseData.modules.find(m => m.id === moduleId);
+            if (!module || lessonIndex >= module.lessons.length) return;
+
+            const lesson = module.lessons[lessonIndex];
+            const contentArea = document.getElementById('contentArea');
+
+            let html = lesson.content;
+
+            // Add quiz if exists
+            if (lesson.quiz && lesson.quiz.length > 0) {
+                html += '<div class="quiz-container">';
+                html += '<h2>Knowledge Check</h2>';
+                lesson.quiz.forEach((q, index) => {
+                    html += `
+                        <div class="quiz-question" data-question="${index}">
+                            <h4>Question ${index + 1}: ${q.question}</h4>
+                            <ul class="quiz-options">
+                                ${q.options.map((opt, optIndex) => `
+                                    <li class="quiz-option" data-option="${optIndex}" onclick="selectQuizOption(${index}, ${optIndex}, ${q.correct})">
+                                        ${String.fromCharCode(65 + optIndex)}. ${opt}
+                                    </li>
+                                `).join('')}
+                            </ul>
+                            <div class="quiz-feedback"></div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            }
+
+            // Add navigation
+            html += '<div class="lesson-nav">';
+            if (lessonIndex > 0) {
+                html += `<button class="btn btn-secondary" onclick="loadLesson('${moduleId}', ${lessonIndex - 1})">← Previous</button>`;
+            } else {
+                html += '<div></div>';
+            }
+
+            if (lessonIndex < module.lessons.length - 1) {
+                html += `<button class="btn btn-primary" onclick="completeAndNext('${moduleId}', ${lessonIndex})">Next →</button>`;
+            } else {
+                html += `<button class="btn btn-primary" onclick="completeModule('${moduleId}', ${lessonIndex})">Complete Module ✓</button>`;
+            }
+            html += '</div>';
+
+            contentArea.innerHTML = html;
+            contentArea.scrollTop = 0;
+        }
+
+        // Quiz functionality
+        function selectQuizOption(questionIndex, optionIndex, correctIndex) {
+            const question = document.querySelectorAll('.quiz-question')[questionIndex];
+            const options = question.querySelectorAll('.quiz-option');
+            const feedback = question.querySelector('.quiz-feedback');
+
+            options.forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+
+            const selected = options[optionIndex];
+            selected.classList.add('selected');
+
+            if (optionIndex === correctIndex) {
+                selected.classList.add('correct');
+                feedback.innerHTML = '<strong style="color: var(--success);">✓ Correct!</strong>';
+                feedback.classList.add('show');} else {
+                selected.classList.add('incorrect');
+                options[correctIndex].classList.add('correct');
+                feedback.innerHTML = '<strong style="color: var(--error);">✗ Incorrect.</strong> The correct answer is highlighted in green.';
+                feedback.classList.add('show');}
+        }
+
+        // Complete lesson and go to next
+        function completeAndNext(moduleId, lessonIndex) {
+            const module = courseData.modules.find(m => m.id === moduleId);
+            const lesson = module.lessons[lessonIndex];
+            const lessonId = `${moduleId}-${lesson.id}`;
+
+            if (!userProgress.completed.includes(lessonId)) {
+                userProgress.completed.push(lessonId);
+                saveProgress();}
+
+            loadLesson(moduleId, lessonIndex + 1);
+        }
+
+        // Complete module
+        function completeModule(moduleId, lessonIndex) {
+            const module = courseData.modules.find(m => m.id === moduleId);
+            const lesson = module.lessons[lessonIndex];
+            const lessonId = `${moduleId}-${lesson.id}`;
+
+            if (!userProgress.completed.includes(lessonId)) {
+                userProgress.completed.push(lessonId);
+                saveProgress();
+            }
+
+            alert(`🎉 Congratulations! You've completed ${module.title}!\n\nKeep going to earn your CAIO certification!`);
+
+            // Load next module
+            const currentModuleIndex = courseData.modules.findIndex(m => m.id === moduleId);
+            if (currentModuleIndex < courseData.modules.length - 1) {
+                loadModule(courseData.modules[currentModuleIndex + 1].id);
+            } else {
+                showDashboard();
+            }
+        }
+
+        // Show dashboard
+        function showDashboard() {
+            const totalLessons = courseData.modules.reduce((sum, mod) => sum + mod.lessons.length, 0);
+            const completedLessons = userProgress.completed.length;
+            const percentage = Math.round((completedLessons / totalLessons) * 100);const contentArea = document.getElementById('contentArea');
+            contentArea.innerHTML = `
+                <h1>📊 Your CAIO Progress Dashboard</h1>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">${percentage}%</div>
+                        <div class="stat-label">Overall Progress</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${completedLessons}/${totalLessons}</div>
+                        <div class="stat-label">Lessons Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${courseData.modules.filter(m => m.lessons.every(l => userProgress.completed.includes(\`\${m.id}-\${l.id}\`))).length}/9</div>
+                        <div class="stat-label">Modules Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${Object.keys(userProgress.quizScores).length}</div>
+                        <div class="stat-label">Quizzes Passed</div>
+                    </div>
+                </div>
+
+                ${percentage === 100 ? `
+                    <div class="certificate">
+                        <div class="certificate-badge">🏆</div>
+                        <h2>Congratulations!</h2>
+                        <p>You've completed the CAIO Certification Program!</p>
+                        <p style="margin: 1rem 0;">You are now a certified Chief AI Officer.</p>
+                        <button class="btn btn-primary" onclick="downloadCertificate()">Download Certificate</button>
+                    </div>
+                ` : `
+                    <div class="info-box">
+                        <h3>Keep Going!</h3>
+                        <p>You're ${percentage}% of the way to becoming a certified CAIO.</p>
+                        <button class="btn btn-primary" onclick="resumeLearning()">Resume Learning →</button>
+                    </div>
+                `}
+
+                <h2>Module Progress</h2>
+                ${courseData.modules.map(module => {
+                    const completed = module.lessons.filter(l => userProgress.completed.includes(\`\${module.id}-\${l.id}\`)).length;
+                    const total = module.lessons.length;
+                    const modPercentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+                    return `
+                        <div class="stat-card" style="text-align: left; margin-bottom: 1rem;" onclick="loadModule('${module.id}')">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <strong>${module.icon} ${module.title}</strong>
+                                <span style="color: var(--accent-green);">${modPercentage}%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" style="width: ${modPercentage}%;"></div>
+                            </div>
+                            <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">
+                                ${completed} of ${total} lessons completed
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            `;
+        }
+
+        // Resume learning
+        function resumeLearning() {
+            loadModule(userProgress.currentModule);
+        }
+
+        // Download certificate
+        function downloadCertificate() {
+            alert('Certificate download feature coming soon!\n\nFor now, take a screenshot of your dashboard as proof of completion.');}
+
+        // Initialize app
+        function init() {
+            console.log('Initializing CAIO University...');
+            console.log('courseData:', courseData);
+            console.log('userProgress:', userProgress);
+            loadModuleList();
+            loadLesson(userProgress.currentModule, userProgress.currentLesson);
+            updateProgressBar();
+        }
+
+        // Start the app when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+
+    <!-- Neon + Steel Animation System -->
+    <script src="../circuit-animations.js"></script>
+</body>
+</html>

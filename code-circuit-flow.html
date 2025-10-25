@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit OS - Code Flow Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000000;
+            color: #00ff88;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            position: relative;
+            width: 90%;
+            max-width: 1400px;
+            height: 90vh;
+        }
+
+        /* Circuit board background */
+        .circuit-background {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 255, 136, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.3;
+        }
+
+        /* Circuit paths */
+        .circuit-path {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, #00ff88, transparent);
+            opacity: 0;
+            animation: pathActivate 8s ease-in-out infinite;
+        }
+
+        .path-h {
+            height: 2px;
+            width: 100%;
+        }
+
+        .path-v {
+            width: 2px;
+            height: 100%;
+        }
+
+        .path-1 { top: 20%; animation-delay: 0s; }
+        .path-2 { top: 50%; animation-delay: 2s; }
+        .path-3 { top: 80%; animation-delay: 4s; }
+        .path-4 { left: 25%; animation-delay: 1s; }
+        .path-5 { left: 75%; animation-delay: 3s; }
+
+        @keyframes pathActivate {
+            0%, 100% { opacity: 0; transform: scaleX(0); }
+            50% { opacity: 0.6; transform: scaleX(1); }
+        }
+
+        /* Circuit nodes */
+        .circuit-node {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #00ff88;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #00ff88;
+            animation: nodePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes nodePulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.6; }
+        }
+
+        .node-1 { top: 20%; left: 10%; animation-delay: 0s; }
+        .node-2 { top: 20%; right: 10%; animation-delay: 0.5s; }
+        .node-3 { top: 50%; left: 25%; animation-delay: 1s; }
+        .node-4 { top: 50%; right: 25%; animation-delay: 1.5s; }
+        .node-5 { top: 80%; left: 40%; animation-delay: 2s; }
+        .node-6 { top: 80%; right: 40%; animation-delay: 2.5s; }
+
+        /* Main code display */
+        .code-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding: 60px;
+        }
+
+        .code-section {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 12px;
+            padding: 32px;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .code-section.active {
+            animation: slideIn 0.8s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-label {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-number {
+            width: 24px;
+            height: 24px;
+            background: #00ff88;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .code-line {
+            font-size: 16px;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .code-line.show {
+            animation: codeFadeIn 0.5s ease forwards;
+        }
+
+        @keyframes codeFadeIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Syntax highlighting */
+        .keyword { color: #ff6b9d; }
+        .string { color: #00ff88; }
+        .function { color: #00bfff; }
+        .comment { color: #666; }
+        .variable { color: #ffa500; }
+        .number { color: #ff9f43; }
+
+        /* Energy flow effect */
+        .energy-pulse {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00ff88;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff88;
+            animation: energyFlow 4s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes energyFlow {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0);
+            }
+            10%, 90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--x), var(--y));
+            }
+        }
+
+        /* Chaos indicator */
+        .chaos-meter {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            min-width: 200px;
+        }
+
+        .chaos-label {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .chaos-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .chaos-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b9d, #ff4757);
+            width: 100%;
+            transition: width 2s ease;
+        }
+
+        .chaos-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6b9d;
+            transition: color 2s ease;
+        }
+
+        .chaos-value.controlled {
+            color: #00ff88;
+        }
+
+        /* Tagline */
+        .tagline {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: taglineFade 2s ease 6s forwards;
+        }
+
+        @keyframes taglineFade {
+            to { opacity: 1; }
+        }
+
+        .tagline .command {
+            color: #00ff88;
+        }
+
+        .tagline .eliminate {
+            color: #a0a0a0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .code-container {
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .code-section {
+                padding: 20px;
+            }
+
+            .code-line {
+                font-size: 13px;
+            }
+
+            .chaos-meter {
+                top: 20px;
+                right: 20px;
+                min-width: 150px;
+                padding: 12px;
+            }
+
+            .tagline {
+                font-size: 14px;
+                bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Circuit board background -->
+        <div class="circuit-background"></div>
+
+        <!-- Animated circuit paths -->
+        <div class="circuit-path path-h path-1"></div>
+        <div class="circuit-path path-h path-2"></div>
+        <div class="circuit-path path-h path-3"></div>
+        <div class="circuit-path path-v path-4"></div>
+        <div class="circuit-path path-v path-5"></div>
+
+        <!-- Circuit nodes -->
+        <div class="circuit-node node-1"></div>
+        <div class="circuit-node node-2"></div>
+        <div class="circuit-node node-3"></div>
+        <div class="circuit-node node-4"></div>
+        <div class="circuit-node node-5"></div>
+        <div class="circuit-node node-6"></div>
+
+        <!-- Energy pulses -->
+        <div class="energy-pulse" style="--x: 800px; --y: 400px; animation-delay: 0s;"></div>
+        <div class="energy-pulse" style="--x: -600px; --y: 300px; animation-delay: 1s;"></div>
+        <div class="energy-pulse" style="--x: 500px; --y: -200px; animation-delay: 2s;"></div>
+        <div class="energy-pulse" style="--x: -700px; --y: -100px; animation-delay: 3s;"></div>
+
+        <!-- Code animation -->
+        <div class="code-container">
+            <!-- Step 1: Import -->
+            <div class="code-section" id="step1">
+                <div class="section-label">
+                    <span class="step-number">1</span>
+                    INITIALIZE SYSTEM
+                </div>
+                <div class="code-line"><span class="comment">// Deploy AI lead qualification in 3 lines</span></div>
+                <div class="code-line"></div>
+                <div class="code-line"><span class="keyword">import</span> { <span class="function">CircuitOS</span> } <span class="keyword">from</span> <span class="string">'@circuit-os/sdk'</span>;</div>
+            </div>
+
+            <!-- Step 2: Configure -->
+            <div class="code-section" id="step2">
+                <div class="section-label">
+                    <span class="step-number">2</span>
+                    CONFIGURE GATEWAY
+                </div>
+                <div class="code-line"><span class="keyword">const</span> <span class="variable">gateway</span> = <span class="keyword">new</span> <span class="function">CircuitOS</span>({</div>
+                <div class="code-line">  <span class="variable">apiKey</span>: process.env.CIRCUIT_API_KEY,</div>
+                <div class="code-line">  <span class="variable">model</span>: <span class="string">'lead-qualification-v2'</span></div>
+                <div class="code-line">});</div>
+            </div>
+
+            <!-- Step 3: Execute -->
+            <div class="code-section" id="step3">
+                <div class="section-label">
+                    <span class="step-number">3</span>
+                    PROCESS LEADS
+                </div>
+                <div class="code-line"><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> gateway.<span class="function">qualify</span>({</div>
+                <div class="code-line">  <span class="variable">email</span>: <span class="string">'prospect@company.com'</span>,</div>
+                <div class="code-line">  <span class="variable">company</span>: <span class="string">'Acme Corp'</span>,</div>
+                <div class="code-line">  <span class="variable">revenue</span>: <span class="string">'$50M-$100M'</span></div>
+                <div class="code-line">});</div>
+            </div>
+
+            <!-- Step 4: Results -->
+            <div class="code-section" id="step4">
+                <div class="section-label">
+                    <span class="step-number">4</span>
+                    CHAOS ELIMINATED
+                </div>
+                <div class="code-line"><span class="comment">// { score: <span class="number">0.94</span>, tier: <span class="string">'A'</span>, confidence: <span class="number">0.92</span> }</span></div>
+            </div>
+        </div>
+
+        <!-- Chaos meter -->
+        <div class="chaos-meter">
+            <div class="chaos-label">System Chaos</div>
+            <div class="chaos-bar">
+                <div class="chaos-fill" id="chaosFill"></div>
+            </div>
+            <div class="chaos-value" id="chaosValue">100%</div>
+        </div>
+
+        <!-- Tagline -->
+        <div class="tagline">
+            <span class="command">Command Revenue.</span> <span class="eliminate">Eliminate Chaos.</span>
+        </div>
+    </div>
+
+    <script>
+        // Animate code sections sequentially
+        const sections = ['step1', 'step2', 'step3', 'step4'];
+        const delays = [0, 2000, 4000, 6000];
+
+        sections.forEach((id, index) => {
+            setTimeout(() => {
+                const section = document.getElementById(id);
+                section.classList.add('active');
+
+                // Animate code lines within section
+                const lines = section.querySelectorAll('.code-line');
+                lines.forEach((line, lineIndex) => {
+                    setTimeout(() => {
+                        line.classList.add('show');
+                    }, lineIndex * 200);
+                });
+            }, delays[index]);
+        });
+
+        // Animate chaos meter reduction
+        const chaosFill = document.getElementById('chaosFill');
+        const chaosValue = document.getElementById('chaosValue');
+
+        setTimeout(() => {
+            chaosFill.style.width = '75%';
+            chaosValue.textContent = '75%';
+        }, 2000);
+
+        setTimeout(() => {
+            chaosFill.style.width = '40%';
+            chaosValue.textContent = '40%';
+        }, 4000);
+
+        setTimeout(() => {
+            chaosFill.style.width = '5%';
+            chaosFill.style.background = 'linear-gradient(90deg, #00ff88, #00cc44)';
+            chaosValue.textContent = '5%';
+            chaosValue.classList.add('controlled');
+        }, 6000);
+
+        // Auto-loop the animation
+        setTimeout(() => {
+            location.reload();
+        }, 14000);
+    </script>
+</body>
+</html>

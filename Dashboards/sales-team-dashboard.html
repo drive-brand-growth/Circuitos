@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit OS: Lead Qualification Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Vercel Geist Design System + Circuit OS Colors */
+        :root {
+            /* Circuit OS Brand Colors */
+            --neon-green: #38FF6A;
+            --neon-green-dark: #2ecc54;
+            --neon-green-bright: #5aff88;
+            --neon-glow: rgba(56, 255, 106, 0.6);
+
+            --steel-gray: #8B9198;
+            --steel-light: #C5C9CE;
+
+            /* Backgrounds */
+            --bg-dark: #000000;
+            --bg-medium: #0a0a0a;
+            --bg-light: #1a1a1a;
+
+            --accent-green: #38FF6A;
+            --accent-green-dark: #2ecc54;
+
+            /* Vercel grays */
+            --background: #000000;
+            --foreground: #FAFAFA;
+            --accents-1: #0a0a0a;
+            --accents-2: #1a1a1a;
+            --accents-6: #999999;
+
+            --text-primary: #FAFAFA;
+            --text-secondary: #999999;
+            --text-muted: #666666;
+            --border: rgba(56, 255, 106, 0.15);
+            --success: #38FF6A;
+            --warning: #FFB800;
+            --error: #DC3545;
+
+            /* Typography */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            /* Spacing */
+            --space-4: 16px;
+            --space-6: 24px;
+            --space-8: 32px;
+
+            /* Border Radius */
+            --radius-md: 6px;
+            --radius-lg: 8px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-dark);
+            min-height: 100vh;
+            padding: 20px;
+            animation: fadeInUp 0.6s ease-out;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: var(--bg-medium);
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--accent-green);
+            border-radius: 4px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .header h1 {
+            color: var(--accent-green);
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+            font-weight: 700;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-medium);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.7s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-green);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+        }
+
+        .stat-value {
+            color: var(--accent-green);
+            font-size: 42px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(212, 175, 55, 0.2);
+        }
+
+        .stat-change {
+            font-size: 14px;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .stat-change.negative {
+            color: var(--error);
+        }
+
+        .lead-card {
+            background: var(--bg-medium);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .lead-card:nth-child(2) { animation-delay: 0.5s; }
+        .lead-card:nth-child(3) { animation-delay: 0.6s; }
+        .lead-card:nth-child(4) { animation-delay: 0.7s; }
+
+        .lead-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-green);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+        }
+
+        .lead-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .lead-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .lead-id {
+            color: var(--text-primary);
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .badge {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .badge-qualified {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .badge-not-qualified {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--error);
+            border: 1px solid var(--error);
+        }
+
+        .badge-review {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .confidence-meter {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: slideIn 0.7s ease-out;
+        }
+
+        .confidence-label {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .confidence-bar {
+            flex: 1;
+            height: 12px;
+            background: var(--bg-light);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--accent-green));
+            border-radius: 6px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+        }
+
+        .confidence-fill.medium {
+            background: linear-gradient(90deg, var(--warning), #fbbf24);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+        }
+
+        .confidence-fill.low {
+            background: linear-gradient(90deg, var(--error), #f87171);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+        }
+
+        .confidence-value {
+            color: var(--accent-green);
+            font-size: 18px;
+            font-weight: bold;
+            min-width: 60px;
+            text-align: right;
+            text-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
+        }
+
+        .recommendation {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.03) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-left: 3px solid var(--accent-green);
+            color: var(--text-primary);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .recommendation-title {
+            color: var(--accent-green);
+            font-size: 13px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+        }
+
+        .recommendation-text {
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .explanation-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .factor-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .factor-item {
+            background: var(--bg-light);
+            border-left: 3px solid var(--accent-green);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent-green);
+            padding: 15px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            animation: slideIn 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .factor-item:nth-child(1) { animation-delay: 0.1s; }
+        .factor-item:nth-child(2) { animation-delay: 0.2s; }
+        .factor-item:nth-child(3) { animation-delay: 0.3s; }
+        .factor-item:nth-child(4) { animation-delay: 0.4s; }
+        .factor-item:nth-child(5) { animation-delay: 0.5s; }
+
+        .factor-item:hover {
+            background: var(--bg-dark);
+            border-left-color: var(--accent-green);
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .factor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .factor-name {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .factor-importance {
+            color: var(--accent-green);
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .factor-value {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .factor-impact {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: var(--font-sans);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-green-dark) 100%);
+            color: #000;
+            border: 1px solid var(--accent-green);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+            background: linear-gradient(135deg, var(--accent-green-dark) 0%, var(--accent-green) 100%);
+        }
+
+        .btn-secondary {
+            background: var(--bg-light);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-dark);
+            border-color: var(--text-muted);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--error) 0%, #f87171 100%);
+            color: white;
+            border: 1px solid var(--error);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(239, 68, 68, 0.5);
+            background: linear-gradient(135deg, #f87171 0%, var(--error) 100%);
+        }
+
+        .governance-footer {
+            background: var(--bg-medium);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            text-align: center;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .governance-footer p {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .governance-footer strong {
+            color: var(--accent-green);
+        }
+
+        /* Demo Mode Indicator */
+        .demo-mode {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid var(--accent-green);
+            padding: 12px 24px;
+            border-radius: 4px;
+            color: var(--accent-green);
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 1000;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .demo-mode:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .demo-mode.active {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        /* Progress Circle for Confidence */
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-circle {
+            stroke: var(--border);
+            fill: transparent;
+            stroke-width: 4;
+        }
+
+        .progress-ring-circle-active {
+            stroke: var(--accent-green);
+            fill: transparent;
+            stroke-width: 4;
+            stroke-dasharray: 251.2;
+            stroke-dashoffset: 251.2;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.3));
+        }
+
+        .progress-ring-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--accent-green);
+            text-shadow: 0 2px 4px rgba(212, 175, 55, 0.2);
+        }
+
+        .confidence-circle {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        /* Enhanced Factor Items */
+        .factor-item {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .factor-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.08), transparent);
+            transition: left 0.5s;
+        }
+
+        .factor-item:hover::after {
+            left: 100%;
+        }
+
+        /* Stat Card Enhanced */
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-green), transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-card {
+            position: relative;
+        }
+
+        /* Icons */
+        .icon-pulse {
+            display: inline-block;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Metric badges */
+        .metric-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--accent-green);
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: bold;
+            color: var(--accent-green);
+            letter-spacing: 1px;
+            margin-left: 10px;
+        }
+
+        /* Importance bar */
+        .importance-bar {
+            height: 3px;
+            background: var(--bg-light);
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .importance-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-green-dark));
+            border-radius: 2px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 6px rgba(212, 175, 55, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lead-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .demo-mode {
+                top: 10px;
+                right: 10px;
+                font-size: 12px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Demo Mode Indicator -->
+    <div class="demo-mode" id="demoToggle" onclick="toggleDemo()">
+        <span id="demoText">▶ START DEMO</span>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>⚡ Circuit OS: Lead Qualification AI</h1>
+            <p>Powered by Random Forest ML • 90% Accuracy • Human-Governed</p>
+        </div>
+
+        <!-- Stats Dashboard -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Today's Leads</div>
+                <div class="stat-value">47</div>
+                <div class="stat-change">+12% vs yesterday</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Auto-Qualified</div>
+                <div class="stat-value">32</div>
+                <div class="stat-change">68% automation rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Needs Review</div>
+                <div class="stat-value">15</div>
+                <div class="stat-change">32% human review</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Time Saved</div>
+                <div class="stat-value">3.9h</div>
+                <div class="stat-change">98% faster than manual</div>
+            </div>
+        </div>
+
+        <!-- Lead 1: High-Priority Qualified -->
+        <div class="lead-card">
+            <div class="lead-header">
+                <div class="lead-title">
+                    <span class="lead-id">Lead #L-492847</span>
+                    <span class="badge badge-qualified">✓ Qualified</span>
+                    <span class="metric-badge">HIGH VALUE</span>
+                </div>
+                <div class="confidence-meter">
+                    <span class="confidence-label">AI Confidence:</span>
+                    <div class="confidence-circle">
+                        <svg class="progress-ring" width="80" height="80">
+                            <circle class="progress-ring-circle" cx="40" cy="40" r="36"></circle>
+                            <circle class="progress-ring-circle-active confidence-92" cx="40" cy="40" r="36"></circle>
+                        </svg>
+                        <div class="progress-ring-text">92%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-title">🎯 Recommended Action</div>
+                <div class="recommendation-text">HIGH PRIORITY: Assign to senior closer, schedule demo within 24 hours</div>
+            </div>
+
+            <div class="explanation-section">
+                <div class="section-title">📊 Why AI Qualified This Lead</div>
+                <div class="factor-list">
+                    <div class="factor-item">
+                        <div class="factor-header">
+                            <span class="factor-name">⚡ Engagement Score</span>
+                            <span class="factor-importance">46% importance</span>
+                        </div>
+                        <div class="factor-value">Value: 87/100</div>
+                        <div class="importance-bar">
+                            <div class="importance-fill" style="width: 0%" data-width="46"></div>
+                        </div>
+                        <div class="factor-impact">→ Very high engagement strongly increases qualification likelihood</div>
+                    </div>
+                    <div class="factor-item">
+                        <div class="factor-header">
+                            <span class="factor-name">🏢 Company Size</span>
+                            <span class="factor-importance">16% importance</span>
+                        </div>
+                        <div class="factor-value">Value: 550 employees</div>
+                        <div class="importance-bar">
+                            <div class="importance-fill" style="width: 0%" data-width="16"></div>
+                        </div>
+                        <div class="factor-impact">→ Enterprise size is ideal for our offering</div>
+                    </div>
+                    <div class="factor-item">
+                        <div class="factor-header">
+                            <span class="factor-name">💰 Budget</span>
+                            <span class="factor-importance">16% importance</span>
+                        </div>
+                        <div class="factor-value">Value: $125,000</div>
+                        <div class="importance-bar">
+                            <div class="importance-fill" style="width: 0%" data-width="16"></div>
+                        </div>
+                        <div class="factor-impact">→ Budget exceeds our typical deal size (strong fit)</div>
+                    </div>
+                    <div class="factor-item">
+                        <div class="factor-header">
+                            <span class="factor-name">🏭 Industry</span>
+                            <span class="factor-importance">7% importance</span>
+                        </div>
+                        <div class="factor-value">Value: Technology</div>
+                        <div class="importance-bar">
+                            <div class="importance-fill" style="width: 0%" data-width="7"></div>
+                        </div>
+                        <div class="factor-impact">→ Industry is a perfect fit for our solution</div>
+                    </div>
+                    <div class="factor-item">
+                        <div class="factor-header">
+                            <span class="factor-name">🔁 Previous Purchases</span>
+                            <span class="factor-importance">3% importance</span>
+                        </div>
+                        <div class="factor-value">Value: 2 orders</div>
+                        <div class="importance-bar">
+                            <div class="importance-fill" style="width: 0%" data-width="3"></div>
+                        </div>
+                        <div class="factor-impact">→ Existing customer (high likelihood of expansion)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="assignToSales()">✓ Assign to Senior Closer</button>
+                <button class="btn btn-secondary" onclick="viewFullProfile()">View Full Profile</button>
+                <button class="btn btn-secondary" onclick="overrideAI()">Override AI Decision</button>
+            </div>
+        </div>
+
+        <!-- Lead 2: Needs Review -->
+        <div class="lead-card">
+            <div class="lead-header">
+                <div class="lead-title">
+                    <span class="lead-id">Lead #L-492849</span>
+                    <span class="badge badge-review">⚠ Needs Review</span>
+                    <span class="metric-badge">BORDERLINE</span>
+                </div>
+                <div class="confidence-meter">
+                    <span class="confidence-label">AI Confidence:</span>
+                    <div class="confidence-circle">
+                        <svg class="progress-ring" width="80" height="80">
+                            <circle class="progress-ring-circle" cx="40" cy="40" r="36"></circle>
+                            <circle class="progress-ring-circle-active confidence-78" cx="40" cy="40" r="36"></circle>
+                        </svg>
+                        <div class="progress-ring-text">78%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-title">⚠️ Recommended Action</div>
+                <div class="recommendation-text">BORDERLINE: Quick human review recommended before routing to sales</div>
+            </div>
+
+            <div class="explanation-section">
+                <div class="section-title">📊 Why This Lead Needs Review</div>
+                <div class="factor-list">
+                    <div class="factor-item">
+                        <div class="factor-header">
+                            <span class="factor-name">Engagement Score</span>
+                            <span class="factor-importance">46% importance</span>
+                        </div>
+                        <div class="factor-value">Value: 68/100</div>
+                        <div class="factor-impact">→ Good engagement moderately increases likelihood (borderline)</div>
+                    </div>
+                    <div class="factor-item">
+                        <div class="factor-header">
+                            <span class="factor-name">Budget</span>
+                            <span class="factor-importance">16% importance</span>
+                        </div>
+                        <div class="factor-value">Value: $45,000</div>
+                        <div class="factor-impact">→ Budget may be too low for our solution (risk factor)</div>
+                    </div>
+                    <div class="factor-item">
+                        <div class="factor-header">
+                            <span class="factor-name">Company Size</span>
+                            <span class="factor-importance">16% importance</span>
+                        </div>
+                        <div class="factor-value">Value: 150 employees</div>
+                        <div class="factor-impact">→ Mid-market size is a decent fit</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="approveQualified()">✓ Approve as Qualified</button>
+                <button class="btn btn-danger" onclick="rejectLead()">✗ Reject (Not Qualified)</button>
+                <button class="btn btn-secondary" onclick="requestMoreInfo()">📧 Request More Information</button>
+            </div>
+        </div>
+
+        <!-- Lead 3: Not Qualified -->
+        <div class="lead-card">
+            <div class="lead-header">
+                <div class="lead-title">
+                    <span class="lead-id">Lead #L-492848</span>
+                    <span class="badge badge-not-qualified">✗ Not Qualified</span>
+                    <span class="metric-badge" style="border-color: var(--error); color: var(--error); background: rgba(239, 68, 68, 0.15);">LOW VALUE</span>
+                </div>
+                <div class="confidence-meter">
+                    <span class="confidence-label">AI Confidence:</span>
+                    <div class="confidence-circle">
+                        <svg class="progress-ring" width="80" height="80">
+                            <circle class="progress-ring-circle" cx="40" cy="40" r="36"></circle>
+                            <circle class="progress-ring-circle-active confidence-83" cx="40" cy="40" r="36"></circle>
+                        </svg>
+                        <div class="progress-ring-text" style="color: var(--error); text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);">83%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-title">📧 Recommended Action</div>
+                <div class="recommendation-text">NOT QUALIFIED: Add to long-term nurture sequence</div>
+            </div>
+
+            <div class="explanation-section">
+                <div class="section-title">📊 Why AI Rejected This Lead</div>
+                <div class="factor-list">
+                    <div class="factor-item">
+                        <div class="factor-header">
+                            <span class="factor-name">Engagement Score</span>
+                            <span class="factor-importance">46% importance</span>
+                        </div>
+                        <div class="factor-value">Value: 23/100</div>
+                        <div class="factor-impact">→ Low engagement decreases qualification likelihood</div>
+                    </div>
+                    <div class="factor-item">
+                        <div class="factor-header">
+                            <span class="factor-name">Company Size</span>
+                            <span class="factor-importance">16% importance</span>
+                        </div>
+                        <div class="factor-value">Value: 15 employees</div>
+                        <div class="factor-impact">→ Small company size decreases likelihood</div>
+                    </div>
+                    <div class="factor-item">
+                        <div class="factor-header">
+                            <span class="factor-name">Budget</span>
+                            <span class="factor-importance">16% importance</span>
+                        </div>
+                        <div class="factor-value">Value: $5,000</div>
+                        <div class="factor-impact">→ Budget may be too low for our solution</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="addToNurture()">📧 Add to Nurture Campaign</button>
+                <button class="btn btn-secondary" onclick="viewFullProfile()">View Full Profile</button>
+                <button class="btn btn-danger" onclick="permanentlyDisqualify()">🚫 Permanently Disqualify</button>
+            </div>
+        </div>
+
+        <!-- Governance Footer -->
+        <div class="governance-footer">
+            <p>
+                <strong>🛡️ AI Governance:</strong> All predictions explained in plain English •
+                <strong>Human Review:</strong> 15% of leads manually reviewed •
+                <strong>Bias Monitoring:</strong> Weekly automated audits •
+                <strong>Accuracy:</strong> 90% (last 30 days) •
+                <strong>Model Version:</strong> v1.0 (trained 2025-01-18)
+            </p>
+            <p style="margin-top: 10px;">
+                <strong>Data Scientist:</strong> Noel Pena •
+                <strong>Business Owner:</strong> Brian (MetroFlex CEO) •
+                <strong>Last Bias Audit:</strong> 2025-01-18 (No bias detected)
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let demoMode = false;
+        let demoInterval = null;
+
+        // Toggle Demo Mode
+        function toggleDemo() {
+            const btn = document.getElementById('demoToggle');
+            const text = document.getElementById('demoText');
+
+            demoMode = !demoMode;
+
+            if (demoMode) {
+                text.textContent = '⏸ PAUSE DEMO';
+                btn.classList.add('active');
+                startDemo();
+            } else {
+                text.textContent = '▶ START DEMO';
+                btn.classList.remove('active');
+                stopDemo();
+            }
+        }
+
+        function startDemo() {
+            let step = 0;
+            const steps = [
+                () => highlightElement('.stat-card:nth-child(1)', 'Today\'s Leads: 47'),
+                () => highlightElement('.stat-card:nth-child(2)', 'Auto-Qualified: 32 leads (68% automation)'),
+                () => highlightElement('.stat-card:nth-child(3)', 'Needs Review: 15 leads require human decision'),
+                () => highlightElement('.stat-card:nth-child(4)', 'Time Saved: 3.9 hours vs manual process'),
+                () => highlightElement('.lead-card:nth-child(1)', 'High-Value Lead: 92% confidence, enterprise size'),
+                () => highlightElement('.confidence-circle', 'Circular progress shows AI confidence level'),
+                () => highlightElement('.recommendation', 'AI recommends: Assign to senior closer within 24h'),
+                () => highlightElement('.factor-item:nth-child(1)', 'Engagement Score: 46% importance in decision'),
+                () => highlightElement('.importance-bar', 'Visual bar shows factor weight'),
+                () => highlightElement('.btn-primary', 'One-click action to assign to sales team'),
+            ];
+
+            demoInterval = setInterval(() => {
+                if (step < steps.length) {
+                    steps[step]();
+                    step++;
+                } else {
+                    step = 0;
+                }
+            }, 3000);
+        }
+
+        function stopDemo() {
+            if (demoInterval) {
+                clearInterval(demoInterval);
+                demoInterval = null;
+            }
+            removeAllHighlights();
+        }
+
+        function highlightElement(selector, message) {
+            removeAllHighlights();
+            const el = document.querySelector(selector);
+            if (el) {
+                el.style.outline = '2px solid var(--accent-green)';
+                el.style.outlineOffset = '4px';
+                el.style.boxShadow = '0 0 30px rgba(212, 175, 55, 0.4)';
+
+                // Show tooltip
+                const tooltip = document.createElement('div');
+                tooltip.className = 'demo-tooltip';
+                tooltip.textContent = message;
+                tooltip.style.cssText = `
+                    position: absolute;
+                    top: -50px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: var(--accent-green);
+                    color: #000;
+                    padding: 10px 20px;
+                    border-radius: 4px;
+                    font-size: 14px;
+                    font-weight: bold;
+                    white-space: nowrap;
+                    z-index: 10000;
+                    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
+                `;
+                el.style.position = 'relative';
+                el.appendChild(tooltip);
+
+                // Scroll into view
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function removeAllHighlights() {
+            document.querySelectorAll('[style*="outline"]').forEach(el => {
+                el.style.outline = '';
+                el.style.outlineOffset = '';
+                const tooltip = el.querySelector('.demo-tooltip');
+                if (tooltip) tooltip.remove();
+            });
+        }
+
+        // Animate everything on load
+        window.addEventListener('load', () => {
+            // Animate circular progress indicators
+            setTimeout(() => {
+                const circle92 = document.querySelector('.confidence-92');
+                const circle78 = document.querySelector('.confidence-78');
+                const circle83 = document.querySelector('.confidence-83');
+
+                if (circle92) {
+                    const circumference = 2 * Math.PI * 36;
+                    const offset = circumference - (92 / 100) * circumference;
+                    circle92.style.strokeDashoffset = offset;
+                }
+
+                if (circle78) {
+                    const circumference = 2 * Math.PI * 36;
+                    const offset = circumference - (78 / 100) * circumference;
+                    circle78.style.strokeDashoffset = offset;
+                    circle78.style.stroke = '#f59e0b'; // Warning color
+                }
+
+                if (circle83) {
+                    const circumference = 2 * Math.PI * 36;
+                    const offset = circumference - (83 / 100) * circumference;
+                    circle83.style.strokeDashoffset = offset;
+                    circle83.style.stroke = '#ef4444'; // Error color
+                }
+            }, 1000);
+
+            // Animate importance bars
+            setTimeout(() => {
+                document.querySelectorAll('.importance-fill').forEach((bar, index) => {
+                    setTimeout(() => {
+                        const width = bar.getAttribute('data-width');
+                        bar.style.width = width + '%';
+                    }, index * 150);
+                });
+            }, 1500);
+        });
+
+        // Sales team actions
+        function assignToSales() {
+            alert('✓ Lead assigned to senior closer\n📅 Demo scheduled for tomorrow 2PM\n📧 Confirmation email sent');
+        }
+
+        function approveQualified() {
+            alert('✓ Lead manually approved as QUALIFIED\n→ Routing to sales team\n📝 Audit log updated with human review');
+        }
+
+        function rejectLead() {
+            alert('✗ Lead manually rejected\n→ Adding to nurture campaign\n📝 Audit log updated with human review');
+        }
+
+        function requestMoreInfo() {
+            alert('📧 Automated email sent requesting:\n• Detailed budget information\n• Timeline for decision\n• Key decision makers\n\n→ Lead will be re-scored when data received');
+        }
+
+        function addToNurture() {
+            alert('📧 Lead added to 90-day nurture sequence\n→ Will receive educational content weekly\n→ AI will re-score after 30 days');
+        }
+
+        function viewFullProfile() {
+            alert('📊 Opening full lead profile:\n• Complete contact history\n• Website behavior tracking\n• Email engagement metrics\n• Social media activity\n• Competitor intelligence');
+        }
+
+        function overrideAI() {
+            alert('⚠️ Override AI Decision\n\nPlease select:\n1. Manually DISQUALIFY (reason required)\n2. Change priority level\n3. Assign to different rep\n\n→ All overrides logged for model improvement');
+        }
+
+        function permanentlyDisqualify() {
+            const confirm = window.confirm('Are you sure you want to permanently disqualify this lead?\n\nThis will:\n• Remove from all campaigns\n• Block future scoring\n• Add to suppression list');
+
+            if (confirm) {
+                alert('🚫 Lead permanently disqualified\n→ Removed from all campaigns\n→ Audit log updated');
+            }
+        }
+    </script>
+</body>
+</html>

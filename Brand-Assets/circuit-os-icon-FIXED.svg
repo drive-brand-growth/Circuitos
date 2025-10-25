@@ -1,0 +1,35 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#A1A1AA"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Dark background -->
+  <rect width="200" height="200" fill="#000000"/>
+
+  <!-- CIRCUIT text -->
+  <text
+    x="100"
+    y="90"
+    font-family="'Exo 2', 'Orbitron', 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif"
+    font-size="24"
+    font-weight="700"
+    letter-spacing="4"
+    fill="url(#textGradient)"
+    text-anchor="middle"
+  >CIRCUIT</text>
+
+  <!-- OS text -->
+  <text
+    x="100"
+    y="120"
+    font-family="'Exo 2', 'Orbitron', 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif"
+    font-size="24"
+    font-weight="700"
+    letter-spacing="4"
+    fill="url(#textGradient)"
+    text-anchor="middle"
+  >OS</text>
+</svg>
