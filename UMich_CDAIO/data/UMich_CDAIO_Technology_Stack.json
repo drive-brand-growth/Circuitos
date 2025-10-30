@@ -1,0 +1,456 @@
+{
+  "technology_stack_recommendations": {
+    "overview": "Build Michigan CDAIO replica as modern, mobile-responsive web application using existing CAIO University codebase as foundation",
+
+    "frontend_stack": {
+      "core_technologies": {
+        "html": "HTML5 (semantic markup)",
+        "css": "CSS3 with CSS Grid and Flexbox",
+        "javascript": "Vanilla JavaScript ES6+ (no frameworks)",
+        "rationale": "Keep it simple, fast, and maintainable. No build step needed."
+      },
+      "ui_framework": {
+        "choice": "Pure CSS (no Bootstrap/Tailwind)",
+        "approach": "Custom design system matching Michigan branding",
+        "colors": {
+          "primary": "#00274C (Michigan Blue)",
+          "secondary": "#FFCB05 (Maize)",
+          "accent": "#9A3324 (Michigan Red)",
+          "neutral": "#F5F5F5, #FFFFFF, #333333"
+        },
+        "typography": {
+          "headings": "Crimson Text or Libre Baskerville (academic feel)",
+          "body": "Inter or Source Sans Pro (readability)"
+        }
+      },
+      "responsive_design": {
+        "breakpoints": {
+          "mobile": "320px - 767px",
+          "tablet": "768px - 1023px",
+          "desktop": "1024px+"
+        },
+        "approach": "Mobile-first design with progressive enhancement"
+      }
+    },
+
+    "data_layer": {
+      "storage": {
+        "curriculum_data": "JSON file (curriculum.json)",
+        "quiz_data": "JSON file (quizzes.json)",
+        "user_progress": "localStorage (client-side persistence)",
+        "rationale": "No backend needed for MVP - static site with client-side state"
+      },
+      "data_structure": {
+        "curriculum_json": {
+          "structure": {
+            "pillars": [
+              {
+                "pillar_id": 1,
+                "title": "Foundations of Value Creation",
+                "sessions": [
+                  {
+                    "los_id": 1,
+                    "title": "AI Past, Present & Future I",
+                    "date": "January 21, 2025",
+                    "duration_minutes": 90,
+                    "topics": ["..."],
+                    "learning_objectives": ["..."],
+                    "video_url": "https://vimeo.com/...",
+                    "slides_url": "/assets/slides/los-1.pdf",
+                    "readings": [
+                      {"title": "...", "url": "...", "duration_min": 15}
+                    ],
+                    "quiz_id": "los-1-quiz",
+                    "deliverable": {
+                      "title": "...",
+                      "description": "...",
+                      "due_date": "..."
+                    }
+                  }
+                ]
+              }
+            ],
+            "immersion": {
+              "days": [
+                {
+                  "day": 1,
+                  "focus": "...",
+                  "schedule": [...]
+                }
+              ]
+            }
+          }
+        },
+        "quizzes_json": {
+          "structure": {
+            "quizzes": [
+              {
+                "quiz_id": "los-1-quiz",
+                "title": "LOS 1: AI Fundamentals Quiz",
+                "passing_score": 80,
+                "max_attempts": 2,
+                "time_limit_minutes": 20,
+                "questions": [
+                  {
+                    "question_id": 1,
+                    "type": "multiple_choice",
+                    "question": "...",
+                    "options": ["A", "B", "C", "D"],
+                    "correct_answer": 2,
+                    "explanation": "...",
+                    "bloom_level": "Understand"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+
+    "learning_platform_components": {
+      "1_dashboard": {
+        "url": "/index.html",
+        "features": [
+          "Overall progress (% completion)",
+          "Next upcoming session (date, title)",
+          "Quick links to all 4 pillars",
+          "Certificate status (locked until completion)",
+          "Capstone project status"
+        ],
+        "ui_elements": [
+          "Progress circle (0-100%)",
+          "4 pillar cards (clickable)",
+          "Session calendar view",
+          "Notifications (upcoming sessions, quiz results)"
+        ]
+      },
+      "2_pillar_overview": {
+        "url": "/pillar-[1-4].html",
+        "features": [
+          "Pillar description and objectives",
+          "Session list with completion status",
+          "Estimated time to complete",
+          "Pillar completion badge"
+        ],
+        "ui_elements": [
+          "Session cards (title, date, duration, status)",
+          "Progress bar for pillar",
+          "Lock/unlock indicators"
+        ]
+      },
+      "3_session_player": {
+        "url": "/session-[id].html",
+        "features": [
+          "Video player (Vimeo embedded)",
+          "Tabbed content (Overview, Readings, Quiz, Deliverable)",
+          "Learning objectives checklist",
+          "Mark as complete button",
+          "Previous/Next navigation"
+        ],
+        "ui_elements": [
+          "Responsive video embed (16:9)",
+          "Tab navigation",
+          "Reading list with time estimates",
+          "Quiz launch button"
+        ]
+      },
+      "4_quiz_engine": {
+        "url": "/quiz-[id].html",
+        "features": [
+          "Timed quiz (countdown timer)",
+          "Multiple choice + scenario-based questions",
+          "Immediate feedback on submission",
+          "Score display (X/10, percentage)",
+          "Attempt tracking (1 of 2)",
+          "Explanations for all answers",
+          "Retake button if failed"
+        ],
+        "ui_elements": [
+          "Question counter (1 of 10)",
+          "Timer display",
+          "Radio buttons for answers",
+          "Submit button",
+          "Results modal (pass/fail, score, explanations)"
+        ]
+      },
+      "5_capstone_hub": {
+        "url": "/capstone.html",
+        "features": [
+          "Capstone requirements and rubric",
+          "Template downloads (strategy doc, ROI model)",
+          "Submission form (file upload placeholder)",
+          "Example capstones (redacted)",
+          "Faculty office hours calendar"
+        ],
+        "ui_elements": [
+          "Rubric table (criteria, weight, description)",
+          "Download buttons for templates",
+          "Upload area (future implementation)",
+          "Example showcase carousel"
+        ]
+      },
+      "6_certificate_generator": {
+        "url": "/certificate.html",
+        "features": [
+          "Unlocked after meeting requirements (10+ sessions + immersion + capstone)",
+          "Personalized certificate with name",
+          "Credential ID (UMICH-CDAIO-2025-XXXXXX)",
+          "Digital badge for LinkedIn",
+          "Download as PDF button",
+          "Share to social media"
+        ],
+        "ui_elements": [
+          "Certificate preview (Michigan branding)",
+          "LinkedIn badge button",
+          "Download PDF button",
+          "Share buttons (LinkedIn, Twitter)"
+        ]
+      }
+    },
+
+    "video_platform": {
+      "recommendation": "Vimeo Pro",
+      "rationale": [
+        "Better player than YouTube (no distractions)",
+        "Privacy settings (restrict to domain)",
+        "Customizable player (match branding)",
+        "Analytics (view duration, engagement)",
+        "Cost: $20/month for 5TB storage"
+      ],
+      "alternative": "YouTube (unlisted videos) - free but less professional",
+      "implementation": "Embed Vimeo videos using iframe API for tracking watch time"
+    },
+
+    "quiz_engine_implementation": {
+      "approach": "Custom JavaScript quiz engine (no third-party)",
+      "features": [
+        "Auto-grading (client-side)",
+        "Immediate feedback",
+        "Attempt tracking (localStorage)",
+        "Timer with auto-submit",
+        "Question randomization (optional)",
+        "Answer explanations"
+      ],
+      "code_structure": {
+        "quiz_engine_js": {
+          "classes": [
+            "QuizEngine (loads quiz data, manages state)",
+            "QuizTimer (countdown with auto-submit)",
+            "QuizResults (displays score, feedback)"
+          ],
+          "functions": [
+            "loadQuiz(quizId)",
+            "submitQuiz()",
+            "calculateScore()",
+            "displayResults()",
+            "saveAttempt()",
+            "canRetake()"
+          ]
+        }
+      }
+    },
+
+    "progress_tracking": {
+      "storage": "localStorage",
+      "data_structure": {
+        "user_progress": {
+          "sessions_completed": ["los-1", "los-2"],
+          "quizzes_passed": [
+            {"quiz_id": "los-1-quiz", "score": 90, "attempts": 1, "date": "2025-01-22"}
+          ],
+          "capstone_status": "in_progress",
+          "immersion_attendance": false,
+          "certificate_earned": false,
+          "total_hours_completed": 3
+        }
+      },
+      "functions": [
+        "markSessionComplete(sessionId)",
+        "saveQuizResult(quizId, score, attempts)",
+        "getOverallProgress() → percentage",
+        "checkCertificateEligibility() → boolean"
+      ]
+    },
+
+    "deployment": {
+      "platform": "Netlify",
+      "rationale": [
+        "Free for static sites",
+        "Auto-deploy from GitHub",
+        "Custom domain support",
+        "HTTPS included",
+        "CDN for fast loading worldwide"
+      ],
+      "configuration": {
+        "build_command": "None (static site)",
+        "publish_directory": ".",
+        "custom_domain": "cdaio.university or michigan-cdaio-replica.com"
+      },
+      "alternative": "Vercel, GitHub Pages, AWS S3 + CloudFront"
+    },
+
+    "content_delivery": {
+      "videos": {
+        "hosting": "Vimeo Pro",
+        "embed": "Responsive iframe",
+        "tracking": "Vimeo API for watch time"
+      },
+      "slides": {
+        "format": "PDF",
+        "hosting": "/assets/slides/",
+        "viewer": "Browser native PDF viewer"
+      },
+      "readings": {
+        "format": "External links (HBR, McKinsey) or PDF",
+        "hosting": "/assets/readings/",
+        "tracking": "Mark as read checkbox"
+      },
+      "code_labs": {
+        "platform": "Google Colab (free, no setup)",
+        "distribution": "Share links to public Colab notebooks",
+        "student_workflow": "Click link → Make a copy → Complete exercises"
+      }
+    },
+
+    "admin_dashboard": {
+      "future_feature": "Faculty view to see student progress",
+      "implementation": "Requires backend (Firebase, Supabase, or custom API)",
+      "features": [
+        "View all students and progress",
+        "See quiz results",
+        "Review capstone submissions",
+        "Export data to CSV"
+      ],
+      "priority": "Phase 2 (not MVP)"
+    }
+  },
+
+  "build_plan": {
+    "phase_1_mvp": {
+      "scope": "Core learning platform with 12 LOS + quizzes + capstone hub",
+      "duration": "6 weeks",
+      "team": {
+        "frontend_developer": "1 (30 hours/week)",
+        "ui_designer": "1 (10 hours/week)",
+        "content_creator": "1 (20 hours/week, loads curriculum data)",
+        "project_manager": "1 (5 hours/week)"
+      },
+      "deliverables": [
+        "Dashboard with progress tracking",
+        "4 pillar overview pages",
+        "12 session player pages (with video embed placeholders)",
+        "12 quizzes (10 questions each, 120 total)",
+        "Capstone hub with templates",
+        "Certificate generator (locked until completion)",
+        "Mobile-responsive design",
+        "Deployed to Netlify"
+      ],
+      "dependencies": [
+        "Curriculum data (from analysis JSON files)",
+        "Quiz questions (120 questions to write)",
+        "Video content (placeholder until real videos available)",
+        "Michigan branding assets (logo, colors, fonts)"
+      ]
+    },
+
+    "phase_2_enhancements": {
+      "scope": "Add GenAI module, MLOps session, hands-on labs, peer collaboration",
+      "duration": "4 weeks",
+      "deliverables": [
+        "3 new GenAI sessions (LOS 4.5, 5.5, 6.5)",
+        "1 new MLOps session (LOS 8.5)",
+        "12 Colab notebooks (hands-on labs)",
+        "Breakout room discussion prompts",
+        "Updated quizzes for new sessions"
+      ]
+    },
+
+    "phase_3_immersion": {
+      "scope": "Build 5-day immersion content and schedule",
+      "duration": "2 weeks",
+      "deliverables": [
+        "Immersion overview page",
+        "Day-by-day schedule with activities",
+        "Company immersion logistics",
+        "Capstone presentation guidelines",
+        "Personal leadership plan template"
+      ]
+    },
+
+    "phase_4_community": {
+      "scope": "Post-program alumni support",
+      "duration": "2 weeks",
+      "deliverables": [
+        "Slack workspace setup",
+        "Alumni directory",
+        "Quarterly meetup calendar",
+        "Job board (simple page with links)",
+        "Faculty office hours booking system"
+      ]
+    }
+  },
+
+  "cost_estimate": {
+    "development_costs": {
+      "phase_1_mvp": {
+        "frontend_developer": "$6,000 (30 hrs/week x 6 weeks x $33/hr)",
+        "ui_designer": "$1,500 (10 hrs/week x 6 weeks x $25/hr)",
+        "content_creator": "$3,000 (20 hrs/week x 6 weeks x $25/hr)",
+        "project_manager": "$750 (5 hrs/week x 6 weeks x $25/hr)",
+        "total": "$11,250"
+      },
+      "phase_2_enhancements": "$4,000",
+      "phase_3_immersion": "$2,000",
+      "phase_4_community": "$1,500",
+      "total_development": "$18,750"
+    },
+    "platform_costs": {
+      "netlify": "$0/month (free tier)",
+      "vimeo_pro": "$20/month ($240/year)",
+      "custom_domain": "$12/year",
+      "ssl_certificate": "$0 (included with Netlify)",
+      "google_colab": "$0 (free tier sufficient)",
+      "total_annual": "$252/year"
+    },
+    "content_creation_costs": {
+      "video_production": {
+        "12_los_videos": "$12,000 (12 videos x $1,000 each)",
+        "5_day_immersion_videos": "$5,000 (summary videos)",
+        "editing": "$3,000",
+        "total": "$20,000"
+      },
+      "quiz_question_writing": "$3,000 (120 questions x $25 each)",
+      "reading_materials": "$1,000 (licensing HBR/McKinsey articles)",
+      "slide_decks": "$2,000 (12 decks)",
+      "colab_notebooks": "$2,400 (12 notebooks x $200 each)",
+      "total_content": "$28,400"
+    },
+    "total_first_year": {
+      "development": "$18,750",
+      "platform": "$252",
+      "content": "$28,400",
+      "total": "$47,402"
+    },
+    "break_even_analysis": {
+      "michigan_price": "$16,000",
+      "break_even_students": "3 students ($47,402 / $16,000)",
+      "realistic_pricing": "$8,000 - $12,000 (without Michigan brand)",
+      "break_even_at_10k": "5 students",
+      "target_cohort": "20-30 students",
+      "revenue_at_20_students": "$200,000 (20 x $10K)",
+      "gross_margin": "$152,598 (76% margin after first cohort)"
+    }
+  },
+
+  "timeline_summary": {
+    "week_1_2": "Project setup, design system, dashboard + pillar pages",
+    "week_3_4": "Session player, quiz engine, progress tracking",
+    "week_5_6": "Capstone hub, certificate generator, mobile optimization",
+    "week_7_10": "Phase 2 (GenAI, MLOps, labs)",
+    "week_11_12": "Phase 3 (immersion content)",
+    "week_13_14": "Phase 4 (community setup)",
+    "total_duration": "14 weeks (3.5 months) for complete platform",
+    "mvp_launch": "6 weeks"
+  }
+}

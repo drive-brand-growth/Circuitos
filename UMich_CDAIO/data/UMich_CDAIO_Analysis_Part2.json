@@ -1,0 +1,573 @@
+{
+  "analysis_section": "Pillars 3-4: Protection and Strategy Creation",
+  "pillars_analyzed": ["Pillar 3: Protecting and Preserving Value", "Pillar 4: Creating a Winning Strategy"],
+  "sessions_covered": "LOS 9-12 + 5-Day Immersion",
+
+  "pillar_3_analysis": {
+    "pillar_name": "Protecting and Preserving Value",
+    "sessions": 4,
+    "los_breakdown": [
+      {
+        "session": "LOS 9",
+        "title": "System Integrity & Trust",
+        "date": "March 25, 2025",
+        "duration_minutes": 90,
+        "topics": [
+          "Data governance frameworks",
+          "Regulatory compliance (GDPR, CCPA, HIPAA)",
+          "AI system trustworthiness",
+          "Transparency and explainability requirements"
+        ],
+        "learning_objectives": [
+          {
+            "objective": "Implement data governance framework compliant with GDPR/CCPA/HIPAA",
+            "bloom_level": "Apply",
+            "quality_score": 9,
+            "measurable": true,
+            "business_outcome": "Regulatory compliance implementation",
+            "assessment_method": "Data governance policy document"
+          },
+          {
+            "objective": "Evaluate AI systems for trustworthiness and explainability",
+            "bloom_level": "Evaluate",
+            "quality_score": 8,
+            "measurable": true,
+            "business_outcome": "AI system validation"
+          }
+        ],
+        "pedagogical_approach": {
+          "format": "Live lecture + Compliance workshop",
+          "adult_learning_principles": {
+            "readiness": true,
+            "problem_centered": true
+          },
+          "engagement_methods": ["Regulatory framework analysis", "Compliance checklist", "Risk assessment"]
+        },
+        "recommended_enhancements": [
+          "Template: GDPR/CCPA compliance checklist for AI systems",
+          "Case study: GDPR violation penalties (British Airways, Marriott)",
+          "Exercise: Audit your organization's data governance gaps",
+          "Quiz: Regulatory compliance (15 questions)",
+          "Deliverable: Data governance policy draft (graded)"
+        ]
+      },
+      {
+        "session": "LOS 10",
+        "title": "Securing Your System",
+        "date": "April 1, 2025",
+        "duration_minutes": 90,
+        "topics": [
+          "Data security fundamentals",
+          "Encryption strategies",
+          "Anonymization and pseudonymization",
+          "Secure AI/ML pipelines",
+          "Threat modeling for AI systems"
+        ],
+        "learning_objectives": [
+          {
+            "objective": "Design security architecture for AI/ML systems",
+            "bloom_level": "Create",
+            "quality_score": 9,
+            "measurable": true,
+            "business_outcome": "Secure AI implementation"
+          },
+          {
+            "objective": "Implement encryption and anonymization strategies for sensitive data",
+            "bloom_level": "Apply",
+            "quality_score": 8,
+            "measurable": true,
+            "business_outcome": "Data protection"
+          }
+        ],
+        "pedagogical_approach": {
+          "format": "Live lecture + Security design workshop",
+          "adult_learning_principles": {
+            "problem_centered": true,
+            "experience_integration": true
+          },
+          "engagement_methods": ["Threat modeling", "Security architecture diagrams", "Vulnerability assessment"]
+        },
+        "recommended_enhancements": [
+          "Guest speaker: CISO from Fortune 500 (Jack Kufahl confirmed)",
+          "Template: AI system threat model canvas",
+          "Case study: AI security breach and remediation",
+          "Exercise: Identify 10 security risks in a sample AI pipeline",
+          "Deliverable: Security architecture proposal (graded)"
+        ]
+      },
+      {
+        "session": "LOS 11",
+        "title": "Risk Management",
+        "date": "April 8, 2025",
+        "duration_minutes": 90,
+        "topics": [
+          "AI risk assessment frameworks",
+          "Model risk management",
+          "Business continuity planning for AI systems",
+          "Risk mitigation strategies",
+          "AI incident response"
+        ],
+        "learning_objectives": [
+          {
+            "objective": "Develop comprehensive AI risk management framework",
+            "bloom_level": "Create",
+            "quality_score": 9,
+            "measurable": true,
+            "business_outcome": "Enterprise risk management",
+            "assessment_method": "Risk management plan"
+          },
+          {
+            "objective": "Assess AI systems for business and technical risks",
+            "bloom_level": "Evaluate",
+            "quality_score": 8,
+            "measurable": true,
+            "business_outcome": "Risk identification and prioritization"
+          }
+        ],
+        "pedagogical_approach": {
+          "format": "Live lecture + Risk assessment simulation",
+          "adult_learning_principles": {
+            "problem_centered": true,
+            "readiness": true
+          },
+          "engagement_methods": ["Risk matrices", "Scenario planning", "Simulation exercise"]
+        },
+        "recommended_enhancements": [
+          "Template: AI risk register and mitigation plan",
+          "Simulation: AI incident response tabletop exercise (30 min)",
+          "Case study: AI failure and business impact (Boeing 737 MAX, Zillow)",
+          "Quiz: Risk management concepts (12 questions)",
+          "Deliverable: AI risk assessment for your organization (graded)"
+        ]
+      },
+      {
+        "session": "LOS 12",
+        "title": "Ethical AI",
+        "date": "April 15, 2025",
+        "duration_minutes": 90,
+        "topics": [
+          "Responsible AI principles",
+          "Bias detection and mitigation",
+          "Fairness in ML models",
+          "Privacy-preserving AI",
+          "Ethical decision-making frameworks"
+        ],
+        "learning_objectives": [
+          {
+            "objective": "Evaluate AI systems for bias, fairness, and ethical concerns",
+            "bloom_level": "Evaluate",
+            "quality_score": 9,
+            "measurable": true,
+            "business_outcome": "Ethical AI assessment"
+          },
+          {
+            "objective": "Design responsible AI governance framework for enterprise",
+            "bloom_level": "Create",
+            "quality_score": 9,
+            "measurable": true,
+            "business_outcome": "Ethical AI implementation",
+            "assessment_method": "Responsible AI policy"
+          }
+        ],
+        "pedagogical_approach": {
+          "format": "Live lecture + Ethics case study debate",
+          "adult_learning_principles": {
+            "problem_centered": true,
+            "experience_integration": true
+          },
+          "engagement_methods": ["Case debates", "Ethical dilemma discussions", "Framework application"]
+        },
+        "recommended_enhancements": [
+          "Guest speaker: Kayte Spector-Bagdady (Bioethics expert - confirmed)",
+          "Case study: AI bias failures (Amazon recruiting, facial recognition)",
+          "Debate: 'Should we deploy this AI system?' scenario (45 min)",
+          "Template: Responsible AI checklist and governance policy",
+          "Deliverable: Ethical AI framework for your company (graded)"
+        ]
+      }
+    ],
+    "pillar_assessment": {
+      "overall_quality": "Excellent - Critical Risk Management Focus",
+      "bloom_distribution": {
+        "apply": 2,
+        "evaluate": 4,
+        "create": 4
+      },
+      "strengths": [
+        "100% higher-order thinking (Apply/Evaluate/Create)",
+        "Covers all critical CAIO responsibilities (compliance, security, risk, ethics)",
+        "Strong mix of technical and policy content",
+        "Real-world deliverables (policies, frameworks, assessments)",
+        "Expert guest speakers (CISO, bioethics) add credibility"
+      ],
+      "weaknesses": [
+        "Heavy content load (each topic could be full course)",
+        "Limited hands-on security labs (e.g., encryption demos)",
+        "Ethical frameworks may feel abstract without real dilemmas",
+        "No group collaboration exercises"
+      ]
+    }
+  },
+
+  "pillar_4_analysis": {
+    "pillar_name": "Creating a Winning Strategy",
+    "format": "5-Day On-Campus Immersion",
+    "dates": "April 20-24, 2026",
+    "location": "Ann Arbor, Michigan",
+    "duration_hours": 40,
+    "immersion_breakdown": [
+      {
+        "day": "Day 1",
+        "focus": "Generative AI & Autonomous Systems",
+        "topics": [
+          "Generative AI landscape (LLMs, diffusion models, multimodal AI)",
+          "Prompt engineering and optimization",
+          "RAG (Retrieval-Augmented Generation) architectures",
+          "Fine-tuning strategies",
+          "Autonomous AI agents and workflows"
+        ],
+        "learning_objectives": [
+          {
+            "objective": "Design generative AI strategy for enterprise applications",
+            "bloom_level": "Create",
+            "quality_score": 9,
+            "measurable": true,
+            "business_outcome": "GenAI implementation roadmap"
+          },
+          {
+            "objective": "Evaluate build vs buy decisions for LLM solutions",
+            "bloom_level": "Evaluate",
+            "quality_score": 8,
+            "measurable": true,
+            "business_outcome": "Strategic GenAI planning"
+          }
+        ],
+        "activities": [
+          "Lecture: GenAI landscape (2 hours)",
+          "Lab: Prompt engineering workshop (1.5 hours)",
+          "Case study: Enterprise LLM implementations",
+          "Group exercise: Design GenAI use case for your industry"
+        ],
+        "recommended_enhancements": [
+          "Hands-on lab: Build RAG system with sample data (Colab)",
+          "Comparison matrix: OpenAI vs Anthropic vs open-source LLMs",
+          "Cost calculator: LLM API costs vs self-hosting",
+          "Deliverable: GenAI strategy 1-pager for your company"
+        ]
+      },
+      {
+        "day": "Day 2",
+        "focus": "Strategic Narrative & Internal Influence",
+        "topics": [
+          "Creating compelling AI strategy narrative",
+          "Storytelling for executives and board",
+          "Stakeholder mapping and influence strategies",
+          "Change management and resistance handling",
+          "Building executive alignment"
+        ],
+        "learning_objectives": [
+          {
+            "objective": "Create persuasive AI strategy presentation for C-suite and board",
+            "bloom_level": "Create",
+            "quality_score": 10,
+            "measurable": true,
+            "business_outcome": "Executive communication",
+            "assessment_method": "Strategy pitch presentation"
+          },
+          {
+            "objective": "Design internal influence campaign for AI adoption",
+            "bloom_level": "Create",
+            "quality_score": 9,
+            "measurable": true,
+            "business_outcome": "Change management planning"
+          }
+        ],
+        "activities": [
+          "Lecture: Persuasive communication frameworks (1.5 hours)",
+          "Workshop: Craft your AI strategy narrative (2 hours)",
+          "Peer feedback: Practice pitches in small groups (1 hour)",
+          "Stakeholder mapping exercise (1 hour)"
+        ],
+        "recommended_enhancements": [
+          "Template: AI strategy pitch deck (15 slides)",
+          "Video examples: Successful CAIO board presentations",
+          "Peer review: Exchange strategy narratives for feedback",
+          "Recording: Record 3-min elevator pitch, get faculty feedback"
+        ]
+      },
+      {
+        "day": "Day 3",
+        "focus": "Leading Digital Transformation",
+        "topics": [
+          "Digital transformation frameworks",
+          "Building AI-ready organization",
+          "Talent strategy (hire, build, partner)",
+          "Vendor selection and partnership strategies",
+          "Measuring AI ROI and impact"
+        ],
+        "learning_objectives": [
+          {
+            "objective": "Develop comprehensive digital transformation roadmap with AI as core component",
+            "bloom_level": "Create",
+            "quality_score": 9,
+            "measurable": true,
+            "business_outcome": "Transformation planning"
+          },
+          {
+            "objective": "Design talent and partnership strategy for AI capabilities",
+            "bloom_level": "Create",
+            "quality_score": 8,
+            "measurable": true,
+            "business_outcome": "Organizational development"
+          }
+        ],
+        "activities": [
+          "Lecture: Digital transformation leadership (1.5 hours)",
+          "Company immersion: Visit Michigan AI research lab (2 hours)",
+          "Panel: Tech company CAIOs discuss challenges (1 hour)",
+          "Workshop: Build transformation roadmap (2 hours)"
+        ],
+        "recommended_enhancements": [
+          "Template: Digital transformation roadmap canvas (90-day, 1-year, 3-year)",
+          "ROI calculator: AI investment payback estimation",
+          "Vendor evaluation matrix: How to assess AI partners",
+          "Deliverable: Transformation roadmap for your organization (graded)"
+        ]
+      },
+      {
+        "day": "Day 4",
+        "focus": "Capstone Project Work",
+        "topics": [
+          "Apply all learnings to real business problem",
+          "Capstone methodology and expectations",
+          "Faculty advising and coaching",
+          "Peer collaboration and feedback"
+        ],
+        "learning_objectives": [
+          {
+            "objective": "Apply comprehensive CDAIO knowledge to solve real business challenge",
+            "bloom_level": "Create",
+            "quality_score": 10,
+            "measurable": true,
+            "business_outcome": "Complete strategic initiative",
+            "assessment_method": "Capstone deliverable and presentation"
+          }
+        ],
+        "activities": [
+          "Capstone kickoff: Requirements and rubric review (1 hour)",
+          "Individual work time: Develop capstone project (4 hours)",
+          "Faculty office hours: 1-on-1 coaching (30 min per student)",
+          "Peer consultation: Share ideas and get feedback (1 hour)"
+        ],
+        "capstone_requirements": {
+          "deliverables": [
+            "Executive summary (2 pages)",
+            "Technical design document (5-7 pages)",
+            "ROI model (financial projection)",
+            "Implementation plan (timeline, resources, risks)",
+            "15-minute presentation"
+          ],
+          "rubric": {
+            "business_alignment": "25%",
+            "technical_feasibility": "20%",
+            "roi_analysis": "20%",
+            "implementation_plan": "20%",
+            "presentation_quality": "15%"
+          },
+          "weight": "35% of final grade"
+        }
+      },
+      {
+        "day": "Day 5",
+        "focus": "Capstone Presentations & Personal Leadership Plan",
+        "topics": [
+          "Capstone project presentations",
+          "Panel evaluation (faculty + industry experts)",
+          "Personal leadership development planning",
+          "Program wrap-up and networking"
+        ],
+        "learning_objectives": [
+          {
+            "objective": "Deliver executive-level presentation of AI strategic initiative",
+            "bloom_level": "Create",
+            "quality_score": 10,
+            "measurable": true,
+            "business_outcome": "Executive communication mastery"
+          },
+          {
+            "objective": "Create personal leadership development plan for CAIO role",
+            "bloom_level": "Create",
+            "quality_score": 9,
+            "measurable": true,
+            "business_outcome": "Career planning"
+          }
+        ],
+        "activities": [
+          "Capstone presentations: 15 min each + 5 min Q&A (4-5 hours)",
+          "Panel feedback and evaluation",
+          "Leadership workshop: Personal development planning (2 hours)",
+          "Certificate ceremony and networking reception (1.5 hours)"
+        ],
+        "recommended_enhancements": [
+          "Video recording: Capture presentations for portfolio",
+          "Peer voting: 'Best Capstone' award",
+          "Alumni panel: Career paths after CDAIO program",
+          "Template: Personal leadership development plan (90-day goals)"
+        ]
+      }
+    ],
+    "pillar_assessment": {
+      "overall_quality": "Exceptional - Intensive Applied Learning",
+      "total_hours": 40,
+      "bloom_distribution": {
+        "evaluate": 1,
+        "create": 8
+      },
+      "strengths": [
+        "100% Create/Evaluate level (highest Bloom's taxonomy)",
+        "Hands-on immersive experience (not lecture-only)",
+        "Real-world application through capstone",
+        "Networking opportunities (peers, faculty, industry)",
+        "On-campus experience adds credibility and engagement",
+        "Capstone with clear rubric and business impact",
+        "Personal leadership planning (career-focused)",
+        "Company immersions/site visits (experiential learning)"
+      ],
+      "weaknesses": [
+        "Requires 5 consecutive days off work (hard for executives)",
+        "Travel costs and time commitment may be barrier",
+        "Limited technical hands-on (mostly strategy/communication)",
+        "Capstone project development compressed into 1.5 days"
+      ]
+    }
+  },
+
+  "pillars_3_4_synthesis": {
+    "overall_curriculum_quality": "World-Class - Comprehensive CAIO Preparation",
+    "total_sessions": 4,
+    "total_immersion_days": 5,
+    "total_hours": 18,
+    "bloom_taxonomy_distribution": {
+      "apply": 2,
+      "evaluate": 5,
+      "create": 12
+    },
+    "bloom_quality_score": "10/10 - 90% at Create level, perfect for executive education",
+
+    "pedagogical_evaluation": {
+      "adult_learning_principles_met": {
+        "self_direction": true,
+        "experience_integration": true,
+        "readiness": true,
+        "problem_centered": true,
+        "internal_motivation": true
+      },
+      "score": "Perfect - All 5 andragogy principles deeply embedded",
+
+      "learning_methods": {
+        "live_sessions": "4 LOS @ 90 min",
+        "immersion_lectures": "Multiple sessions over 5 days",
+        "case_studies": "Ethics debates, security breaches, compliance failures",
+        "simulations": "Risk management tabletop exercise",
+        "peer_learning": "Peer feedback, cohort collaboration",
+        "capstone": "Major deliverable with real business problem",
+        "hands_on_labs": "Prompt engineering, GenAI workshops",
+        "guest_speakers": "CISO, bioethics expert, CAIO panels",
+        "site_visits": "Michigan AI research lab"
+      },
+      "methods_score": "10/10 - Comprehensive mix of all effective executive ed methods"
+    },
+
+    "assessment_analysis": {
+      "current_state": "Rigorous capstone-focused assessment",
+      "assessment_types": [
+        "Live session attendance requirement (10+ sessions)",
+        "Multiple deliverables throughout Pillar 3 (policies, frameworks)",
+        "Full immersion week participation (required)",
+        "Capstone project (35% of grade)",
+        "Capstone presentation (evaluated by panel)"
+      ],
+      "rigor_score": "9/10 - Strong capstone focus, but missing incremental quizzes",
+      "recommendations": [
+        "Add 10-question quiz per LOS 9-12 (knowledge check)",
+        "Create detailed rubrics for Pillar 3 deliverables",
+        "Add peer evaluation component (20%) for capstone",
+        "Require capstone draft review midway through Day 4"
+      ]
+    },
+
+    "sequencing_logic": {
+      "progression": "Perfect culmination of program",
+      "flow": "Risk/Compliance/Ethics (Pillar 3) → Strategy Creation/Leadership (Pillar 4)",
+      "prerequisites": {
+        "los_9_12": "Requires Pillars 1-2 (foundation + value creation)",
+        "immersion": "Requires all 12 LOS (comprehensive knowledge)",
+        "capstone": "Integrates all program learnings"
+      },
+      "just_in_time_learning": true,
+      "sequencing_score": "10/10 - Flawless build-up to capstone"
+    },
+
+    "gaps_identified": [
+      {
+        "gap": "Compressed capstone development (1.5 days only)",
+        "improvement": "Start capstone earlier (assign after LOS 8), provide templates",
+        "justification": "Executives need time to develop high-quality strategic deliverables"
+      },
+      {
+        "gap": "No MLOps or AI in production content",
+        "improvement": "Add Day 1 session on MLOps, monitoring, model drift, A/B testing",
+        "justification": "CAIOs need to understand operational AI, not just strategy"
+      },
+      {
+        "gap": "Limited technical depth on GenAI implementation",
+        "improvement": "Extend Day 1 with hands-on RAG implementation lab (2 hours)",
+        "justification": "CAIOs should be able to prototype GenAI solutions"
+      },
+      {
+        "gap": "No ongoing post-program support",
+        "improvement": "Offer quarterly alumni meetups, Slack community, office hours",
+        "justification": "Learning continues after program - need ongoing support"
+      }
+    ]
+  },
+
+  "full_program_summary": {
+    "total_los_sessions": 12,
+    "total_los_hours": 18,
+    "immersion_days": 5,
+    "immersion_hours": 40,
+    "total_program_hours": 58,
+    "program_duration": "5 months",
+
+    "overall_bloom_distribution": {
+      "remember": 0,
+      "understand": 1,
+      "apply": 3,
+      "analyze": 2,
+      "evaluate": 13,
+      "create": 20
+    },
+    "bloom_quality_score": "10/10 - 85% at Create/Evaluate (world-class)",
+
+    "program_strengths": [
+      "Exceptional curriculum design (foundational → strategic → applied)",
+      "World-class faculty (Michigan Ross + Engineering + practitioners)",
+      "Comprehensive CAIO skill coverage (technical, strategic, leadership)",
+      "Real-world capstone with business impact",
+      "Strong credential (Michigan Ross + Engineering certificate)",
+      "Hybrid format (flexibility + immersive networking)",
+      "Executive-focused pedagogy (case studies, simulations, peer learning)",
+      "Clear learning objectives aligned to CAIO job requirements"
+    ],
+
+    "program_weaknesses": [
+      "Limited formal assessments (mostly capstone + attendance)",
+      "Minimal hands-on technical labs (more strategy-focused)",
+      "Compressed GenAI coverage (could be full module)",
+      "No MLOps or production AI content",
+      "Expensive ($16K) and time-intensive (5-month commitment)",
+      "No ongoing post-program support or community"
+    ]
+  }
+}

@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>UMich CDAIO - Mobile Audio Training</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #00274C 0%, #001A33 100%);
+            color: #FFFFFF;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: 100px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 15px;
+        }
+
+        header {
+            text-align: center;
+            padding: 25px 15px;
+            background: linear-gradient(135deg, rgba(255, 203, 5, 0.1) 0%, rgba(255, 203, 5, 0.05) 100%);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 203, 5, 0.3);
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, #00274C 0%, #FFCB05 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #FFCB05 0%, #FFFFFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1em;
+            color: #B0B8C0;
+            margin-bottom: 15px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 10px 15px;
+            background: rgba(255, 203, 5, 0.1);
+            border-radius: 10px;
+        }
+
+        .stat-number {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #FFCB05;
+        }
+
+        .stat-label {
+            font-size: 0.8em;
+            color: #B0B8C0;
+        }
+
+        .progress-overview {
+            background: rgba(20, 21, 23, 0.6);
+            border: 2px solid rgba(255, 203, 5, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #FFCB05 0%, #FFD740 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 0.9em;
+            color: #B0B8C0;
+        }
+
+        .module-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .module-card {
+            background: rgba(20, 21, 23, 0.8);
+            border: 2px solid rgba(255, 203, 5, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .module-card.active {
+            border-color: #FFCB05;
+            background: rgba(255, 203, 5, 0.1);
+        }
+
+        .module-card.completed {
+            border-color: rgba(76, 175, 80, 0.5);
+            opacity: 0.7;
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .module-number {
+            font-size: 0.8em;
+            color: #FFCB05;
+            font-weight: 600;
+        }
+
+        .module-status {
+            font-size: 1.2em;
+        }
+
+        .module-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #FFFFFF;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85em;
+            color: #B0B8C0;
+            margin-bottom: 10px;
+        }
+
+        .module-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .module-description {
+            font-size: 0.9em;
+            color: #B0B8C0;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .audio-player {
+            background: rgba(0, 39, 76, 0.5);
+            border-radius: 12px;
+            padding: 15px;
+            display: none;
+        }
+
+        .module-card.active .audio-player {
+            display: block;
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .play-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFCB05 0%, #FFD740 100%);
+            border: none;
+            color: #00274C;
+            font-size: 1.5em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .play-button:active {
+            transform: scale(0.95);
+        }
+
+        .audio-info {
+            flex: 1;
+        }
+
+        .audio-timeline {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            margin-bottom: 5px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .audio-progress {
+            height: 100%;
+            background: #FFCB05;
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .audio-time {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75em;
+            color: #B0B8C0;
+        }
+
+        .playback-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .control-button {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255, 203, 5, 0.1);
+            border: 1px solid rgba(255, 203, 5, 0.3);
+            border-radius: 8px;
+            color: #FFCB05;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .control-button:active {
+            background: rgba(255, 203, 5, 0.2);
+        }
+
+        .audio-speed {
+            padding: 5px 10px;
+            background: rgba(255, 203, 5, 0.1);
+            border: 1px solid rgba(255, 203, 5, 0.3);
+            border-radius: 8px;
+            color: #FFCB05;
+            font-size: 0.85em;
+            text-align: center;
+        }
+
+        .fixed-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 39, 76, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 2px solid rgba(255, 203, 5, 0.3);
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .nav-button {
+            flex: 1;
+            padding: 15px;
+            background: linear-gradient(135deg, #FFCB05 0%, #FFD740 100%);
+            border: none;
+            border-radius: 12px;
+            color: #00274C;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-button:active {
+            transform: scale(0.98);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-size: 0.9em;
+            z-index: 2000;
+            display: none;
+            border: 1px solid rgba(255, 203, 5, 0.3);
+        }
+
+        .toast.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateX(-50%) translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .pillar-header {
+            background: rgba(255, 203, 5, 0.1);
+            border: 2px solid rgba(255, 203, 5, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px 0 15px;
+        }
+
+        .pillar-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #FFCB05;
+            margin-bottom: 5px;
+        }
+
+        .pillar-subtitle {
+            font-size: 0.9em;
+            color: #B0B8C0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">M</div>
+            <h1>Chief Data & AI Officer</h1>
+            <div class="subtitle">University of Michigan Professional Certificate</div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Sessions</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">58</div>
+                    <div class="stat-label">Hours</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Months</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="progress-overview">
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="overallProgress"></div>
+            </div>
+            <div class="progress-text" id="progressText">0 of 12 sessions completed (0%)</div>
+        </div>
+
+        <!-- Pillar 1: Foundations of Value Creation -->
+        <div class="pillar-header">
+            <div class="pillar-title">Pillar 1: Foundations of Value Creation</div>
+            <div class="pillar-subtitle">Sessions 1-4 • Weeks 1-8</div>
+        </div>
+
+        <div class="module-list">
+            <!-- Session 1 -->
+            <div class="module-card" data-module="1">
+                <div class="module-header">
+                    <div class="module-number">SESSION 1</div>
+                    <div class="module-status">⏸️</div>
+                </div>
+                <div class="module-title">AI Past, Present & Future I</div>
+                <div class="module-meta">
+                    <span>⏱️ 3-5 min</span>
+                    <span>📍 Week 1</span>
+                    <span>🎯 Foundations</span>
+                </div>
+                <div class="module-description">
+                    Learn the evolution of AI from symbolic systems to foundation models. Understand machine learning fundamentals and current AI capabilities.
+                </div>
+                <div class="audio-player">
+                    <div class="audio-controls">
+                        <button class="play-button" data-action="play">▶️</button>
+                        <div class="audio-info">
+                            <div class="audio-timeline" data-action="seek">
+                                <div class="audio-progress"></div>
+                            </div>
+                            <div class="audio-time">
+                                <span class="current-time">0:00</span>
+                                <span class="total-time">3:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playback-controls">
+                        <button class="control-button" data-action="rewind">⏪ -15s</button>
+                        <div class="audio-speed">1.0x</div>
+                        <button class="control-button" data-action="forward">+15s ⏩</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Session 2 -->
+            <div class="module-card" data-module="2">
+                <div class="module-header">
+                    <div class="module-number">SESSION 2</div>
+                    <div class="module-status">⏸️</div>
+                </div>
+                <div class="module-title">AI Past, Present & Future II</div>
+                <div class="module-meta">
+                    <span>⏱️ 3-5 min</span>
+                    <span>📍 Week 2</span>
+                    <span>🎯 Foundations</span>
+                </div>
+                <div class="module-description">
+                    Deep dive into transfer learning and foundation model selection. Explore GPT-4, Claude, and open-source alternatives for enterprise use.
+                </div>
+                <div class="audio-player">
+                    <div class="audio-controls">
+                        <button class="play-button" data-action="play">▶️</button>
+                        <div class="audio-info">
+                            <div class="audio-timeline" data-action="seek">
+                                <div class="audio-progress"></div>
+                            </div>
+                            <div class="audio-time">
+                                <span class="current-time">0:00</span>
+                                <span class="total-time">3:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playback-controls">
+                        <button class="control-button" data-action="rewind">⏪ -15s</button>
+                        <div class="audio-speed">1.0x</div>
+                        <button class="control-button" data-action="forward">+15s ⏩</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Session 3 -->
+            <div class="module-card" data-module="3">
+                <div class="module-header">
+                    <div class="module-number">SESSION 3</div>
+                    <div class="module-status">⏸️</div>
+                </div>
+                <div class="module-title">Data Strategy for Success I</div>
+                <div class="module-meta">
+                    <span>⏱️ 3-5 min</span>
+                    <span>📍 Week 4</span>
+                    <span>🎯 Strategy</span>
+                </div>
+                <div class="module-description">
+                    Master enterprise data strategy frameworks. Learn to align data initiatives with business objectives and build data-driven culture.
+                </div>
+                <div class="audio-player">
+                    <div class="audio-controls">
+                        <button class="play-button" data-action="play">▶️</button>
+                        <div class="audio-info">
+                            <div class="audio-timeline" data-action="seek">
+                                <div class="audio-progress"></div>
+                            </div>
+                            <div class="audio-time">
+                                <span class="current-time">0:00</span>
+                                <span class="total-time">3:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playback-controls">
+                        <button class="control-button" data-action="rewind">⏪ -15s</button>
+                        <div class="audio-speed">1.0x</div>
+                        <button class="control-button" data-action="forward">+15s ⏩</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Session 4 -->
+            <div class="module-card" data-module="4">
+                <div class="module-header">
+                    <div class="module-number">SESSION 4</div>
+                    <div class="module-status">⏸️</div>
+                </div>
+                <div class="module-title">Data Strategy for Success II</div>
+                <div class="module-meta">
+                    <span>⏱️ 3-5 min</span>
+                    <span>📍 Week 6</span>
+                    <span>🎯 Architecture</span>
+                </div>
+                <div class="module-description">
+                    Explore data architectures: data mesh, data fabric, and cloud platforms. Design scalable data pipelines and modern data stacks.
+                </div>
+                <div class="audio-player">
+                    <div class="audio-controls">
+                        <button class="play-button" data-action="play">▶️</button>
+                        <div class="audio-info">
+                            <div class="audio-timeline" data-action="seek">
+                                <div class="audio-progress"></div>
+                            </div>
+                            <div class="audio-time">
+                                <span class="current-time">0:00</span>
+                                <span class="total-time">3:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playback-controls">
+                        <button class="control-button" data-action="rewind">⏪ -15s</button>
+                        <div class="audio-speed">1.0x</div>
+                        <button class="control-button" data-action="forward">+15s ⏩</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pillar 2: Business Strategy -->
+        <div class="pillar-header">
+            <div class="pillar-title">Pillar 2: Business Strategy & Value</div>
+            <div class="pillar-subtitle">Sessions 5-8 • Weeks 9-12</div>
+        </div>
+
+        <div class="module-list">
+            <!-- Session 5 -->
+            <div class="module-card" data-module="5">
+                <div class="module-header">
+                    <div class="module-number">SESSION 5</div>
+                    <div class="module-status">⏸️</div>
+                </div>
+                <div class="module-title">AI Strategy & Digital Transformation</div>
+                <div class="module-meta">
+                    <span>⏱️ 3-5 min</span>
+                    <span>📍 Week 9</span>
+                    <span>🎯 Strategy</span>
+                </div>
+                <div class="module-description">
+                    Develop AI strategy aligned with digital transformation goals. Learn ROI frameworks and build/buy/partner decision models.
+                </div>
+                <div class="audio-player">
+                    <div class="audio-controls">
+                        <button class="play-button" data-action="play">▶️</button>
+                        <div class="audio-info">
+                            <div class="audio-timeline" data-action="seek">
+                                <div class="audio-progress"></div>
+                            </div>
+                            <div class="audio-time">
+                                <span class="current-time">0:00</span>
+                                <span class="total-time">3:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playback-controls">
+                        <button class="control-button" data-action="rewind">⏪ -15s</button>
+                        <div class="audio-speed">1.0x</div>
+                        <button class="control-button" data-action="forward">+15s ⏩</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Session 6 -->
+            <div class="module-card" data-module="6">
+                <div class="module-header">
+                    <div class="module-number">SESSION 6</div>
+                    <div class="module-status">⏸️</div>
+                </div>
+                <div class="module-title">AI Business Applications & Use Cases</div>
+                <div class="module-meta">
+                    <span>⏱️ 3-5 min</span>
+                    <span>📍 Week 10</span>
+                    <span>🎯 Applications</span>
+                </div>
+                <div class="module-description">
+                    Discover AI applications across industries: predictive analytics, recommendation systems, NLP, computer vision, and autonomous systems.
+                </div>
+                <div class="audio-player">
+                    <div class="audio-controls">
+                        <button class="play-button" data-action="play">▶️</button>
+                        <div class="audio-info">
+                            <div class="audio-timeline" data-action="seek">
+                                <div class="audio-progress"></div>
+                            </div>
+                            <div class="audio-time">
+                                <span class="current-time">0:00</span>
+                                <span class="total-time">3:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playback-controls">
+                        <button class="control-button" data-action="rewind">⏪ -15s</button>
+                        <div class="audio-speed">1.0x</div>
+                        <button class="control-button" data-action="forward">+15s ⏩</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Session 7 -->
+            <div class="module-card" data-module="7">
+                <div class="module-header">
+                    <div class="module-number">SESSION 7</div>
+                    <div class="module-status">⏸️</div>
+                </div>
+                <div class="module-title">Leading Data & Analytics Teams</div>
+                <div class="module-meta">
+                    <span>⏱️ 3-5 min</span>
+                    <span>📍 Week 11</span>
+                    <span>🎯 Leadership</span>
+                </div>
+                <div class="module-description">
+                    Build and lead high-performing data teams. Learn org structures, talent acquisition, skills development, and performance management.
+                </div>
+                <div class="audio-player">
+                    <div class="audio-controls">
+                        <button class="play-button" data-action="play">▶️</button>
+                        <div class="audio-info">
+                            <div class="audio-timeline" data-action="seek">
+                                <div class="audio-progress"></div>
+                            </div>
+                            <div class="audio-time">
+                                <span class="current-time">0:00</span>
+                                <span class="total-time">3:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playback-controls">
+                        <button class="control-button" data-action="rewind">⏪ -15s</button>
+                        <div class="audio-speed">1.0x</div>
+                        <button class="control-button" data-action="forward">+15s ⏩</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Session 8 -->
+            <div class="module-card" data-module="8">
+                <div class="module-header">
+                    <div class="module-number">SESSION 8</div>
+                    <div class="module-status">⏸️</div>
+                </div>
+                <div class="module-title">AI Governance, Ethics & Trust</div>
+                <div class="module-meta">
+                    <span>⏱️ 3-5 min</span>
+                    <span>📍 Week 12</span>
+                    <span>🎯 Governance</span>
+                </div>
+                <div class="module-description">
+                    Master AI governance frameworks. Address bias, fairness, transparency, privacy, and regulatory compliance (GDPR, AI Act).
+                </div>
+                <div class="audio-player">
+                    <div class="audio-controls">
+                        <button class="play-button" data-action="play">▶️</button>
+                        <div class="audio-info">
+                            <div class="audio-timeline" data-action="seek">
+                                <div class="audio-progress"></div>
+                            </div>
+                            <div class="audio-time">
+                                <span class="current-time">0:00</span>
+                                <span class="total-time">3:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playback-controls">
+                        <button class="control-button" data-action="rewind">⏪ -15s</button>
+                        <div class="audio-speed">1.0x</div>
+                        <button class="control-button" data-action="forward">+15s ⏩</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pillar 3: Leadership & Culture -->
+        <div class="pillar-header">
+            <div class="pillar-title">Pillar 3: Leadership & Change Management</div>
+            <div class="pillar-subtitle">Sessions 9-10 • Weeks 13-16</div>
+        </div>
+
+        <div class="module-list">
+            <!-- Session 9 -->
+            <div class="module-card" data-module="9">
+                <div class="module-header">
+                    <div class="module-number">SESSION 9</div>
+                    <div class="module-status">⏸️</div>
+                </div>
+                <div class="module-title">Building AI-Ready Organizations</div>
+                <div class="module-meta">
+                    <span>⏱️ 3-5 min</span>
+                    <span>📍 Week 13</span>
+                    <span>🎯 Culture</span>
+                </div>
+                <div class="module-description">
+                    Transform organizational culture for AI adoption. Drive change management, overcome resistance, and build data-driven mindsets.
+                </div>
+                <div class="audio-player">
+                    <div class="audio-controls">
+                        <button class="play-button" data-action="play">▶️</button>
+                        <div class="audio-info">
+                            <div class="audio-timeline" data-action="seek">
+                                <div class="audio-progress"></div>
+                            </div>
+                            <div class="audio-time">
+                                <span class="current-time">0:00</span>
+                                <span class="total-time">3:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playback-controls">
+                        <button class="control-button" data-action="rewind">⏪ -15s</button>
+                        <div class="audio-speed">1.0x</div>
+                        <button class="control-button" data-action="forward">+15s ⏩</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Session 10 -->
+            <div class="module-card" data-module="10">
+                <div class="module-header">
+                    <div class="module-number">SESSION 10</div>
+                    <div class="module-status">⏸️</div>
+                </div>
+                <div class="module-title">Communicating AI to Stakeholders</div>
+                <div class="module-meta">
+                    <span>⏱️ 3-5 min</span>
+                    <span>📍 Week 15</span>
+                    <span>🎯 Communication</span>
+                </div>
+                <div class="module-description">
+                    Learn to communicate technical concepts to executives, boards, and non-technical stakeholders. Build business cases for AI investments.
+                </div>
+                <div class="audio-player">
+                    <div class="audio-controls">
+                        <button class="play-button" data-action="play">▶️</button>
+                        <div class="audio-info">
+                            <div class="audio-timeline" data-action="seek">
+                                <div class="audio-progress"></div>
+                            </div>
+                            <div class="audio-time">
+                                <span class="current-time">0:00</span>
+                                <span class="total-time">3:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playback-controls">
+                        <button class="control-button" data-action="rewind">⏪ -15s</button>
+                        <div class="audio-speed">1.0x</div>
+                        <button class="control-button" data-action="forward">+15s ⏩</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pillar 4: Future of AI -->
+        <div class="pillar-header">
+            <div class="pillar-title">Pillar 4: Future & Innovation</div>
+            <div class="pillar-subtitle">Sessions 11-12 • Weeks 17-18</div>
+        </div>
+
+        <div class="module-list">
+            <!-- Session 11 -->
+            <div class="module-card" data-module="11">
+                <div class="module-header">
+                    <div class="module-number">SESSION 11</div>
+                    <div class="module-status">⏸️</div>
+                </div>
+                <div class="module-title">Future of AI & Emerging Technologies</div>
+                <div class="module-meta">
+                    <span>⏱️ 3-5 min</span>
+                    <span>📍 Week 17</span>
+                    <span>🎯 Innovation</span>
+                </div>
+                <div class="module-description">
+                    Explore cutting-edge AI: multimodal models, AI agents, quantum computing, AGI, and emerging technology convergence.
+                </div>
+                <div class="audio-player">
+                    <div class="audio-controls">
+                        <button class="play-button" data-action="play">▶️</button>
+                        <div class="audio-info">
+                            <div class="audio-timeline" data-action="seek">
+                                <div class="audio-progress"></div>
+                            </div>
+                            <div class="audio-time">
+                                <span class="current-time">0:00</span>
+                                <span class="total-time">3:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playback-controls">
+                        <button class="control-button" data-action="rewind">⏪ -15s</button>
+                        <div class="audio-speed">1.0x</div>
+                        <button class="control-button" data-action="forward">+15s ⏩</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Session 12 -->
+            <div class="module-card" data-module="12">
+                <div class="module-header">
+                    <div class="module-number">SESSION 12</div>
+                    <div class="module-status">⏸️</div>
+                </div>
+                <div class="module-title">CDAIO Role & Career Development</div>
+                <div class="module-meta">
+                    <span>⏱️ 3-5 min</span>
+                    <span>📍 Week 18</span>
+                    <span>🎯 Career</span>
+                </div>
+                <div class="module-description">
+                    Define the modern CDAIO role. Build your career roadmap, personal brand, and leadership presence in the AI executive space.
+                </div>
+                <div class="audio-player">
+                    <div class="audio-controls">
+                        <button class="play-button" data-action="play">▶️</button>
+                        <div class="audio-info">
+                            <div class="audio-timeline" data-action="seek">
+                                <div class="audio-progress"></div>
+                            </div>
+                            <div class="audio-time">
+                                <span class="current-time">0:00</span>
+                                <span class="total-time">3:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playback-controls">
+                        <button class="control-button" data-action="rewind">⏪ -15s</button>
+                        <div class="audio-speed">1.0x</div>
+                        <button class="control-button" data-action="forward">+15s ⏩</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fixed Navigation -->
+    <div class="fixed-nav">
+        <button class="nav-button" id="prevBtn" disabled>⬅️ Previous</button>
+        <button class="nav-button" id="nextBtn">Next ➡️</button>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Module content - actual curriculum from UMich CDAIO Implementation Blueprint
+        const moduleContent = {
+            1: {
+                title: "AI Past, Present & Future I",
+                script: "Welcome to Session 1: AI Past, Present and Future. In this session, we'll explore the evolution of artificial intelligence from symbolic AI systems to machine learning, deep learning, and foundation models. We'll cover machine learning fundamentals including supervised learning, unsupervised learning, and reinforcement learning. You'll understand current AI capabilities and limitations, and get an overview of foundation models like GPT, BERT, and Stable Diffusion. The session includes a 60-minute lecture, 20-minute Q&A, and 10-minute breakout to discuss AI challenges your organization is facing. After this session, you'll complete a quiz on AI fundamentals and have the option to train a simple machine learning model in Colab."
+            },
+            2: {
+                title: "AI Past, Present & Future II",
+                script: "Welcome to Session 2: AI Past, Present and Future Part 2. Today we dive deep into transfer learning and pre-trained models. We'll explore fine-tuning strategies and compare foundation models including GPT-4, Claude, and open-source alternatives. We'll discuss future AI trends including AGI, autonomous agents, and multimodal AI. You'll analyze a case study on how Netflix uses transfer learning for recommendations. In the workshop portion, you'll compare three foundation models for your specific use case. Your assignment is to identify three foundation model use cases for your organization."
+            },
+            3: {
+                title: "Data Strategy for Success I",
+                script: "Welcome to Session 3: Data Strategy for Success. This session focuses on enterprise data strategy frameworks and how to align data strategy to business objectives. We'll cover data quality, data governance, and building a data-driven culture. You'll learn from the McKinsey Data-Driven Enterprise report and complete a data maturity self-assessment. The workshop will guide you through drafting a data strategy outline using our provided template. Your graded deliverable is a Data Strategy 1-Pager for your organization, worth 10 points."
+            },
+            4: {
+                title: "Data Strategy for Success II",
+                script: "Welcome to Session 4: Data Strategy for Success Continued. We'll explore different data architectures including centralized, federated, and data mesh approaches. You'll learn about cloud data platforms on AWS, Azure, and GCP. We'll cover data pipelines, ETL processes, and introduce DataOps and MLOps fundamentals. In the architecture workshop, you'll sketch your current versus future state data architecture. This session includes an optional lab where you can build a simple data pipeline in Colab."
+            },
+            5: {
+                title: "AI Strategy & Digital Transformation",
+                script: "Welcome to Session 5: AI and Business Strategy. This session covers AI strategy frameworks and digital transformation roadmaps. We'll explore business model innovation with AI and change management for AI adoption. You'll analyze Amazon's AI strategy as a case study and work with our AI Transformation Roadmap Canvas. In the workshop, you'll map AI opportunities to your business model. Your graded deliverable is an AI Transformation 1-Pager worth 25 points."
+            },
+            6: {
+                title: "AI Business Applications & Use Cases",
+                script: "Welcome to Session 6: Leverage AI in Operations. This session focuses on operational efficiency with AI, process automation, quality improvement through machine learning, and achieving speed and cost reduction. You'll work with our process automation ROI calculator during the workshop. We'll examine real-world examples across industries including predictive analytics, recommendation systems, natural language processing, computer vision, and autonomous systems."
+            },
+            7: {
+                title: "Leading Data & Analytics Teams",
+                script: "Welcome to Session 7: Leverage AI for Customers. Today we explore customer engagement AI, personalization engines, customer service automation, and predictive analytics for behavior. The workshop focuses on customer journey mapping with AI touchpoints. Your graded deliverable is a Customer AI Strategy Proposal worth 15 points. We'll examine how leading companies use AI to transform customer experiences."
+            },
+            8: {
+                title: "AI Governance, Ethics & Trust",
+                script: "Welcome to Session 8: Leverage AI for Decision Making. This session covers AI-augmented decision making, organizational design for AI, and AI Center of Excellence structures. We'll discuss building an AI-ready culture in your organization. The workshop guides you through designing an AI CoE for your specific organization. Your deliverable is an AI CoE Proposal worth 15 points."
+            },
+            9: {
+                title: "Building AI-Ready Organizations",
+                script: "Welcome to Session 9: System Integrity and Trust. This critical session covers data governance frameworks, GDPR, CCPA, and HIPAA compliance. We'll explore AI trustworthiness, transparency, and explainability. The workshop includes a GDPR compliance audit for AI systems. Your graded deliverable is a Data Governance Policy Draft worth 15 points. This is essential knowledge for any Chief Data and AI Officer."
+            },
+            10: {
+                title: "Communicating AI to Stakeholders",
+                script: "Welcome to Session 10: Securing Your System. Today we cover data security fundamentals, encryption strategies, anonymization techniques, and secure machine learning pipelines. We'll practice threat modeling with a guest speaker who is a CISO from a Fortune 500 company. The workshop focuses on threat modeling for your AI system. Your Security Architecture Proposal deliverable is worth 15 points."
+            },
+            11: {
+                title: "Future of AI & Emerging Technologies",
+                script: "Welcome to Session 11: Risk Management. This session introduces AI risk frameworks, model risk management, business continuity for AI, and incident response. We'll conduct an AI incident response tabletop exercise simulation. Your Risk Assessment deliverable is worth 15 points. This session prepares you to identify and mitigate AI risks in your organization."
+            },
+            12: {
+                title: "CDAIO Role & Career Development",
+                script: "Welcome to Session 12: Ethical AI. Our final session covers responsible AI principles, bias detection and mitigation, fairness in machine learning, and privacy-preserving AI. We'll examine ethical frameworks with a bioethics expert and engage in a debate: Should we deploy this AI system? Your Responsible AI Framework deliverable is worth 15 points. This caps off your journey through the four pillars of the Chief Data and AI Officer program. You're now ready for the 5-day immersion week where you'll develop your capstone project."
+            }
+        };
+
+        // State management
+        let currentModule = null;
+        let currentAudio = null;
+        let speechSynthesis = window.speechSynthesis;
+        let currentUtterance = null;
+        let playbackSpeed = 1.0;
+        let moduleProgress = {};
+        let audioStartTime = 0;
+        let audioPauseTime = 0;
+        let audioInterval = null;
+
+        // Initialize from localStorage
+        function initializeProgress() {
+            const saved = localStorage.getItem('umich_cdaio_progress');
+            if (saved) {
+                moduleProgress = JSON.parse(saved);
+                updateUI();
+            }
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            localStorage.setItem('umich_cdaio_progress', JSON.stringify(moduleProgress));
+            updateOverallProgress();
+        }
+
+        // Update overall progress
+        function updateOverallProgress() {
+            const completed = Object.values(moduleProgress).filter(p => p.completed).length;
+            const total = 12;
+            const percentage = Math.round((completed / total) * 100);
+
+            document.getElementById('overallProgress').style.width = percentage + '%';
+            document.getElementById('progressText').textContent =
+                `${completed} of ${total} sessions completed (${percentage}%)`;
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // Module card click handler
+        document.querySelectorAll('.module-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Don't toggle if clicking on player controls
+                if (e.target.closest('.audio-player')) return;
+
+                const moduleId = this.dataset.module;
+
+                // Close current module if different
+                if (currentModule && currentModule !== moduleId) {
+                    document.querySelector(`[data-module="${currentModule}"]`).classList.remove('active');
+                    stopAudio();
+                }
+
+                // Toggle current module
+                this.classList.toggle('active');
+                currentModule = this.classList.contains('active') ? moduleId : null;
+
+                updateNavButtons();
+            });
+        });
+
+        // Play/Pause button
+        document.querySelectorAll('[data-action="play"]').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const card = this.closest('.module-card');
+                const moduleId = card.dataset.module;
+
+                if (this.textContent === '▶️') {
+                    playAudio(moduleId, this);
+                } else {
+                    pauseAudio(this);
+                }
+            });
+        });
+
+        // Rewind button - Note: Web Speech API doesn't support seeking
+        document.querySelectorAll('[data-action="rewind"]').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showToast('⏪ Rewind not supported in speech mode');
+            });
+        });
+
+        // Forward button - Note: Web Speech API doesn't support seeking
+        document.querySelectorAll('[data-action="forward"]').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showToast('⏩ Forward not supported in speech mode');
+            });
+        });
+
+        // Speed button
+        document.querySelectorAll('.audio-speed').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const speeds = [0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
+                const currentIndex = speeds.indexOf(playbackSpeed);
+                playbackSpeed = speeds[(currentIndex + 1) % speeds.length];
+                this.textContent = playbackSpeed + 'x';
+                if (currentUtterance && speechSynthesis.speaking) {
+                    // Update current utterance rate
+                    currentUtterance.rate = playbackSpeed;
+                }
+                showToast(`Playback speed: ${playbackSpeed}x`);
+            });
+        });
+
+        // Seek functionality
+        document.querySelectorAll('[data-action="seek"]').forEach(timeline => {
+            timeline.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (!currentAudio) return;
+
+                const rect = this.getBoundingClientRect();
+                const percent = (e.clientX - rect.left) / rect.width;
+                currentAudio.currentTime = percent * currentAudio.duration;
+            });
+        });
+
+        // Play audio using Web Speech API
+        function playAudio(moduleId, button) {
+            // Stop any existing speech
+            speechSynthesis.cancel();
+
+            // Get module content
+            const content = moduleContent[moduleId];
+            if (!content) {
+                showToast('Module content not available');
+                return;
+            }
+
+            // Create speech utterance
+            currentUtterance = new SpeechSynthesisUtterance(content.script);
+            currentUtterance.rate = playbackSpeed;
+            currentUtterance.pitch = 1.0;
+            currentUtterance.volume = 1.0;
+
+            // Select best voice (prefer English voices)
+            const voices = speechSynthesis.getVoices();
+            const preferredVoice = voices.find(v => v.lang.startsWith('en') && v.name.includes('Samantha')) ||
+                                  voices.find(v => v.lang.startsWith('en-US')) ||
+                                  voices[0];
+            if (preferredVoice) {
+                currentUtterance.voice = preferredVoice;
+            }
+
+            // Set up event handlers
+            currentUtterance.onend = () => {
+                completeModule(moduleId);
+                stopAudio();
+                button.textContent = '▶️';
+                const card = button.closest('.module-card');
+                card.querySelector('.module-status').textContent = '✅';
+            };
+
+            currentUtterance.onerror = (event) => {
+                console.error('Speech synthesis error:', event);
+                showToast('Audio error: ' + event.error);
+                stopAudio();
+            };
+
+            // Start speaking
+            speechSynthesis.speak(currentUtterance);
+
+            // Update UI
+            button.textContent = '⏸️';
+            const card = button.closest('.module-card');
+            card.querySelector('.module-status').textContent = '▶️';
+
+            // Start progress tracking
+            audioStartTime = Date.now();
+            const scriptLength = content.script.length;
+            const estimatedDuration = (scriptLength / 15) * (1 / playbackSpeed); // ~15 chars per second
+
+            audioInterval = setInterval(() => {
+                if (speechSynthesis.speaking) {
+                    const elapsed = (Date.now() - audioStartTime) / 1000;
+                    const progress = Math.min((elapsed / estimatedDuration) * 100, 99);
+
+                    const progressBar = card.querySelector('.audio-progress');
+                    const currentTime = card.querySelector('.current-time');
+
+                    progressBar.style.width = progress + '%';
+                    currentTime.textContent = formatTime(elapsed);
+                }
+            }, 100);
+
+            showToast('🎧 Playing audio narration');
+        }
+
+        // Pause audio
+        function pauseAudio(button) {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.pause();
+                button.textContent = '▶️';
+                const card = button.closest('.module-card');
+                card.querySelector('.module-status').textContent = '⏸️';
+
+                if (audioInterval) {
+                    clearInterval(audioInterval);
+                    audioInterval = null;
+                }
+
+                // Save progress
+                const moduleId = card.dataset.module;
+                if (!moduleProgress[moduleId]) {
+                    moduleProgress[moduleId] = {};
+                }
+                moduleProgress[moduleId].position = (Date.now() - audioStartTime) / 1000;
+                saveProgress();
+
+                showToast('Audio paused');
+            } else if (speechSynthesis.paused) {
+                // Resume
+                speechSynthesis.resume();
+                button.textContent = '⏸️';
+                const card = button.closest('.module-card');
+                card.querySelector('.module-status').textContent = '▶️';
+
+                // Restart progress tracking
+                const moduleId = card.dataset.module;
+                const content = moduleContent[moduleId];
+                const scriptLength = content.script.length;
+                const estimatedDuration = (scriptLength / 15) * (1 / playbackSpeed);
+
+                audioInterval = setInterval(() => {
+                    if (speechSynthesis.speaking) {
+                        const elapsed = (Date.now() - audioStartTime) / 1000;
+                        const progress = Math.min((elapsed / estimatedDuration) * 100, 99);
+
+                        const progressBar = card.querySelector('.audio-progress');
+                        const currentTime = card.querySelector('.current-time');
+
+                        progressBar.style.width = progress + '%';
+                        currentTime.textContent = formatTime(elapsed);
+                    }
+                }, 100);
+
+                showToast('Audio resumed');
+            }
+        }
+
+        // Stop audio
+        function stopAudio() {
+            speechSynthesis.cancel();
+
+            if (audioInterval) {
+                clearInterval(audioInterval);
+                audioInterval = null;
+            }
+
+            currentUtterance = null;
+
+            document.querySelectorAll('[data-action="play"]').forEach(btn => {
+                btn.textContent = '▶️';
+            });
+        }
+
+        // Format time
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Complete module
+        function completeModule(moduleId) {
+            moduleProgress[moduleId] = {
+                completed: true,
+                position: 0
+            };
+            saveProgress();
+
+            const card = document.querySelector(`[data-module="${moduleId}"]`);
+            card.classList.add('completed');
+            card.querySelector('.module-status').textContent = '✅';
+
+            showToast('Session completed! 🎉');
+        }
+
+        // Navigation buttons
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (!currentModule) return;
+            const prev = parseInt(currentModule) - 1;
+            if (prev >= 1) {
+                openModule(prev);
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (!currentModule) {
+                openModule(1);
+            } else {
+                const next = parseInt(currentModule) + 1;
+                if (next <= 12) {
+                    openModule(next);
+                }
+            }
+        });
+
+        // Open specific module
+        function openModule(moduleId) {
+            // Close current
+            if (currentModule) {
+                document.querySelector(`[data-module="${currentModule}"]`).classList.remove('active');
+                stopAudio();
+            }
+
+            // Open new
+            const card = document.querySelector(`[data-module="${moduleId}"]`);
+            card.classList.add('active');
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            currentModule = moduleId.toString();
+
+            updateNavButtons();
+        }
+
+        // Update navigation buttons
+        function updateNavButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (!currentModule) {
+                prevBtn.disabled = true;
+                nextBtn.disabled = false;
+            } else {
+                const num = parseInt(currentModule);
+                prevBtn.disabled = num === 1;
+                nextBtn.disabled = num === 12;
+            }
+        }
+
+        // Update UI based on saved progress
+        function updateUI() {
+            Object.entries(moduleProgress).forEach(([moduleId, progress]) => {
+                const card = document.querySelector(`[data-module="${moduleId}"]`);
+                if (progress.completed) {
+                    card.classList.add('completed');
+                    card.querySelector('.module-status').textContent = '✅';
+                }
+            });
+        }
+
+        // Initialize
+        initializeProgress();
+        updateOverallProgress();
+        updateNavButtons();
+
+        // Load voices (required for some browsers/iOS)
+        let voicesLoaded = false;
+        function loadVoices() {
+            const voices = speechSynthesis.getVoices();
+            if (voices.length > 0 && !voicesLoaded) {
+                voicesLoaded = true;
+                console.log('Voices loaded:', voices.length);
+            }
+        }
+
+        // iOS requires voices to be loaded
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadVoices;
+        }
+        loadVoices();
+
+        // Add iOS audio support
+        document.addEventListener('DOMContentLoaded', () => {
+            // Enable audio on iOS
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                showToast('🎓 Welcome to UMich CDAIO! Tap any session to begin');
+                // Preload voices for iOS
+                loadVoices();
+            } else {
+                showToast('🎓 Welcome! Click any session to start audio training');
+            }
+        });
+    </script>
+</body>
+</html>

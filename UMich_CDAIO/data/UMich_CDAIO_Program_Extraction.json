@@ -1,0 +1,478 @@
+{
+  "program_metadata": {
+    "program_name": "Chief Data and AI Officer (CDAIO) Program",
+    "institution": {
+      "primary": "University of Michigan",
+      "schools": [
+        "Michigan Ross School of Business Executive Education",
+        "Michigan Engineering Professional Education"
+      ],
+      "partnership": "Emeritus (Education Technology Partner)"
+    },
+    "duration": {
+      "total_length": "5 months",
+      "online_component": "~4 months (live online sessions)",
+      "on_campus_component": "5 days (immersive on-campus experience)",
+      "weekly_hours": "NOT PUBLICLY AVAILABLE"
+    },
+    "cost": {
+      "tuition": "$16,000 USD",
+      "currency": "US Dollars",
+      "payment_terms": "Payable in advance",
+      "early_bird_discount": "Available (specific amount not disclosed)",
+      "notes": "Exclusive of any taxes, subject to change"
+    },
+    "format": {
+      "delivery_model": "Hybrid",
+      "components": [
+        "Live online sessions",
+        "5-day on-campus immersive module (Ann Arbor, Michigan)",
+        "Business case simulations",
+        "Innovation lab access",
+        "Case studies",
+        "Capstone project"
+      ]
+    },
+    "target_audience": {
+      "primary_roles": [
+        "Chief Data Officers (CDOs)",
+        "Chief Technology Officers (CTOs)",
+        "Chief Information Officers (CIOs)",
+        "Chief AI Officers (CAIOs)",
+        "Chief Digital Officers"
+      ],
+      "additional_roles": [
+        "C-suite executives responsible for AI and digital strategies",
+        "Data science and analytics leaders",
+        "Digital leaders and entrepreneurs",
+        "AI transformation leaders",
+        "Senior executives driving AI-led initiatives"
+      ],
+      "industries": "Diverse industries across sectors",
+      "experience_level": "Senior executives and C-suite leaders"
+    },
+    "start_date": "June 24, 2025",
+    "admission_type": "Application-based (by application only)",
+    "language": "English"
+  },
+
+  "curriculum_structure": {
+    "overview": "Four strategic core modules delivered via live faculty-led sessions",
+    "total_modules": 4,
+    "modules": [
+      {
+        "module_number": 1,
+        "module_name": "AI Strategy Foundations: Building Data-Driven Advantage",
+        "alternate_names": ["Data-driven Value Creation", "AI Strategy"],
+        "topics": [
+          "AI strategy foundations",
+          "Building data-driven competitive advantage",
+          "Data governance frameworks",
+          "AI integration in business strategy"
+        ],
+        "learning_objectives": [
+          "Develop AI-driven business strategies",
+          "Understand data governance principles",
+          "Create competitive advantage through data",
+          "Align AI initiatives with business objectives"
+        ],
+        "duration": "NOT PUBLICLY SPECIFIED",
+        "delivery_format": "Live online sessions"
+      },
+      {
+        "module_number": 2,
+        "module_name": "AI for Business Impact: Driving Strategy and Innovation",
+        "alternate_names": ["AI for Business Impact"],
+        "topics": [
+          "AI for business impact",
+          "Driving strategy through AI",
+          "Innovation frameworks",
+          "Operational efficiency through AI",
+          "Generative AI (GenAI) applications",
+          "Strategic decision making with AI"
+        ],
+        "learning_objectives": [
+          "Lead AI-driven initiatives",
+          "Leverage emerging technologies like GenAI",
+          "Enhance operational efficiency",
+          "Streamline business processes with AI",
+          "Guide strategic decision making"
+        ],
+        "duration": "NOT PUBLICLY SPECIFIED",
+        "delivery_format": "Live online sessions"
+      },
+      {
+        "module_number": 3,
+        "module_name": "Trusted AI: Securing Data and Scaling Analytics",
+        "alternate_names": ["Trusted AI"],
+        "topics": [
+          "Data security",
+          "Compliance and regulatory standards",
+          "Advanced analytics",
+          "Ethical AI frameworks",
+          "Responsible AI implementation",
+          "Risk management in AI systems"
+        ],
+        "learning_objectives": [
+          "Ensure data security and compliance",
+          "Extract actionable insights through advanced analytics",
+          "Support business objectives while maintaining regulatory standards",
+          "Implement trusted and ethical AI systems",
+          "Manage AI-related risks"
+        ],
+        "duration": "NOT PUBLICLY SPECIFIED",
+        "delivery_format": "Live online sessions"
+      },
+      {
+        "module_number": 4,
+        "module_name": "AI Leadership Immersion: Transforming Strategy and Influence",
+        "alternate_names": ["AI Strategy", "On-Campus Immersion"],
+        "topics": [
+          "AI leadership in digital transformation",
+          "Change management",
+          "Organizational transformation",
+          "Executive influence and communication",
+          "Innovation labs and emerging technologies",
+          "Real-world AI applications",
+          "Site visits to leading tech companies"
+        ],
+        "learning_objectives": [
+          "Lead digital transformation initiatives",
+          "Manage organizational change in AI adoption",
+          "Equip organizations to thrive in dynamic business environments",
+          "Apply learning to real-world challenges",
+          "Network with industry leaders and peers"
+        ],
+        "duration": "5 days",
+        "delivery_format": "On-campus immersive experience (Ann Arbor, Michigan)",
+        "special_features": [
+          "Access to innovation labs",
+          "Site visits to leading tech companies",
+          "Hands-on workshops",
+          "Direct engagement with Michigan AI researchers",
+          "Intensive peer networking"
+        ]
+      }
+    ],
+    "capstone_project": {
+      "name": "AI Leadership Capstone Project",
+      "description": "Real-world AI and data challenge focused on participants' organizations",
+      "deliverable": "Strategic roadmap applying program learnings to actual business challenges",
+      "methodology": "Apply insights from business case simulations and practical frameworks",
+      "duration": "Spans multiple modules (exact timeline not specified)",
+      "assessment": "Required for certificate completion"
+    }
+  },
+
+  "learning_methodologies": {
+    "live_sessions": {
+      "format": "Live, faculty-led online sessions",
+      "minimum_attendance": "10 live sessions required for certificate",
+      "features": [
+        "Direct interaction with top faculty",
+        "Real-time discussions on current AI applications",
+        "Q&A with industry experts",
+        "Global peer group engagement"
+      ]
+    },
+    "case_studies": {
+      "description": "Business case studies focused on real-world AI and data challenges",
+      "application": "Analysis of actual business scenarios",
+      "integration": "Used throughout modules and in capstone project"
+    },
+    "simulations": {
+      "type": "Business case simulations",
+      "purpose": "Replicate real-world scenarios to practice learning",
+      "features": [
+        "Hands-on simulation exercises",
+        "Mimics real business environments",
+        "Enables application of theoretical knowledge"
+      ]
+    },
+    "capstone_project": {
+      "structure": "Individual or team-based project (not specified)",
+      "focus": "Real AI leadership challenge in participant's organization",
+      "output": "Strategic roadmap and implementation plan",
+      "presentation": "NOT SPECIFIED"
+    },
+    "on_campus_immersion": {
+      "duration": "5 days",
+      "location": "Ann Arbor, Michigan (Ross School of Business + College of Engineering)",
+      "activities": [
+        "Hands-on workshops",
+        "Innovation lab access",
+        "Site visits to leading tech companies",
+        "Direct engagement with Michigan AI researchers",
+        "Intensive networking with peers and faculty",
+        "Practical application sessions"
+      ],
+      "requirement": "Full participation required for certificate"
+    },
+    "peer_learning": {
+      "format": "Global peer group collaboration",
+      "activities": [
+        "Group discussions during live sessions",
+        "Collaborative case study analysis",
+        "Networking during on-campus week",
+        "Peer feedback and knowledge exchange"
+      ]
+    },
+    "faculty_engagement": {
+      "access": "Direct access to University of Michigan faculty",
+      "experts": [
+        "Michigan Ross Business School professors",
+        "College of Engineering faculty",
+        "Michigan AI researchers",
+        "External industry practitioners"
+      ]
+    }
+  },
+
+  "assessments": {
+    "graded_assignments": {
+      "confirmed": true,
+      "details": "Emeritus delivers programs with graded assignments (specific details not publicly available)"
+    },
+    "quizzes": {
+      "status": "NOT PUBLICLY SPECIFIED"
+    },
+    "projects": {
+      "capstone_project": {
+        "required": true,
+        "weight": "NOT SPECIFIED",
+        "description": "Final strategic roadmap for real-world AI challenge"
+      }
+    },
+    "exams": {
+      "status": "NOT PUBLICLY SPECIFIED"
+    },
+    "attendance_requirements": {
+      "live_sessions": "Minimum 10 live sessions",
+      "on_campus_week": "Full participation required"
+    },
+    "grading_system": {
+      "structure": "NOT PUBLICLY AVAILABLE",
+      "passing_criteria": "NOT PUBLICLY SPECIFIED"
+    },
+    "certificate_requirements": [
+      "Attend minimum of 10 live sessions",
+      "Fully participate in on-campus week (5 days)",
+      "Complete graded assignments",
+      "Complete capstone project (assumed)"
+    ]
+  },
+
+  "technical_requirements": {
+    "prerequisites": {
+      "formal_education": "NOT EXPLICITLY SPECIFIED",
+      "work_experience": "Senior executive or C-suite level experience (implied)",
+      "technical_skills": "NOT SPECIFIED",
+      "prior_knowledge": "Understanding of business strategy and operations (implied)",
+      "notes": "Designed for executives already in or aspiring to C-suite data/AI roles"
+    },
+    "tools_and_software": {
+      "learning_platform": "Emeritus learning platform",
+      "specific_tools": "NOT PUBLICLY AVAILABLE",
+      "software_required": "NOT SPECIFIED",
+      "notes": "Likely includes access to AI tools and analytics platforms during program"
+    },
+    "hardware_requirements": {
+      "computer": "Standard computer with internet connection (assumed)",
+      "specifications": "NOT PUBLICLY SPECIFIED",
+      "camera_microphone": "Required for live sessions (assumed)"
+    },
+    "internet_requirements": {
+      "bandwidth": "Stable internet connection for live streaming (assumed)",
+      "details": "NOT SPECIFIED"
+    }
+  },
+
+  "credentials": {
+    "certificate": {
+      "name": "Chief Data and AI Officer Certificate",
+      "issued_by": [
+        "Michigan Ross Executive Education",
+        "Michigan Engineering Professional Education"
+      ],
+      "format": "Verified digital certificate",
+      "requirements": [
+        "Attend minimum 10 live sessions",
+        "Complete on-campus immersion week",
+        "Complete all graded assignments",
+        "Complete capstone project"
+      ]
+    },
+    "alumni_access": {
+      "status": "DETAILS NOT PUBLICLY AVAILABLE",
+      "potential_benefits": [
+        "University of Michigan alumni network access (potential)",
+        "Michigan Ross alumni resources (potential)",
+        "Continuing education opportunities (potential)"
+      ],
+      "notes": "Standard U-M alumni benefits include UCAN (University Career Alumni Network), Career Design Fellowship, and continuing education discounts"
+    },
+    "ceus": {
+      "status": "NOT SPECIFIED FOR THIS PROGRAM",
+      "notes": "University of Michigan offers CEUs for some programs, but not confirmed for CDAIO"
+    },
+    "accreditation": {
+      "institution": "University of Michigan (Top-ranked institution)",
+      "specific_accreditation": "NOT SPECIFIED FOR THIS EXECUTIVE PROGRAM"
+    }
+  },
+
+  "faculty": {
+    "program_directors": [
+      {
+        "name": "Brad Killaly",
+        "title": "Faculty Director, CDAIO Program",
+        "position": "Clinical Associate Professor of Strategy",
+        "school": "Ross School of Business, University of Michigan",
+        "expertise": "Strategy, Digital Transformation"
+      },
+      {
+        "name": "Jenna Wiens, PhD",
+        "title": "Technical Faculty Advisor, CDAIO Program",
+        "position": "Associate Professor of Computer Science and Engineering",
+        "school": "College of Engineering, University of Michigan",
+        "expertise": "Artificial Intelligence, Machine Learning"
+      }
+    ],
+    "additional_faculty": [
+      {
+        "name": "M.S. Krishnan",
+        "title": "Accenture Professor of Computer Information Systems",
+        "school": "University of Michigan",
+        "expertise": "Information Systems, Digital Innovation"
+      },
+      {
+        "name": "Eric Schwartz",
+        "title": "Professor",
+        "school": "University of Michigan",
+        "expertise": "Customer behavior prediction, customer relationship management"
+      },
+      {
+        "name": "Brian Denton",
+        "title": "Stephen M. Pollock Collegiate Professor of Industrial and Operations Engineering",
+        "school": "University of Michigan",
+        "expertise": "Operations Engineering, Analytics"
+      },
+      {
+        "name": "Hyun-soo Ahn",
+        "title": "Professor of Technology and Operations, Ford Motor Company Business Co-Director of the Joel D. Tauber Institute for Global Operations",
+        "school": "Michigan Ross",
+        "expertise": "Technology and Operations Management"
+      }
+    ],
+    "external_practitioners": {
+      "confirmed": true,
+      "details": "Sessions delivered by both University of Michigan faculty and external industry practitioners"
+    }
+  },
+
+  "program_benefits": {
+    "key_outcomes": [
+      "Develop and lead AI-driven business strategies",
+      "Strengthen data governance frameworks",
+      "Lead digital transformation initiatives",
+      "Leverage emerging technologies (GenAI, analytics) for competitive advantage",
+      "Ensure data security and regulatory compliance",
+      "Extract actionable insights through advanced analytics",
+      "Manage organizational change in AI adoption",
+      "Build executive influence in AI leadership"
+    ],
+    "networking": {
+      "peer_network": "Global cohort of C-suite executives and AI leaders",
+      "faculty_access": "Direct engagement with top Michigan faculty and AI researchers",
+      "industry_connections": "Site visits and workshops with leading tech companies",
+      "alumni_network": "Access to University of Michigan alumni community (potential)"
+    },
+    "innovation_access": {
+      "labs": "Access to University of Michigan innovation labs",
+      "research": "Engagement with cutting-edge AI research at Michigan",
+      "companies": "Site visits to leading technology companies"
+    },
+    "career_impact": [
+      "Equip for C-suite data and AI leadership roles",
+      "Enhance strategic decision-making capabilities",
+      "Gain competitive advantage through AI expertise",
+      "Position as thought leader in AI and digital transformation"
+    ]
+  },
+
+  "data_extraction_metadata": {
+    "extraction_date": "2025-10-28",
+    "sources": [
+      "Web search results from multiple sources",
+      "University of Michigan official program pages",
+      "Michigan Ross Executive Education materials",
+      "Emeritus blog posts and press releases",
+      "Third-party program reviews and comparisons"
+    ],
+    "extraction_method": "WebSearch tool (multiple queries)",
+    "data_completeness": "Partial - some details not publicly available",
+    "confidence_level": "High for available data, gaps noted throughout"
+  },
+
+  "information_gaps": {
+    "critical_gaps": [
+      "Detailed weekly time commitment hours",
+      "Specific assessment methods and grading criteria",
+      "Detailed breakdown of each module's topics and duration",
+      "Specific software tools and platforms used",
+      "Technical prerequisites and required skills",
+      "CEU availability and credits",
+      "Specific alumni benefits for program graduates",
+      "Detailed capstone project requirements and assessment",
+      "Group project details and collaboration structure",
+      "Office hours and faculty support availability"
+    ],
+    "minor_gaps": [
+      "Exact number of live sessions per module",
+      "Specific dates for on-campus immersion week",
+      "Detailed site visit locations and companies",
+      "Innovation lab access specifics",
+      "Application process details and acceptance rate",
+      "Scholarship or financial aid availability",
+      "Cohort size and participant demographics",
+      "Program cancellation or refund policies"
+    ],
+    "reasons_for_gaps": [
+      "Information not publicly disclosed on official websites",
+      "Details provided only during application/enrollment process",
+      "Program marketed in collaboration with Emeritus (some details gated)",
+      "Executive education programs often have limited public information",
+      "Pricing and specific requirements shared upon inquiry"
+    ],
+    "recommendations_to_obtain_missing_data": [
+      "Contact Michigan Ross Executive Education directly",
+      "Contact Michigan Engineering Professional Education",
+      "Submit inquiry through Emeritus program page",
+      "Request program brochure or detailed syllabus",
+      "Schedule call with program admissions advisor",
+      "Connect with program alumni through LinkedIn"
+    ]
+  },
+
+  "competitive_intelligence": {
+    "unique_differentiators": [
+      "Dual-school collaboration (Ross Business + Engineering)",
+      "5-day immersive on-campus experience",
+      "Access to University of Michigan AI research labs",
+      "Site visits to leading tech companies",
+      "Direct engagement with Michigan AI researchers",
+      "Top-tier university ranking and brand recognition",
+      "Emeritus partnership for scalable executive education delivery"
+    ],
+    "program_positioning": "Premium executive education for C-suite leaders focused on AI and data strategy",
+    "market_tier": "Top-tier executive education (comparable to MIT, Stanford, Carnegie Mellon programs)"
+  },
+
+  "notes": {
+    "program_launch": "Newly launched program (April 2025 announcement, June 2025 first cohort)",
+    "partnership_model": "University of Michigan + Emeritus collaboration",
+    "delivery_platform": "Emeritus learning management system",
+    "target_outcome": "Equip executives to lead AI-driven transformation in their organizations",
+    "certification_value": "University of Michigan credential (highly valued in executive education market)"
+  }
+}
