@@ -1,0 +1,30 @@
+{
+  "name": "circuitos-virtual-lpr",
+  "version": "2.0.0",
+  "description": "Virtual LPR™ - Lead validation system with FREE MCP servers",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "vercel build",
+    "deploy": "vercel deploy --prod",
+    "test": "node --experimental-modules test.js"
+  },
+  "keywords": [
+    "virtual-lpr",
+    "lead-validation",
+    "mcp",
+    "gohighlevel",
+    "claude-ai"
+  ],
+  "author": "CircuitOS",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.27.0"
+  },
+  "devDependencies": {
+    "vercel": "^33.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
