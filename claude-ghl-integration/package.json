@@ -1,0 +1,29 @@
+{
+  "name": "claude-ghl-integration",
+  "version": "1.0.0",
+  "description": "Claude API integration for GoHighLevel - World-class AI employees",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "claude",
+    "gohighlevel",
+    "ai",
+    "lead-scoring",
+    "automation"
+  ],
+  "author": "Circuit OS",
+  "license": "PROPRIETARY",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0"
+  },
+  "devDependencies": {
+    "vercel": "^33.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
