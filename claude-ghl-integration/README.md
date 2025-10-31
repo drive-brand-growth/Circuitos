@@ -10,7 +10,7 @@ This project provides serverless API endpoints that connect GoHighLevel workflow
 **7 World-Class AI Employees:**
 
 1. **Lead Scorer** (`/api/score-lead`) - BANT/MEDDIC/CHAMP enterprise scoring
-2. **Master Copywriter** (`/api/copywriter`) - Russell Brunson + Eugene Schwartz + Alex Hormozi frameworks
+2. **Master Copywriter** (`/api/copywriter`) - Russell Brunson + Eugene Schwartz + Alex Hormozi + Donald Miller StoryBrand frameworks
 3. **Email Campaign Manager** (`/api/email-campaign`) - Instantly.ai integration with deliverability optimization
 4. **Channel Router** (`/api/channel-router`) - Omnichannel orchestration (Email → LinkedIn → SMS → Call)
 5. **Reputation Guardian** (`/api/reputation`) - Review monitoring and response generation

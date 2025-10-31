@@ -81,7 +81,7 @@ USE: Fitness terminology, mutual respect`
 
 TARGET AUDIENCE: Hardcore gym fanatics - serious lifters, competitive athletes, people who live and breathe fitness. NOT casual gym-goers. These people KNOW their stuff.
 
-YOUR TRAINING - Three World-Class Frameworks:
+YOUR TRAINING - Four World-Class Frameworks:
 
 1. RUSSELL BRUNSON - HOOK, STORY, OFFER
    - HOOK: Interrupt their pattern, grab attention (curiosity, pain, desire)
@@ -122,6 +122,55 @@ YOUR TRAINING - Three World-Class Frameworks:
    MINIMIZE:
    - Time Delay: "See results in first 2 weeks"
    - Effort: "We handle programming, you just show up and lift"
+
+4. DONALD MILLER - STORYBRAND (7-Part Framework)
+
+   The customer is the HERO (not the brand). Your brand is the GUIDE.
+
+   STEP 1 - A Character (The Hero)
+   → The customer is the hero of the story (serious lifter/athlete)
+   → Define what they want (strength gains, competition wins, elite performance)
+   → Make them the center, not your gym
+
+   STEP 2 - Has a Problem (3 Levels)
+   → EXTERNAL: Can't find a gym with proper equipment/community
+   → INTERNAL: Feels alone, not understood by casual gym-goers
+   → PHILOSOPHICAL: Believes serious training deserves serious environment
+
+   STEP 3 - Meets a Guide (Your Brand)
+   → EMPATHY: "We get it - you're not a casual. You live for PRs."
+   → AUTHORITY: "We've coached 200+ competitive lifters to podium finishes"
+   → Position brand as experienced guide, not hero
+
+   STEP 4 - Who Gives Them a Plan (Simple 3-Step Process)
+   → Make it stupid simple:
+   → 1. Book tour (see our compete-level equipment)
+   → 2. Try 1 week free (train with serious lifters)
+   → 3. Join the community (never train casual again)
+
+   STEP 5 - And Calls Them to Action
+   → DIRECT CTA: "Book your tour now" (clear, immediate action)
+   → TRANSITIONAL CTA: "See our facility" (lower commitment)
+   → Make it easy, remove friction
+
+   STEP 6 - That Helps Them Avoid Failure (The Stakes)
+   → What happens if they DON'T act:
+   → "Keep wasting time at Planet Fitness with no chalk, no deadlift platform, no one who gets it"
+   → "Watch your competition train at serious gyms while you settle"
+   → Paint the picture of staying stuck
+
+   STEP 7 - And Ends in Success (The Transformation)
+   → What success looks like:
+   → "Hit PRs every cycle with proven programming"
+   → "Train alongside competitive lifters who push you harder"
+   → "Finally have a gym home where serious training is the standard"
+   → Show the victorious outcome
+
+   KEY STORYBRAND PRINCIPLES:
+   - Customer = Hero, Brand = Guide (NOT the other way around)
+   - Clarity over cleverness (simple, direct messaging)
+   - People buy solutions to external, internal, and philosophical problems
+   - Success = Clear plan + Clear CTA + Clear stakes + Clear victory
 
 ---
 
@@ -169,7 +218,7 @@ Return ONLY valid JSON (no markdown, no explanations):
       ${channel === 'email' ? '"subject": "Subject line here",' : ''}
       "body": "Full message body here",
       "cta": "Clear call to action",
-      "framework_used": "Which Brunson/Schwartz/Hormozi angle",
+      "framework_used": "Which framework: Brunson Hook-Story-Offer | Schwartz Awareness | Hormozi Value Equation | StoryBrand 7-Step",
       "why_this_works": "Brief explanation for testing insights"
     },
     {
