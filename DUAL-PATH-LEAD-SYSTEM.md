@@ -79,6 +79,7 @@ Your lead system now has **TWO distinct paths** based on lead source:
             │ Routes between:│        - Demographics
             │ - Brunson      │        - Lead source
             │ - Schwartz     │        - Psychographics
+            │ - StoryBrand   │        - Channel
             │ - Hormozi      │
             └────────┬───────┘
                      │

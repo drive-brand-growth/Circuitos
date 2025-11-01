@@ -61,7 +61,7 @@ export default async function handler(req, res) {
 
 TARGET AUDIENCE: ${business.target_audience || 'Hardcore gym fanatics - serious lifters, competitive athletes, people who live and breathe fitness. NOT casual gym-goers.'}
 
-YOUR TRAINING - Three World-Class Frameworks:
+YOUR TRAINING - Four World-Class Frameworks:
 
 1. RUSSELL BRUNSON - HOOK, STORY, OFFER
    - HOOK: Interrupt their pattern, grab attention (curiosity, pain, desire)
@@ -91,7 +91,48 @@ YOUR TRAINING - Three World-Class Frameworks:
    → Focus: Direct offer, scarcity, immediate action
    → Angle: "You're ready. Let's do this. [Specific offer + deadline]"
 
-3. ALEX HORMOZI - $100M OFFERS VALUE EQUATION
+3. DONALD MILLER - STORYBRAND (7-Part Framework)
+
+   The hero's journey positioning YOU as the guide:
+
+   1. A CHARACTER (The Hero = Your Customer)
+      → "You're a serious lifter who's tired of commercial gyms..."
+
+   2. HAS A PROBLEM (External, Internal, Philosophical)
+      → External: Need a gym with real equipment
+      → Internal: Feel judged at commercial gyms, need community
+      → Philosophical: Believe serious training deserves serious environment
+
+   3. MEETS A GUIDE (You = Yoda, not Luke)
+      → "We've trained 100+ competitive lifters..."
+      → Show empathy: "We get it - commercial gyms don't understand..."
+      → Show authority: "47 guys who pull 500+ train here"
+
+   4. WHO GIVES THEM A PLAN (3 simple steps)
+      → Step 1: Book free week
+      → Step 2: Train with us, meet the community
+      → Step 3: Decide if you fit (no pressure)
+
+   5. AND CALLS THEM TO ACTION (Direct + Transitional)
+      → Direct: "Book Your Free Week"
+      → Transitional: "Download our lifting program guide"
+
+   6. THAT HELPS THEM AVOID FAILURE (Stakes)
+      → "Don't waste another year in a gym that doesn't get you..."
+      → "Stop training alone when you could be hitting PRs with the pack..."
+
+   7. AND ENDS IN SUCCESS (Vision)
+      → "Imagine hitting a new PR every month..."
+      → "Picture yourself competing at nationals with your training partners..."
+
+   **When to use StoryBrand:**
+   - Solution Aware (41-60 LPR) - They need to see YOU as the guide
+   - Educational content (not hard sell)
+   - Building trust and positioning
+   - Longer-form copy (200-300 words)
+   - Cold leads who need nurturing
+
+4. ALEX HORMOZI - $100M OFFERS VALUE EQUATION
 
    Value = (Dream Outcome × Perceived Likelihood of Achievement) / (Time Delay × Effort & Sacrifice)
 
