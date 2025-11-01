@@ -1,10 +1,76 @@
-# 🚀 START HERE - CircuitOS Steve Jobs Edition
+# 🚀 START HERE - CircuitOS Repository
 
 **Your Complete Zero-Cost, World-Class AI Sales System**
 
 ---
 
-## ✅ WHAT'S COMPLETE
+## 🔥 **NEW: Dual-Path Lead System** (November 2025)
+
+**Status:** ✅ Production-Ready | **Setup Time:** 2-3 hours | **Cost:** ~$0.03/lead
+
+### 🎯 Quick Start (Choose One):
+
+#### Option 1: Interactive Web Guide (Recommended)
+```bash
+open setup-guide.html
+```
+👉 **[Click here to open: setup-guide.html](file:///home/user/Circuitos/setup-guide.html)**
+
+- Beautiful step-by-step interface
+- Copy-paste buttons for every command
+- Auto-saves your progress
+- 22 steps across 5 phases
+
+#### Option 2: Traditional Markdown Guide
+📖 **[COMPLETE-SETUP-GUIDE-STEP-BY-STEP.md](./COMPLETE-SETUP-GUIDE-STEP-BY-STEP.md)**
+
+---
+
+### What This System Does
+
+**Dual-Path Lead Routing:**
+- **Path 1 (Cold Email):** Qualify via Instantly.ai → Send humble, respectful copy
+- **Path 2 (Website Traffic):** Validate via Virtual LPR → Send confident, direct copy
+
+**Master Copywriter with 4 Frameworks:**
+- Russell Brunson (Hook, Story, Offer)
+- Eugene Schwartz (5 Levels of Awareness)
+- Donald Miller (StoryBrand)
+- Alex Hormozi ($100M Offers)
+
+**What You Get:**
+- 5 production API endpoints (Vercel serverless)
+- Complete GHL workflow integration
+- Automated test suite
+- Free MCP servers (Google Maps + Census Bureau)
+- Interactive test console
+
+### Quick Reference Files
+
+| File | Purpose |
+|------|---------|
+| **[setup-guide.html](./setup-guide.html)** | 🌐 Interactive web-based setup guide (START HERE) |
+| **[README-DUAL-PATH-SYSTEM.md](./README-DUAL-PATH-SYSTEM.md)** | 📖 Complete system overview |
+| **[QUICK-REFERENCE-CARD.md](./QUICK-REFERENCE-CARD.md)** | 📋 1-page cheat sheet with commands |
+| **[test-system.sh](./test-system.sh)** | ✅ Automated validation script |
+| **[DUAL-PATH-LEAD-SYSTEM.md](./DUAL-PATH-LEAD-SYSTEM.md)** | 🏗️ System architecture |
+| **[FRAMEWORK-ROUTING-GUIDE.md](./FRAMEWORK-ROUTING-GUIDE.md)** | 🎨 Framework selection guide |
+| **[VERCEL-DEPLOYMENT-GUIDE.md](./VERCEL-DEPLOYMENT-GUIDE.md)** | 🚀 Deployment walkthrough |
+
+### 30-Second Test
+
+```bash
+npm install
+echo "ANTHROPIC_API_KEY=your-key-here" > .env
+vercel dev
+./test-system.sh
+```
+
+**Next:** Open `setup-guide.html` and follow along step-by-step!
+
+---
+
+## ✅ LEGACY SYSTEM: CircuitOS AI Skills (October 2025)
 
 **Status:** 100% Ready for Deployment
 **Date:** October 25, 2025
