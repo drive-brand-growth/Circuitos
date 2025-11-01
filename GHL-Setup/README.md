@@ -1,13 +1,61 @@
 # GoHighLevel Complete Setup Guide
-## Optimized for $97/Month Unlimited AI Employees
+## Two Systems Available
+
+**Last Updated:** November 1, 2025
+
+---
+
+## 🔥 **NEW: Dual-Path Lead System** (Recommended)
+
+**Version:** 2.0.0 | **Setup Time:** 2-3 hours | **Cost:** ~$0.03/lead
+
+### Quick Start
+
+**Interactive Guide (Recommended):**
+```bash
+open ../setup-guide.html
+```
+👉 **[Open Interactive Guide](file:///home/user/Circuitos/setup-guide.html)**
+
+**Or use command line:**
+```bash
+cd ..
+npm install
+echo "ANTHROPIC_API_KEY=your-key-here" > .env
+vercel dev
+./test-system.sh
+```
+
+### What's Different
+
+| Feature | Dual-Path (NEW) | AI Employees (Legacy) |
+|---------|-----------------|----------------------|
+| **Architecture** | Vercel serverless APIs | GHL AI Employees |
+| **Cost per lead** | ~$0.03 | $97/mo unlimited |
+| **Setup** | 2-3 hours | 4-6 hours |
+| **Frameworks** | 4 (Brunson, Schwartz, Miller, Hormozi) | 3 frameworks |
+| **Testing** | Automated test suite | Manual |
+| **Lead Routing** | Dual-path (cold vs warm) | Single path |
+| **Deployment** | Production-ready | Requires GHL config |
+
+### Documentation
+
+- **[setup-guide.html](../setup-guide.html)** - Interactive web guide
+- **[README-DUAL-PATH-SYSTEM.md](../README-DUAL-PATH-SYSTEM.md)** - System overview
+- **[QUICK-REFERENCE-CARD.md](../QUICK-REFERENCE-CARD.md)** - Commands cheat sheet
+- **[GHL-INTERACTIVE-SETUP-GUIDE.md](../GHL-INTERACTIVE-SETUP-GUIDE.md)** - Detailed GHL integration
+
+**Recommended:** Use the Dual-Path system for new deployments.
+
+---
+
+## 📦 **LEGACY: AI Employees System**
 
 **Version:** 1.0.0
 **Date:** October 25, 2025
 **Plan Required:** GHL Unlimited + $97 AI Unlimited Add-On
 
----
-
-## 📋 PREREQUISITES CHECKLIST
+### 📋 PREREQUISITES CHECKLIST
 
 Before you begin, ensure you have:
 
