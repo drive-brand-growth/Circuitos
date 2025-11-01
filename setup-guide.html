@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dual-Path Lead System - Interactive Setup Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            gap: 20px;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .sidebar h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #2563eb;
+        }
+
+        .phase {
+            margin-bottom: 15px;
+        }
+
+        .phase-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .phase-steps {
+            list-style: none;
+            margin-left: 10px;
+        }
+
+        .phase-steps li {
+            padding: 5px 0;
+            font-size: 13px;
+            color: #6b7280;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .phase-steps li:hover {
+            color: #2563eb;
+        }
+
+        .phase-steps li.completed {
+            color: #10b981;
+            text-decoration: line-through;
+        }
+
+        .phase-steps li.active {
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            color: #6b7280;
+            font-size: 16px;
+        }
+
+        .progress-bar {
+            background: #e5e7eb;
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #2563eb, #10b981);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .step {
+            margin-bottom: 40px;
+            padding: 30px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            background: #2563eb;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .step-title h2 {
+            font-size: 24px;
+            color: #1f2937;
+        }
+
+        .step-time {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .step-content {
+            margin-top: 20px;
+        }
+
+        .step-content h3 {
+            font-size: 18px;
+            color: #1f2937;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .step-content p {
+            margin-bottom: 15px;
+            color: #4b5563;
+        }
+
+        .step-content ul, .step-content ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .step-content li {
+            margin-bottom: 8px;
+            color: #4b5563;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+            position: relative;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #2563eb;
+        }
+
+        .copy-btn.copied {
+            background: #10b981;
+        }
+
+        .checkpoint {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .checkpoint h4 {
+            color: #92400e;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .checkpoint h4::before {
+            content: "✓";
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        .warning {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .warning h4 {
+            color: #991b1b;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .warning h4::before {
+            content: "⚠";
+            margin-right: 8px;
+        }
+
+        .tip {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .tip h4 {
+            color: #1e40af;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tip h4::before {
+            content: "💡";
+            margin-right: 8px;
+        }
+
+        .step-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        /* Quick Reference Sidebar */
+        .quick-ref {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .quick-ref h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #1f2937;
+        }
+
+        .quick-ref-section {
+            margin-bottom: 20px;
+        }
+
+        .quick-ref-section h4 {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .quick-ref-item {
+            background: #f9fafb;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .quick-ref-item:hover {
+            background: #e5e7eb;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-card.green {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .stat-card.blue {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar, .quick-ref {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Sidebar: Navigation -->
+        <aside class="sidebar">
+            <h2>Setup Progress</h2>
+            <div id="phase-nav"></div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="header">
+                <h1>Dual-Path Lead System</h1>
+                <p class="subtitle">Interactive Setup Guide - From Zero to Production</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="current-step">1</div>
+                    <div class="stat-label">Current Step</div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-value" id="completed-steps">0</div>
+                    <div class="stat-label">Completed</div>
+                </div>
+                <div class="stat-card blue">
+                    <div class="stat-value" id="time-estimate">5 min</div>
+                    <div class="stat-label">Est. Time</div>
+                </div>
+            </div>
+
+            <!-- Steps will be dynamically generated -->
+            <div id="steps-container"></div>
+        </main>
+
+        <!-- Right Sidebar: Quick Reference -->
+        <aside class="quick-ref">
+            <h3>Quick Reference</h3>
+
+            <div class="quick-ref-section">
+                <h4>Common Commands</h4>
+                <div class="quick-ref-item" onclick="copyToClipboard('npm install')">
+                    npm install
+                </div>
+                <div class="quick-ref-item" onclick="copyToClipboard('vercel dev')">
+                    vercel dev
+                </div>
+                <div class="quick-ref-item" onclick="copyToClipboard('./test-system.sh')">
+                    ./test-system.sh
+                </div>
+                <div class="quick-ref-item" onclick="copyToClipboard('vercel --prod')">
+                    vercel --prod
+                </div>
+            </div>
+
+            <div class="quick-ref-section">
+                <h4>Important URLs</h4>
+                <div class="quick-ref-item" onclick="window.open('http://localhost:3000/api/test-lead-validation', '_blank')">
+                    Test Console
+                </div>
+                <div class="quick-ref-item" onclick="window.open('https://console.anthropic.com/settings/keys', '_blank')">
+                    Get Claude API Key
+                </div>
+                <div class="quick-ref-item" onclick="window.open('https://vercel.com', '_blank')">
+                    Vercel Dashboard
+                </div>
+            </div>
+
+            <div class="quick-ref-section">
+                <h4>Documentation</h4>
+                <div class="quick-ref-item" onclick="window.open('README-DUAL-PATH-SYSTEM.md', '_blank')">
+                    System Overview
+                </div>
+                <div class="quick-ref-item" onclick="window.open('QUICK-REFERENCE-CARD.md', '_blank')">
+                    Quick Ref Card
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Setup data structure
+        const setupData = {
+            phases: [
+                {
+                    name: "Phase 1: Local Setup",
+                    steps: [
+                        {
+                            title: "Get Claude API Key",
+                            time: "5 min",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Get your Claude API key from Anthropic to power the AI features.</p>
+
+                                <h3>Instructions</h3>
+                                <ol>
+                                    <li>Go to <a href="https://console.anthropic.com/settings/keys" target="_blank">Anthropic Console</a></li>
+                                    <li>Sign up or log in with your account</li>
+                                    <li>Click "Create Key"</li>
+                                    <li>Name it "Dual-Path Lead System"</li>
+                                    <li>Copy the key (starts with <code>sk-ant-api03-...</code>)</li>
+                                    <li>Save it somewhere safe - you'll need it in the next step</li>
+                                </ol>
+
+                                <div class="checkpoint">
+                                    <h4>Checkpoint</h4>
+                                    <p>You should have a key that looks like: <code>sk-ant-api03-xxxxxxxxxxxxx</code></p>
+                                </div>
+
+                                <div class="tip">
+                                    <h4>Tip</h4>
+                                    <p>New Anthropic accounts get $5 free credit. Each lead validation costs ~$0.03, so you can test 150+ leads for free!</p>
+                                </div>
+                            `,
+                            commands: []
+                        },
+                        {
+                            title: "Clone & Install Dependencies",
+                            time: "3 min",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Make sure you're in the project directory and install required packages.</p>
+
+                                <h3>Instructions</h3>
+                                <ol>
+                                    <li>Open your terminal</li>
+                                    <li>Navigate to the Circuitos directory (you should already be here)</li>
+                                    <li>Run the install command below</li>
+                                    <li>Wait for packages to install (~30 seconds)</li>
+                                </ol>
+
+                                <div class="checkpoint">
+                                    <h4>Checkpoint</h4>
+                                    <p>You should see: ✓ Successfully installed packages</p>
+                                </div>
+                            `,
+                            commands: [
+                                { label: "Install dependencies", cmd: "npm install" }
+                            ]
+                        },
+                        {
+                            title: "Create .env File",
+                            time: "2 min",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Create a .env file with your Claude API key for local development.</p>
+
+                                <h3>Instructions</h3>
+                                <ol>
+                                    <li>Use the command below (replace YOUR-KEY-HERE with your actual key)</li>
+                                    <li>Or manually create .env file in the project root</li>
+                                </ol>
+
+                                <div class="warning">
+                                    <h4>Important</h4>
+                                    <p>Replace <code>YOUR-KEY-HERE</code> with your actual Claude API key from Step 1!</p>
+                                </div>
+
+                                <div class="checkpoint">
+                                    <h4>Checkpoint</h4>
+                                    <p>Run <code>cat .env</code> and verify your API key is there</p>
+                                </div>
+                            `,
+                            commands: [
+                                { label: "Create .env file (REPLACE KEY!)", cmd: 'echo "ANTHROPIC_API_KEY=sk-ant-api03-YOUR-KEY-HERE" > .env' },
+                                { label: "Verify .env file", cmd: "cat .env" }
+                            ]
+                        },
+                        {
+                            title: "Start Local Server",
+                            time: "2 min",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Start the local development server using Vercel Dev.</p>
+
+                                <h3>Instructions</h3>
+                                <ol>
+                                    <li>Run the command below</li>
+                                    <li>Wait for "Ready! Available at http://localhost:3000"</li>
+                                    <li>Keep this terminal window open</li>
+                                </ol>
+
+                                <div class="tip">
+                                    <h4>First Time Running?</h4>
+                                    <p>If Vercel CLI isn't installed, run: <code>npm install -g vercel</code></p>
+                                </div>
+
+                                <div class="checkpoint">
+                                    <h4>Checkpoint</h4>
+                                    <p>You should see: <code>Ready! Available at http://localhost:3000</code></p>
+                                </div>
+                            `,
+                            commands: [
+                                { label: "Install Vercel CLI (if needed)", cmd: "npm install -g vercel" },
+                                { label: "Start local server", cmd: "vercel dev" }
+                            ]
+                        },
+                        {
+                            title: "Test Interactive Console",
+                            time: "5 min",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Open the interactive test console and verify all endpoints work.</p>
+
+                                <h3>Instructions</h3>
+                                <ol>
+                                    <li>Open a NEW terminal window (keep vercel dev running)</li>
+                                    <li>Visit: <a href="http://localhost:3000/api/test-lead-validation" target="_blank">http://localhost:3000/api/test-lead-validation</a></li>
+                                    <li>Click "Test All Scenarios"</li>
+                                    <li>Verify all 3 tests pass</li>
+                                </ol>
+
+                                <div class="checkpoint">
+                                    <h4>Checkpoint</h4>
+                                    <ul>
+                                        <li>Test 1 (High Intent GMB): Score should be 85+</li>
+                                        <li>Test 2 (Website Visit): Score should be 60-75</li>
+                                        <li>Test 3 (Low Quality): Score should be &lt;40</li>
+                                    </ul>
+                                </div>
+
+                                <div class="warning">
+                                    <h4>If Tests Fail</h4>
+                                    <p>Check that your ANTHROPIC_API_KEY is correct in .env file</p>
+                                </div>
+                            `,
+                            commands: []
+                        },
+                        {
+                            title: "Run Validation Script",
+                            time: "3 min",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Run the automated test script to validate all 7 endpoints.</p>
+
+                                <h3>Instructions</h3>
+                                <ol>
+                                    <li>Make sure vercel dev is still running</li>
+                                    <li>Open a new terminal window</li>
+                                    <li>Run the test script below</li>
+                                    <li>Wait for all tests to complete</li>
+                                </ol>
+
+                                <div class="checkpoint">
+                                    <h4>Checkpoint</h4>
+                                    <p>You should see: <strong style="color: #10b981;">✓ ALL TESTS PASSED</strong></p>
+                                    <p>Passed: 7/7</p>
+                                </div>
+                            `,
+                            commands: [
+                                { label: "Run all tests", cmd: "./test-system.sh" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "Phase 2: Production Deploy",
+                    steps: [
+                        {
+                            title: "Deploy to Vercel",
+                            time: "10 min",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Deploy your system to Vercel for production use.</p>
+
+                                <h3>Instructions</h3>
+                                <ol>
+                                    <li>Run the deploy command below</li>
+                                    <li>Follow the prompts (choose defaults)</li>
+                                    <li>Wait for deployment to complete</li>
+                                    <li>Copy your production URL</li>
+                                </ol>
+
+                                <div class="tip">
+                                    <h4>First Time?</h4>
+                                    <p>You may need to login first: <code>vercel login</code></p>
+                                </div>
+
+                                <div class="checkpoint">
+                                    <h4>Checkpoint</h4>
+                                    <p>You should get a URL like: <code>https://circuitos-xxx.vercel.app</code></p>
+                                </div>
+                            `,
+                            commands: [
+                                { label: "Login to Vercel", cmd: "vercel login" },
+                                { label: "Deploy to production", cmd: "vercel --prod" }
+                            ]
+                        },
+                        {
+                            title: "Add Environment Variables",
+                            time: "5 min",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Add your Claude API key to Vercel's environment variables.</p>
+
+                                <h3>Instructions</h3>
+                                <ol>
+                                    <li>Go to <a href="https://vercel.com/dashboard" target="_blank">Vercel Dashboard</a></li>
+                                    <li>Select your project</li>
+                                    <li>Go to Settings → Environment Variables</li>
+                                    <li>Add: <code>ANTHROPIC_API_KEY</code> = your key</li>
+                                    <li>Select all environments (Production, Preview, Development)</li>
+                                    <li>Click "Save"</li>
+                                    <li>Redeploy: <code>vercel --prod</code></li>
+                                </ol>
+
+                                <div class="checkpoint">
+                                    <h4>Checkpoint</h4>
+                                    <p>Environment variable should show as "Encrypted" in Vercel dashboard</p>
+                                </div>
+                            `,
+                            commands: [
+                                { label: "Redeploy with env vars", cmd: "vercel --prod" }
+                            ]
+                        },
+                        {
+                            title: "Test Production",
+                            time: "5 min",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Test your production deployment to make sure everything works.</p>
+
+                                <h3>Instructions</h3>
+                                <ol>
+                                    <li>Replace YOUR-URL in the command below with your actual Vercel URL</li>
+                                    <li>Run the test script against production</li>
+                                    <li>Verify all 7 tests pass</li>
+                                </ol>
+
+                                <div class="checkpoint">
+                                    <h4>Checkpoint</h4>
+                                    <p>All tests should pass on production just like they did locally</p>
+                                </div>
+                            `,
+                            commands: [
+                                { label: "Test production (REPLACE URL!)", cmd: "./test-system.sh https://your-project.vercel.app" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "Phase 3: GHL Integration",
+                    steps: [
+                        {
+                            title: "Create Custom Fields",
+                            time: "10 min",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Create 8 custom fields in GoHighLevel to store lead data.</p>
+
+                                <h3>Instructions</h3>
+                                <ol>
+                                    <li>Go to GHL → Settings → Custom Fields</li>
+                                    <li>Click "Add Custom Field"</li>
+                                    <li>Create these 8 fields (exact names!):</li>
+                                </ol>
+
+                                <table style="width: 100%; margin: 20px 0; border-collapse: collapse;">
+                                    <thead>
+                                        <tr style="background: #f9fafb;">
+                                            <th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Field Name</th>
+                                            <th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Type</th>
+                                            <th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Example</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;"><code>lead_source</code></td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Text</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">cold_email</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;"><code>vlpr_score</code></td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Number</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">85</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;"><code>vlpr_qualified</code></td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Checkbox</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Yes</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;"><code>distance_miles</code></td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Number</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">2.4</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;"><code>median_income</code></td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Number</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">87500</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;"><code>awareness_level</code></td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Text</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Product Aware</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;"><code>instantly_campaign_id</code></td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Text</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">camp_123</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;"><code>instantly_qualification</code></td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Text</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">positive</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="checkpoint">
+                                    <h4>Checkpoint</h4>
+                                    <p>All 8 custom fields should appear in Settings → Custom Fields</p>
+                                </div>
+                            `,
+                            commands: []
+                        },
+                        {
+                            title: "Create Workflow - Website Traffic",
+                            time: "15 min",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Create a GHL workflow that validates website leads and sends personalized emails.</p>
+
+                                <h3>Instructions</h3>
+                                <ol>
+                                    <li>Go to GHL → Automations → Workflows</li>
+                                    <li>Click "Create Workflow"</li>
+                                    <li>Name it: "Virtual LPR - Website Traffic"</li>
+                                    <li>Trigger: Form Submitted OR Tag Added: "Website Lead"</li>
+                                    <li>Add HTTP Request action (Virtual LPR)</li>
+                                    <li>Add Decision node (check if qualified)</li>
+                                    <li>Add HTTP Request action (Master Copywriter)</li>
+                                    <li>Add Email action</li>
+                                </ol>
+
+                                <div class="tip">
+                                    <h4>Need Full Details?</h4>
+                                    <p>See DUAL-PATH-LEAD-SYSTEM.md for complete webhook bodies and workflow screenshots</p>
+                                </div>
+
+                                <div class="checkpoint">
+                                    <h4>Checkpoint</h4>
+                                    <p>Workflow should have 4 steps: Trigger → HTTP (LPR) → Decision → HTTP (Copy) → Email</p>
+                                </div>
+                            `,
+                            commands: []
+                        },
+                        {
+                            title: "Test Complete Flow",
+                            time: "10 min",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Test the complete end-to-end flow with a real GHL contact.</p>
+
+                                <h3>Instructions</h3>
+                                <ol>
+                                    <li>Go to GHL → Contacts</li>
+                                    <li>Create a test contact</li>
+                                    <li>Add tag "Website Lead"</li>
+                                    <li>Watch workflow execute</li>
+                                    <li>Verify custom fields populate</li>
+                                    <li>Check email was sent</li>
+                                </ol>
+
+                                <div class="checkpoint">
+                                    <h4>Checkpoint</h4>
+                                    <p>Contact should have:</p>
+                                    <ul>
+                                        <li>vlpr_score populated (0-100)</li>
+                                        <li>awareness_level set</li>
+                                        <li>Email sent with personalized copy</li>
+                                    </ul>
+                                </div>
+
+                                <div class="warning">
+                                    <h4>If Workflow Fails</h4>
+                                    <p>Check GHL workflow history for error messages. Most common: wrong webhook URL or missing API key in Vercel.</p>
+                                </div>
+                            `,
+                            commands: []
+                        }
+                    ]
+                },
+                {
+                    name: "Phase 4: Testing",
+                    steps: [
+                        {
+                            title: "Test Cold vs Warm Paths",
+                            time: "10 min",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Verify both lead paths work correctly with different tones.</p>
+
+                                <h3>Test Scenarios</h3>
+
+                                <h4>Test 1: Cold Email Lead</h4>
+                                <ol>
+                                    <li>Create contact with tag "Instantly Campaign"</li>
+                                    <li>Set custom field: instantly_campaign_id = "test_123"</li>
+                                    <li>Trigger workflow</li>
+                                    <li>Verify tone is humble: "Thanks for replying..."</li>
+                                </ol>
+
+                                <h4>Test 2: Website Traffic Lead</h4>
+                                <ol>
+                                    <li>Create contact with tag "Website Lead"</li>
+                                    <li>Trigger workflow</li>
+                                    <li>Verify tone is confident: "Saw you on our site..."</li>
+                                </ol>
+
+                                <div class="checkpoint">
+                                    <h4>Checkpoint</h4>
+                                    <p>Email copy should be noticeably different between cold and warm leads</p>
+                                </div>
+                            `,
+                            commands: [
+                                { label: "Test cold email via API", cmd: 'curl -X POST http://localhost:3000/api/copywriter -H "Content-Type: application/json" -d \'{"contact":{"first_name":"Test"},"channel":"email","awareness_level":"Problem Aware","lead_source":"cold_email","business":{"name":"MetroFlex Gym"}}\'' }
+                            ]
+                        },
+                        {
+                            title: "Verify Framework Routing",
+                            time: "5 min",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Confirm the Master Copywriter uses the right framework for different awareness levels.</p>
+
+                                <h3>Test Matrix</h3>
+                                <table style="width: 100%; margin: 20px 0; border-collapse: collapse;">
+                                    <thead>
+                                        <tr style="background: #f9fafb;">
+                                            <th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Awareness Level</th>
+                                            <th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Expected Framework</th>
+                                            <th style="padding: 10px; text-align: left; border: 1px solid #e5e7eb;">Key Phrase</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Unaware</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Brunson</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Hook, Story</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Problem Aware</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Schwartz</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Agitate pain</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Solution Aware</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">StoryBrand</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Guide, Plan</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Most Aware</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Hormozi</td>
+                                            <td style="padding: 10px; border: 1px solid #e5e7eb;">Value equation</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="checkpoint">
+                                    <h4>Checkpoint</h4>
+                                    <p>Each awareness level should use its designated framework</p>
+                                </div>
+                            `,
+                            commands: []
+                        }
+                    ]
+                },
+                {
+                    name: "Phase 5: Going Live",
+                    steps: [
+                        {
+                            title: "Connect Real Lead Sources",
+                            time: "Variable",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Connect your real lead sources to the system.</p>
+
+                                <h3>Website Traffic Sources</h3>
+                                <ul>
+                                    <li><strong>Website Forms:</strong> Already handled by GHL form trigger</li>
+                                    <li><strong>Google My Business:</strong> Use GHL's GMB integration</li>
+                                    <li><strong>Facebook Leads:</strong> Use GHL's Facebook integration</li>
+                                </ul>
+
+                                <h3>Cold Email Sources</h3>
+                                <ol>
+                                    <li>Go to Instantly.ai → Settings → Webhooks</li>
+                                    <li>Add webhook URL: <code>https://your-project.vercel.app/api/instantly-webhook</code></li>
+                                    <li>Select events: Email Reply, Link Click</li>
+                                    <li>Save webhook</li>
+                                </ol>
+
+                                <div class="tip">
+                                    <h4>Start Small</h4>
+                                    <p>Test with one campaign first, then expand to all campaigns once proven</p>
+                                </div>
+                            `,
+                            commands: []
+                        },
+                        {
+                            title: "Monitor & Optimize",
+                            time: "Ongoing",
+                            content: `
+                                <h3>What You'll Do</h3>
+                                <p>Monitor system performance and optimize based on results.</p>
+
+                                <h3>Key Metrics to Track</h3>
+                                <ul>
+                                    <li><strong>Qualification Rate:</strong> % of leads that pass Virtual LPR</li>
+                                    <li><strong>Response Rate:</strong> % of leads that reply to initial email</li>
+                                    <li><strong>Booking Rate:</strong> % that book appointments</li>
+                                    <li><strong>Cost Per Lead:</strong> Should stay around $0.03-0.04</li>
+                                </ul>
+
+                                <h3>Optimization Tips</h3>
+                                <ol>
+                                    <li>A/B test different framework assignments</li>
+                                    <li>Adjust awareness level thresholds based on results</li>
+                                    <li>Refine copy templates for your specific audience</li>
+                                    <li>Monitor Vercel logs for any errors</li>
+                                </ol>
+
+                                <div class="checkpoint">
+                                    <h4>Success Metrics</h4>
+                                    <p>You're successful when:</p>
+                                    <ul>
+                                        <li>System runs automatically without intervention</li>
+                                        <li>Leads receive personalized copy within seconds</li>
+                                        <li>Response rates improve vs manual outreach</li>
+                                    </ul>
+                                </div>
+                            `,
+                            commands: [
+                                { label: "Check Vercel logs", cmd: "vercel logs" }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // State management
+        let currentStepIndex = 0;
+        let completedSteps = new Set();
+
+        // Load saved progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('setupProgress');
+            if (saved) {
+                const data = JSON.parse(saved);
+                currentStepIndex = data.currentStep || 0;
+                completedSteps = new Set(data.completed || []);
+            }
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            localStorage.setItem('setupProgress', JSON.stringify({
+                currentStep: currentStepIndex,
+                completed: Array.from(completedSteps)
+            }));
+        }
+
+        // Calculate total steps
+        function getTotalSteps() {
+            return setupData.phases.reduce((sum, phase) => sum + phase.steps.length, 0);
+        }
+
+        // Get step by index
+        function getStepByIndex(index) {
+            let count = 0;
+            for (const phase of setupData.phases) {
+                for (const step of phase.steps) {
+                    if (count === index) {
+                        return step;
+                    }
+                    count++;
+                }
+            }
+            return null;
+        }
+
+        // Render navigation
+        function renderNavigation() {
+            const nav = document.getElementById('phase-nav');
+            let html = '';
+            let stepIndex = 0;
+
+            setupData.phases.forEach((phase, phaseIndex) => {
+                html += `<div class="phase">`;
+                html += `<div class="phase-title">${phase.name}</div>`;
+                html += `<ul class="phase-steps">`;
+
+                phase.steps.forEach((step, localStepIndex) => {
+                    const globalIndex = stepIndex;
+                    const isActive = globalIndex === currentStepIndex;
+                    const isCompleted = completedSteps.has(globalIndex);
+                    const className = isActive ? 'active' : (isCompleted ? 'completed' : '');
+
+                    html += `<li class="${className}" onclick="goToStep(${globalIndex})">${step.title}</li>`;
+                    stepIndex++;
+                });
+
+                html += `</ul></div>`;
+            });
+
+            nav.innerHTML = html;
+        }
+
+        // Render steps
+        function renderSteps() {
+            const container = document.getElementById('steps-container');
+            let html = '';
+            let stepNumber = 1;
+
+            setupData.phases.forEach(phase => {
+                phase.steps.forEach(step => {
+                    const isActive = (stepNumber - 1) === currentStepIndex;
+
+                    html += `
+                        <div class="step ${isActive ? 'active' : ''}" data-step="${stepNumber - 1}">
+                            <div class="step-header">
+                                <div class="step-number">${stepNumber}</div>
+                                <div class="step-title">
+                                    <h2>${step.title}</h2>
+                                    <div class="step-time">⏱️ ${step.time}</div>
+                                </div>
+                            </div>
+                            <div class="step-content">
+                                ${step.content}
+                                ${renderCommands(step.commands)}
+                            </div>
+                            <div class="step-actions">
+                                ${stepNumber > 1 ? `<button class="btn btn-secondary" onclick="previousStep()">← Previous</button>` : ''}
+                                ${completedSteps.has(stepNumber - 1)
+                                    ? `<button class="btn btn-success" onclick="markIncomplete(${stepNumber - 1})">✓ Completed</button>`
+                                    : `<button class="btn btn-primary" onclick="markComplete(${stepNumber - 1})">Mark as Complete</button>`
+                                }
+                                ${stepNumber < getTotalSteps() ? `<button class="btn btn-primary" onclick="nextStep()">Next →</button>` : ''}
+                            </div>
+                        </div>
+                    `;
+                    stepNumber++;
+                });
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Render command buttons
+        function renderCommands(commands) {
+            if (!commands || commands.length === 0) return '';
+
+            let html = '<div style="margin-top: 20px;">';
+            commands.forEach(cmd => {
+                html += `
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCommand(this, '${escapeHtml(cmd.cmd)}')">Copy</button>
+                        <div>${cmd.label}</div>
+                        <code>${escapeHtml(cmd.cmd)}</code>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        // Escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Copy command
+        function copyCommand(btn, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = 'Copy';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // Copy to clipboard (for quick ref)
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied: ' + text);
+            });
+        }
+
+        // Navigation functions
+        function goToStep(index) {
+            currentStepIndex = index;
+            updateUI();
+        }
+
+        function nextStep() {
+            if (currentStepIndex < getTotalSteps() - 1) {
+                currentStepIndex++;
+                updateUI();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function previousStep() {
+            if (currentStepIndex > 0) {
+                currentStepIndex--;
+                updateUI();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function markComplete(index) {
+            completedSteps.add(index);
+            saveProgress();
+            updateUI();
+            if (index === currentStepIndex && index < getTotalSteps() - 1) {
+                setTimeout(() => nextStep(), 500);
+            }
+        }
+
+        function markIncomplete(index) {
+            completedSteps.delete(index);
+            saveProgress();
+            updateUI();
+        }
+
+        // Update UI
+        function updateUI() {
+            renderNavigation();
+            renderSteps();
+
+            // Update stats
+            document.getElementById('current-step').textContent = currentStepIndex + 1;
+            document.getElementById('completed-steps').textContent = completedSteps.size;
+
+            const currentStep = getStepByIndex(currentStepIndex);
+            document.getElementById('time-estimate').textContent = currentStep ? currentStep.time : '—';
+
+            // Update progress bar
+            const progress = (completedSteps.size / getTotalSteps()) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+
+            saveProgress();
+        }
+
+        // Initialize
+        loadProgress();
+        updateUI();
+    </script>
+</body>
+</html>
