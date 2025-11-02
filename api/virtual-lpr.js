@@ -8,12 +8,18 @@
  * Integrations:
  * - Google Maps API (distance, geocoding)
  * - US Census Bureau API (demographics)
- * - Google Analytics 4 (visitor tracking)
- * - Google My Business (intent signals)
+ * - Google Analytics 4 (visitor tracking) ✅ NEW
+ * - Google My Business (intent signals) ✅ NEW
+ * - OpenStreetMap (free geocoding fallback) ✅ NEW
+ * - OpenWeather (weather-based personalization) ✅ NEW
  * - Claude API (AI validation)
  */
 
 import Anthropic from '@anthropic-ai/sdk';
+import { getVisitorByClientId, getHighIntentVisitors } from '../lib/mcps/google-analytics.js';
+import { getGMBInsights, calculateGMBIntentScore, getGMBAwarenessLevel, trackGMBSignal } from '../lib/mcps/google-my-business.js';
+import { geocodeWithFallback } from '../lib/mcps/openstreetmap.js';
+import { getCurrentWeather, analyzeWeatherImpact, isExtremeWeather } from '../lib/mcps/openweather.js';
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY
@@ -77,6 +83,76 @@ export default async function handler(req, res) {
         console.warn('[Virtual LPR] Census API error:', error.message);
         enrichmentData.census = null;
       }
+
+      // === NEW: Enrich with Weather Data ===
+      console.log('[Virtual LPR] Enriching with weather data');
+      try {
+        const weather = await getCurrentWeather(zipCode);
+        const weatherImpact = analyzeWeatherImpact(weather, business.type || 'gym');
+
+        enrichmentData.weather = {
+          ...weather,
+          impact: weatherImpact,
+          isExtreme: isExtremeWeather(weather)
+        };
+      } catch (error) {
+        console.warn('[Virtual LPR] Weather API error:', error.message);
+        enrichmentData.weather = null;
+      }
+    }
+
+    // === NEW: Enrich with GA4 Visitor Data ===
+    if (signal_type === 'website_visit' && signal_data.ga4_client_id) {
+      console.log('[Virtual LPR] Enriching with GA4 visitor data');
+      try {
+        const visitorData = await getVisitorByClientId(signal_data.ga4_client_id);
+        if (visitorData) {
+          enrichmentData.ga4 = {
+            pages_viewed: visitorData.pagesViewed,
+            session_duration: visitorData.sessionDuration,
+            total_sessions: visitorData.totalSessions,
+            engagement_score: visitorData.engagementScore,
+            awareness_level: visitorData.awarenessLevel,
+            is_high_intent: visitorData.isHighIntent
+          };
+        }
+      } catch (error) {
+        console.warn('[Virtual LPR] GA4 API error:', error.message);
+        enrichmentData.ga4 = null;
+      }
+    }
+
+    // === NEW: Enrich with GMB Signals ===
+    if (signal_type === 'gmb_view' || signal_type === 'gmb_direction' || signal_type === 'gmb_call') {
+      console.log('[Virtual LPR] Enriching with GMB data (HIGH INTENT!)');
+      try {
+        const gmbInsights = await getGMBInsights(
+          process.env.GMB_ACCOUNT_ID,
+          process.env.GMB_LOCATION_ID
+        );
+
+        const gmbIntentScore = calculateGMBIntentScore(gmbInsights);
+        const gmbAwareness = getGMBAwarenessLevel(gmbInsights);
+
+        enrichmentData.gmb = {
+          ...gmbInsights,
+          intent_score: gmbIntentScore,
+          awareness_level: gmbAwareness,
+          signal_type
+        };
+
+        // Auto-boost score for direction requests (EXTREMELY HIGH INTENT)
+        if (signal_type === 'gmb_direction') {
+          enrichmentData.gmb.intent_boost = 25;
+          console.log('[Virtual LPR] 🔥 GMB DIRECTION REQUEST - Boosting score +25!');
+        } else if (signal_type === 'gmb_call') {
+          enrichmentData.gmb.intent_boost = 20;
+          console.log('[Virtual LPR] 🔥 GMB CALL CLICK - Boosting score +20!');
+        }
+      } catch (error) {
+        console.warn('[Virtual LPR] GMB API error:', error.message);
+        enrichmentData.gmb = null;
+      }
     }
 
     // Calculate distance if coordinates available
@@ -126,9 +202,31 @@ export default async function handler(req, res) {
             median_income: enrichmentData.census?.median_income || null,
             median_age: enrichmentData.census?.median_age || null,
             zip_code: zipCode || null,
-            awareness_level: detectionResult.awareness_level || 'Unknown'
+            awareness_level: detectionResult.awareness_level || 'Unknown',
+
+            // NEW: GA4 enrichment
+            ga4_pages_viewed: enrichmentData.ga4?.pages_viewed || null,
+            ga4_session_duration: enrichmentData.ga4?.session_duration || null,
+            ga4_engagement_score: enrichmentData.ga4?.engagement_score || null,
+
+            // NEW: GMB enrichment (HIGH INTENT signals)
+            gmb_intent_score: enrichmentData.gmb?.intent_score || null,
+            gmb_direction_requests: enrichmentData.gmb?.directionRequests || null,
+            gmb_call_clicks: enrichmentData.gmb?.callClicks || null,
+
+            // NEW: Weather enrichment
+            weather_temp: enrichmentData.weather?.temp || null,
+            weather_condition: enrichmentData.weather?.condition || null,
+            weather_impact: enrichmentData.weather?.impact?.impact || null
           },
-          next_workflow: 'Lead Scorer'
+          next_workflow: 'Lead Scorer',
+
+          // NEW: Pass enrichment data for copywriter
+          enrichment: {
+            weather: enrichmentData.weather,
+            ga4: enrichmentData.ga4,
+            gmb: enrichmentData.gmb
+          }
         }
       });
     } else {

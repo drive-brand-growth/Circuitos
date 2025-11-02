@@ -7,14 +7,17 @@
  * - Demographics (age, income, distance)
  * - Psychographics (intent signals, LPR score)
  * - Channel (Email, SMS, LinkedIn)
+ * - Weather context (NEW - hyper-personalization) ✅
  *
  * Frameworks:
  * 1. Russell Brunson - Hook, Story, Offer
  * 2. Eugene Schwartz - 5 Levels of Awareness
- * 3. Alex Hormozi - $100M Offers Value Equation
+ * 3. Donald Miller - StoryBrand
+ * 4. Alex Hormozi - $100M Offers Value Equation
  */
 
 import Anthropic from '@anthropic-ai/sdk';
+import { getWeatherCopySuggestions } from '../lib/mcps/openweather.js';
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY
@@ -216,6 +219,20 @@ AVOID: Over-explaining who you are (they know)
 USE: "Saw you visited...", "You checked out...", "Ready when you are"
 ` : ''}
 
+${contact.custom_fields?.weather_temp || contact.weather ? `
+---
+
+**WEATHER CONTEXT (Hyper-Personalization)**
+
+Current weather in ${contact.city || business.city}:
+- Temperature: ${contact.custom_fields?.weather_temp || contact.weather?.temp}°F
+- Condition: ${contact.custom_fields?.weather_condition || contact.weather?.condition}
+
+WEATHER-BASED MESSAGING:
+${getWeatherContext(contact.custom_fields?.weather_temp || contact.weather?.temp, contact.custom_fields?.weather_condition || contact.weather?.condition, business.type)}
+
+` : ''}
+
 ---
 
 CHANNEL-SPECIFIC REQUIREMENTS:
@@ -345,4 +362,78 @@ WRITE WORLD-CLASS COPY NOW.`
       message: error.message
     });
   }
+}
+
+/**
+ * Generate weather-based copy suggestions
+ * Adds hyper-personalization based on current weather
+ */
+function getWeatherContext(temp, condition, businessType = 'gym') {
+  if (!temp || !condition) return '';
+
+  let context = '';
+
+  // Hot weather
+  if (temp > 85) {
+    context = `🔥 HOT WEATHER (${temp}°F):
+- Hook: "With temps hitting ${temp}°F today..."
+- Pain: "scorching heat," "brutal temperatures," "heat wave"
+- Solution angle: "${businessType === 'gym' ? 'climate-controlled facility' : 'air-conditioned comfort'}"
+- Benefit: "beat the heat," "stay cool while crushing goals"
+- Urgency: "perfect time to work out indoors"
+EXAMPLE: "While it's ${temp}°F outside, our facility stays a perfect 68°F..."`;
+  }
+
+  // Cold weather
+  else if (temp < 50) {
+    context = `❄️ COLD WEATHER (${temp}°F):
+- Hook: "As temps drop to ${temp}°F..."
+- Pain: "freezing cold," "brutal winter," "cold snap"
+- Solution angle: "${businessType === 'gym' ? 'heated facility' : 'warm environment'}"
+- Benefit: "keep momentum," "don't let weather slow you down"
+- Urgency: "weather-proof your training"
+EXAMPLE: "Don't let the ${temp}° cold be an excuse..."`;
+  }
+
+  // Rainy weather
+  else if (condition.toLowerCase().includes('rain')) {
+    context = `🌧️ RAINY CONDITIONS:
+- Hook: "Perfect rainy day weather to..."
+- Pain: "wet conditions," "slippery sidewalks," "dreary weather"
+- Solution angle: "${businessType === 'gym' ? 'stay dry while staying active' : 'indoor advantage'}"
+- Benefit: "rain or shine," "no excuses," "weather-proof"
+- Urgency: "rain makes indoor training perfect"
+EXAMPLE: "Skip the wet sidewalks and hit your PRs indoors..."`;
+  }
+
+  // Snowy weather
+  else if (condition.toLowerCase().includes('snow')) {
+    context = `❄️ SNOWY CONDITIONS:
+- Hook: "With snow in the forecast..."
+- Pain: "slippery conditions," "snowstorm," "winter weather"
+- Solution angle: "safe indoor environment"
+- Benefit: "skip dangerous conditions," "weather-proof routine"
+- Urgency: "snow day = perfect training day"
+EXAMPLE: "Snow outside? Perfect day to stay warm and train hard..."`;
+  }
+
+  // Perfect weather
+  else if (temp >= 65 && temp <= 80 && condition.toLowerCase().includes('clear')) {
+    context = `☀️ PERFECT WEATHER (${temp}°F):
+- Hook: "Beautiful ${temp}° weather today..."
+- Mood: "perfect conditions," "ideal weather," "great day"
+- Motivation angle: "capitalize on this energy"
+- Benefit: "momentum builder," "great weather = great results"
+- Urgency: "perfect day to start"
+EXAMPLE: "Perfect ${temp}° weather to kick off your transformation..."`;
+  }
+
+  else {
+    context = `MILD CONDITIONS (${temp}°F):
+- Keep messaging standard
+- Weather not a strong angle
+- Focus on other personalization factors`;
+  }
+
+  return context;
 }

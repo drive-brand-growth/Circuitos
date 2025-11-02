@@ -19,7 +19,10 @@
   "author": "CircuitOS",
   "license": "UNLICENSED",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.27.0"
+    "@anthropic-ai/sdk": "^0.27.0",
+    "@google-analytics/data": "^4.2.0",
+    "googleapis": "^134.0.0",
+    "axios": "^1.6.0"
   },
   "devDependencies": {
     "vercel": "^33.0.0"
