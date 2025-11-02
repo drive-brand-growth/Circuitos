@@ -33,10 +33,13 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background-color: var(--light-gray);
             color: var(--text-dark);
-            font-size: 16px;
-            line-height: 1.6;
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.8;
+            letter-spacing: 0.02em;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
         header {
@@ -51,14 +54,16 @@
         }
 
         header h1 {
-            font-size: 24px;
+            font-size: 26px;
             margin-bottom: 8px;
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: 0.03em;
         }
 
         header p {
-            font-size: 14px;
-            opacity: 0.9;
+            font-size: 16px;
+            opacity: 0.95;
+            font-weight: 500;
         }
 
         .container {
@@ -76,8 +81,10 @@
 
         .progress-overview h2 {
             color: var(--michigan-blue);
-            font-size: 20px;
+            font-size: 22px;
+            font-weight: 700;
             margin-bottom: 12px;
+            letter-spacing: 0.02em;
         }
 
         .progress-bar-container {
@@ -96,8 +103,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: 800;
             color: var(--michigan-blue);
         }
 
@@ -122,8 +129,9 @@
         }
 
         .stat-card .label {
-            font-size: 12px;
-            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+            color: #555;
             margin-top: 4px;
         }
 
@@ -182,21 +190,26 @@
         }
 
         .session-title {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 22px;
+            font-weight: 700;
             color: var(--michigan-blue);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            letter-spacing: 0.02em;
         }
 
         .session-duration {
-            font-size: 14px;
-            color: #666;
+            font-size: 16px;
+            font-weight: 500;
+            color: #555;
         }
 
         .session-description {
-            margin: 12px 0;
+            margin: 16px 0;
+            margin-bottom: 20px;
             color: var(--text-dark);
-            line-height: 1.5;
+            font-size: 17px;
+            line-height: 1.8;
+            font-weight: 500;
         }
 
         .objectives, .topics {
@@ -205,8 +218,10 @@
 
         .objectives h4, .topics h4 {
             color: var(--michigan-blue);
-            font-size: 16px;
-            margin-bottom: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 0.02em;
         }
 
         .objectives ul, .topics ul {
@@ -215,9 +230,12 @@
         }
 
         .objectives li, .topics li {
-            padding: 6px 0 6px 24px;
+            padding: 8px 0 8px 28px;
             position: relative;
-            font-size: 15px;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.7;
+            margin-bottom: 4px;
         }
 
         .objectives li::before {
@@ -226,6 +244,7 @@
             left: 0;
             color: var(--michigan-maize);
             font-weight: bold;
+            font-size: 18px;
         }
 
         .topics li::before {
@@ -234,6 +253,7 @@
             left: 8px;
             color: var(--michigan-blue);
             font-weight: bold;
+            font-size: 20px;
         }
 
         .audio-player {
@@ -340,8 +360,9 @@
         .time-display {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
-            color: #666;
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
             margin-bottom: 8px;
         }
 
@@ -388,8 +409,8 @@
             color: var(--michigan-blue);
             padding: 8px 16px;
             border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 15px;
+            font-weight: 700;
             cursor: pointer;
             touch-action: manipulation;
             min-width: 60px;
@@ -416,8 +437,9 @@
             padding: 14px 20px;
             border: none;
             border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
             cursor: pointer;
             touch-action: manipulation;
             transition: all 0.2s;
@@ -459,13 +481,17 @@
 
         .certificate-section h3 {
             color: var(--michigan-blue);
-            font-size: 20px;
+            font-size: 22px;
+            font-weight: 700;
             margin-bottom: 12px;
+            letter-spacing: 0.02em;
         }
 
         .certificate-section p {
             margin-bottom: 16px;
-            color: #666;
+            color: #555;
+            font-size: 17px;
+            font-weight: 500;
         }
 
         .modal {
@@ -499,7 +525,10 @@
 
         .modal h2 {
             color: var(--michigan-blue);
+            font-size: 24px;
+            font-weight: 700;
             margin-bottom: 20px;
+            letter-spacing: 0.02em;
         }
 
         .modal .btn {
@@ -520,33 +549,150 @@
         }
 
         .install-prompt h3 {
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: 700;
             margin-bottom: 8px;
         }
 
         .install-prompt p {
-            font-size: 14px;
+            font-size: 16px;
+            font-weight: 500;
             margin-bottom: 12px;
         }
 
         .audio-status {
             text-align: center;
             padding: 8px;
-            font-size: 14px;
-            color: #666;
+            font-size: 15px;
+            font-weight: 500;
+            color: #555;
             font-style: italic;
+        }
+
+        /* Audio Mode Toggle Styles */
+        .audio-mode-selector {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+            border: 2px solid var(--michigan-blue);
+        }
+
+        .audio-mode-selector h4 {
+            color: var(--michigan-blue);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .mode-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .mode-option {
+            background: var(--light-gray);
+            border: 3px solid transparent;
+            border-radius: 12px;
+            padding: 16px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            touch-action: manipulation;
+        }
+
+        .mode-option:active {
+            transform: scale(0.97);
+        }
+
+        .mode-option.active {
+            background: var(--michigan-maize);
+            border-color: var(--michigan-blue);
+        }
+
+        .mode-option .mode-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .mode-option .mode-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--michigan-blue);
+            margin-bottom: 4px;
+        }
+
+        .mode-option .mode-duration {
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .mode-option .mode-description {
+            font-size: 12px;
+            color: #888;
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+
+        .current-mode-indicator {
+            background: var(--michigan-blue);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .audio-mode-selector {
+                background: #2a2a2a;
+                border-color: var(--michigan-maize);
+            }
+
+            .mode-option {
+                background: #333;
+            }
+
+            .mode-option.active {
+                background: var(--michigan-maize);
+            }
+
+            .mode-option .mode-name {
+                color: #FFFFFF;
+            }
+
+            .mode-option.active .mode-name {
+                color: var(--michigan-blue);
+            }
+
+            .mode-option .mode-duration,
+            .mode-option .mode-description {
+                color: #E0E0E0;
+            }
+
+            .mode-option.active .mode-duration,
+            .mode-option.active .mode-description {
+                color: var(--michigan-blue);
+            }
         }
 
         footer {
             text-align: center;
             padding: 30px 20px;
-            color: #666;
-            font-size: 14px;
+            color: #555;
+            font-size: 15px;
+            font-weight: 500;
         }
 
         footer a {
             color: var(--michigan-blue);
             text-decoration: none;
+            font-weight: 600;
         }
 
         @media (min-width: 768px) {
@@ -559,20 +705,32 @@
         @media (prefers-color-scheme: dark) {
             body {
                 background-color: #1a1a1a;
-                color: #e0e0e0;
+                color: #FFFFFF;
             }
 
             .session-card, .progress-overview, .modal-content {
                 background: #2a2a2a;
-                color: #e0e0e0;
+                color: #FFFFFF;
             }
 
             .audio-player, .stat-card {
                 background: #333;
             }
 
-            .session-description, .objectives li, .topics li {
-                color: #d0d0d0;
+            .session-description {
+                color: #FFFFFF;
+            }
+
+            .objectives li, .topics li {
+                color: #FFFFFF;
+            }
+
+            .session-duration, .stat-card .label, .time-display, .audio-status {
+                color: #E0E0E0;
+            }
+
+            .certificate-section p, footer {
+                color: #E0E0E0;
             }
         }
 
@@ -597,7 +755,8 @@
             color: white;
             padding: 8px;
             text-align: center;
-            font-size: 14px;
+            font-size: 16px;
+            font-weight: 600;
             display: none;
         }
 
@@ -654,7 +813,7 @@
                 <div class="session-number">1</div>
                 <div class="session-title-container">
                     <div class="session-title">AI Past, Present & Future I</div>
-                    <div class="session-duration">Duration: 30 minutes</div>
+                    <div class="session-duration">Audio Summary</div>
                 </div>
             </div>
             <div class="session-description">
@@ -680,6 +839,23 @@
                     <li>Perceptrons, activation functions, and backpropagation</li>
                     <li>Real-world applications of ML in business</li>
                 </ul>
+            </div>
+            <div class="audio-mode-selector">
+                <h4>Choose Audio Mode</h4>
+                <div class="mode-options">
+                    <div class="mode-option active" onclick="setAudioMode(1, 'mp3')" id="mode-mp3-1">
+                        <div class="mode-icon">&#127925;</div>
+                        <div class="mode-name">Quick Summary</div>
+                        <div class="mode-duration">~3 minutes</div>
+                        <div class="mode-description">Professional audio highlights</div>
+                    </div>
+                    <div class="mode-option" onclick="setAudioMode(1, 'tts')" id="mode-tts-1">
+                        <div class="mode-icon">&#128214;</div>
+                        <div class="mode-name">Full Content</div>
+                        <div class="mode-duration">~25 minutes</div>
+                        <div class="mode-description">Complete AI narration</div>
+                    </div>
+                </div>
             </div>
             <div class="audio-player">
                 <audio id="audio1" src="../audio/module-01.mp3" preload="metadata"></audio>
@@ -721,7 +897,7 @@
                 <div class="session-number">2</div>
                 <div class="session-title-container">
                     <div class="session-title">AI Past, Present & Future II</div>
-                    <div class="session-duration">Duration: 30 minutes</div>
+                    <div class="session-duration">Audio Summary</div>
                 </div>
             </div>
             <div class="session-description">
@@ -748,6 +924,23 @@
                     <li>Prompt engineering and fine-tuning strategies</li>
                     <li>Business applications of generative AI</li>
                 </ul>
+            </div>
+            <div class="audio-mode-selector">
+                <h4>Choose Audio Mode</h4>
+                <div class="mode-options">
+                    <div class="mode-option active" onclick="setAudioMode(2, 'mp3')" id="mode-mp3-2">
+                        <div class="mode-icon">&#127925;</div>
+                        <div class="mode-name">Quick Summary</div>
+                        <div class="mode-duration">~3 minutes</div>
+                        <div class="mode-description">Professional audio highlights</div>
+                    </div>
+                    <div class="mode-option" onclick="setAudioMode(2, 'tts')" id="mode-tts-2">
+                        <div class="mode-icon">&#128214;</div>
+                        <div class="mode-name">Full Content</div>
+                        <div class="mode-duration">~25 minutes</div>
+                        <div class="mode-description">Complete AI narration</div>
+                    </div>
+                </div>
             </div>
             <div class="audio-player">
                 <audio id="audio2" src="../audio/module-02.mp3" preload="metadata"></audio>
@@ -789,7 +982,7 @@
                 <div class="session-number">3</div>
                 <div class="session-title-container">
                     <div class="session-title">Data Strategy for Success I</div>
-                    <div class="session-duration">Duration: 30 minutes</div>
+                    <div class="session-duration">Audio Summary</div>
                 </div>
             </div>
             <div class="session-description">
@@ -816,6 +1009,23 @@
                     <li>Business alignment and value realization</li>
                     <li>Data strategy roadmap creation</li>
                 </ul>
+            </div>
+            <div class="audio-mode-selector">
+                <h4>Choose Audio Mode</h4>
+                <div class="mode-options">
+                    <div class="mode-option active" onclick="setAudioMode(3, 'mp3')" id="mode-mp3-3">
+                        <div class="mode-icon">&#127925;</div>
+                        <div class="mode-name">Quick Summary</div>
+                        <div class="mode-duration">~3 minutes</div>
+                        <div class="mode-description">Professional audio highlights</div>
+                    </div>
+                    <div class="mode-option" onclick="setAudioMode(3, 'tts')" id="mode-tts-3">
+                        <div class="mode-icon">&#128214;</div>
+                        <div class="mode-name">Full Content</div>
+                        <div class="mode-duration">~25 minutes</div>
+                        <div class="mode-description">Complete AI narration</div>
+                    </div>
+                </div>
             </div>
             <div class="audio-player">
                 <audio id="audio3" src="../audio/module-03.mp3" preload="metadata"></audio>
@@ -857,7 +1067,7 @@
                 <div class="session-number">4</div>
                 <div class="session-title-container">
                     <div class="session-title">Data Strategy for Success II</div>
-                    <div class="session-duration">Duration: 30 minutes</div>
+                    <div class="session-duration">Audio Summary</div>
                 </div>
             </div>
             <div class="session-description">
@@ -885,6 +1095,23 @@
                     <li>Real-time data processing and streaming</li>
                     <li>DataOps and data pipeline automation</li>
                 </ul>
+            </div>
+            <div class="audio-mode-selector">
+                <h4>Choose Audio Mode</h4>
+                <div class="mode-options">
+                    <div class="mode-option active" onclick="setAudioMode(4, 'mp3')" id="mode-mp3-4">
+                        <div class="mode-icon">&#127925;</div>
+                        <div class="mode-name">Quick Summary</div>
+                        <div class="mode-duration">~3 minutes</div>
+                        <div class="mode-description">Professional audio highlights</div>
+                    </div>
+                    <div class="mode-option" onclick="setAudioMode(4, 'tts')" id="mode-tts-4">
+                        <div class="mode-icon">&#128214;</div>
+                        <div class="mode-name">Full Content</div>
+                        <div class="mode-duration">~25 minutes</div>
+                        <div class="mode-description">Complete AI narration</div>
+                    </div>
+                </div>
             </div>
             <div class="audio-player">
                 <audio id="audio4" src="../audio/module-04.mp3" preload="metadata"></audio>
@@ -926,7 +1153,7 @@
                 <div class="session-number">5</div>
                 <div class="session-title-container">
                     <div class="session-title">AI Strategy & Digital Transformation</div>
-                    <div class="session-duration">Duration: 30 minutes</div>
+                    <div class="session-duration">Audio Summary</div>
                 </div>
             </div>
             <div class="session-description">
@@ -954,6 +1181,23 @@
                     <li>AI center of excellence establishment</li>
                     <li>Change management for AI adoption</li>
                 </ul>
+            </div>
+            <div class="audio-mode-selector">
+                <h4>Choose Audio Mode</h4>
+                <div class="mode-options">
+                    <div class="mode-option active" onclick="setAudioMode(5, 'mp3')" id="mode-mp3-5">
+                        <div class="mode-icon">&#127925;</div>
+                        <div class="mode-name">Quick Summary</div>
+                        <div class="mode-duration">~3 minutes</div>
+                        <div class="mode-description">Professional audio highlights</div>
+                    </div>
+                    <div class="mode-option" onclick="setAudioMode(5, 'tts')" id="mode-tts-5">
+                        <div class="mode-icon">&#128214;</div>
+                        <div class="mode-name">Full Content</div>
+                        <div class="mode-duration">~25 minutes</div>
+                        <div class="mode-description">Complete AI narration</div>
+                    </div>
+                </div>
             </div>
             <div class="audio-player">
                 <audio id="audio5" src="../audio/module-05.mp3" preload="metadata"></audio>
@@ -995,7 +1239,7 @@
                 <div class="session-number">6</div>
                 <div class="session-title-container">
                     <div class="session-title">AI Business Applications & Use Cases</div>
-                    <div class="session-duration">Duration: 30 minutes</div>
+                    <div class="session-duration">Audio Summary</div>
                 </div>
             </div>
             <div class="session-description">
@@ -1024,6 +1268,23 @@
                     <li>Customer experience enhancement through AI</li>
                     <li>Industry-specific AI applications</li>
                 </ul>
+            </div>
+            <div class="audio-mode-selector">
+                <h4>Choose Audio Mode</h4>
+                <div class="mode-options">
+                    <div class="mode-option active" onclick="setAudioMode(6, 'mp3')" id="mode-mp3-6">
+                        <div class="mode-icon">&#127925;</div>
+                        <div class="mode-name">Quick Summary</div>
+                        <div class="mode-duration">~3 minutes</div>
+                        <div class="mode-description">Professional audio highlights</div>
+                    </div>
+                    <div class="mode-option" onclick="setAudioMode(6, 'tts')" id="mode-tts-6">
+                        <div class="mode-icon">&#128214;</div>
+                        <div class="mode-name">Full Content</div>
+                        <div class="mode-duration">~25 minutes</div>
+                        <div class="mode-description">Complete AI narration</div>
+                    </div>
+                </div>
             </div>
             <div class="audio-player">
                 <audio id="audio6" src="../audio/module-06.mp3" preload="metadata"></audio>
@@ -1065,7 +1326,7 @@
                 <div class="session-number">7</div>
                 <div class="session-title-container">
                     <div class="session-title">Leading Data & Analytics Teams</div>
-                    <div class="session-duration">Duration: 30 minutes</div>
+                    <div class="session-duration">Audio Summary</div>
                 </div>
             </div>
             <div class="session-description">
@@ -1094,6 +1355,23 @@
                     <li>Team culture and collaboration practices</li>
                     <li>Managing remote and hybrid teams</li>
                 </ul>
+            </div>
+            <div class="audio-mode-selector">
+                <h4>Choose Audio Mode</h4>
+                <div class="mode-options">
+                    <div class="mode-option active" onclick="setAudioMode(7, 'mp3')" id="mode-mp3-7">
+                        <div class="mode-icon">&#127925;</div>
+                        <div class="mode-name">Quick Summary</div>
+                        <div class="mode-duration">~3 minutes</div>
+                        <div class="mode-description">Professional audio highlights</div>
+                    </div>
+                    <div class="mode-option" onclick="setAudioMode(7, 'tts')" id="mode-tts-7">
+                        <div class="mode-icon">&#128214;</div>
+                        <div class="mode-name">Full Content</div>
+                        <div class="mode-duration">~25 minutes</div>
+                        <div class="mode-description">Complete AI narration</div>
+                    </div>
+                </div>
             </div>
             <div class="audio-player">
                 <audio id="audio7" src="../audio/module-07.mp3" preload="metadata"></audio>
@@ -1135,7 +1413,7 @@
                 <div class="session-number">8</div>
                 <div class="session-title-container">
                     <div class="session-title">AI Governance, Ethics & Trust</div>
-                    <div class="session-duration">Duration: 30 minutes</div>
+                    <div class="session-duration">Audio Summary</div>
                 </div>
             </div>
             <div class="session-description">
@@ -1165,6 +1443,23 @@
                     <li>Responsible AI development practices</li>
                     <li>Building stakeholder trust in AI</li>
                 </ul>
+            </div>
+            <div class="audio-mode-selector">
+                <h4>Choose Audio Mode</h4>
+                <div class="mode-options">
+                    <div class="mode-option active" onclick="setAudioMode(8, 'mp3')" id="mode-mp3-8">
+                        <div class="mode-icon">&#127925;</div>
+                        <div class="mode-name">Quick Summary</div>
+                        <div class="mode-duration">~3 minutes</div>
+                        <div class="mode-description">Professional audio highlights</div>
+                    </div>
+                    <div class="mode-option" onclick="setAudioMode(8, 'tts')" id="mode-tts-8">
+                        <div class="mode-icon">&#128214;</div>
+                        <div class="mode-name">Full Content</div>
+                        <div class="mode-duration">~25 minutes</div>
+                        <div class="mode-description">Complete AI narration</div>
+                    </div>
+                </div>
             </div>
             <div class="audio-player">
                 <audio id="audio8" src="../audio/module-08.mp3" preload="metadata"></audio>
@@ -1206,7 +1501,7 @@
                 <div class="session-number">9</div>
                 <div class="session-title-container">
                     <div class="session-title">Building AI-Ready Organizations</div>
-                    <div class="session-duration">Duration: 30 minutes</div>
+                    <div class="session-duration">Audio Summary</div>
                 </div>
             </div>
             <div class="session-description">
@@ -1236,6 +1531,23 @@
                     <li>Measuring organizational AI readiness</li>
                     <li>Scaling AI from pilots to production</li>
                 </ul>
+            </div>
+            <div class="audio-mode-selector">
+                <h4>Choose Audio Mode</h4>
+                <div class="mode-options">
+                    <div class="mode-option active" onclick="setAudioMode(9, 'mp3')" id="mode-mp3-9">
+                        <div class="mode-icon">&#127925;</div>
+                        <div class="mode-name">Quick Summary</div>
+                        <div class="mode-duration">~3 minutes</div>
+                        <div class="mode-description">Professional audio highlights</div>
+                    </div>
+                    <div class="mode-option" onclick="setAudioMode(9, 'tts')" id="mode-tts-9">
+                        <div class="mode-icon">&#128214;</div>
+                        <div class="mode-name">Full Content</div>
+                        <div class="mode-duration">~25 minutes</div>
+                        <div class="mode-description">Complete AI narration</div>
+                    </div>
+                </div>
             </div>
             <div class="audio-player">
                 <audio id="audio9" src="../audio/module-09.mp3" preload="metadata"></audio>
@@ -1277,7 +1589,7 @@
                 <div class="session-number">10</div>
                 <div class="session-title-container">
                     <div class="session-title">Communicating AI to Stakeholders</div>
-                    <div class="session-duration">Duration: 30 minutes</div>
+                    <div class="session-duration">Audio Summary</div>
                 </div>
             </div>
             <div class="session-description">
@@ -1307,6 +1619,23 @@
                     <li>Influencing without authority</li>
                     <li>Creating AI champions across the organization</li>
                 </ul>
+            </div>
+            <div class="audio-mode-selector">
+                <h4>Choose Audio Mode</h4>
+                <div class="mode-options">
+                    <div class="mode-option active" onclick="setAudioMode(10, 'mp3')" id="mode-mp3-10">
+                        <div class="mode-icon">&#127925;</div>
+                        <div class="mode-name">Quick Summary</div>
+                        <div class="mode-duration">~3 minutes</div>
+                        <div class="mode-description">Professional audio highlights</div>
+                    </div>
+                    <div class="mode-option" onclick="setAudioMode(10, 'tts')" id="mode-tts-10">
+                        <div class="mode-icon">&#128214;</div>
+                        <div class="mode-name">Full Content</div>
+                        <div class="mode-duration">~25 minutes</div>
+                        <div class="mode-description">Complete AI narration</div>
+                    </div>
+                </div>
             </div>
             <div class="audio-player">
                 <audio id="audio10" src="../audio/module-10.mp3" preload="metadata"></audio>
@@ -1348,7 +1677,7 @@
                 <div class="session-number">11</div>
                 <div class="session-title-container">
                     <div class="session-title">Future of AI & Emerging Technologies</div>
-                    <div class="session-duration">Duration: 30 minutes</div>
+                    <div class="session-duration">Audio Summary</div>
                 </div>
             </div>
             <div class="session-description">
@@ -1378,6 +1707,23 @@
                     <li>Synthetic data and simulation</li>
                     <li>Preparing for future AI disruptions</li>
                 </ul>
+            </div>
+            <div class="audio-mode-selector">
+                <h4>Choose Audio Mode</h4>
+                <div class="mode-options">
+                    <div class="mode-option active" onclick="setAudioMode(11, 'mp3')" id="mode-mp3-11">
+                        <div class="mode-icon">&#127925;</div>
+                        <div class="mode-name">Quick Summary</div>
+                        <div class="mode-duration">~3 minutes</div>
+                        <div class="mode-description">Professional audio highlights</div>
+                    </div>
+                    <div class="mode-option" onclick="setAudioMode(11, 'tts')" id="mode-tts-11">
+                        <div class="mode-icon">&#128214;</div>
+                        <div class="mode-name">Full Content</div>
+                        <div class="mode-duration">~25 minutes</div>
+                        <div class="mode-description">Complete AI narration</div>
+                    </div>
+                </div>
             </div>
             <div class="audio-player">
                 <audio id="audio11" src="../audio/module-11.mp3" preload="metadata"></audio>
@@ -1419,7 +1765,7 @@
                 <div class="session-number">12</div>
                 <div class="session-title-container">
                     <div class="session-title">CDAIO Role & Career Development</div>
-                    <div class="session-duration">Duration: 30 minutes</div>
+                    <div class="session-duration">Audio Summary</div>
                 </div>
             </div>
             <div class="session-description">
@@ -1450,6 +1796,23 @@
                     <li>Work-life balance and avoiding burnout</li>
                     <li>Negotiating compensation and role scope</li>
                 </ul>
+            </div>
+            <div class="audio-mode-selector">
+                <h4>Choose Audio Mode</h4>
+                <div class="mode-options">
+                    <div class="mode-option active" onclick="setAudioMode(12, 'mp3')" id="mode-mp3-12">
+                        <div class="mode-icon">&#127925;</div>
+                        <div class="mode-name">Quick Summary</div>
+                        <div class="mode-duration">~3 minutes</div>
+                        <div class="mode-description">Professional audio highlights</div>
+                    </div>
+                    <div class="mode-option" onclick="setAudioMode(12, 'tts')" id="mode-tts-12">
+                        <div class="mode-icon">&#128214;</div>
+                        <div class="mode-name">Full Content</div>
+                        <div class="mode-duration">~25 minutes</div>
+                        <div class="mode-description">Complete AI narration</div>
+                    </div>
+                </div>
             </div>
             <div class="audio-player">
                 <audio id="audio12" src="../audio/module-12.mp3" preload="metadata"></audio>
@@ -1515,9 +1878,13 @@
         // ===== GLOBAL STATE =====
         const TOTAL_SESSIONS = 12;
         const audioPlayers = {}; // Store audio element references
+        const audioModes = {}; // Store current audio mode for each session (mp3 or tts)
+        const ttsUtterances = {}; // Store TTS utterances for each session
+        let speechSynthesis = window.speechSynthesis;
 
         let deferredPrompt = null;
         let currentPlayingSession = null;
+        let currentAudioMode = 'mp3'; // Default mode
 
         // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', function() {
@@ -1531,6 +1898,78 @@
             updateProgressDisplay();
             checkCertificateEligibility();
             setupAudioPlayers();
+            initializeAudioModes();
+        }
+
+        function initializeAudioModes() {
+            // Initialize all sessions to MP3 mode by default
+            for (let i = 1; i <= TOTAL_SESSIONS; i++) {
+                audioModes[i] = 'mp3';
+            }
+            // Load saved mode preferences
+            loadAudioModePreferences();
+        }
+
+        function loadAudioModePreferences() {
+            try {
+                const savedModes = JSON.parse(localStorage.getItem('cdaio_audio_modes') || '{}');
+                for (let sessionNum in savedModes) {
+                    const session = parseInt(sessionNum);
+                    const mode = savedModes[sessionNum];
+                    if (session >= 1 && session <= TOTAL_SESSIONS && (mode === 'mp3' || mode === 'tts')) {
+                        audioModes[session] = mode;
+                        // Update UI to reflect saved preference
+                        updateModeUI(session, mode);
+                    }
+                }
+            } catch (e) {
+                console.error('Error loading audio mode preferences:', e);
+            }
+        }
+
+        function saveAudioModePreference(sessionNumber, mode) {
+            try {
+                const savedModes = JSON.parse(localStorage.getItem('cdaio_audio_modes') || '{}');
+                savedModes[sessionNumber] = mode;
+                localStorage.setItem('cdaio_audio_modes', JSON.stringify(savedModes));
+            } catch (e) {
+                console.error('Error saving audio mode preference:', e);
+            }
+        }
+
+        function setAudioMode(sessionNumber, mode) {
+            // Stop any currently playing audio
+            stopAllAudio();
+            stopAllTTS();
+
+            // Update mode
+            audioModes[sessionNumber] = mode;
+            saveAudioModePreference(sessionNumber, mode);
+
+            // Update UI
+            updateModeUI(sessionNumber, mode);
+
+            // Update status
+            if (mode === 'mp3') {
+                updateStatus(sessionNumber, 'MP3 Mode - Professional audio summary');
+            } else {
+                updateStatus(sessionNumber, 'TTS Mode - Full content narration');
+            }
+        }
+
+        function updateModeUI(sessionNumber, mode) {
+            const mp3Option = document.getElementById(`mode-mp3-${sessionNumber}`);
+            const ttsOption = document.getElementById(`mode-tts-${sessionNumber}`);
+
+            if (mp3Option && ttsOption) {
+                if (mode === 'mp3') {
+                    mp3Option.classList.add('active');
+                    ttsOption.classList.remove('active');
+                } else {
+                    mp3Option.classList.remove('active');
+                    ttsOption.classList.add('active');
+                }
+            }
         }
 
         function setupAudioPlayers() {
@@ -1708,6 +2147,16 @@
         }
 
         function togglePlayPause(sessionNumber) {
+            const mode = audioModes[sessionNumber] || 'mp3';
+
+            if (mode === 'mp3') {
+                toggleMP3PlayPause(sessionNumber);
+            } else {
+                toggleTTSPlayPause(sessionNumber);
+            }
+        }
+
+        function toggleMP3PlayPause(sessionNumber) {
             const audio = audioPlayers[sessionNumber];
             if (!audio) {
                 updateStatus(sessionNumber, 'Audio player not found');
@@ -1719,6 +2168,7 @@
             if (audio.paused) {
                 // Stop any other playing audio
                 stopAllAudio();
+                stopAllTTS();
 
                 // Play this audio
                 audio.play().then(() => {
@@ -1732,6 +2182,119 @@
                 // Pause
                 audio.pause();
                 playBtn.textContent = '▶';
+            }
+        }
+
+        function toggleTTSPlayPause(sessionNumber) {
+            const playBtn = document.getElementById(`playBtn${sessionNumber}`);
+
+            // Check if TTS is speaking
+            if (speechSynthesis.speaking && currentPlayingSession === sessionNumber) {
+                // Pause or resume
+                if (speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                    playBtn.textContent = '⏸';
+                    updateStatus(sessionNumber, 'Playing TTS...');
+                } else {
+                    speechSynthesis.pause();
+                    playBtn.textContent = '▶';
+                    updateStatus(sessionNumber, 'Paused');
+                }
+            } else {
+                // Start new TTS
+                stopAllAudio();
+                stopAllTTS();
+                playTTS(sessionNumber);
+            }
+        }
+
+        function playTTS(sessionNumber) {
+            // Get session content
+            const sessionCard = document.querySelector(`.session-card[data-session="${sessionNumber}"]`);
+            if (!sessionCard) {
+                updateStatus(sessionNumber, 'Session content not found');
+                return;
+            }
+
+            // Build complete text from session content
+            const title = sessionCard.querySelector('.session-title')?.textContent || '';
+            const description = sessionCard.querySelector('.session-description')?.textContent || '';
+
+            const objectives = Array.from(sessionCard.querySelectorAll('.objectives li'))
+                .map(li => li.textContent)
+                .join('. ');
+
+            const topics = Array.from(sessionCard.querySelectorAll('.topics li'))
+                .map(li => li.textContent)
+                .join('. ');
+
+            // Combine all content
+            const fullText = `${title}. ${description} Learning Objectives: ${objectives} Topics Covered: ${topics}`;
+
+            // Create utterance
+            const utterance = new SpeechSynthesisUtterance(fullText);
+
+            // Configure utterance
+            utterance.rate = 1.0;
+            utterance.pitch = 1.0;
+            utterance.volume = 1.0;
+            utterance.lang = 'en-US';
+
+            // Try to select a good voice
+            const voices = speechSynthesis.getVoices();
+            const preferredVoice = voices.find(voice =>
+                voice.lang.startsWith('en') &&
+                (voice.name.includes('Female') || voice.name.includes('Google') || voice.name.includes('Natural'))
+            ) || voices.find(voice => voice.lang.startsWith('en'));
+
+            if (preferredVoice) {
+                utterance.voice = preferredVoice;
+            }
+
+            // Event handlers
+            utterance.onstart = () => {
+                const playBtn = document.getElementById(`playBtn${sessionNumber}`);
+                playBtn.textContent = '⏸';
+                currentPlayingSession = sessionNumber;
+                updateStatus(sessionNumber, 'Playing full content with TTS...');
+            };
+
+            utterance.onend = () => {
+                const playBtn = document.getElementById(`playBtn${sessionNumber}`);
+                playBtn.textContent = '▶';
+                currentPlayingSession = null;
+                updateStatus(sessionNumber, 'TTS playback completed');
+            };
+
+            utterance.onerror = (event) => {
+                console.error('TTS error:', event);
+                const playBtn = document.getElementById(`playBtn${sessionNumber}`);
+                playBtn.textContent = '▶';
+                currentPlayingSession = null;
+                updateStatus(sessionNumber, 'TTS error occurred');
+            };
+
+            // Store utterance
+            ttsUtterances[sessionNumber] = utterance;
+
+            // Play
+            updateStatus(sessionNumber, 'Starting TTS playback...');
+            speechSynthesis.speak(utterance);
+        }
+
+        function stopAllTTS() {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+            }
+
+            // Reset all TTS play buttons
+            for (let i = 1; i <= TOTAL_SESSIONS; i++) {
+                if (audioModes[i] === 'tts') {
+                    const playBtn = document.getElementById(`playBtn${i}`);
+                    if (playBtn) {
+                        playBtn.textContent = '▶';
+                    }
+                }
             }
         }
 
@@ -1751,35 +2314,77 @@
         }
 
         function skipBackward(sessionNumber) {
-            const audio = audioPlayers[sessionNumber];
-            if (!audio) return;
+            const mode = audioModes[sessionNumber] || 'mp3';
 
-            audio.currentTime = Math.max(0, audio.currentTime - 15);
-            updateStatus(sessionNumber, 'Skipped back 15s');
+            if (mode === 'mp3') {
+                const audio = audioPlayers[sessionNumber];
+                if (!audio) return;
+
+                audio.currentTime = Math.max(0, audio.currentTime - 15);
+                updateStatus(sessionNumber, 'Skipped back 15s');
+            } else {
+                // TTS doesn't support seeking
+                updateStatus(sessionNumber, 'Skip not available in TTS mode. Stop and restart to replay.');
+            }
         }
 
         function skipForward(sessionNumber) {
-            const audio = audioPlayers[sessionNumber];
-            if (!audio) return;
+            const mode = audioModes[sessionNumber] || 'mp3';
 
-            audio.currentTime = Math.min(audio.duration, audio.currentTime + 15);
-            updateStatus(sessionNumber, 'Skipped forward 15s');
+            if (mode === 'mp3') {
+                const audio = audioPlayers[sessionNumber];
+                if (!audio) return;
+
+                audio.currentTime = Math.min(audio.duration, audio.currentTime + 15);
+                updateStatus(sessionNumber, 'Skipped forward 15s');
+            } else {
+                // TTS doesn't support seeking
+                updateStatus(sessionNumber, 'Skip not available in TTS mode. Use speed controls instead.');
+            }
         }
 
         function seek(sessionNumber) {
-            const audio = audioPlayers[sessionNumber];
-            const seekBar = document.getElementById(`seekBar${sessionNumber}`);
+            const mode = audioModes[sessionNumber] || 'mp3';
 
-            if (!audio || !seekBar) return;
+            if (mode === 'mp3') {
+                const audio = audioPlayers[sessionNumber];
+                const seekBar = document.getElementById(`seekBar${sessionNumber}`);
 
-            audio.currentTime = parseFloat(seekBar.value);
+                if (!audio || !seekBar) return;
+
+                audio.currentTime = parseFloat(seekBar.value);
+            } else {
+                // TTS doesn't support seeking
+                updateStatus(sessionNumber, 'Seek not available in TTS mode');
+            }
         }
 
         function setSpeed(sessionNumber, rate) {
-            const audio = audioPlayers[sessionNumber];
-            if (!audio) return;
+            const mode = audioModes[sessionNumber] || 'mp3';
 
-            audio.playbackRate = rate;
+            if (mode === 'mp3') {
+                const audio = audioPlayers[sessionNumber];
+                if (!audio) return;
+
+                audio.playbackRate = rate;
+            } else {
+                // For TTS, update the utterance rate
+                const utterance = ttsUtterances[sessionNumber];
+                if (utterance) {
+                    // Map playback rates to TTS rates (TTS accepts 0.1 to 10)
+                    // Standard rates: 0.75, 1, 1.25, 1.5, 1.75, 2
+                    utterance.rate = rate;
+
+                    // If TTS is currently playing this session, we need to restart
+                    if (speechSynthesis.speaking && currentPlayingSession === sessionNumber) {
+                        speechSynthesis.cancel();
+                        // Set new rate for next play
+                        updateStatus(sessionNumber, `Speed set to ${rate}x. Restart to apply.`);
+                    } else {
+                        updateStatus(sessionNumber, `Speed set to ${rate}x for next TTS playback`);
+                    }
+                }
+            }
 
             // Update active button
             const card = document.querySelector(`.session-card[data-session="${sessionNumber}"]`);
@@ -1787,30 +2392,73 @@
                 card.querySelectorAll('.speed-btn').forEach(btn => btn.classList.remove('active'));
                 event.target.classList.add('active');
             }
-
-            updateStatus(sessionNumber, `Speed: ${rate}x`);
         }
 
         function setVolume(sessionNumber) {
-            const audio = audioPlayers[sessionNumber];
+            const mode = audioModes[sessionNumber] || 'mp3';
             const volumeSlider = document.getElementById(`volume${sessionNumber}`);
+            if (!volumeSlider) return;
 
-            if (!audio || !volumeSlider) return;
+            const volumeValue = volumeSlider.value / 100;
 
-            audio.volume = volumeSlider.value / 100;
+            if (mode === 'mp3') {
+                const audio = audioPlayers[sessionNumber];
+                if (!audio) return;
+
+                audio.volume = volumeValue;
+            } else {
+                // For TTS, update the utterance volume
+                const utterance = ttsUtterances[sessionNumber];
+                if (utterance) {
+                    utterance.volume = volumeValue;
+
+                    // If TTS is currently playing this session, we need to restart for volume change
+                    if (speechSynthesis.speaking && currentPlayingSession === sessionNumber) {
+                        updateStatus(sessionNumber, `Volume changed. Restart to apply.`);
+                    }
+                }
+            }
 
             // Update volume icon
             const volumeIcon = volumeSlider.previousElementSibling;
             if (volumeIcon) {
-                if (audio.volume === 0) {
+                if (volumeValue === 0) {
                     volumeIcon.textContent = '🔇';
-                } else if (audio.volume < 0.5) {
+                } else if (volumeValue < 0.5) {
                     volumeIcon.textContent = '🔉';
                 } else {
                     volumeIcon.textContent = '🔊';
                 }
             }
         }
+
+        // Load voices for TTS (some browsers load voices asynchronously)
+        function loadVoices() {
+            return new Promise((resolve) => {
+                let voices = speechSynthesis.getVoices();
+                if (voices.length > 0) {
+                    resolve(voices);
+                    return;
+                }
+
+                // Wait for voices to load
+                speechSynthesis.onvoiceschanged = () => {
+                    voices = speechSynthesis.getVoices();
+                    resolve(voices);
+                };
+
+                // Timeout after 3 seconds
+                setTimeout(() => {
+                    voices = speechSynthesis.getVoices();
+                    resolve(voices);
+                }, 3000);
+            });
+        }
+
+        // Load voices on initialization
+        loadVoices().then(voices => {
+            console.log(`Loaded ${voices.length} TTS voices`);
+        });
 
         function updateTimeDisplay(sessionNumber) {
             const audio = audioPlayers[sessionNumber];
