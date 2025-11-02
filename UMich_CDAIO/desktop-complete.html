@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University of Michigan - Chief Data & AI Officer Training Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #00274C 0%, #003d73 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: #00274C;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-title h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .umich-logo {
+            width: 50px;
+            height: 50px;
+            background: #FFCB05;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            color: #00274C;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #FFCB05;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #ccc;
+            text-transform: uppercase;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            background: white;
+            margin-top: 90px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 30px 20px;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            color: #00274C;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .progress-overview {
+            margin-bottom: 30px;
+        }
+
+        .overall-progress {
+            margin-bottom: 25px;
+        }
+
+        .progress-bar {
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00274C 0%, #0055a5 100%);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .session-list {
+            list-style: none;
+        }
+
+        .session-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f5f5f5;
+            transition: all 0.3s ease;
+        }
+
+        .session-item.completed {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+        }
+
+        .session-item:hover {
+            background: #e0e0e0;
+            transform: translateX(5px);
+        }
+
+        .session-number {
+            font-weight: bold;
+            color: #00274C;
+        }
+
+        .session-status {
+            font-size: 18px;
+        }
+
+        .action-buttons {
+            margin-top: 30px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background: #FFCB05;
+            color: #00274C;
+        }
+
+        .btn-primary:hover {
+            background: #ffd633;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: #00274C;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #003d73;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 300px;
+            margin-top: 90px;
+            padding: 30px;
+        }
+
+        .welcome-banner {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-banner h2 {
+            color: #00274C;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .welcome-banner p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Sessions Grid */
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+            gap: 25px;
+        }
+
+        .session-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-top: 4px solid #00274C;
+        }
+
+        .session-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .session-card.completed {
+            border-top-color: #4caf50;
+        }
+
+        .session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .session-title-area {
+            flex: 1;
+        }
+
+        .session-number-badge {
+            display: inline-block;
+            background: #00274C;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .session-card.completed .session-number-badge {
+            background: #4caf50;
+        }
+
+        .session-title {
+            color: #00274C;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .session-duration {
+            color: #999;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .completion-badge {
+            background: #4caf50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .session-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .session-section {
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            color: #00274C;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .objectives-list, .topics-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .objectives-list li, .topics-list li {
+            padding: 6px 0 6px 20px;
+            position: relative;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .objectives-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #FFCB05;
+            font-weight: bold;
+        }
+
+        .topics-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #00274C;
+            font-weight: bold;
+        }
+
+        /* Audio Player */
+        .audio-player {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .play-button {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #FFCB05;
+            border: none;
+            color: #00274C;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            background: #ffd633;
+            transform: scale(1.1);
+        }
+
+        .play-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .time-display {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-size: 14px;
+            color: #666;
+            flex: 1;
+        }
+
+        .audio-progress {
+            flex: 1;
+            height: 6px;
+            background: #ddd;
+            border-radius: 3px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .audio-progress-fill {
+            height: 100%;
+            background: #00274C;
+            transition: width 0.1s linear;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .volume-slider {
+            width: 80px;
+        }
+
+        .playback-speed {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .speed-button {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .speed-button.active {
+            background: #00274C;
+            color: white;
+            border-color: #00274C;
+        }
+
+        /* Session Actions */
+        .session-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .session-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .session-btn-primary {
+            background: #00274C;
+            color: white;
+        }
+
+        .session-btn-primary:hover {
+            background: #003d73;
+        }
+
+        .session-btn-success {
+            background: #4caf50;
+            color: white;
+        }
+
+        .session-btn-success:hover {
+            background: #45a049;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .certificate {
+            border: 8px solid #FFCB05;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .certificate-logo {
+            width: 80px;
+            height: 80px;
+            background: #00274C;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #FFCB05;
+        }
+
+        .certificate h2 {
+            color: #00274C;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .certificate p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .certificate-name {
+            font-size: 24px;
+            color: #00274C;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .certificate-footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #FFCB05;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .certificate-sig {
+            text-align: center;
+        }
+
+        .certificate-sig-line {
+            border-top: 2px solid #333;
+            width: 150px;
+            margin: 10px auto 5px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00274C;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #003d73;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .sessions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <div class="umich-logo">M</div>
+                <div>
+                    <h1>Chief Data & AI Officer Training</h1>
+                    <p style="font-size: 14px; color: #ccc; margin-top: 5px;">University of Michigan Executive Education</p>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="completedCount">0</div>
+                    <div class="stat-label">Sessions Complete</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalHours">0</div>
+                    <div class="stat-label">Hours Completed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="overallPercent">0%</div>
+                    <div class="stat-label">Overall Progress</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Progress Overview</h2>
+
+            <div class="progress-overview">
+                <div class="overall-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="sidebarProgress">0%</div>
+                    </div>
+                    <p style="text-align: center; color: #666; font-size: 14px; margin-top: 10px;">
+                        <span id="sidebarCompletedText">0 of 12</span> sessions completed
+                    </p>
+                </div>
+
+                <ul class="session-list" id="sessionList"></ul>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="certificateBtn" disabled>
+                    View Certificate
+                </button>
+                <button class="btn btn-secondary" id="exportBtn">
+                    Export Progress
+                </button>
+                <button class="btn btn-secondary" id="resetBtn">
+                    Reset Progress
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="welcome-banner">
+                <h2>Welcome to the CDAIO Training Platform</h2>
+                <p>
+                    This comprehensive 12-session program is designed to equip senior executives with the knowledge and skills
+                    needed to lead data and AI initiatives at the highest organizational levels. Each 30-minute session combines
+                    strategic insights, practical frameworks, and real-world case studies to prepare you for the evolving role
+                    of Chief Data and AI Officer. Track your progress, complete all sessions, and earn your certificate of completion.
+                </p>
+            </div>
+
+            <div class="sessions-grid" id="sessionsGrid"></div>
+        </main>
+    </div>
+
+    <!-- Certificate Modal -->
+    <div class="modal" id="certificateModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">&times;</button>
+            <div class="certificate">
+                <div class="certificate-logo">M</div>
+                <h2>Certificate of Completion</h2>
+                <p>This certifies that</p>
+                <div class="certificate-name" id="certificateName">CDAIO Candidate</div>
+                <p>has successfully completed the</p>
+                <p style="font-weight: bold; font-size: 18px; color: #00274C;">
+                    Chief Data & AI Officer Training Program
+                </p>
+                <p>University of Michigan Executive Education</p>
+                <p style="margin-top: 20px;">
+                    <strong>12 Sessions Completed</strong> | <strong>6 Hours Total</strong>
+                </p>
+                <div class="certificate-footer">
+                    <div class="certificate-sig">
+                        <div class="certificate-sig-line"></div>
+                        <p style="font-size: 12px; color: #666;">Program Director</p>
+                    </div>
+                    <div class="certificate-sig">
+                        <div class="certificate-sig-line"></div>
+                        <p style="font-size: 12px; color: #666;">Date Completed: <span id="completionDate"></span></p>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="margin-top: 20px;" id="downloadCertificate">
+                Download Certificate
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const TOTAL_SESSIONS = 12;
+        const SESSION_DURATION = 30;
+
+        const sessionsData = [
+            {
+                id: 1,
+                title: "AI Past, Present & Future I",
+                duration: 30,
+                description: "Explore the evolution of artificial intelligence from its early theoretical foundations to modern applications. Understand the fundamental concepts of machine learning, deep learning, and neural networks that power today's AI systems. Learn how historical breakthroughs have shaped the current AI landscape.",
+                objectives: [
+                    "Trace the historical development of AI from the 1950s to present day",
+                    "Understand core machine learning concepts including supervised, unsupervised, and reinforcement learning",
+                    "Explain the architecture and function of neural networks and deep learning systems",
+                    "Identify key technological breakthroughs that enabled modern AI capabilities",
+                    "Recognize the difference between narrow AI and the pursuit of general AI"
+                ],
+                topics: [
+                    "History of AI: Turing Test, expert systems, and AI winters",
+                    "Machine learning fundamentals and algorithms",
+                    "Neural network architecture and deep learning",
+                    "Key milestones: ImageNet, AlphaGo, and transformer models",
+                    "Current state of AI technology and capabilities"
+                ]
+            },
+            {
+                id: 2,
+                title: "AI Past, Present & Future II",
+                duration: 30,
+                description: "Dive deep into cutting-edge AI technologies including transfer learning, foundation models, and large language models. Examine how models like GPT, Claude, and LLaMA are transforming business capabilities. Understand the technical innovations that enable these powerful systems and their implications for enterprise applications.",
+                objectives: [
+                    "Understand transfer learning and how it accelerates AI development",
+                    "Explain the architecture and capabilities of foundation models",
+                    "Compare major large language models (GPT, Claude, LLaMA, Gemini)",
+                    "Assess the practical applications of generative AI in business contexts",
+                    "Evaluate the limitations and challenges of current AI technologies"
+                ],
+                topics: [
+                    "Transfer learning and pre-trained models",
+                    "Foundation models and their applications",
+                    "Large language models: GPT-4, Claude, LLaMA, Gemini",
+                    "Generative AI for text, images, code, and multimodal outputs",
+                    "Future directions: multimodal AI and reasoning capabilities"
+                ]
+            },
+            {
+                id: 3,
+                title: "Data Strategy for Success I",
+                duration: 30,
+                description: "Master the fundamentals of enterprise data strategy and governance. Learn how to align data initiatives with business objectives and create a cohesive data vision. Understand the critical importance of data quality, metadata management, and establishing a strong data governance framework that enables AI success.",
+                objectives: [
+                    "Develop a comprehensive enterprise data strategy aligned with business goals",
+                    "Establish effective data governance frameworks and policies",
+                    "Implement data quality management processes and metrics",
+                    "Create organizational structures that support data excellence",
+                    "Build business cases for data investments and initiatives"
+                ],
+                topics: [
+                    "Enterprise data strategy frameworks and methodologies",
+                    "Data governance principles, policies, and organizational structures",
+                    "Data quality dimensions and management practices",
+                    "Metadata management and data catalogs",
+                    "Aligning data strategy with business objectives and ROI"
+                ]
+            },
+            {
+                id: 4,
+                title: "Data Strategy for Success II",
+                duration: 30,
+                description: "Explore modern data architectures including data lakes, data warehouses, data mesh, and data fabric. Understand cloud platforms and how to choose the right architecture for your organization's needs. Learn best practices for data integration, real-time processing, and building scalable data infrastructure that supports AI and analytics.",
+                objectives: [
+                    "Compare and contrast modern data architecture patterns (lake, warehouse, mesh, fabric)",
+                    "Evaluate cloud platform options for data storage and processing",
+                    "Design data pipelines for batch and real-time processing",
+                    "Implement data integration strategies across diverse sources",
+                    "Select appropriate architectures based on organizational needs and constraints"
+                ],
+                topics: [
+                    "Data architecture patterns: lakes, warehouses, lakehouses",
+                    "Data mesh and data fabric paradigms",
+                    "Cloud platforms: AWS, Azure, Google Cloud data services",
+                    "Data integration and ETL/ELT processes",
+                    "Real-time data processing and streaming architectures"
+                ]
+            },
+            {
+                id: 5,
+                title: "AI Strategy & Digital Transformation",
+                duration: 30,
+                description: "Learn how to develop and execute a comprehensive AI strategy that drives digital transformation. Understand strategic frameworks for AI adoption, how to calculate ROI for AI initiatives, and when to build, buy, or partner for AI capabilities. Navigate the challenges of organizational change and create roadmaps for successful AI implementation.",
+                objectives: [
+                    "Develop enterprise AI strategies that align with business transformation goals",
+                    "Calculate and communicate ROI for AI investments and initiatives",
+                    "Make strategic build vs. buy vs. partner decisions for AI capabilities",
+                    "Create AI roadmaps with clear milestones and success metrics",
+                    "Navigate organizational change management for AI adoption"
+                ],
+                topics: [
+                    "AI strategy frameworks and maturity models",
+                    "Digital transformation enabled by AI technologies",
+                    "ROI calculation and business case development for AI",
+                    "Build vs. buy vs. partner decision frameworks",
+                    "AI roadmap development and phased implementation strategies"
+                ]
+            },
+            {
+                id: 6,
+                title: "AI Business Applications & Use Cases",
+                duration: 30,
+                description: "Survey the landscape of AI business applications across industries and functions. Examine real-world use cases in predictive analytics, natural language processing, computer vision, and autonomous systems. Learn how leading organizations are deploying AI for customer experience, operations optimization, risk management, and innovation.",
+                objectives: [
+                    "Identify high-value AI use cases across business functions and industries",
+                    "Understand applications of predictive analytics and forecasting",
+                    "Evaluate NLP use cases including chatbots, sentiment analysis, and document processing",
+                    "Assess computer vision applications in quality control, security, and automation",
+                    "Explore autonomous systems and intelligent process automation"
+                ],
+                topics: [
+                    "Predictive analytics and forecasting applications",
+                    "Natural language processing: chatbots, sentiment analysis, document understanding",
+                    "Computer vision: image recognition, object detection, video analytics",
+                    "Recommendation systems and personalization",
+                    "Autonomous systems and robotic process automation"
+                ]
+            },
+            {
+                id: 7,
+                title: "Leading Data & Analytics Teams",
+                duration: 30,
+                description: "Master the art of building, leading, and scaling high-performing data and AI teams. Learn organizational structures that work, how to attract and retain top talent, and create cultures of data-driven decision making. Understand the skills needed across different roles and how to develop career paths that motivate and engage your team.",
+                objectives: [
+                    "Design effective organizational structures for data and AI teams",
+                    "Recruit, hire, and retain top data science and AI talent",
+                    "Create career development paths for technical and leadership roles",
+                    "Manage cross-functional collaboration between technical and business teams",
+                    "Build high-performance team cultures focused on innovation and impact"
+                ],
+                topics: [
+                    "Data and AI team organizational structures and models",
+                    "Talent acquisition strategies for competitive markets",
+                    "Role definitions: data scientists, ML engineers, data engineers, analysts",
+                    "Performance management and career development frameworks",
+                    "Creating collaborative cultures between business and technical teams"
+                ]
+            },
+            {
+                id: 8,
+                title: "AI Governance, Ethics & Trust",
+                duration: 30,
+                description: "Navigate the critical challenges of AI governance, ethics, and responsible AI deployment. Understand frameworks for identifying and mitigating bias, ensuring fairness, and building trustworthy AI systems. Learn about regulatory compliance requirements, explainability techniques, and how to establish governance structures that balance innovation with responsibility.",
+                objectives: [
+                    "Establish comprehensive AI governance frameworks and oversight structures",
+                    "Identify and mitigate bias in data and AI models",
+                    "Implement fairness metrics and responsible AI practices",
+                    "Navigate regulatory compliance requirements (GDPR, CCPA, AI Act)",
+                    "Build stakeholder trust through transparency and explainability"
+                ],
+                topics: [
+                    "AI governance frameworks and organizational structures",
+                    "Bias detection, measurement, and mitigation strategies",
+                    "Fairness principles and implementation approaches",
+                    "Regulatory landscape: GDPR, CCPA, EU AI Act, emerging regulations",
+                    "Explainable AI (XAI) techniques and transparency practices"
+                ]
+            },
+            {
+                id: 9,
+                title: "Building AI-Ready Organizations",
+                duration: 30,
+                description: "Transform your organization to be AI-ready through strategic organizational design and change management. Learn how to create structures that support AI innovation, drive cultural change, and build capabilities across the enterprise. Understand the critical success factors for AI adoption and how to overcome common organizational barriers.",
+                objectives: [
+                    "Design organizational structures that enable AI innovation and scale",
+                    "Drive cultural transformation to embrace data-driven decision making",
+                    "Implement change management strategies for AI adoption",
+                    "Build enterprise-wide AI literacy and capabilities",
+                    "Create centers of excellence and innovation hubs for AI"
+                ],
+                topics: [
+                    "Organizational design for AI-ready enterprises",
+                    "Cultural transformation and change management strategies",
+                    "AI literacy programs and upskilling initiatives",
+                    "Centers of excellence and AI innovation labs",
+                    "Breaking down silos and fostering cross-functional collaboration"
+                ]
+            },
+            {
+                id: 10,
+                title: "Communicating AI to Stakeholders",
+                duration: 30,
+                description: "Develop executive communication skills for presenting AI initiatives to boards, C-suite executives, and diverse stakeholders. Learn storytelling techniques that make complex AI concepts accessible, how to frame AI investments for maximum impact, and best practices for board presentations. Master the art of building support and managing expectations for AI initiatives.",
+                objectives: [
+                    "Craft compelling narratives that explain AI value to non-technical audiences",
+                    "Prepare and deliver effective board presentations on AI strategy",
+                    "Communicate AI risks, limitations, and ethical considerations",
+                    "Build stakeholder alignment and secure buy-in for AI investments",
+                    "Report on AI initiatives with appropriate metrics and business outcomes"
+                ],
+                topics: [
+                    "Executive communication strategies for AI initiatives",
+                    "Board presentation best practices and templates",
+                    "Data storytelling and visualization techniques",
+                    "Communicating technical concepts to business audiences",
+                    "Building stakeholder coalitions and managing expectations"
+                ]
+            },
+            {
+                id: 11,
+                title: "Future of AI & Emerging Technologies",
+                duration: 30,
+                description: "Look ahead to the future of AI and emerging technologies that will shape the next decade. Explore the path toward artificial general intelligence (AGI), autonomous AI agents, multimodal systems, and quantum AI. Understand how to prepare your organization for technological disruption and position for competitive advantage in an AI-driven future.",
+                objectives: [
+                    "Understand the trajectory toward artificial general intelligence (AGI)",
+                    "Evaluate emerging AI technologies and their potential business impact",
+                    "Assess autonomous AI agents and their applications",
+                    "Explore multimodal AI systems combining vision, language, and reasoning",
+                    "Prepare organizational strategies for rapid technological change"
+                ],
+                topics: [
+                    "Path to artificial general intelligence (AGI) and current progress",
+                    "Autonomous AI agents and agentic systems",
+                    "Multimodal AI: integrating vision, language, audio, and reasoning",
+                    "Quantum computing and its implications for AI",
+                    "Future trends: AI in biotechnology, materials science, and climate"
+                ]
+            },
+            {
+                id: 12,
+                title: "CDAIO Role & Career Development",
+                duration: 30,
+                description: "Define your career path as a Chief Data and AI Officer and understand the evolving requirements of this critical executive role. Learn about career progression options, essential skills for continued growth, networking strategies, and how to stay current in the rapidly changing AI landscape. Create your personal development plan for long-term success.",
+                objectives: [
+                    "Define the responsibilities and scope of the CDAIO role",
+                    "Identify career paths and progression opportunities in data and AI leadership",
+                    "Develop essential executive skills for the CDAIO position",
+                    "Build professional networks and executive presence",
+                    "Create personal development plans for continuous learning and growth"
+                ],
+                topics: [
+                    "CDAIO role definition, responsibilities, and success factors",
+                    "Career pathways: technical leadership vs. executive leadership",
+                    "Essential skills: strategic thinking, communication, influence",
+                    "Professional networking and building executive presence",
+                    "Continuous learning strategies and staying current with AI advances"
+                ]
+            }
+        ];
+
+        class AudioSimulator {
+            constructor(sessionId, duration) {
+                this.sessionId = sessionId;
+                this.duration = duration * 60;
+                this.currentTime = 0;
+                this.isPlaying = false;
+                this.speed = 1;
+                this.volume = 1;
+                this.interval = null;
+            }
+
+            play() {
+                if (!this.isPlaying) {
+                    this.isPlaying = true;
+                    this.interval = setInterval(() => {
+                        this.currentTime += 0.1 * this.speed;
+                        if (this.currentTime >= this.duration) {
+                            this.currentTime = this.duration;
+                            this.pause();
+                            this.onEnded();
+                        }
+                        if (this.onTimeUpdate) {
+                            this.onTimeUpdate();
+                        }
+                    }, 100);
+                }
+            }
+
+            pause() {
+                this.isPlaying = false;
+                if (this.interval) {
+                    clearInterval(this.interval);
+                    this.interval = null;
+                }
+            }
+
+            seek(time) {
+                this.currentTime = Math.max(0, Math.min(time, this.duration));
+                if (this.onTimeUpdate) {
+                    this.onTimeUpdate();
+                }
+            }
+
+            setSpeed(speed) {
+                this.speed = speed;
+            }
+
+            setVolume(volume) {
+                this.volume = Math.max(0, Math.min(1, volume));
+            }
+
+            reset() {
+                this.pause();
+                this.currentTime = 0;
+                if (this.onTimeUpdate) {
+                    this.onTimeUpdate();
+                }
+            }
+
+            onTimeUpdate() {}
+            onEnded() {}
+        }
+
+        class CDAPlatform {
+            constructor() {
+                this.progress = this.loadProgress();
+                this.audioPlayers = new Map();
+                this.init();
+            }
+
+            init() {
+                this.renderSessions();
+                this.renderSidebar();
+                this.updateStats();
+                this.attachEventListeners();
+            }
+
+            loadProgress() {
+                try {
+                    const saved = localStorage.getItem('cdaio_progress');
+                    if (saved) {
+                        return JSON.parse(saved);
+                    }
+                } catch (error) {
+                    return this.createEmptyProgress();
+                }
+                return this.createEmptyProgress();
+            }
+
+            createEmptyProgress() {
+                const progress = {
+                    sessions: {},
+                    startDate: new Date().toISOString(),
+                    lastUpdate: new Date().toISOString()
+                };
+                for (let i = 1; i <= TOTAL_SESSIONS; i++) {
+                    progress.sessions[i] = {
+                        completed: false,
+                        progress: 0,
+                        timeSpent: 0,
+                        lastAccessed: null,
+                        completionDate: null
+                    };
+                }
+                return progress;
+            }
+
+            saveProgress() {
+                try {
+                    this.progress.lastUpdate = new Date().toISOString();
+                    localStorage.setItem('cdaio_progress', JSON.stringify(this.progress));
+                } catch (error) {
+                    return;
+                }
+            }
+
+            renderSessions() {
+                const grid = document.getElementById('sessionsGrid');
+                grid.innerHTML = '';
+
+                sessionsData.forEach(session => {
+                    const card = this.createSessionCard(session);
+                    grid.appendChild(card);
+                });
+            }
+
+            createSessionCard(session) {
+                const card = document.createElement('div');
+                card.className = 'session-card';
+                const sessionProgress = this.progress.sessions[session.id];
+
+                if (sessionProgress.completed) {
+                    card.classList.add('completed');
+                }
+
+                card.innerHTML = `
+                    <div class="session-header">
+                        <div class="session-title-area">
+                            <span class="session-number-badge">Session ${session.id}</span>
+                            <h3 class="session-title">${session.title}</h3>
+                            <div class="session-duration">
+                                ⏱ ${session.duration} minutes
+                            </div>
+                        </div>
+                        ${sessionProgress.completed ? '<div class="completion-badge">✓ Completed</div>' : ''}
+                    </div>
+
+                    <p class="session-description">${session.description}</p>
+
+                    <div class="session-section">
+                        <h4 class="section-title">Learning Objectives</h4>
+                        <ul class="objectives-list">
+                            ${session.objectives.map(obj => `<li>${obj}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="session-section">
+                        <h4 class="section-title">Topics Covered</h4>
+                        <ul class="topics-list">
+                            ${session.topics.map(topic => `<li>${topic}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="audio-player">
+                        <div class="player-controls">
+                            <button class="play-button" data-session="${session.id}">
+                                ▶
+                            </button>
+                            <div class="time-display">
+                                <span class="current-time" data-session="${session.id}">0:00</span>
+                                <div class="audio-progress" data-session="${session.id}">
+                                    <div class="audio-progress-fill" data-session="${session.id}" style="width: ${sessionProgress.progress}%"></div>
+                                </div>
+                                <span class="total-time">${session.duration}:00</span>
+                            </div>
+                            <div class="volume-control">
+                                🔊
+                                <input type="range" class="volume-slider" min="0" max="100" value="100" data-session="${session.id}">
+                            </div>
+                        </div>
+                        <div class="playback-speed">
+                            Speed:
+                            <button class="speed-button active" data-session="${session.id}" data-speed="1">1x</button>
+                            <button class="speed-button" data-session="${session.id}" data-speed="1.25">1.25x</button>
+                            <button class="speed-button" data-session="${session.id}" data-speed="1.5">1.5x</button>
+                            <button class="speed-button" data-session="${session.id}" data-speed="2">2x</button>
+                        </div>
+                    </div>
+
+                    <div class="session-actions">
+                        <button class="session-btn session-btn-primary" data-action="reset" data-session="${session.id}">
+                            Reset Session
+                        </button>
+                        <button class="session-btn session-btn-success" data-action="complete" data-session="${session.id}" ${sessionProgress.completed ? 'disabled' : ''}>
+                            ${sessionProgress.completed ? 'Completed' : 'Mark Complete'}
+                        </button>
+                    </div>
+                `;
+
+                this.attachSessionEventListeners(card, session);
+                return card;
+            }
+
+            attachSessionEventListeners(card, session) {
+                const playButton = card.querySelector('.play-button');
+                const progressBar = card.querySelector('.audio-progress');
+                const volumeSlider = card.querySelector('.volume-slider');
+                const speedButtons = card.querySelectorAll('.speed-button');
+                const resetBtn = card.querySelector('[data-action="reset"]');
+                const completeBtn = card.querySelector('[data-action="complete"]');
+
+                const audio = new AudioSimulator(session.id, session.duration);
+                this.audioPlayers.set(session.id, audio);
+
+                audio.onTimeUpdate = () => {
+                    const currentTimeEl = card.querySelector('.current-time');
+                    const progressFill = card.querySelector('.audio-progress-fill');
+
+                    const minutes = Math.floor(audio.currentTime / 60);
+                    const seconds = Math.floor(audio.currentTime % 60);
+                    currentTimeEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+                    const progress = (audio.currentTime / audio.duration) * 100;
+                    progressFill.style.width = `${progress}%`;
+
+                    this.progress.sessions[session.id].progress = progress;
+                    this.progress.sessions[session.id].timeSpent = audio.currentTime;
+                    this.progress.sessions[session.id].lastAccessed = new Date().toISOString();
+                    this.saveProgress();
+                };
+
+                audio.onEnded = () => {
+                    playButton.textContent = '▶';
+                    if (!this.progress.sessions[session.id].completed) {
+                        this.completeSession(session.id);
+                    }
+                };
+
+                playButton.addEventListener('click', () => {
+                    if (audio.isPlaying) {
+                        audio.pause();
+                        playButton.textContent = '▶';
+                    } else {
+                        this.pauseAllAudio();
+                        audio.play();
+                        playButton.textContent = '⏸';
+                    }
+                });
+
+                progressBar.addEventListener('click', (e) => {
+                    const rect = progressBar.getBoundingClientRect();
+                    const percent = (e.clientX - rect.left) / rect.width;
+                    const time = percent * audio.duration;
+                    audio.seek(time);
+                });
+
+                volumeSlider.addEventListener('input', (e) => {
+                    audio.setVolume(e.target.value / 100);
+                });
+
+                speedButtons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        speedButtons.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        audio.setSpeed(parseFloat(btn.dataset.speed));
+                    });
+                });
+
+                resetBtn.addEventListener('click', () => {
+                    audio.reset();
+                    playButton.textContent = '▶';
+                });
+
+                completeBtn.addEventListener('click', () => {
+                    if (!this.progress.sessions[session.id].completed) {
+                        this.completeSession(session.id);
+                    }
+                });
+            }
+
+            pauseAllAudio() {
+                document.querySelectorAll('.play-button').forEach(btn => {
+                    btn.textContent = '▶';
+                });
+                this.audioPlayers.forEach(audio => audio.pause());
+            }
+
+            completeSession(sessionId) {
+                this.progress.sessions[sessionId].completed = true;
+                this.progress.sessions[sessionId].progress = 100;
+                this.progress.sessions[sessionId].completionDate = new Date().toISOString();
+                this.saveProgress();
+                this.renderSessions();
+                this.renderSidebar();
+                this.updateStats();
+                this.checkAllComplete();
+            }
+
+            checkAllComplete() {
+                const allComplete = Object.values(this.progress.sessions).every(s => s.completed);
+                const certBtn = document.getElementById('certificateBtn');
+                certBtn.disabled = !allComplete;
+
+                if (allComplete) {
+                    setTimeout(() => {
+                        this.showCertificate();
+                    }, 500);
+                }
+            }
+
+            renderSidebar() {
+                const sessionList = document.getElementById('sessionList');
+                sessionList.innerHTML = '';
+
+                sessionsData.forEach(session => {
+                    const li = document.createElement('li');
+                    li.className = 'session-item';
+                    const sessionProgress = this.progress.sessions[session.id];
+
+                    if (sessionProgress.completed) {
+                        li.classList.add('completed');
+                    }
+
+                    li.innerHTML = `
+                        <span class="session-number">Session ${session.id}</span>
+                        <span class="session-status">${sessionProgress.completed ? '✓' : '○'}</span>
+                    `;
+
+                    sessionList.appendChild(li);
+                });
+            }
+
+            updateStats() {
+                const completed = Object.values(this.progress.sessions).filter(s => s.completed).length;
+                const percentage = Math.round((completed / TOTAL_SESSIONS) * 100);
+                const totalHours = (completed * SESSION_DURATION) / 60;
+
+                document.getElementById('completedCount').textContent = completed;
+                document.getElementById('totalHours').textContent = totalHours.toFixed(1);
+                document.getElementById('overallPercent').textContent = `${percentage}%`;
+                document.getElementById('sidebarProgress').textContent = `${percentage}%`;
+                document.getElementById('sidebarProgress').style.width = `${percentage}%`;
+                document.getElementById('sidebarCompletedText').textContent = `${completed} of ${TOTAL_SESSIONS}`;
+            }
+
+            attachEventListeners() {
+                document.getElementById('certificateBtn').addEventListener('click', () => {
+                    this.showCertificate();
+                });
+
+                document.getElementById('exportBtn').addEventListener('click', () => {
+                    this.exportProgress();
+                });
+
+                document.getElementById('resetBtn').addEventListener('click', () => {
+                    if (confirm('Are you sure you want to reset all progress? This action cannot be undone.')) {
+                        this.resetProgress();
+                    }
+                });
+
+                document.getElementById('closeModal').addEventListener('click', () => {
+                    this.hideCertificate();
+                });
+
+                document.getElementById('certificateModal').addEventListener('click', (e) => {
+                    if (e.target.id === 'certificateModal') {
+                        this.hideCertificate();
+                    }
+                });
+
+                document.getElementById('downloadCertificate').addEventListener('click', () => {
+                    this.downloadCertificate();
+                });
+            }
+
+            showCertificate() {
+                const modal = document.getElementById('certificateModal');
+                const lastCompletion = Object.values(this.progress.sessions)
+                    .map(s => s.completionDate)
+                    .filter(d => d)
+                    .sort()
+                    .pop();
+
+                const date = new Date(lastCompletion);
+                document.getElementById('completionDate').textContent = date.toLocaleDateString();
+                modal.classList.add('active');
+            }
+
+            hideCertificate() {
+                document.getElementById('certificateModal').classList.remove('active');
+            }
+
+            exportProgress() {
+                const data = {
+                    program: 'University of Michigan - Chief Data & AI Officer Training',
+                    exportDate: new Date().toISOString(),
+                    progress: this.progress,
+                    summary: {
+                        totalSessions: TOTAL_SESSIONS,
+                        completedSessions: Object.values(this.progress.sessions).filter(s => s.completed).length,
+                        totalHours: (Object.values(this.progress.sessions).filter(s => s.completed).length * SESSION_DURATION) / 60,
+                        completionPercentage: Math.round((Object.values(this.progress.sessions).filter(s => s.completed).length / TOTAL_SESSIONS) * 100)
+                    }
+                };
+
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `CDAIO_Progress_${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            downloadCertificate() {
+                const certificate = document.querySelector('.certificate');
+                const originalBg = certificate.style.background;
+                certificate.style.background = 'white';
+
+                const dataUrl = this.generateCertificateImage();
+
+                const a = document.createElement('a');
+                a.href = dataUrl;
+                a.download = `UMich_CDAIO_Certificate_${new Date().toISOString().split('T')[0]}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+
+                certificate.style.background = originalBg;
+            }
+
+            generateCertificateImage() {
+                const text = `
+UNIVERSITY OF MICHIGAN
+CERTIFICATE OF COMPLETION
+
+This certifies that CDAIO Candidate has successfully completed the
+Chief Data & AI Officer Training Program
+
+University of Michigan Executive Education
+
+12 Sessions Completed | 6 Hours Total
+Completion Date: ${new Date().toLocaleDateString()}
+
+This certificate validates completion of comprehensive executive training
+in data strategy, AI leadership, governance, and organizational transformation.
+`;
+                return 'data:text/plain;charset=utf-8,' + encodeURIComponent(text);
+            }
+
+            resetProgress() {
+                this.pauseAllAudio();
+                this.progress = this.createEmptyProgress();
+                this.saveProgress();
+                this.audioPlayers.clear();
+                this.renderSessions();
+                this.renderSidebar();
+                this.updateStats();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new CDAPlatform();
+        });
+    </script>
+</body>
+</html>
