@@ -1,0 +1,883 @@
+{
+  "program_metadata": {
+    "program_name": "MBA Education for Chief Data & AI Officers",
+    "institution": {
+      "primary": "Claude Skills - MBA Education Module",
+      "type": "Complementary Business Education",
+      "partnership": "Integrated with CDAIO Technical Training"
+    },
+    "program_type": "COMPLEMENTARY_ENHANCEMENT",
+    "primary_program": "Chief Data and AI Officer (CDAIO) Program",
+    "relationship": "MBA content enhances and complements core CDAIO technical training",
+    "duration": {
+      "total_length": "44 hours (complementary to 58-hour CDAIO program)",
+      "recommended_pace": "Self-paced or parallel with CDAIO",
+      "completion_timeframe": "2-6 months depending on learning path"
+    },
+    "format": {
+      "delivery_model": "Self-paced online learning",
+      "components": [
+        "Interactive case studies",
+        "Business framework library",
+        "Financial modeling templates",
+        "Strategic analysis tools",
+        "Executive communication resources",
+        "Integrated capstone project"
+      ]
+    },
+    "target_audience": {
+      "primary_roles": [
+        "CDAIO program participants",
+        "Chief Data Officers (CDOs)",
+        "Chief AI Officers (CAIOs)",
+        "Technical executives moving to C-suite",
+        "Data/AI leaders seeking business acumen"
+      ],
+      "prerequisites": {
+        "recommended": "CDAIO technical training (or equivalent experience)",
+        "technical_background": "Understanding of AI/data technologies",
+        "experience_level": "Mid to senior-level technical leadership"
+      }
+    },
+    "language": "English"
+  },
+
+  "curriculum_structure": {
+    "overview": "Four strategic business pillars that complement CDAIO technical training",
+    "total_pillars": 4,
+    "total_hours": 44,
+    "focus_areas": [
+      "AI Business Strategy",
+      "Data-Driven Decision Making",
+      "Technology Investment Evaluation",
+      "Digital Transformation Leadership"
+    ],
+    "pillars": [
+      {
+        "pillar_number": 1,
+        "pillar_name": "AI Business Strategy",
+        "duration": "12 hours",
+        "modules": [
+          {
+            "module_number": "1.1",
+            "module_name": "Strategic Frameworks for AI",
+            "duration": "3 hours",
+            "topics": [
+              "Porter's Five Forces for AI markets",
+              "AI capability assessments using SWOT",
+              "Blue Ocean Strategy for AI positioning",
+              "Business Model Canvas for AI"
+            ],
+            "learning_objectives": [
+              "Apply strategic frameworks to AI-driven industries",
+              "Develop AI positioning strategies",
+              "Build AI business model canvases",
+              "Assess competitive dynamics in AI markets"
+            ],
+            "key_frameworks": [
+              "Porter's Five Forces (AI adaptation)",
+              "AI Strategy Canvas",
+              "Business Model Innovation with AI"
+            ],
+            "case_studies": [
+              "Netflix: AI-driven content strategy",
+              "Amazon: AI in operations",
+              "Microsoft: AI platform strategy",
+              "Tesla: Vertical integration and AI"
+            ],
+            "deliverable": {
+              "type": "Strategic Analysis",
+              "description": "3-year AI strategy for Fortune 500 company",
+              "time_required": "8-10 hours"
+            }
+          },
+          {
+            "module_number": "1.2",
+            "module_name": "AI Value Creation & Competitive Advantage",
+            "duration": "3 hours",
+            "topics": [
+              "Quantifying AI value creation",
+              "Building sustainable AI competitive advantages",
+              "AI monetization strategies",
+              "Data moats and network effects"
+            ],
+            "learning_objectives": [
+              "Identify and quantify AI value opportunities",
+              "Build sustainable competitive advantages",
+              "Develop AI monetization strategies",
+              "Assess AI maturity and capability gaps"
+            ],
+            "key_frameworks": [
+              "AI Value Framework (ROI calculation)",
+              "Data Moats & Network Effects",
+              "AI Capability Maturity Model (5 levels)",
+              "AI Value Chain Analysis"
+            ],
+            "case_studies": [
+              "Google: Search algorithm moat",
+              "Salesforce: Einstein AI platform",
+              "UPS: ORION routing system ($400M savings)",
+              "Capital One: Credit risk modeling"
+            ],
+            "deliverable": {
+              "type": "Value Map",
+              "description": "AI opportunity portfolio with ROI estimates",
+              "time_required": "6-8 hours"
+            }
+          },
+          {
+            "module_number": "1.3",
+            "module_name": "AI Go-to-Market Strategy",
+            "duration": "3 hours",
+            "topics": [
+              "AI product positioning and messaging",
+              "Pricing strategies for AI products",
+              "Distribution channels for AI solutions",
+              "Sales enablement for AI"
+            ],
+            "learning_objectives": [
+              "Design AI product positioning",
+              "Develop pricing strategies",
+              "Build distribution channels",
+              "Create sales enablement strategies"
+            ],
+            "key_frameworks": [
+              "AI Product Positioning Framework",
+              "AI Pricing Models (per-prediction, subscription, value-based)",
+              "Channel Strategy for AI",
+              "CAC and LTV calculation"
+            ],
+            "case_studies": [
+              "OpenAI: Research lab to commercial API",
+              "Snowflake: Consumption-based pricing",
+              "Databricks: Partner-led enterprise sales",
+              "Hugging Face: Developer community to enterprise"
+            ],
+            "deliverable": {
+              "type": "Go-to-Market Plan",
+              "description": "Complete GTM strategy with 3-year revenue projections",
+              "time_required": "10-12 hours"
+            }
+          },
+          {
+            "module_number": "1.4",
+            "module_name": "M&A and Partnership Strategy for AI",
+            "duration": "3 hours",
+            "topics": [
+              "Evaluating AI acquisition targets",
+              "Technical due diligence for AI companies",
+              "Structuring AI partnerships",
+              "Integrating acquired AI capabilities"
+            ],
+            "learning_objectives": [
+              "Evaluate AI acquisition targets",
+              "Conduct technical due diligence",
+              "Structure partnerships and JVs",
+              "Integrate acquired capabilities"
+            ],
+            "key_frameworks": [
+              "AI Acquisition Framework (value calculation)",
+              "Technical Due Diligence Checklist",
+              "Partnership Models (data, tech, research, GTM)",
+              "DCF and comparable company valuation"
+            ],
+            "case_studies": [
+              "Microsoft + OpenAI: $10B strategic partnership",
+              "Google acquisitions: DeepMind, Kaggle, Looker",
+              "Salesforce + Tableau: Data + AI integration",
+              "IBM + Red Hat: Hybrid cloud + AI"
+            ],
+            "deliverable": {
+              "type": "M&A Analysis",
+              "description": "Complete M&A evaluation with valuation and integration plan",
+              "time_required": "12-15 hours"
+            }
+          }
+        ],
+        "total_assessment_hours": "36-45 hours",
+        "integration_with_cdaio": {
+          "cdaio_sessions": [1, 2, 5],
+          "description": "Complements CDAIO AI foundations and business strategy sessions"
+        }
+      },
+      {
+        "pillar_number": 2,
+        "pillar_name": "Data-Driven Decision Making",
+        "duration": "10 hours",
+        "modules": [
+          {
+            "module_number": "2.1",
+            "module_name": "Executive Decision Science",
+            "duration": "3 hours",
+            "topics": [
+              "Decision theory for business problems",
+              "Quantifying uncertainty",
+              "Bayesian reasoning for strategy",
+              "Decision trees for complex scenarios"
+            ],
+            "learning_objectives": [
+              "Apply decision theory to business problems",
+              "Quantify uncertainty in decisions",
+              "Use Bayesian reasoning",
+              "Build decision trees"
+            ],
+            "key_frameworks": [
+              "Expected Value Decision Framework",
+              "Decision Tree Analysis",
+              "Multi-Criteria Decision Analysis (MCDA)",
+              "Monte Carlo simulation for risk"
+            ],
+            "case_studies": [
+              "Netflix: Data-driven content investment ($17B budget)",
+              "Amazon: A/B testing culture (1000s of experiments)",
+              "P&G: Decision quality framework",
+              "Shell: Scenario planning"
+            ],
+            "deliverable": {
+              "type": "Decision Tree",
+              "description": "Major strategic choice with probability analysis",
+              "time_required": "6-8 hours"
+            }
+          },
+          {
+            "module_number": "2.2",
+            "module_name": "Financial Modeling for AI Investments",
+            "duration": "3 hours",
+            "topics": [
+              "Building financial models for AI projects",
+              "ROI and payback calculations",
+              "Sensitivity and scenario analysis",
+              "Presenting business cases to executives"
+            ],
+            "learning_objectives": [
+              "Build financial models for AI",
+              "Calculate ROI and payback",
+              "Perform sensitivity analysis",
+              "Present business cases"
+            ],
+            "key_frameworks": [
+              "AI Investment Model Template",
+              "Unit Economics for AI",
+              "AI Scaling Economics",
+              "NPV, IRR, payback calculations"
+            ],
+            "case_studies": [
+              "JPMorgan Chase: COiN (360K hours saved annually)",
+              "Walmart: Inventory optimization ($2B reduction)",
+              "UnitedHealth: Claims automation ($1B savings)",
+              "Stitch Fix: AI styling vs. human (40% better retention)"
+            ],
+            "deliverable": {
+              "type": "Financial Model",
+              "description": "5-year financial model with sensitivity analysis",
+              "time_required": "10-12 hours"
+            }
+          },
+          {
+            "module_number": "2.3",
+            "module_name": "Business Intelligence & Analytics Strategy",
+            "duration": "2 hours",
+            "topics": [
+              "Enterprise analytics architectures",
+              "Data governance frameworks",
+              "Self-service analytics",
+              "Analytics ROI measurement"
+            ],
+            "learning_objectives": [
+              "Design analytics architectures",
+              "Build governance frameworks",
+              "Implement self-service analytics",
+              "Measure analytics ROI"
+            ],
+            "key_frameworks": [
+              "Analytics Maturity Model (5 levels)",
+              "Modern Data Stack Architecture",
+              "Self-Service Analytics Framework",
+              "Centralized vs. federated analytics"
+            ],
+            "case_studies": [
+              "Airbnb: Data University and self-service",
+              "Spotify: Event-driven real-time analytics",
+              "LinkedIn: Unified metrics platform",
+              "Netflix: Data-driven culture"
+            ],
+            "deliverable": {
+              "type": "Analytics Strategy",
+              "description": "Enterprise analytics strategy with architecture and roadmap",
+              "time_required": "8-10 hours"
+            }
+          },
+          {
+            "module_number": "2.4",
+            "module_name": "Metrics & KPIs for AI/Data Organizations",
+            "duration": "2 hours",
+            "topics": [
+              "North Star metrics for data organizations",
+              "Balanced scorecards for AI",
+              "OKRs for data teams",
+              "Executive dashboard design"
+            ],
+            "learning_objectives": [
+              "Define North Star metrics",
+              "Build balanced scorecards",
+              "Implement OKRs",
+              "Design executive dashboards"
+            ],
+            "key_frameworks": [
+              "AI/Data Organization Metrics (business, operational, team)",
+              "OKR Framework for Data Teams",
+              "Executive Dashboard Design (3-tier)",
+              "Balanced Scorecard"
+            ],
+            "case_studies": [
+              "Amazon: Working backwards with metrics",
+              "Facebook: Growth team metric trees",
+              "Uber: Marketplace efficiency metrics",
+              "Stripe: Data quality scorecards"
+            ],
+            "deliverable": {
+              "type": "Balanced Scorecard",
+              "description": "KPI dashboard for data organization",
+              "time_required": "4-6 hours"
+            }
+          }
+        ],
+        "total_assessment_hours": "28-36 hours",
+        "integration_with_cdaio": {
+          "cdaio_sessions": [3, 4, 6, 7, 8],
+          "description": "Complements CDAIO data strategy and AI application sessions"
+        }
+      },
+      {
+        "pillar_number": 3,
+        "pillar_name": "Technology Investment Evaluation",
+        "duration": "10 hours",
+        "modules": [
+          {
+            "module_number": "3.1",
+            "module_name": "Technology Portfolio Management",
+            "duration": "3 hours",
+            "topics": [
+              "Building technology investment portfolios",
+              "Capital allocation across horizons",
+              "Managing technical debt",
+              "Exploration vs. exploitation balance"
+            ],
+            "learning_objectives": [
+              "Build technology portfolios",
+              "Allocate capital strategically",
+              "Manage technical debt",
+              "Balance innovation horizons"
+            ],
+            "key_frameworks": [
+              "Three Horizons Framework (70/20/10)",
+              "Technology Investment Portfolio Matrix",
+              "Capital Allocation Framework",
+              "Portfolio optimization models"
+            ],
+            "case_studies": [
+              "Google: 70-20-10 rule for innovation",
+              "Amazon: Two-pizza team funding",
+              "Apple: Concentrated bets on breakthroughs",
+              "Microsoft: Cloud transformation capital allocation"
+            ],
+            "deliverable": {
+              "type": "Portfolio Model",
+              "description": "3-year technology portfolio ($50M budget)",
+              "time_required": "8-10 hours"
+            }
+          },
+          {
+            "module_number": "3.2",
+            "module_name": "Build vs. Buy vs. Partner Decisions",
+            "duration": "2 hours",
+            "topics": [
+              "Make vs. buy decision frameworks",
+              "Strategic partnership assessment",
+              "Technology contract negotiation",
+              "Vendor relationship management"
+            ],
+            "learning_objectives": [
+              "Evaluate make vs. buy decisions",
+              "Assess partnerships",
+              "Negotiate contracts",
+              "Manage vendor relationships"
+            ],
+            "key_frameworks": [
+              "Build vs. Buy Matrix (strategic importance × core capability)",
+              "Total Cost of Ownership (TCO)",
+              "Vendor Evaluation Scorecard",
+              "SaaS negotiation tactics"
+            ],
+            "case_studies": [
+              "Spotify: Build streaming, buy recommendation",
+              "Uber: Build dispatch, partner on maps",
+              "Walmart: Acquire Jet.com vs. build",
+              "Target: Partner with Google Cloud"
+            ],
+            "deliverable": {
+              "type": "TCO Analysis",
+              "description": "Build-buy-partner analysis for 5 capabilities",
+              "time_required": "6-8 hours"
+            }
+          },
+          {
+            "module_number": "3.3",
+            "module_name": "AI/ML Infrastructure Investment",
+            "duration": "2 hours",
+            "topics": [
+              "AI infrastructure strategies",
+              "Cloud vs. on-prem for AI",
+              "MLOps spending optimization",
+              "Infrastructure ROI calculation"
+            ],
+            "learning_objectives": [
+              "Design AI infrastructure strategies",
+              "Evaluate cloud vs. on-prem",
+              "Optimize MLOps spending",
+              "Calculate infrastructure ROI"
+            ],
+            "key_frameworks": [
+              "Compute Strategy (cloud, on-prem, hybrid, edge)",
+              "Cost Optimization Framework (training vs. inference)",
+              "MLOps Maturity Model (4 levels)",
+              "Break-even analysis: Cloud vs. on-prem"
+            ],
+            "case_studies": [
+              "OpenAI: Massive compute investments ($100M+ runs)",
+              "Tesla: Dojo supercomputer for AV",
+              "Meta: PyTorch infrastructure optimization",
+              "Cruise: Hybrid cloud for AV development"
+            ],
+            "deliverable": {
+              "type": "Infrastructure Plan",
+              "description": "3-year infrastructure plan with cost optimization",
+              "time_required": "8-10 hours"
+            }
+          },
+          {
+            "module_number": "3.4",
+            "module_name": "Data Platform Investment Strategy",
+            "duration": "3 hours",
+            "topics": [
+              "Modern data platform architectures",
+              "Data warehouses, lakes, and lakehouses",
+              "Data product strategies",
+              "Data platform ROI"
+            ],
+            "learning_objectives": [
+              "Design data platform architectures",
+              "Evaluate platforms (warehouse, lake, lakehouse)",
+              "Build data product strategies",
+              "Calculate platform ROI"
+            ],
+            "key_frameworks": [
+              "Data Platform Patterns (warehouse, lake, lakehouse)",
+              "Data Platform Investment Model",
+              "Data Product Strategy",
+              "Platform selection criteria matrix"
+            ],
+            "case_studies": [
+              "Netflix: Platform evolution (Teradata → S3 + EMR → Iceberg)",
+              "Lyft: Amundsen data discovery",
+              "Airbnb: Dataportal and quality",
+              "Uber: Centralized platform architecture"
+            ],
+            "deliverable": {
+              "type": "Platform Strategy",
+              "description": "Data platform architecture with 3-year ROI",
+              "time_required": "8-10 hours"
+            }
+          }
+        ],
+        "total_assessment_hours": "30-38 hours",
+        "integration_with_cdaio": {
+          "cdaio_sessions": [3, 4, 6, 11],
+          "description": "Complements CDAIO technical architecture and infrastructure sessions"
+        }
+      },
+      {
+        "pillar_number": 4,
+        "pillar_name": "Digital Transformation Leadership",
+        "duration": "12 hours",
+        "modules": [
+          {
+            "module_number": "4.1",
+            "module_name": "Leading Digital Transformation",
+            "duration": "3 hours",
+            "topics": [
+              "Digital transformation roadmaps",
+              "Organizational change at scale",
+              "Transformation governance",
+              "Measuring transformation success"
+            ],
+            "learning_objectives": [
+              "Design transformation roadmaps",
+              "Lead organizational change",
+              "Build transformation governance",
+              "Measure success"
+            ],
+            "key_frameworks": [
+              "Digital Transformation Framework (5-phase)",
+              "Transformation Roadmap Structure (3 phases)",
+              "ADKAR Change Management Model",
+              "Burning platform vs. vision approaches"
+            ],
+            "case_studies": [
+              "Microsoft: Satya Nadella's cloud transformation",
+              "General Electric: Digital industrial transformation",
+              "Domino's Pizza: Pizza to tech company",
+              "DBS Bank: World's best digital bank"
+            ],
+            "deliverable": {
+              "type": "Transformation Roadmap",
+              "description": "3-year transformation plan with change management",
+              "time_required": "12-15 hours"
+            }
+          },
+          {
+            "module_number": "4.2",
+            "module_name": "Building AI-Ready Organizations",
+            "duration": "3 hours",
+            "topics": [
+              "Organizational structures for AI",
+              "AI talent strategies",
+              "AI cultures and ways of working",
+              "Centers of excellence for AI"
+            ],
+            "learning_objectives": [
+              "Design AI organizational structures",
+              "Build talent strategies",
+              "Create AI cultures",
+              "Develop centers of excellence"
+            ],
+            "key_frameworks": [
+              "AI Operating Models (centralized, federated, hub-and-spoke)",
+              "AI Talent Strategy (build, buy, borrow)",
+              "AI Culture Framework (5 elements)",
+              "Organizational design decisions"
+            ],
+            "case_studies": [
+              "Facebook: AI research to product pipeline",
+              "Airbnb: Data science in product teams",
+              "Capital One: 10,000+ technologists at scale",
+              "Stitch Fix: Algorithms + humans hybrid"
+            ],
+            "deliverable": {
+              "type": "Organizational Blueprint",
+              "description": "Complete org design with talent and culture strategy",
+              "time_required": "10-12 hours"
+            }
+          },
+          {
+            "module_number": "4.3",
+            "module_name": "Communicating AI to Executives & Boards",
+            "duration": "3 hours",
+            "topics": [
+              "Presenting AI strategies to C-suite/boards",
+              "Translating technical to business language",
+              "Building executive buy-in",
+              "Reporting AI performance"
+            ],
+            "learning_objectives": [
+              "Present to C-suite and boards",
+              "Translate technical concepts",
+              "Build executive buy-in",
+              "Report performance effectively"
+            ],
+            "key_frameworks": [
+              "Executive Presentation Structure (10-minute format)",
+              "Technical-to-Business Translation Guide",
+              "Board Reporting Template",
+              "Storytelling techniques for executives"
+            ],
+            "case_studies": [
+              "Andy Jassy: AWS re:Invent keynotes",
+              "Sundar Pichai: Google AI-first strategy",
+              "Jamie Dimon: JPMorgan shareholder letters on tech",
+              "Mary Barra: GM investor presentations on Cruise"
+            ],
+            "deliverable": {
+              "type": "Executive Presentation",
+              "description": "15-slide board presentation with speaker notes",
+              "time_required": "8-10 hours"
+            }
+          },
+          {
+            "module_number": "4.4",
+            "module_name": "AI Governance & Risk Management",
+            "duration": "3 hours",
+            "topics": [
+              "AI governance frameworks",
+              "Managing AI risks (technical, ethical, legal)",
+              "Responsible AI programs",
+              "AI regulations and compliance"
+            ],
+            "learning_objectives": [
+              "Design governance frameworks",
+              "Manage AI risks",
+              "Build responsible AI programs",
+              "Navigate regulations"
+            ],
+            "key_frameworks": [
+              "AI Governance Structure (5 levels)",
+              "AI Risk Taxonomy (technical, ethical, legal, reputational)",
+              "Responsible AI Framework (4 phases)",
+              "Regulatory landscape (EU AI Act, US laws, sector-specific)"
+            ],
+            "case_studies": [
+              "Google: AI Principles after employee protests",
+              "Microsoft: Responsible AI Standard",
+              "IBM: AI Ethics Board",
+              "Salesforce: Trusted AI framework"
+            ],
+            "deliverable": {
+              "type": "Governance Framework",
+              "description": "Comprehensive AI governance with policies and processes",
+              "time_required": "10-12 hours"
+            }
+          }
+        ],
+        "total_assessment_hours": "40-49 hours",
+        "integration_with_cdaio": {
+          "cdaio_sessions": [9, 10, 12],
+          "description": "Complements CDAIO leadership, communication, and career sessions"
+        }
+      }
+    ],
+    "capstone_project": {
+      "name": "Integrated AI Business Case & Strategy",
+      "description": "Comprehensive AI strategy synthesizing all four MBA pillars with CDAIO technical knowledge",
+      "deliverables": [
+        "Executive summary (2 pages)",
+        "AI strategy document (20-25 pages)",
+        "Financial model (Excel + 5-page summary)",
+        "Implementation roadmap (Gantt + 3-page narrative)",
+        "Board presentation (20 slides + speaker notes)"
+      ],
+      "time_required": "50 hours",
+      "grading_components": {
+        "strategic_clarity": "25%",
+        "financial_rigor": "25%",
+        "organizational_change": "20%",
+        "risk_management": "15%",
+        "executive_communication": "15%"
+      },
+      "passing_score": "70%",
+      "distinction_score": "85%"
+    }
+  },
+
+  "learning_methodologies": {
+    "self_paced_learning": {
+      "format": "Text-based modules with frameworks, case studies, and templates",
+      "features": [
+        "Comprehensive written content",
+        "Interactive case studies",
+        "Business framework library",
+        "Financial modeling templates",
+        "Real-world examples from Fortune 500 companies"
+      ]
+    },
+    "case_studies": {
+      "total_cases": "50+ detailed case studies",
+      "industries": [
+        "Technology (FAANG, Microsoft, Salesforce)",
+        "Financial Services (JPMorgan, Capital One)",
+        "Retail (Amazon, Walmart, Stitch Fix)",
+        "Healthcare (UnitedHealth)",
+        "Manufacturing (Tesla, GE)",
+        "Transportation (Uber)"
+      ],
+      "approach": "Real-world business decisions with quantitative analysis"
+    },
+    "frameworks": {
+      "total_frameworks": "25+ business frameworks",
+      "categories": [
+        "Strategic frameworks (Porter's 5 Forces, Blue Ocean, etc.)",
+        "Financial frameworks (DCF, NPV, TCO, etc.)",
+        "Decision frameworks (Decision trees, MCDA, etc.)",
+        "Change management frameworks (ADKAR, Kotter, etc.)"
+      ],
+      "application": "Applied to AI/data context with templates"
+    },
+    "templates_and_tools": {
+      "financial_models": [
+        "AI Investment Model",
+        "Build vs. Buy TCO Calculator",
+        "Unit Economics Calculator",
+        "Portfolio Optimization Model"
+      ],
+      "strategy_templates": [
+        "AI Strategy Canvas",
+        "Competitive Analysis Template",
+        "Business Model Canvas",
+        "Go-to-Market Plan"
+      ],
+      "governance_documents": [
+        "AI Principles Statement",
+        "Risk Assessment Template",
+        "Project Review Checklist",
+        "Incident Response Playbook"
+      ]
+    },
+    "assessment_approach": {
+      "type": "Practical deliverables",
+      "rubric_based_grading": true,
+      "resubmission_policy": "One resubmission if below 70%",
+      "feedback": "Constructive comments on all submissions"
+    }
+  },
+
+  "assessments": {
+    "module_assessments": {
+      "total_assessments": 16,
+      "format": "Case analyses, financial models, strategic plans, presentations",
+      "passing_score": "70%",
+      "time_per_assessment": "4-15 hours depending on module"
+    },
+    "capstone_project": {
+      "required": true,
+      "weight": "300 points (equivalent to ~3 module assessments)",
+      "components": 5,
+      "time_required": "50 hours",
+      "passing_score": "70% (210/300 points)"
+    },
+    "total_assessment_hours": "110-130 hours including learning time",
+    "grading_approach": "Instructor graded with transparent rubrics"
+  },
+
+  "credentials": {
+    "individual_certificates": {
+      "available": true,
+      "options": [
+        "Certificate in AI Business Strategy for Data Leaders",
+        "Certificate in Data-Driven Decision Making",
+        "Certificate in Technology Investment Evaluation",
+        "Certificate in Digital Transformation Leadership"
+      ],
+      "requirements": "Complete all modules in pillar with 75%+ average"
+    },
+    "integrated_certificate": {
+      "name": "Executive MBA for Chief Data & AI Officers (EMBA-CDAIO)",
+      "requirements": [
+        "Complete CDAIO Certificate (58 hours)",
+        "Complete all 4 MBA pillars (44 hours)",
+        "Pass all MBA assessments (70%+)",
+        "Complete integrated capstone (70%+)"
+      ],
+      "total_hours": 102,
+      "credential_type": "Dual certification (Technical + Business)"
+    },
+    "digital_credential": {
+      "format": "Blockchain-verified certificate",
+      "shareable": true,
+      "platforms": ["LinkedIn", "Professional networks"],
+      "verification": "QR code and unique ID"
+    }
+  },
+
+  "learning_paths": {
+    "path_1_sequential": {
+      "name": "Sequential Learning (Recommended for Career Changers)",
+      "duration": "6-9 months",
+      "structure": {
+        "phase_1": "Complete CDAIO (Months 1-3, 58 hours)",
+        "phase_2": "Complete MBA (Months 4-6, 44 hours)",
+        "phase_3": "Capstone (Months 7-9, 50 hours)"
+      },
+      "best_for": [
+        "Technical professionals moving to C-suite",
+        "Data scientists becoming CDOs/CAIOs",
+        "Engineers transitioning to leadership"
+      ]
+    },
+    "path_2_parallel": {
+      "name": "Parallel Learning (Recommended for Current Executives)",
+      "duration": "4-6 months",
+      "structure": "Alternate CDAIO and MBA modules weekly",
+      "best_for": [
+        "Current executives adding AI/data expertise",
+        "MBAs moving into CDAIO roles",
+        "Consultants advising on AI strategy"
+      ]
+    },
+    "path_3_reference": {
+      "name": "MBA as Reference (Recommended for Technical Leaders)",
+      "duration": "2-4 months for CDAIO + on-demand MBA",
+      "structure": "Complete CDAIO, use MBA modules as needed",
+      "best_for": [
+        "Technical leaders comfortable with business",
+        "Time-constrained executives",
+        "Those seeking tactical tools vs. full curriculum"
+      ]
+    }
+  },
+
+  "integration_with_cdaio": {
+    "relationship": "COMPLEMENTARY",
+    "primary_program": "CDAIO Technical Training (58 hours)",
+    "enhancement_program": "MBA Business Leadership (44 hours)",
+    "philosophy": "T-shaped executive: Deep technical (CDAIO) + Broad business (MBA)",
+    "integration_points": {
+      "cdaio_session_1_2": "MBA Module 1.1 - Strategic Frameworks",
+      "cdaio_session_3_4": "MBA Module 3.4 - Data Platform Investment",
+      "cdaio_session_5": "MBA Module 1.2 - AI Value Creation",
+      "cdaio_session_6_8": "MBA Module 2.1 - Decision Science",
+      "cdaio_session_9": "MBA Module 4.2 - AI-Ready Organizations",
+      "cdaio_session_10": "MBA Module 4.3 - Executive Communication",
+      "cdaio_session_11": "MBA Module 1.4 - M&A Strategy",
+      "cdaio_session_12": "MBA Module 4.1 - Digital Transformation"
+    },
+    "combined_value": "Most complete executive AI leadership program (Technical depth + Business mastery)"
+  },
+
+  "program_benefits": {
+    "for_technical_leaders": [
+      "Build business cases for AI investments",
+      "Communicate technical concepts to executives",
+      "Evaluate technology vendors systematically",
+      "Faster executive buy-in and larger budgets"
+    ],
+    "for_business_leaders": [
+      "Apply business frameworks to AI context",
+      "Translate business strategy to technical roadmaps",
+      "Lead transformation with technical competence",
+      "Credibility with technical teams"
+    ],
+    "for_consultants": [
+      "Client-ready frameworks and methodologies",
+      "Financial models and business cases",
+      "Change management approaches",
+      "Higher billing rates and larger engagements"
+    ]
+  },
+
+  "competitive_positioning": {
+    "unique_differentiators": [
+      "Only MBA program specifically designed for AI/data leaders",
+      "Integrated with world-class CDAIO technical training",
+      "100+ real-world case studies from Fortune 500 companies",
+      "25+ business frameworks adapted for AI context",
+      "Practical templates and financial models",
+      "Self-paced with flexible learning paths",
+      "Dual certification option (Technical + Business)"
+    ],
+    "market_positioning": "Complementary executive education for technical AI leaders seeking business acumen",
+    "target_outcome": "Create complete C-suite AI leaders with both technical depth and business mastery"
+  },
+
+  "metadata": {
+    "version": "1.0",
+    "created_date": "2025-11-02",
+    "last_updated": "2025-11-02",
+    "skill_type": "mba-education",
+    "skill_location": ".claude/skills/mba-education/skill.md",
+    "documentation": [
+      "skill.md - Main skill content",
+      "INTEGRATION-BLUEPRINT.md - Integration with CDAIO",
+      "case-studies-library.md - 50+ case studies",
+      "assessments-certification.md - Assessment details"
+    ]
+  }
+}
