@@ -1,0 +1,1914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="UMich CDAIO">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>UMich CDAIO Mobile Platform</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" id="manifest-placeholder">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --michigan-blue: #00274C;
+            --michigan-maize: #FFCB05;
+            --light-gray: #f5f5f5;
+            --border-color: #ddd;
+            --text-dark: #333;
+            --success-green: #28a745;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--michigan-blue), #003366);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 16px;
+        }
+
+        .progress-overview {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .progress-overview h2 {
+            color: var(--michigan-blue);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar-container {
+            background: var(--light-gray);
+            border-radius: 20px;
+            height: 24px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--michigan-maize), #ffdb4d);
+            height: 100%;
+            border-radius: 20px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--michigan-blue);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .stat-card {
+            background: var(--light-gray);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--michigan-blue);
+        }
+
+        .stat-card .label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .session-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--michigan-blue);
+        }
+
+        .session-card.completed {
+            border-left-color: var(--success-green);
+            opacity: 0.9;
+        }
+
+        .session-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .session-number {
+            background: var(--michigan-blue);
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .session-card.completed .session-number {
+            background: var(--success-green);
+        }
+
+        .session-number::after {
+            content: '';
+        }
+
+        .session-card.completed .session-number::after {
+            content: '✓';
+            position: absolute;
+            font-size: 24px;
+        }
+
+        .session-title-container {
+            flex: 1;
+            margin-left: 12px;
+        }
+
+        .session-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--michigan-blue);
+            margin-bottom: 4px;
+        }
+
+        .session-duration {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .session-description {
+            margin: 12px 0;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .objectives, .topics {
+            margin: 16px 0;
+        }
+
+        .objectives h4, .topics h4 {
+            color: var(--michigan-blue);
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .objectives ul, .topics ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .objectives li, .topics li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 15px;
+        }
+
+        .objectives li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--michigan-maize);
+            font-weight: bold;
+        }
+
+        .topics li::before {
+            content: '•';
+            position: absolute;
+            left: 8px;
+            color: var(--michigan-blue);
+            font-weight: bold;
+        }
+
+        .audio-player {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .control-btn {
+            background: var(--michigan-blue);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: all 0.2s;
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+            background: #003366;
+        }
+
+        .control-btn.play-pause {
+            width: 56px;
+            height: 56px;
+            font-size: 24px;
+            background: var(--michigan-maize);
+            color: var(--michigan-blue);
+        }
+
+        .control-btn.play-pause:active {
+            background: #ffdb4d;
+        }
+
+        .control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .progress-container {
+            margin: 12px 0;
+        }
+
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .seek-bar {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #ddd;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .seek-bar::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--michigan-blue);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .seek-bar::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: var(--michigan-blue);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .speed-control {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .speed-btn {
+            background: white;
+            border: 2px solid var(--michigan-blue);
+            color: var(--michigan-blue);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            touch-action: manipulation;
+            min-width: 60px;
+            transition: all 0.2s;
+        }
+
+        .speed-btn.active {
+            background: var(--michigan-blue);
+            color: white;
+        }
+
+        .speed-btn:active {
+            transform: scale(0.95);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: all 0.2s;
+            min-height: 48px;
+        }
+
+        .btn-primary {
+            background: var(--michigan-blue);
+            color: white;
+        }
+
+        .btn-primary:active {
+            background: #003366;
+        }
+
+        .btn-success {
+            background: var(--success-green);
+            color: white;
+        }
+
+        .btn-success:active {
+            background: #218838;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .certificate-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--michigan-maize);
+        }
+
+        .certificate-section h3 {
+            color: var(--michigan-blue);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .certificate-section p {
+            margin-bottom: 16px;
+            color: #666;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .modal h2 {
+            color: var(--michigan-blue);
+            margin-bottom: 20px;
+        }
+
+        .modal .btn {
+            margin-top: 20px;
+        }
+
+        .install-prompt {
+            background: var(--michigan-maize);
+            color: var(--michigan-blue);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .install-prompt.show {
+            display: block;
+        }
+
+        .install-prompt h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .install-prompt p {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .audio-status {
+            text-align: center;
+            padding: 8px;
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: var(--michigan-blue);
+            text-decoration: none;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 768px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a;
+                color: #e0e0e0;
+            }
+
+            .session-card, .progress-overview, .modal-content {
+                background: #2a2a2a;
+                color: #e0e0e0;
+            }
+
+            .audio-player, .stat-card {
+                background: #333;
+            }
+
+            .session-description, .objectives li, .topics li {
+                color: #d0d0d0;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Offline indicator */
+        .offline-indicator {
+            background: #ff6b6b;
+            color: white;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+
+        .offline-indicator.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-indicator" id="offlineIndicator">
+        📵 Offline Mode - Content available locally
+    </div>
+
+    <header>
+        <h1>University of Michigan</h1>
+        <p>Chief Data & AI Officer Program</p>
+    </header>
+
+    <div class="container">
+        <div class="install-prompt" id="installPrompt">
+            <h3>📱 Install App</h3>
+            <p>Add this to your home screen for easy offline access!</p>
+            <button class="btn btn-primary" onclick="installApp()">Install Now</button>
+        </div>
+
+        <div class="progress-overview">
+            <h2>Your Progress</h2>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="overallProgress">0%</div>
+            </div>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="value" id="completedCount">0</div>
+                    <div class="label">Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="remainingCount">12</div>
+                    <div class="label">Remaining</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="totalTime">6h 0m</div>
+                    <div class="label">Total Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="timeSpent">0h 0m</div>
+                    <div class="label">Time Spent</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Session 1 -->
+        <div class="session-card" data-session="1">
+            <div class="session-header">
+                <div class="session-number">1</div>
+                <div class="session-title-container">
+                    <div class="session-title">AI Past, Present & Future I</div>
+                    <div class="session-duration">Duration: 30 minutes</div>
+                </div>
+            </div>
+            <div class="session-description">
+                Explore the evolution of artificial intelligence from its inception to modern applications. This session covers the historical milestones of AI development, fundamental machine learning concepts, and the breakthrough of neural networks that revolutionized the field.
+            </div>
+            <div class="objectives">
+                <h4>Learning Objectives</h4>
+                <ul>
+                    <li>Understand the historical evolution of AI from 1950s to present day</li>
+                    <li>Grasp fundamental machine learning concepts and algorithms</li>
+                    <li>Learn how neural networks process information and make decisions</li>
+                    <li>Identify key milestones in AI development and their business impact</li>
+                    <li>Recognize the transition from rule-based to learning-based systems</li>
+                </ul>
+            </div>
+            <div class="topics">
+                <h4>Topics Covered</h4>
+                <ul>
+                    <li>Turing Test and early AI research</li>
+                    <li>AI winters and resurgence periods</li>
+                    <li>Supervised, unsupervised, and reinforcement learning</li>
+                    <li>Neural network architectures and deep learning</li>
+                    <li>Perceptrons, activation functions, and backpropagation</li>
+                    <li>Real-world applications of ML in business</li>
+                </ul>
+            </div>
+            <div class="audio-player">
+                <div class="player-controls">
+                    <button class="control-btn" onclick="skipBackward(1)" title="Back 15s">⏪</button>
+                    <button class="control-btn play-pause" onclick="togglePlayPause(1)" id="playBtn1">▶</button>
+                    <button class="control-btn" onclick="skipForward(1)" title="Forward 15s">⏩</button>
+                </div>
+                <div class="progress-container">
+                    <div class="time-display">
+                        <span id="currentTime1">0:00</span>
+                        <span id="totalTime1">30:00</span>
+                    </div>
+                    <input type="range" class="seek-bar" id="seekBar1" min="0" max="1800" value="0" onchange="seek(1)">
+                </div>
+                <div class="speed-control">
+                    <button class="speed-btn" onclick="setSpeed(1, 0.75)">0.75x</button>
+                    <button class="speed-btn active" onclick="setSpeed(1, 1)">1x</button>
+                    <button class="speed-btn" onclick="setSpeed(1, 1.25)">1.25x</button>
+                    <button class="speed-btn" onclick="setSpeed(1, 1.5)">1.5x</button>
+                    <button class="speed-btn" onclick="setSpeed(1, 1.75)">1.75x</button>
+                    <button class="speed-btn" onclick="setSpeed(1, 2)">2x</button>
+                </div>
+                <div class="audio-status" id="status1">Ready to play</div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="startSession(1)">Start Session</button>
+                <button class="btn btn-success" onclick="markComplete(1)">Mark Complete</button>
+            </div>
+        </div>
+
+        <!-- Session 2 -->
+        <div class="session-card" data-session="2">
+            <div class="session-header">
+                <div class="session-number">2</div>
+                <div class="session-title-container">
+                    <div class="session-title">AI Past, Present & Future II</div>
+                    <div class="session-duration">Duration: 30 minutes</div>
+                </div>
+            </div>
+            <div class="session-description">
+                Dive into cutting-edge AI developments including transfer learning, large language models like GPT and Claude, and the paradigm shift to foundation models. Learn how these technologies are transforming business operations and creating new opportunities for innovation.
+            </div>
+            <div class="objectives">
+                <h4>Learning Objectives</h4>
+                <ul>
+                    <li>Master transfer learning concepts and their practical applications</li>
+                    <li>Understand architecture and capabilities of modern LLMs (GPT, Claude, LLaMA)</li>
+                    <li>Explore foundation models and their versatility across domains</li>
+                    <li>Evaluate transformer architecture and attention mechanisms</li>
+                    <li>Assess the business implications of generative AI</li>
+                </ul>
+            </div>
+            <div class="topics">
+                <h4>Topics Covered</h4>
+                <ul>
+                    <li>Transfer learning and pre-trained models</li>
+                    <li>Transformer architecture and self-attention</li>
+                    <li>GPT series evolution and capabilities</li>
+                    <li>Claude, LLaMA, and open-source alternatives</li>
+                    <li>Foundation models across vision, language, and multimodal tasks</li>
+                    <li>Prompt engineering and fine-tuning strategies</li>
+                    <li>Business applications of generative AI</li>
+                </ul>
+            </div>
+            <div class="audio-player">
+                <div class="player-controls">
+                    <button class="control-btn" onclick="skipBackward(2)" title="Back 15s">⏪</button>
+                    <button class="control-btn play-pause" onclick="togglePlayPause(2)" id="playBtn2">▶</button>
+                    <button class="control-btn" onclick="skipForward(2)" title="Forward 15s">⏩</button>
+                </div>
+                <div class="progress-container">
+                    <div class="time-display">
+                        <span id="currentTime2">0:00</span>
+                        <span id="totalTime2">30:00</span>
+                    </div>
+                    <input type="range" class="seek-bar" id="seekBar2" min="0" max="1800" value="0" onchange="seek(2)">
+                </div>
+                <div class="speed-control">
+                    <button class="speed-btn" onclick="setSpeed(2, 0.75)">0.75x</button>
+                    <button class="speed-btn active" onclick="setSpeed(2, 1)">1x</button>
+                    <button class="speed-btn" onclick="setSpeed(2, 1.25)">1.25x</button>
+                    <button class="speed-btn" onclick="setSpeed(2, 1.5)">1.5x</button>
+                    <button class="speed-btn" onclick="setSpeed(2, 1.75)">1.75x</button>
+                    <button class="speed-btn" onclick="setSpeed(2, 2)">2x</button>
+                </div>
+                <div class="audio-status" id="status2">Ready to play</div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="startSession(2)">Start Session</button>
+                <button class="btn btn-success" onclick="markComplete(2)">Mark Complete</button>
+            </div>
+        </div>
+
+        <!-- Session 3 -->
+        <div class="session-card" data-session="3">
+            <div class="session-header">
+                <div class="session-number">3</div>
+                <div class="session-title-container">
+                    <div class="session-title">Data Strategy for Success I</div>
+                    <div class="session-duration">Duration: 30 minutes</div>
+                </div>
+            </div>
+            <div class="session-description">
+                Learn to develop and implement enterprise data strategies that drive business value. This session covers data governance frameworks, strategic data planning, and aligning data initiatives with business objectives for maximum organizational impact.
+            </div>
+            <div class="objectives">
+                <h4>Learning Objectives</h4>
+                <ul>
+                    <li>Design comprehensive enterprise data strategies aligned with business goals</li>
+                    <li>Implement effective data governance frameworks and policies</li>
+                    <li>Establish data quality standards and monitoring processes</li>
+                    <li>Create data roadmaps that balance quick wins with long-term vision</li>
+                    <li>Build stakeholder alignment around data initiatives</li>
+                </ul>
+            </div>
+            <div class="topics">
+                <h4>Topics Covered</h4>
+                <ul>
+                    <li>Enterprise data strategy development</li>
+                    <li>Data governance frameworks and best practices</li>
+                    <li>Data quality management and monitoring</li>
+                    <li>Master data management (MDM)</li>
+                    <li>Data catalog and metadata management</li>
+                    <li>Business alignment and value realization</li>
+                    <li>Data strategy roadmap creation</li>
+                </ul>
+            </div>
+            <div class="audio-player">
+                <div class="player-controls">
+                    <button class="control-btn" onclick="skipBackward(3)" title="Back 15s">⏪</button>
+                    <button class="control-btn play-pause" onclick="togglePlayPause(3)" id="playBtn3">▶</button>
+                    <button class="control-btn" onclick="skipForward(3)" title="Forward 15s">⏩</button>
+                </div>
+                <div class="progress-container">
+                    <div class="time-display">
+                        <span id="currentTime3">0:00</span>
+                        <span id="totalTime3">30:00</span>
+                    </div>
+                    <input type="range" class="seek-bar" id="seekBar3" min="0" max="1800" value="0" onchange="seek(3)">
+                </div>
+                <div class="speed-control">
+                    <button class="speed-btn" onclick="setSpeed(3, 0.75)">0.75x</button>
+                    <button class="speed-btn active" onclick="setSpeed(3, 1)">1x</button>
+                    <button class="speed-btn" onclick="setSpeed(3, 1.25)">1.25x</button>
+                    <button class="speed-btn" onclick="setSpeed(3, 1.5)">1.5x</button>
+                    <button class="speed-btn" onclick="setSpeed(3, 1.75)">1.75x</button>
+                    <button class="speed-btn" onclick="setSpeed(3, 2)">2x</button>
+                </div>
+                <div class="audio-status" id="status3">Ready to play</div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="startSession(3)">Start Session</button>
+                <button class="btn btn-success" onclick="markComplete(3)">Mark Complete</button>
+            </div>
+        </div>
+
+        <!-- Session 4 -->
+        <div class="session-card" data-session="4">
+            <div class="session-header">
+                <div class="session-number">4</div>
+                <div class="session-title-container">
+                    <div class="session-title">Data Strategy for Success II</div>
+                    <div class="session-duration">Duration: 30 minutes</div>
+                </div>
+            </div>
+            <div class="session-description">
+                Explore modern data architectures including data mesh and data fabric paradigms. Learn about cloud platforms, data warehousing, data lakes, and building modern data stacks that enable AI and analytics at scale.
+            </div>
+            <div class="objectives">
+                <h4>Learning Objectives</h4>
+                <ul>
+                    <li>Compare data mesh vs data fabric architectural approaches</li>
+                    <li>Evaluate cloud data platforms (AWS, Azure, GCP, Snowflake)</li>
+                    <li>Design modern data warehouse and data lake architectures</li>
+                    <li>Build scalable data pipelines and ETL processes</li>
+                    <li>Implement DataOps practices for production reliability</li>
+                </ul>
+            </div>
+            <div class="topics">
+                <h4>Topics Covered</h4>
+                <ul>
+                    <li>Data mesh principles and domain-oriented ownership</li>
+                    <li>Data fabric architecture and semantic layers</li>
+                    <li>Cloud data platforms comparison and selection</li>
+                    <li>Data warehouse modernization strategies</li>
+                    <li>Data lake and lakehouse architectures</li>
+                    <li>Modern data stack components and integration</li>
+                    <li>Real-time data processing and streaming</li>
+                    <li>DataOps and data pipeline automation</li>
+                </ul>
+            </div>
+            <div class="audio-player">
+                <div class="player-controls">
+                    <button class="control-btn" onclick="skipBackward(4)" title="Back 15s">⏪</button>
+                    <button class="control-btn play-pause" onclick="togglePlayPause(4)" id="playBtn4">▶</button>
+                    <button class="control-btn" onclick="skipForward(4)" title="Forward 15s">⏩</button>
+                </div>
+                <div class="progress-container">
+                    <div class="time-display">
+                        <span id="currentTime4">0:00</span>
+                        <span id="totalTime4">30:00</span>
+                    </div>
+                    <input type="range" class="seek-bar" id="seekBar4" min="0" max="1800" value="0" onchange="seek(4)">
+                </div>
+                <div class="speed-control">
+                    <button class="speed-btn" onclick="setSpeed(4, 0.75)">0.75x</button>
+                    <button class="speed-btn active" onclick="setSpeed(4, 1)">1x</button>
+                    <button class="speed-btn" onclick="setSpeed(4, 1.25)">1.25x</button>
+                    <button class="speed-btn" onclick="setSpeed(4, 1.5)">1.5x</button>
+                    <button class="speed-btn" onclick="setSpeed(4, 1.75)">1.75x</button>
+                    <button class="speed-btn" onclick="setSpeed(4, 2)">2x</button>
+                </div>
+                <div class="audio-status" id="status4">Ready to play</div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="startSession(4)">Start Session</button>
+                <button class="btn btn-success" onclick="markComplete(4)">Mark Complete</button>
+            </div>
+        </div>
+
+        <!-- Session 5 -->
+        <div class="session-card" data-session="5">
+            <div class="session-header">
+                <div class="session-number">5</div>
+                <div class="session-title-container">
+                    <div class="session-title">AI Strategy & Digital Transformation</div>
+                    <div class="session-duration">Duration: 30 minutes</div>
+                </div>
+            </div>
+            <div class="session-description">
+                Master the creation of AI strategies that drive digital transformation. Learn frameworks for assessing AI opportunities, calculating ROI, and making critical build vs buy vs partner decisions that accelerate time to value.
+            </div>
+            <div class="objectives">
+                <h4>Learning Objectives</h4>
+                <ul>
+                    <li>Develop comprehensive AI strategy frameworks for enterprises</li>
+                    <li>Calculate and communicate AI ROI to stakeholders</li>
+                    <li>Navigate build vs buy vs partner decision matrices</li>
+                    <li>Create AI transformation roadmaps with clear milestones</li>
+                    <li>Align AI initiatives with digital transformation goals</li>
+                </ul>
+            </div>
+            <div class="topics">
+                <h4>Topics Covered</h4>
+                <ul>
+                    <li>AI strategy frameworks and methodologies</li>
+                    <li>Digital transformation fundamentals</li>
+                    <li>AI opportunity assessment and prioritization</li>
+                    <li>ROI calculation and business case development</li>
+                    <li>Build vs buy vs partner decision criteria</li>
+                    <li>Vendor evaluation and selection processes</li>
+                    <li>AI center of excellence establishment</li>
+                    <li>Change management for AI adoption</li>
+                </ul>
+            </div>
+            <div class="audio-player">
+                <div class="player-controls">
+                    <button class="control-btn" onclick="skipBackward(5)" title="Back 15s">⏪</button>
+                    <button class="control-btn play-pause" onclick="togglePlayPause(5)" id="playBtn5">▶</button>
+                    <button class="control-btn" onclick="skipForward(5)" title="Forward 15s">⏩</button>
+                </div>
+                <div class="progress-container">
+                    <div class="time-display">
+                        <span id="currentTime5">0:00</span>
+                        <span id="totalTime5">30:00</span>
+                    </div>
+                    <input type="range" class="seek-bar" id="seekBar5" min="0" max="1800" value="0" onchange="seek(5)">
+                </div>
+                <div class="speed-control">
+                    <button class="speed-btn" onclick="setSpeed(5, 0.75)">0.75x</button>
+                    <button class="speed-btn active" onclick="setSpeed(5, 1)">1x</button>
+                    <button class="speed-btn" onclick="setSpeed(5, 1.25)">1.25x</button>
+                    <button class="speed-btn" onclick="setSpeed(5, 1.5)">1.5x</button>
+                    <button class="speed-btn" onclick="setSpeed(5, 1.75)">1.75x</button>
+                    <button class="speed-btn" onclick="setSpeed(5, 2)">2x</button>
+                </div>
+                <div class="audio-status" id="status5">Ready to play</div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="startSession(5)">Start Session</button>
+                <button class="btn btn-success" onclick="markComplete(5)">Mark Complete</button>
+            </div>
+        </div>
+
+        <!-- Session 6 -->
+        <div class="session-card" data-session="6">
+            <div class="session-header">
+                <div class="session-number">6</div>
+                <div class="session-title-container">
+                    <div class="session-title">AI Business Applications & Use Cases</div>
+                    <div class="session-duration">Duration: 30 minutes</div>
+                </div>
+            </div>
+            <div class="session-description">
+                Discover practical AI applications across industries including predictive analytics, natural language processing, computer vision, and autonomous systems. Learn to identify and implement high-impact AI use cases in your organization.
+            </div>
+            <div class="objectives">
+                <h4>Learning Objectives</h4>
+                <ul>
+                    <li>Identify high-value AI use cases across business functions</li>
+                    <li>Implement predictive analytics for forecasting and optimization</li>
+                    <li>Deploy NLP solutions for document processing and customer service</li>
+                    <li>Apply computer vision for quality control and automation</li>
+                    <li>Evaluate autonomous systems and intelligent automation opportunities</li>
+                </ul>
+            </div>
+            <div class="topics">
+                <h4>Topics Covered</h4>
+                <ul>
+                    <li>Predictive analytics and forecasting models</li>
+                    <li>Natural language processing applications</li>
+                    <li>Computer vision use cases and implementation</li>
+                    <li>Recommendation systems and personalization</li>
+                    <li>Autonomous systems and robotics</li>
+                    <li>Fraud detection and anomaly detection</li>
+                    <li>Supply chain optimization with AI</li>
+                    <li>Customer experience enhancement through AI</li>
+                    <li>Industry-specific AI applications</li>
+                </ul>
+            </div>
+            <div class="audio-player">
+                <div class="player-controls">
+                    <button class="control-btn" onclick="skipBackward(6)" title="Back 15s">⏪</button>
+                    <button class="control-btn play-pause" onclick="togglePlayPause(6)" id="playBtn6">▶</button>
+                    <button class="control-btn" onclick="skipForward(6)" title="Forward 15s">⏩</button>
+                </div>
+                <div class="progress-container">
+                    <div class="time-display">
+                        <span id="currentTime6">0:00</span>
+                        <span id="totalTime6">30:00</span>
+                    </div>
+                    <input type="range" class="seek-bar" id="seekBar6" min="0" max="1800" value="0" onchange="seek(6)">
+                </div>
+                <div class="speed-control">
+                    <button class="speed-btn" onclick="setSpeed(6, 0.75)">0.75x</button>
+                    <button class="speed-btn active" onclick="setSpeed(6, 1)">1x</button>
+                    <button class="speed-btn" onclick="setSpeed(6, 1.25)">1.25x</button>
+                    <button class="speed-btn" onclick="setSpeed(6, 1.5)">1.5x</button>
+                    <button class="speed-btn" onclick="setSpeed(6, 1.75)">1.75x</button>
+                    <button class="speed-btn" onclick="setSpeed(6, 2)">2x</button>
+                </div>
+                <div class="audio-status" id="status6">Ready to play</div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="startSession(6)">Start Session</button>
+                <button class="btn btn-success" onclick="markComplete(6)">Mark Complete</button>
+            </div>
+        </div>
+
+        <!-- Session 7 -->
+        <div class="session-card" data-session="7">
+            <div class="session-header">
+                <div class="session-number">7</div>
+                <div class="session-title-container">
+                    <div class="session-title">Leading Data & Analytics Teams</div>
+                    <div class="session-duration">Duration: 30 minutes</div>
+                </div>
+            </div>
+            <div class="session-description">
+                Learn to build, lead, and scale high-performing data and analytics teams. This session covers organizational structures, talent acquisition strategies, retention techniques, and performance management approaches for technical teams.
+            </div>
+            <div class="objectives">
+                <h4>Learning Objectives</h4>
+                <ul>
+                    <li>Design effective data team structures and reporting lines</li>
+                    <li>Develop talent acquisition strategies for competitive markets</li>
+                    <li>Implement retention programs that reduce turnover</li>
+                    <li>Create performance management frameworks for technical roles</li>
+                    <li>Build career development paths for data professionals</li>
+                </ul>
+            </div>
+            <div class="topics">
+                <h4>Topics Covered</h4>
+                <ul>
+                    <li>Data team organizational structures (centralized, federated, hybrid)</li>
+                    <li>Talent acquisition in competitive markets</li>
+                    <li>Technical recruiting and assessment strategies</li>
+                    <li>Retention strategies and career development</li>
+                    <li>Performance management for technical teams</li>
+                    <li>Building diverse and inclusive teams</li>
+                    <li>Upskilling and reskilling programs</li>
+                    <li>Team culture and collaboration practices</li>
+                    <li>Managing remote and hybrid teams</li>
+                </ul>
+            </div>
+            <div class="audio-player">
+                <div class="player-controls">
+                    <button class="control-btn" onclick="skipBackward(7)" title="Back 15s">⏪</button>
+                    <button class="control-btn play-pause" onclick="togglePlayPause(7)" id="playBtn7">▶</button>
+                    <button class="control-btn" onclick="skipForward(7)" title="Forward 15s">⏩</button>
+                </div>
+                <div class="progress-container">
+                    <div class="time-display">
+                        <span id="currentTime7">0:00</span>
+                        <span id="totalTime7">30:00</span>
+                    </div>
+                    <input type="range" class="seek-bar" id="seekBar7" min="0" max="1800" value="0" onchange="seek(7)">
+                </div>
+                <div class="speed-control">
+                    <button class="speed-btn" onclick="setSpeed(7, 0.75)">0.75x</button>
+                    <button class="speed-btn active" onclick="setSpeed(7, 1)">1x</button>
+                    <button class="speed-btn" onclick="setSpeed(7, 1.25)">1.25x</button>
+                    <button class="speed-btn" onclick="setSpeed(7, 1.5)">1.5x</button>
+                    <button class="speed-btn" onclick="setSpeed(7, 1.75)">1.75x</button>
+                    <button class="speed-btn" onclick="setSpeed(7, 2)">2x</button>
+                </div>
+                <div class="audio-status" id="status7">Ready to play</div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="startSession(7)">Start Session</button>
+                <button class="btn btn-success" onclick="markComplete(7)">Mark Complete</button>
+            </div>
+        </div>
+
+        <!-- Session 8 -->
+        <div class="session-card" data-session="8">
+            <div class="session-header">
+                <div class="session-number">8</div>
+                <div class="session-title-container">
+                    <div class="session-title">AI Governance, Ethics & Trust</div>
+                    <div class="session-duration">Duration: 30 minutes</div>
+                </div>
+            </div>
+            <div class="session-description">
+                Master AI governance frameworks, ethical considerations, and trust-building practices. Learn to address bias and fairness, ensure transparency and explainability, and navigate regulatory compliance including GDPR and emerging AI regulations.
+            </div>
+            <div class="objectives">
+                <h4>Learning Objectives</h4>
+                <ul>
+                    <li>Establish comprehensive AI governance frameworks</li>
+                    <li>Identify and mitigate bias in AI systems</li>
+                    <li>Implement fairness metrics and monitoring</li>
+                    <li>Ensure AI transparency and explainability</li>
+                    <li>Navigate GDPR, CCPA, and emerging AI regulations</li>
+                </ul>
+            </div>
+            <div class="topics">
+                <h4>Topics Covered</h4>
+                <ul>
+                    <li>AI governance frameworks and policies</li>
+                    <li>Ethical AI principles and implementation</li>
+                    <li>Bias detection and mitigation strategies</li>
+                    <li>Fairness metrics and evaluation methods</li>
+                    <li>Explainable AI (XAI) techniques</li>
+                    <li>GDPR compliance for AI systems</li>
+                    <li>EU AI Act and global AI regulations</li>
+                    <li>AI risk assessment and management</li>
+                    <li>Responsible AI development practices</li>
+                    <li>Building stakeholder trust in AI</li>
+                </ul>
+            </div>
+            <div class="audio-player">
+                <div class="player-controls">
+                    <button class="control-btn" onclick="skipBackward(8)" title="Back 15s">⏪</button>
+                    <button class="control-btn play-pause" onclick="togglePlayPause(8)" id="playBtn8">▶</button>
+                    <button class="control-btn" onclick="skipForward(8)" title="Forward 15s">⏩</button>
+                </div>
+                <div class="progress-container">
+                    <div class="time-display">
+                        <span id="currentTime8">0:00</span>
+                        <span id="totalTime8">30:00</span>
+                    </div>
+                    <input type="range" class="seek-bar" id="seekBar8" min="0" max="1800" value="0" onchange="seek(8)">
+                </div>
+                <div class="speed-control">
+                    <button class="speed-btn" onclick="setSpeed(8, 0.75)">0.75x</button>
+                    <button class="speed-btn active" onclick="setSpeed(8, 1)">1x</button>
+                    <button class="speed-btn" onclick="setSpeed(8, 1.25)">1.25x</button>
+                    <button class="speed-btn" onclick="setSpeed(8, 1.5)">1.5x</button>
+                    <button class="speed-btn" onclick="setSpeed(8, 1.75)">1.75x</button>
+                    <button class="speed-btn" onclick="setSpeed(8, 2)">2x</button>
+                </div>
+                <div class="audio-status" id="status8">Ready to play</div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="startSession(8)">Start Session</button>
+                <button class="btn btn-success" onclick="markComplete(8)">Mark Complete</button>
+            </div>
+        </div>
+
+        <!-- Session 9 -->
+        <div class="session-card" data-session="9">
+            <div class="session-header">
+                <div class="session-number">9</div>
+                <div class="session-title-container">
+                    <div class="session-title">Building AI-Ready Organizations</div>
+                    <div class="session-duration">Duration: 30 minutes</div>
+                </div>
+            </div>
+            <div class="session-description">
+                Transform your organization to become AI-ready through optimal structures, effective change management, and fostering an AI-first culture. Learn to overcome resistance, drive adoption, and create sustainable AI capabilities.
+            </div>
+            <div class="objectives">
+                <h4>Learning Objectives</h4>
+                <ul>
+                    <li>Design organizational structures that support AI initiatives</li>
+                    <li>Implement change management strategies for AI adoption</li>
+                    <li>Foster an AI-first organizational culture</li>
+                    <li>Overcome resistance to AI transformation</li>
+                    <li>Build sustainable AI capabilities and infrastructure</li>
+                </ul>
+            </div>
+            <div class="topics">
+                <h4>Topics Covered</h4>
+                <ul>
+                    <li>AI-ready organizational structures</li>
+                    <li>Change management frameworks for AI</li>
+                    <li>Building AI culture and mindset</li>
+                    <li>Stakeholder engagement and buy-in</li>
+                    <li>Overcoming resistance to AI adoption</li>
+                    <li>AI literacy programs and training</li>
+                    <li>Cross-functional collaboration models</li>
+                    <li>Innovation labs and experimentation frameworks</li>
+                    <li>Measuring organizational AI readiness</li>
+                    <li>Scaling AI from pilots to production</li>
+                </ul>
+            </div>
+            <div class="audio-player">
+                <div class="player-controls">
+                    <button class="control-btn" onclick="skipBackward(9)" title="Back 15s">⏪</button>
+                    <button class="control-btn play-pause" onclick="togglePlayPause(9)" id="playBtn9">▶</button>
+                    <button class="control-btn" onclick="skipForward(9)" title="Forward 15s">⏩</button>
+                </div>
+                <div class="progress-container">
+                    <div class="time-display">
+                        <span id="currentTime9">0:00</span>
+                        <span id="totalTime9">30:00</span>
+                    </div>
+                    <input type="range" class="seek-bar" id="seekBar9" min="0" max="1800" value="0" onchange="seek(9)">
+                </div>
+                <div class="speed-control">
+                    <button class="speed-btn" onclick="setSpeed(9, 0.75)">0.75x</button>
+                    <button class="speed-btn active" onclick="setSpeed(9, 1)">1x</button>
+                    <button class="speed-btn" onclick="setSpeed(9, 1.25)">1.25x</button>
+                    <button class="speed-btn" onclick="setSpeed(9, 1.5)">1.5x</button>
+                    <button class="speed-btn" onclick="setSpeed(9, 1.75)">1.75x</button>
+                    <button class="speed-btn" onclick="setSpeed(9, 2)">2x</button>
+                </div>
+                <div class="audio-status" id="status9">Ready to play</div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="startSession(9)">Start Session</button>
+                <button class="btn btn-success" onclick="markComplete(9)">Mark Complete</button>
+            </div>
+        </div>
+
+        <!-- Session 10 -->
+        <div class="session-card" data-session="10">
+            <div class="session-header">
+                <div class="session-number">10</div>
+                <div class="session-title-container">
+                    <div class="session-title">Communicating AI to Stakeholders</div>
+                    <div class="session-duration">Duration: 30 minutes</div>
+                </div>
+            </div>
+            <div class="session-description">
+                Master the art of communicating AI initiatives to executives, boards, and diverse stakeholders. Learn effective presentation techniques, data storytelling, and how to translate technical concepts into business value.
+            </div>
+            <div class="objectives">
+                <h4>Learning Objectives</h4>
+                <ul>
+                    <li>Craft compelling executive presentations on AI initiatives</li>
+                    <li>Deliver effective board-level AI strategy communications</li>
+                    <li>Master data storytelling techniques for impact</li>
+                    <li>Translate technical AI concepts into business language</li>
+                    <li>Build stakeholder confidence in AI investments</li>
+                </ul>
+            </div>
+            <div class="topics">
+                <h4>Topics Covered</h4>
+                <ul>
+                    <li>Executive communication strategies</li>
+                    <li>Board presentation best practices</li>
+                    <li>Data storytelling and visualization</li>
+                    <li>Translating technical to business language</li>
+                    <li>Building business cases for AI</li>
+                    <li>Addressing stakeholder concerns</li>
+                    <li>Presenting AI risks and mitigation strategies</li>
+                    <li>Showcasing AI success metrics</li>
+                    <li>Influencing without authority</li>
+                    <li>Creating AI champions across the organization</li>
+                </ul>
+            </div>
+            <div class="audio-player">
+                <div class="player-controls">
+                    <button class="control-btn" onclick="skipBackward(10)" title="Back 15s">⏪</button>
+                    <button class="control-btn play-pause" onclick="togglePlayPause(10)" id="playBtn10">▶</button>
+                    <button class="control-btn" onclick="skipForward(10)" title="Forward 15s">⏩</button>
+                </div>
+                <div class="progress-container">
+                    <div class="time-display">
+                        <span id="currentTime10">0:00</span>
+                        <span id="totalTime10">30:00</span>
+                    </div>
+                    <input type="range" class="seek-bar" id="seekBar10" min="0" max="1800" value="0" onchange="seek(10)">
+                </div>
+                <div class="speed-control">
+                    <button class="speed-btn" onclick="setSpeed(10, 0.75)">0.75x</button>
+                    <button class="speed-btn active" onclick="setSpeed(10, 1)">1x</button>
+                    <button class="speed-btn" onclick="setSpeed(10, 1.25)">1.25x</button>
+                    <button class="speed-btn" onclick="setSpeed(10, 1.5)">1.5x</button>
+                    <button class="speed-btn" onclick="setSpeed(10, 1.75)">1.75x</button>
+                    <button class="speed-btn" onclick="setSpeed(10, 2)">2x</button>
+                </div>
+                <div class="audio-status" id="status10">Ready to play</div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="startSession(10)">Start Session</button>
+                <button class="btn btn-success" onclick="markComplete(10)">Mark Complete</button>
+            </div>
+        </div>
+
+        <!-- Session 11 -->
+        <div class="session-card" data-session="11">
+            <div class="session-header">
+                <div class="session-number">11</div>
+                <div class="session-title-container">
+                    <div class="session-title">Future of AI & Emerging Technologies</div>
+                    <div class="session-duration">Duration: 30 minutes</div>
+                </div>
+            </div>
+            <div class="session-description">
+                Explore the cutting edge of AI including artificial general intelligence, autonomous agents, multimodal AI systems, and quantum computing. Learn to prepare your organization for emerging technologies and future AI capabilities.
+            </div>
+            <div class="objectives">
+                <h4>Learning Objectives</h4>
+                <ul>
+                    <li>Understand the path toward artificial general intelligence (AGI)</li>
+                    <li>Evaluate autonomous agents and their business applications</li>
+                    <li>Explore multimodal AI combining vision, language, and more</li>
+                    <li>Assess quantum computing's impact on AI and optimization</li>
+                    <li>Prepare organizations for emerging AI technologies</li>
+                </ul>
+            </div>
+            <div class="topics">
+                <h4>Topics Covered</h4>
+                <ul>
+                    <li>Artificial General Intelligence (AGI) trajectory</li>
+                    <li>Autonomous agents and agentic AI systems</li>
+                    <li>Multimodal AI and unified models</li>
+                    <li>Quantum computing fundamentals</li>
+                    <li>Quantum machine learning applications</li>
+                    <li>Brain-computer interfaces and neurotech</li>
+                    <li>Edge AI and federated learning</li>
+                    <li>AI hardware innovations (neuromorphic chips, TPUs)</li>
+                    <li>Synthetic data and simulation</li>
+                    <li>Preparing for future AI disruptions</li>
+                </ul>
+            </div>
+            <div class="audio-player">
+                <div class="player-controls">
+                    <button class="control-btn" onclick="skipBackward(11)" title="Back 15s">⏪</button>
+                    <button class="control-btn play-pause" onclick="togglePlayPause(11)" id="playBtn11">▶</button>
+                    <button class="control-btn" onclick="skipForward(11)" title="Forward 15s">⏩</button>
+                </div>
+                <div class="progress-container">
+                    <div class="time-display">
+                        <span id="currentTime11">0:00</span>
+                        <span id="totalTime11">30:00</span>
+                    </div>
+                    <input type="range" class="seek-bar" id="seekBar11" min="0" max="1800" value="0" onchange="seek(11)">
+                </div>
+                <div class="speed-control">
+                    <button class="speed-btn" onclick="setSpeed(11, 0.75)">0.75x</button>
+                    <button class="speed-btn active" onclick="setSpeed(11, 1)">1x</button>
+                    <button class="speed-btn" onclick="setSpeed(11, 1.25)">1.25x</button>
+                    <button class="speed-btn" onclick="setSpeed(11, 1.5)">1.5x</button>
+                    <button class="speed-btn" onclick="setSpeed(11, 1.75)">1.75x</button>
+                    <button class="speed-btn" onclick="setSpeed(11, 2)">2x</button>
+                </div>
+                <div class="audio-status" id="status11">Ready to play</div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="startSession(11)">Start Session</button>
+                <button class="btn btn-success" onclick="markComplete(11)">Mark Complete</button>
+            </div>
+        </div>
+
+        <!-- Session 12 -->
+        <div class="session-card" data-session="12">
+            <div class="session-header">
+                <div class="session-number">12</div>
+                <div class="session-title-container">
+                    <div class="session-title">CDAIO Role & Career Development</div>
+                    <div class="session-duration">Duration: 30 minutes</div>
+                </div>
+            </div>
+            <div class="session-description">
+                Navigate your career as a Chief Data and AI Officer. Learn about career paths, networking strategies, continuous skill development, and building executive presence. Discover how to position yourself for success in this rapidly evolving field.
+            </div>
+            <div class="objectives">
+                <h4>Learning Objectives</h4>
+                <ul>
+                    <li>Understand CDAIO career trajectories and opportunities</li>
+                    <li>Build effective professional networks in data and AI</li>
+                    <li>Develop continuous learning strategies for staying current</li>
+                    <li>Cultivate executive presence and leadership gravitas</li>
+                    <li>Position yourself for CDAIO and C-suite roles</li>
+                </ul>
+            </div>
+            <div class="topics">
+                <h4>Topics Covered</h4>
+                <ul>
+                    <li>CDAIO role evolution and responsibilities</li>
+                    <li>Career paths to the CDAIO position</li>
+                    <li>Professional networking strategies</li>
+                    <li>Building your personal brand</li>
+                    <li>Continuous learning and skill development</li>
+                    <li>Executive presence and leadership skills</li>
+                    <li>Mentorship and sponsorship</li>
+                    <li>Industry certifications and credentials</li>
+                    <li>Thought leadership and public speaking</li>
+                    <li>Work-life balance and avoiding burnout</li>
+                    <li>Negotiating compensation and role scope</li>
+                </ul>
+            </div>
+            <div class="audio-player">
+                <div class="player-controls">
+                    <button class="control-btn" onclick="skipBackward(12)" title="Back 15s">⏪</button>
+                    <button class="control-btn play-pause" onclick="togglePlayPause(12)" id="playBtn12">▶</button>
+                    <button class="control-btn" onclick="skipForward(12)" title="Forward 15s">⏩</button>
+                </div>
+                <div class="progress-container">
+                    <div class="time-display">
+                        <span id="currentTime12">0:00</span>
+                        <span id="totalTime12">30:00</span>
+                    </div>
+                    <input type="range" class="seek-bar" id="seekBar12" min="0" max="1800" value="0" onchange="seek(12)">
+                </div>
+                <div class="speed-control">
+                    <button class="speed-btn" onclick="setSpeed(12, 0.75)">0.75x</button>
+                    <button class="speed-btn active" onclick="setSpeed(12, 1)">1x</button>
+                    <button class="speed-btn" onclick="setSpeed(12, 1.25)">1.25x</button>
+                    <button class="speed-btn" onclick="setSpeed(12, 1.5)">1.5x</button>
+                    <button class="speed-btn" onclick="setSpeed(12, 1.75)">1.75x</button>
+                    <button class="speed-btn" onclick="setSpeed(12, 2)">2x</button>
+                </div>
+                <div class="audio-status" id="status12">Ready to play</div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="startSession(12)">Start Session</button>
+                <button class="btn btn-success" onclick="markComplete(12)">Mark Complete</button>
+            </div>
+        </div>
+
+        <!-- Certificate Section -->
+        <div class="certificate-section" id="certificateSection" style="display: none;">
+            <h3>Congratulations!</h3>
+            <p>You've completed all 12 sessions of the UMich CDAIO Program!</p>
+            <button class="btn btn-primary" onclick="generateCertificate()">Generate Certificate</button>
+        </div>
+    </div>
+
+    <!-- Certificate Modal -->
+    <div class="modal" id="certificateModal">
+        <div class="modal-content">
+            <h2>Program Completion Certificate</h2>
+            <p style="margin: 20px 0; font-size: 18px;">This certifies that you have successfully completed</p>
+            <h3 style="color: var(--michigan-blue); margin: 10px 0;">University of Michigan<br>Chief Data & AI Officer Program</h3>
+            <p style="margin: 20px 0;">All 12 sessions • 6 hours of content</p>
+            <p style="font-size: 14px; color: #666;">Completion Date: <span id="completionDate"></span></p>
+            <button class="btn btn-primary" onclick="closeCertificateModal()">Close</button>
+            <button class="btn btn-success" onclick="downloadCertificate()">Download Certificate</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 University of Michigan - Chief Data & AI Officer Program</p>
+        <p>Mobile Platform • Optimized for offline use</p>
+    </footer>
+
+    <script>
+        // ===== GLOBAL STATE =====
+        const TOTAL_SESSIONS = 12;
+        const SESSION_DURATION = 1800; // 30 minutes in seconds
+
+        const audioState = {
+            currentSession: null,
+            isPlaying: false,
+            currentTime: 0,
+            playbackRate: 1,
+            utterance: null,
+            isPaused: false
+        };
+
+        let deferredPrompt = null;
+
+        // ===== INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            checkOnlineStatus();
+            setupPWA();
+        });
+
+        function initializeApp() {
+            loadProgress();
+            updateProgressDisplay();
+            checkCertificateEligibility();
+
+            // Check for Web Speech API support
+            if (!('speechSynthesis' in window)) {
+                console.warn('Web Speech API not supported');
+                document.querySelectorAll('.audio-status').forEach(el => {
+                    el.textContent = 'Audio not supported on this device';
+                });
+            }
+        }
+
+        // ===== PROGRESS MANAGEMENT =====
+        function loadProgress() {
+            try {
+                const progress = JSON.parse(localStorage.getItem('cdaio_progress') || '{}');
+
+                for (let i = 1; i <= TOTAL_SESSIONS; i++) {
+                    if (progress[`session${i}`]) {
+                        const card = document.querySelector(`.session-card[data-session="${i}"]`);
+                        if (card) {
+                            card.classList.add('completed');
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error('Error loading progress:', e);
+            }
+        }
+
+        function saveProgress(sessionNumber, completed = true) {
+            try {
+                const progress = JSON.parse(localStorage.getItem('cdaio_progress') || '{}');
+                progress[`session${sessionNumber}`] = completed;
+                progress[`session${sessionNumber}_timestamp`] = new Date().toISOString();
+                localStorage.setItem('cdaio_progress', JSON.stringify(progress));
+                return true;
+            } catch (e) {
+                console.error('Error saving progress:', e);
+                return false;
+            }
+        }
+
+        function updateProgressDisplay() {
+            const progress = JSON.parse(localStorage.getItem('cdaio_progress') || '{}');
+            const completed = Object.keys(progress).filter(k => k.startsWith('session') && !k.includes('_timestamp')).length;
+            const remaining = TOTAL_SESSIONS - completed;
+            const percentage = Math.round((completed / TOTAL_SESSIONS) * 100);
+
+            document.getElementById('overallProgress').style.width = percentage + '%';
+            document.getElementById('overallProgress').textContent = percentage + '%';
+            document.getElementById('completedCount').textContent = completed;
+            document.getElementById('remainingCount').textContent = remaining;
+
+            // Calculate time spent (estimated)
+            const timeSpent = completed * 30; // 30 minutes per session
+            const hours = Math.floor(timeSpent / 60);
+            const minutes = timeSpent % 60;
+            document.getElementById('timeSpent').textContent = `${hours}h ${minutes}m`;
+        }
+
+        function markComplete(sessionNumber) {
+            const card = document.querySelector(`.session-card[data-session="${sessionNumber}"]`);
+
+            if (card.classList.contains('completed')) {
+                if (confirm('This session is already marked complete. Unmark it?')) {
+                    card.classList.remove('completed');
+                    saveProgress(sessionNumber, false);
+                }
+            } else {
+                card.classList.add('completed');
+                saveProgress(sessionNumber, true);
+
+                // Show celebration for first completion
+                const progress = JSON.parse(localStorage.getItem('cdaio_progress') || '{}');
+                const completed = Object.keys(progress).filter(k => k.startsWith('session') && !k.includes('_timestamp')).length;
+
+                if (completed === 1) {
+                    showNotification('Great start! Keep going!');
+                } else if (completed === TOTAL_SESSIONS) {
+                    showNotification('Congratulations! You\'ve completed all sessions!');
+                }
+            }
+
+            updateProgressDisplay();
+            checkCertificateEligibility();
+        }
+
+        function checkCertificateEligibility() {
+            const progress = JSON.parse(localStorage.getItem('cdaio_progress') || '{}');
+            const completed = Object.keys(progress).filter(k => k.startsWith('session') && !k.includes('_timestamp')).length;
+
+            if (completed === TOTAL_SESSIONS) {
+                document.getElementById('certificateSection').style.display = 'block';
+            } else {
+                document.getElementById('certificateSection').style.display = 'none';
+            }
+        }
+
+        // ===== AUDIO PLAYER =====
+        function startSession(sessionNumber) {
+            stopAllAudio();
+            audioState.currentSession = sessionNumber;
+            updateStatus(sessionNumber, 'Preparing audio...');
+
+            // Scroll to audio player
+            const card = document.querySelector(`.session-card[data-session="${sessionNumber}"]`);
+            if (card) {
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            setTimeout(() => {
+                updateStatus(sessionNumber, 'Ready to play - Press play button');
+            }, 500);
+        }
+
+        function togglePlayPause(sessionNumber) {
+            if (!('speechSynthesis' in window)) {
+                updateStatus(sessionNumber, 'Audio not supported on this device');
+                return;
+            }
+
+            if (audioState.currentSession !== sessionNumber) {
+                stopAllAudio();
+                audioState.currentSession = sessionNumber;
+            }
+
+            const playBtn = document.getElementById(`playBtn${sessionNumber}`);
+
+            if (audioState.isPlaying && audioState.currentSession === sessionNumber) {
+                // Pause
+                window.speechSynthesis.pause();
+                audioState.isPlaying = false;
+                audioState.isPaused = true;
+                playBtn.textContent = '▶';
+                updateStatus(sessionNumber, 'Paused');
+            } else if (audioState.isPaused && audioState.currentSession === sessionNumber) {
+                // Resume
+                window.speechSynthesis.resume();
+                audioState.isPlaying = true;
+                audioState.isPaused = false;
+                playBtn.textContent = '⏸';
+                updateStatus(sessionNumber, 'Playing...');
+            } else {
+                // Start new
+                playAudio(sessionNumber);
+            }
+        }
+
+        function playAudio(sessionNumber) {
+            try {
+                const card = document.querySelector(`.session-card[data-session="${sessionNumber}"]`);
+                const title = card.querySelector('.session-title').textContent;
+                const description = card.querySelector('.session-description').textContent;
+
+                // Get objectives and topics
+                const objectives = Array.from(card.querySelectorAll('.objectives li')).map(li => li.textContent).join('. ');
+                const topics = Array.from(card.querySelectorAll('.topics li')).map(li => li.textContent).join('. ');
+
+                const content = `Session ${sessionNumber}: ${title}. ${description}. Learning objectives: ${objectives}. Topics covered: ${topics}. This concludes session ${sessionNumber}.`;
+
+                const utterance = new SpeechSynthesisUtterance(content);
+                utterance.rate = audioState.playbackRate;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+
+                // Try to use a good voice
+                const voices = window.speechSynthesis.getVoices();
+                const preferredVoice = voices.find(voice => voice.lang === 'en-US' && voice.name.includes('Google'))
+                    || voices.find(voice => voice.lang === 'en-US')
+                    || voices[0];
+                if (preferredVoice) {
+                    utterance.voice = preferredVoice;
+                }
+
+                audioState.currentTime = 0;
+                let startTime = Date.now();
+
+                utterance.onstart = () => {
+                    audioState.isPlaying = true;
+                    audioState.isPaused = false;
+                    const playBtn = document.getElementById(`playBtn${sessionNumber}`);
+                    playBtn.textContent = '⏸';
+                    updateStatus(sessionNumber, 'Playing...');
+                    startTime = Date.now();
+                };
+
+                utterance.onend = () => {
+                    audioState.isPlaying = false;
+                    audioState.isPaused = false;
+                    const playBtn = document.getElementById(`playBtn${sessionNumber}`);
+                    playBtn.textContent = '▶';
+                    updateStatus(sessionNumber, 'Completed');
+                    audioState.currentTime = 0;
+                    updateTimeDisplay(sessionNumber);
+                };
+
+                utterance.onerror = (event) => {
+                    console.error('Speech synthesis error:', event);
+                    audioState.isPlaying = false;
+                    updateStatus(sessionNumber, 'Error playing audio');
+                };
+
+                // Update progress bar periodically
+                const progressInterval = setInterval(() => {
+                    if (audioState.isPlaying && !audioState.isPaused) {
+                        const elapsed = (Date.now() - startTime) / 1000;
+                        audioState.currentTime = Math.min(elapsed, SESSION_DURATION);
+                        updateTimeDisplay(sessionNumber);
+
+                        if (audioState.currentTime >= SESSION_DURATION) {
+                            clearInterval(progressInterval);
+                        }
+                    }
+
+                    if (!audioState.isPlaying && !audioState.isPaused) {
+                        clearInterval(progressInterval);
+                    }
+                }, 100);
+
+                audioState.utterance = utterance;
+                window.speechSynthesis.speak(utterance);
+
+            } catch (e) {
+                console.error('Error playing audio:', e);
+                updateStatus(sessionNumber, 'Error: ' + e.message);
+            }
+        }
+
+        function stopAllAudio() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+
+            audioState.isPlaying = false;
+            audioState.isPaused = false;
+            audioState.currentTime = 0;
+
+            // Reset all play buttons
+            for (let i = 1; i <= TOTAL_SESSIONS; i++) {
+                const playBtn = document.getElementById(`playBtn${i}`);
+                if (playBtn) {
+                    playBtn.textContent = '▶';
+                }
+            }
+        }
+
+        function skipBackward(sessionNumber) {
+            if (audioState.currentSession !== sessionNumber) return;
+
+            audioState.currentTime = Math.max(0, audioState.currentTime - 15);
+            updateTimeDisplay(sessionNumber);
+            updateStatus(sessionNumber, 'Skipped back 15s');
+
+            // If playing, restart from new position
+            if (audioState.isPlaying) {
+                // Note: Web Speech API doesn't support seeking, so we show the feedback but can't actually seek
+                updateStatus(sessionNumber, 'Note: Cannot seek in current playback');
+            }
+        }
+
+        function skipForward(sessionNumber) {
+            if (audioState.currentSession !== sessionNumber) return;
+
+            audioState.currentTime = Math.min(SESSION_DURATION, audioState.currentTime + 15);
+            updateTimeDisplay(sessionNumber);
+            updateStatus(sessionNumber, 'Skipped forward 15s');
+
+            // If playing, restart from new position
+            if (audioState.isPlaying) {
+                updateStatus(sessionNumber, 'Note: Cannot seek in current playback');
+            }
+        }
+
+        function seek(sessionNumber) {
+            const seekBar = document.getElementById(`seekBar${sessionNumber}`);
+            audioState.currentTime = parseInt(seekBar.value);
+            updateTimeDisplay(sessionNumber);
+
+            if (audioState.isPlaying) {
+                updateStatus(sessionNumber, 'Note: Cannot seek during playback');
+            }
+        }
+
+        function setSpeed(sessionNumber, rate) {
+            audioState.playbackRate = rate;
+
+            // Update active button
+            const card = document.querySelector(`.session-card[data-session="${sessionNumber}"]`);
+            card.querySelectorAll('.speed-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            updateStatus(sessionNumber, `Speed: ${rate}x`);
+
+            // If currently playing, need to restart with new rate
+            if (audioState.isPlaying && audioState.currentSession === sessionNumber) {
+                if (audioState.utterance) {
+                    audioState.utterance.rate = rate;
+                }
+            }
+        }
+
+        function updateTimeDisplay(sessionNumber) {
+            const currentTime = formatTime(Math.floor(audioState.currentTime));
+            const totalTime = formatTime(SESSION_DURATION);
+
+            document.getElementById(`currentTime${sessionNumber}`).textContent = currentTime;
+            document.getElementById(`totalTime${sessionNumber}`).textContent = totalTime;
+
+            const seekBar = document.getElementById(`seekBar${sessionNumber}`);
+            seekBar.value = Math.floor(audioState.currentTime);
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updateStatus(sessionNumber, message) {
+            const statusEl = document.getElementById(`status${sessionNumber}`);
+            if (statusEl) {
+                statusEl.textContent = message;
+            }
+        }
+
+        // ===== CERTIFICATE =====
+        function generateCertificate() {
+            const completionDate = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            document.getElementById('completionDate').textContent = completionDate;
+            document.getElementById('certificateModal').classList.add('show');
+        }
+
+        function closeCertificateModal() {
+            document.getElementById('certificateModal').classList.remove('show');
+        }
+
+        function downloadCertificate() {
+            alert('Certificate download functionality would connect to server. For offline use, take a screenshot of this certificate!');
+        }
+
+        // ===== PWA FUNCTIONALITY =====
+        function setupPWA() {
+            // Register service worker
+            if ('serviceWorker' in navigator) {
+                registerServiceWorker();
+            }
+
+            // Handle install prompt
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                document.getElementById('installPrompt').classList.add('show');
+            });
+
+            // Create manifest dynamically
+            const manifest = {
+                name: "UMich CDAIO Program",
+                short_name: "CDAIO",
+                description: "University of Michigan Chief Data & AI Officer Program - Mobile Platform",
+                start_url: window.location.pathname,
+                display: "standalone",
+                background_color: "#00274C",
+                theme_color: "#00274C",
+                icons: [
+                    {
+                        src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%2300274C' width='100' height='100'/%3E%3Ctext x='50' y='50' font-size='50' text-anchor='middle' dy='.3em' fill='%23FFCB05' font-family='Arial, sans-serif' font-weight='bold'%3EM%3C/text%3E%3C/svg%3E",
+                        sizes: "192x192",
+                        type: "image/svg+xml"
+                    },
+                    {
+                        src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%2300274C' width='100' height='100'/%3E%3Ctext x='50' y='50' font-size='50' text-anchor='middle' dy='.3em' fill='%23FFCB05' font-family='Arial, sans-serif' font-weight='bold'%3EM%3C/text%3E%3C/svg%3E",
+                        sizes: "512x512",
+                        type: "image/svg+xml"
+                    }
+                ]
+            };
+
+            const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+            const manifestURL = URL.createObjectURL(manifestBlob);
+            document.getElementById('manifest-placeholder').setAttribute('href', manifestURL);
+        }
+
+        function registerServiceWorker() {
+            const swCode = `
+                const CACHE_NAME = 'cdaio-v1';
+                const urlsToCache = ['./', 'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap'];
+
+                self.addEventListener('install', event => {
+                    event.waitUntil(
+                        caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+                    );
+                });
+
+                self.addEventListener('fetch', event => {
+                    event.respondWith(
+                        caches.match(event.request).then(response => {
+                            return response || fetch(event.request).then(fetchResponse => {
+                                return caches.open(CACHE_NAME).then(cache => {
+                                    cache.put(event.request, fetchResponse.clone());
+                                    return fetchResponse;
+                                });
+                            });
+                        }).catch(() => {
+                            return caches.match('./');
+                        })
+                    );
+                });
+            `;
+
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swURL = URL.createObjectURL(blob);
+
+            navigator.serviceWorker.register(swURL).then(registration => {
+                // Service Worker registered successfully
+            }).catch(err => {
+                console.error('Service Worker registration failed:', err);
+            });
+        }
+
+        function installApp() {
+            if (!deferredPrompt) {
+                alert('App installation is available when you visit this site in a browser that supports PWA installation.');
+                return;
+            }
+
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(choiceResult => {
+                if (choiceResult.outcome === 'accepted') {
+                    document.getElementById('installPrompt').classList.remove('show');
+                }
+                deferredPrompt = null;
+            });
+        }
+
+        // ===== OFFLINE DETECTION =====
+        function checkOnlineStatus() {
+            const updateOnlineStatus = () => {
+                const offlineIndicator = document.getElementById('offlineIndicator');
+                if (!navigator.onLine) {
+                    offlineIndicator.classList.add('show');
+                } else {
+                    offlineIndicator.classList.remove('show');
+                }
+            };
+
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            updateOnlineStatus();
+        }
+
+        // ===== UTILITIES =====
+        function showNotification(message) {
+            // Simple notification - could be enhanced with toast library
+            alert(message);
+        }
+
+        // Prevent accidental page refresh
+        window.addEventListener('beforeunload', (e) => {
+            if (audioState.isPlaying) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+
+        // Load voices when available
+        if ('speechSynthesis' in window) {
+            speechSynthesis.addEventListener('voiceschanged', () => {
+                const voices = speechSynthesis.getVoices();
+                // Voices loaded successfully
+            });
+        }
+    </script>
+</body>
+</html>
