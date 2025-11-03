@@ -1,0 +1,51 @@
+conversation_id,transcript,outcome,deal_value,duration,customer_name,date,agent_name
+conv_001,"Agent: Hi Amanda, I see you're interested in the standing desk. What's driving your interest?
+
+Customer: I work from home and my back is killing me.
+
+Agent: I hear that a lot. How long have you been dealing with the back pain?
+
+Customer: About 6 months now. It's getting worse.
+
+Agent: Have you tried anything to fix it?
+
+Customer: Just a better chair, but it's not helping.
+
+Agent: Makes sense. If you don't solve this, what happens over the next year?
+
+Customer: Probably more pain, maybe even medical bills if I need treatment.
+
+Agent: Exactly. This standing desk has been shown to reduce back pain by 54% within 4 weeks for our customers. Plus, you'll burn an extra 50 calories per hour standing. Over a year, that's like losing 15 pounds just from standing while you work.
+
+Customer: Really? That's impressive.
+
+Agent: And right now we have free delivery and setup. Normally $200, but free this week. It'll be installed in your home office within 3 days.
+
+Customer: Okay, I'm sold. Let's do it.
+
+Agent: Perfect! I'll get you set up.",closed,899,600,Amanda Foster,2025-01-11,Jessica Lee
+conv_002,"Agent: Hi Robert, thanks for your interest in the home gym system. What's your fitness goal?
+
+Customer: I want to lose 30 pounds and stop paying for a gym membership.
+
+Agent: Great goals. How much are you paying for the gym now?
+
+Customer: $60 a month.
+
+Agent: And how often do you actually go?
+
+Customer: Honestly, maybe twice a week. I keep meaning to go more.
+
+Agent: So you're paying $60 for 8 visits a month - that's $7.50 per visit. And you want to go more, but...?
+
+Customer: I just don't have time with the drive and everything.
+
+Agent: I get it. This home gym gives you everything you need in your garage. No drive, available 24/7. It's $1,800, which sounds like a lot, but compare it to your gym: you're paying $720/year. This pays for itself in 2.5 years, and then it's free fitness forever.
+
+Customer: Plus I can use it whenever I want.
+
+Agent: Exactly. And we have 0% financing - $75/month for 24 months. That's only $15 more than your current gym, but you own it.
+
+Customer: That's actually a no-brainer. Let's do the financing.
+
+Agent: Perfect! I'll get you started.",closed,1800,720,Robert Kim,2025-01-17,Jessica Lee

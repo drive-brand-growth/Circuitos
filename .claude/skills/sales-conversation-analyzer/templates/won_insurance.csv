@@ -1,0 +1,47 @@
+conversation_id,transcript,outcome,deal_value,duration,customer_name,date,agent_name
+conv_001,"Agent: Hi Jennifer, thanks for reaching out about life insurance. Can I ask what prompted you to look into this now?
+
+Customer: My wife just had our first baby and I realized I have nothing in place.
+
+Agent: Congratulations! That's a big moment. Can I ask, if something happened to you tomorrow, how would your family cover the mortgage and expenses?
+
+Customer: Honestly, I don't know. That's what's keeping me up at night.
+
+Agent: I understand. Let's talk about what you'd need. What's your annual income?
+
+Customer: About $85K.
+
+Agent: And your mortgage and essential expenses per year?
+
+Customer: Probably $65K total.
+
+Agent: Okay, so general rule is 10x your income to replace your earning power, which would be $850K. But given your expenses, we could look at $500K to fully cover needs for 7-8 years while your child grows up. Does that feel right?
+
+Customer: Yes, that makes sense.
+
+Agent: Great. For a 30-year-old non-smoker, that's about $45 per month. Less than your phone bill.
+
+Customer: That's it? I can do that.
+
+Agent: Perfect. Let's get you covered. I'll need some health information to lock in this rate.",closed,500000,900,Jennifer Park,2025-01-10,David Kim
+conv_002,"Agent: Hi Michael, I see you're looking at disability insurance. What's your current situation?
+
+Customer: I'm self-employed and if I get hurt, I have no income.
+
+Agent: That's a real risk. What would happen to your business if you couldn't work for 3-6 months?
+
+Customer: It would probably fail. I'm the only one who can do what I do.
+
+Agent: And financially, how long could you cover your bills without income?
+
+Customer: Maybe 2 months with savings.
+
+Agent: Okay, so there's about a 4-month gap between your savings and when you'd be in serious trouble. That's what we need to cover. What's your monthly take-home?
+
+Customer: About $8K.
+
+Agent: Perfect. We can get you disability coverage for 60% of that - $4,800/month - for about $180/month. If you're injured and can't work, you're covered after a 90-day waiting period.
+
+Customer: That's a huge relief. I'll take it.
+
+Agent: Smart decision. Let's get you protected.",closed,4800,720,Michael Torres,2025-01-14,David Kim

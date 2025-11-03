@@ -1,0 +1,70 @@
+conversation_id,transcript,outcome,deal_value,duration,customer_name,date,agent_name
+conv_001,"Agent: Hi John, thanks for calling about refinancing. What's your current monthly payment?
+
+Customer: I'm paying $485 a month at 8.5%.
+
+Agent: Got it. How long have you been in this loan?
+
+Customer: About 20 months now.
+
+Agent: And how is that $485 payment affecting your budget each month?
+
+Customer: Honestly, it's tough. We had unexpected medical bills and it's making things tight.
+
+Agent: I understand. If you had another unexpected expense - car repair, emergency - with that $485 payment, what would happen?
+
+Customer: We'd probably have to use a credit card, which we're trying to avoid.
+
+Agent: That makes sense. Based on your credit score of 740, I can get you 5.9%. That would drop your payment to $412 - saving you $73 per month, or $876 per year.
+
+Customer: Really? That would help a lot.
+
+Agent: With an extra $73 a month, what would you do with that?
+
+Customer: We could actually build our emergency fund back up.
+
+Agent: Perfect. Let's make it happen. Do you have your current loan details handy?
+
+Customer: Yes, let me grab them.
+
+Agent: Great. We can have this done by end of week. Does that work?
+
+Customer: Yes! Let's do it.",closed,26500,840,John Martinez,2025-01-15,Sarah Chen
+conv_002,"Agent: Hi Lisa, I see you're interested in trading in your current vehicle. What year and model?
+
+Customer: It's a 2019 Honda Accord. I still owe about $12K on it.
+
+Agent: Perfect. Based on market rates, we're seeing trade-in values around $14K for that model. That would give you $2K equity to put toward your new purchase. Does that sound fair?
+
+Customer: That's actually better than I thought.
+
+Agent: Great! And what's your budget for the new vehicle?
+
+Customer: I'd like to keep it under $400 a month.
+
+Agent: Okay. With your credit score of 710 and $2K down from the trade-in, I can get you into a 2023 model at $385 per month. Does that work?
+
+Customer: That's perfect. Can we do this today?
+
+Agent: Absolutely. Let me get the paperwork started.",closed,28000,600,Lisa Thompson,2025-01-18,Mike Rodriguez
+conv_003,"Agent: Hi David, thanks for your time. I understand you're looking to refinance?
+
+Customer: Yes, my rate is pretty high at 9.2%.
+
+Agent: What's driving you to look at refinancing now?
+
+Customer: Well, my credit has improved since I first got the loan, and I'm hoping to lower my payment.
+
+Agent: That's a great reason. What would a lower payment enable you to do?
+
+Customer: Save for a down payment on a house. That's my goal this year.
+
+Agent: I love that. How much would you need to save per month to make that goal realistic?
+
+Customer: Ideally $100-150 more than I'm saving now.
+
+Agent: Perfect. With your improved credit at 720, I can get you 6.1%. Your current payment is $520, and we can get you to $445. That's $75 savings, plus you could round up to $500 and put $55 extra toward principal. Over time, that accelerates your payoff AND you're saving $20/month. Combined, that's close to your $100 goal.
+
+Customer: That's exactly what I need. What do we need to do?
+
+Agent: I'll need your current loan details and we can lock this in today.",booked,24800,720,David Wilson,2025-01-22,Sarah Chen

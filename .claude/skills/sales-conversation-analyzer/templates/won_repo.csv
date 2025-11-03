@@ -1,0 +1,47 @@
+conversation_id,transcript,outcome,deal_value,duration,customer_name,date,agent_name
+conv_001,"Agent: Hi Tom, I understand you need help recovering a vehicle. Can you tell me about the situation?
+
+Customer: We have a borrower 3 months behind on a $45K truck. We need it back.
+
+Agent: Understood. Do you have the current location of the vehicle?
+
+Customer: Yes, it's at the borrower's residence in Phoenix.
+
+Agent: Perfect. Our success rate in Arizona is 94% within 48 hours. Our fee is 10% of the vehicle value plus storage. For a $45K truck, that's $4,500 plus $50/day storage until you pick it up.
+
+Customer: What if you can't find it?
+
+Agent: No recovery, no fee. You only pay if we successfully recover the vehicle.
+
+Customer: How fast can you move on this?
+
+Agent: We can have a team there tonight. Usually recovered within 24-48 hours.
+
+Customer: Let's do it. The longer we wait, the higher the risk.
+
+Agent: Agreed. I'll need the VIN, borrower info, and your authorization letter.
+
+Customer: I'll email that over in 10 minutes.
+
+Agent: Perfect. I'll assign a team as soon as I receive it.",closed,4500,480,Tom Anderson,2025-01-12,Marcus Johnson
+conv_002,"Agent: Hi Sarah, you need a skip trace and recovery?
+
+Customer: Yes, borrower disappeared with a $35K vehicle. We have no current address.
+
+Agent: How long has the borrower been missing?
+
+Customer: About 3 weeks.
+
+Agent: Okay, we can help. Our skip trace fee is $500, then recovery fee is 10% if we locate and recover. For a $35K vehicle, total would be $500 + $3,500 = $4,000 if successful. If we can't locate, you're only out the $500 skip trace.
+
+Customer: What's your success rate on skips?
+
+Agent: 78% within 2 weeks. We use database searches, social media, associates, workplace contacts.
+
+Customer: Timeline is critical. Can you start immediately?
+
+Agent: Yes. I need borrower's full name, SSN, last known address, and any associate information you have.
+
+Customer: I'll send that now. Let's move on this.
+
+Agent: You'll get daily updates. First report in 24 hours.",booked,4000,540,Sarah Mitchell,2025-01-19,Marcus Johnson
