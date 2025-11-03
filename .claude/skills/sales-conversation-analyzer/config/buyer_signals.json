@@ -1,0 +1,187 @@
+{
+  "intent_signals": {
+    "high": {
+      "score_value": 15,
+      "examples": [
+        "What's the pricing?",
+        "When can we start?",
+        "I need a demo",
+        "How does this compare to [competitor]?",
+        "Can you send me a proposal?",
+        "Let's move forward"
+      ]
+    },
+    "medium": {
+      "score_value": 5,
+      "examples": [
+        "Tell me more",
+        "How does it work?",
+        "What features do you have?",
+        "This sounds interesting"
+      ]
+    },
+    "low": {
+      "score_value": -5,
+      "examples": [
+        "Just browsing",
+        "Not interested right now",
+        "Maybe later",
+        "Happy with current solution"
+      ]
+    }
+  },
+  "pain_indicators": {
+    "high": [
+      "constantly failing",
+      "losing money",
+      "missing deadlines",
+      "customers complaining",
+      "can't scale",
+      "falling behind competitors"
+    ],
+    "medium": [
+      "somewhat frustrating",
+      "could be better",
+      "inefficient",
+      "takes too long",
+      "manual process"
+    ],
+    "low": [
+      "minor issue",
+      "not a big problem",
+      "manageable",
+      "workaround exists"
+    ]
+  },
+  "authority_indicators": {
+    "decision_maker": [
+      "I make the decision",
+      "I control the budget",
+      "I can approve this",
+      "It's my call"
+    ],
+    "influencer": [
+      "I'll need to check with",
+      "My boss needs to approve",
+      "We need buy-in from",
+      "I'm part of the decision team"
+    ],
+    "blocker": [
+      "Just gathering information",
+      "Someone else decides",
+      "Not my area"
+    ]
+  },
+  "budget_indicators": {
+    "qualified": [
+      "we have budget",
+      "already allocated",
+      "we can spend",
+      "budgeted for this"
+    ],
+    "unqualified": [
+      "no budget",
+      "not in the budget",
+      "can't afford",
+      "too expensive",
+      "need to find budget"
+    ],
+    "unknown": [
+      "need to check budget",
+      "depends on the price",
+      "what's the cost?"
+    ]
+  },
+  "timeline_indicators": {
+    "immediate": {
+      "urgency": "high",
+      "keywords": [
+        "need this now",
+        "asap",
+        "immediately",
+        "this week",
+        "urgent"
+      ]
+    },
+    "near_term": {
+      "urgency": "medium",
+      "keywords": [
+        "this month",
+        "next quarter",
+        "within 30 days",
+        "soon"
+      ]
+    },
+    "long_term": {
+      "urgency": "low",
+      "keywords": [
+        "next year",
+        "eventually",
+        "6+ months",
+        "not urgent"
+      ]
+    }
+  },
+  "objection_types": {
+    "price": {
+      "severity": "medium",
+      "keywords": [
+        "too expensive",
+        "can't afford",
+        "over budget",
+        "cheaper alternative"
+      ],
+      "response_frameworks": ["Chris_Voss", "Gap_Selling"]
+    },
+    "timing": {
+      "severity": "low",
+      "keywords": [
+        "not right now",
+        "maybe later",
+        "too busy",
+        "call back"
+      ],
+      "response_frameworks": ["Sandler", "SPIN_Implication"]
+    },
+    "authority": {
+      "severity": "high",
+      "keywords": [
+        "need to check",
+        "not my decision",
+        "have to ask boss"
+      ],
+      "response_frameworks": ["MEDDIC", "Sandler"]
+    },
+    "need": {
+      "severity": "high",
+      "keywords": [
+        "don't need this",
+        "not interested",
+        "happy with current"
+      ],
+      "response_frameworks": ["SPIN_Problem", "Gap_Selling"]
+    },
+    "trust": {
+      "severity": "medium",
+      "keywords": [
+        "never heard of you",
+        "can I trust",
+        "too good to be true",
+        "sounds risky"
+      ],
+      "response_frameworks": ["Chris_Voss_Labeling", "Social_Proof"]
+    }
+  },
+  "positive_engagement_signals": [
+    "Asking clarifying questions",
+    "Taking notes",
+    "Involving colleagues",
+    "Requesting additional information",
+    "Discussing implementation details",
+    "Sharing internal challenges",
+    "Asking about next steps",
+    "Comparing to current solution",
+    "Discussing timeline",
+    "Asking about pricing/ROI"
+  ]
+}

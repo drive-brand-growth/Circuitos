@@ -1,0 +1,80 @@
+{
+  "frameworks": {
+    "SPIN": {
+      "name": "SPIN Selling",
+      "author": "Neil Rackham",
+      "description": "Situation, Problem, Implication, Need-payoff question framework",
+      "effectiveness": 0.87,
+      "best_for": ["complex_sales", "b2b", "high_ticket"],
+      "phases": ["Situation", "Problem", "Implication", "Need-Payoff"]
+    },
+    "Challenger": {
+      "name": "Challenger Sale",
+      "author": "Matthew Dixon & Brent Adamson",
+      "description": "Teach, Tailor, Take Control approach",
+      "effectiveness": 0.82,
+      "best_for": ["complex_sales", "enterprise", "disruptive_solutions"],
+      "phases": ["Teach", "Tailor", "Take_Control"]
+    },
+    "Gap_Selling": {
+      "name": "Gap Selling",
+      "author": "Keenan",
+      "description": "Current State to Future State gap analysis",
+      "effectiveness": 0.85,
+      "best_for": ["problem_centric_sales", "consultative", "transformation"],
+      "phases": ["Current_State", "Future_State", "Gap_Analysis"]
+    },
+    "MEDDIC": {
+      "name": "MEDDIC",
+      "author": "Jack Napoli",
+      "description": "Metrics, Economic Buyer, Decision Criteria, Decision Process, Identify Pain, Champion",
+      "effectiveness": 0.88,
+      "best_for": ["enterprise_sales", "complex_buying_process", "long_cycles"],
+      "components": ["Metrics", "Economic_Buyer", "Decision_Criteria", "Decision_Process", "Identify_Pain", "Champion"]
+    },
+    "Never_Split_Difference": {
+      "name": "Never Split the Difference",
+      "author": "Chris Voss",
+      "description": "FBI negotiation tactics: tactical empathy, mirroring, calibrated questions",
+      "effectiveness": 0.83,
+      "best_for": ["negotiation", "objection_handling", "high_stakes"],
+      "tactics": ["Tactical_Empathy", "Mirroring", "Labeling", "Calibrated_Questions", "No_Oriented_Questions"]
+    },
+    "Sandler": {
+      "name": "Sandler Selling System",
+      "author": "David Sandler",
+      "description": "Pain-Budget-Decision qualification system",
+      "effectiveness": 0.81,
+      "best_for": ["qualification", "avoiding_tire_kickers", "time_efficiency"],
+      "components": ["Pain", "Budget", "Decision", "Upfront_Contract"]
+    },
+    "Straight_Line": {
+      "name": "Straight Line Persuasion",
+      "author": "Jordan Belfort",
+      "description": "Certainty scales, tonality, and assumptive closes",
+      "effectiveness": 0.76,
+      "best_for": ["high_volume", "consumer_sales", "closing"],
+      "components": ["Certainty_Product", "Certainty_Self", "Certainty_Company", "Tonality"]
+    }
+  },
+  "world_class_combinations": [
+    {
+      "name": "Enterprise Closer",
+      "frameworks": ["MEDDIC", "SPIN", "Challenger"],
+      "description": "Best for complex enterprise deals",
+      "effectiveness": 0.91
+    },
+    {
+      "name": "Consultative Partner",
+      "frameworks": ["Gap_Selling", "SPIN", "Never_Split_Difference"],
+      "description": "Best for consultative, problem-solving approach",
+      "effectiveness": 0.89
+    },
+    {
+      "name": "Fast Qualifier",
+      "frameworks": ["Sandler", "SPIN", "Straight_Line"],
+      "description": "Best for qualifying quickly and closing fast",
+      "effectiveness": 0.84
+    }
+  ]
+}

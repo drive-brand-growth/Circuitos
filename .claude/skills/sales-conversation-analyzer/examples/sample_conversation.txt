@@ -1,0 +1,35 @@
+Agent: Hi John, thanks for taking my call. I understand you're the VP of Sales at TechCorp?
+
+Prospect: Yes, that's right.
+
+Agent: Great. I noticed your company recently expanded to the East Coast. As you scale to new regions, what's the biggest challenge you're facing with your sales operations?
+
+Prospect: Honestly, it's managing the team remotely. Our reps are spread across different time zones and it's hard to keep everyone aligned.
+
+Agent: I see. What specific issues is that causing?
+
+Prospect: Well, follow-ups are getting missed, leads are falling through the cracks, and we don't have good visibility into what everyone's doing.
+
+Agent: That sounds frustrating. If this continues for another quarter, how does that impact your expansion goals?
+
+Prospect: We'll probably miss our Q4 targets. We planned for $2M in new business from the East Coast, but at this rate, we'll maybe hit 60% of that.
+
+Agent: So you're looking at potentially $800K in missed revenue just from the coordination issues?
+
+Prospect: Yeah, when you put it that way, it's pretty significant.
+
+Agent: Absolutely. If you could solve this - get full visibility, automate follow-ups, and keep the team aligned - what would that mean for hitting those targets?
+
+Prospect: We'd probably not only hit the $2M but exceed it. Our reps are talented, they just need better systems.
+
+Agent: That makes sense. Given what's at stake this quarter, when would be the best time to implement a solution?
+
+Prospect: We need something soon. Can we see a demo this week?
+
+Agent: Absolutely. How does Thursday at 2pm ET work for you? I'll bring our implementation lead so we can discuss getting you up and running quickly.
+
+Prospect: Thursday works. Let's do it.
+
+Agent: Perfect. I'll send a calendar invite right after this call. Looking forward to showing you how we've helped companies like Salesforce and HubSpot solve these exact challenges.
+
+Prospect: Sounds good. See you Thursday.
