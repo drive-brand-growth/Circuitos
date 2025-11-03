@@ -30,7 +30,13 @@ class PatternDetector:
             "Gap_Selling": self._gap_selling_patterns(),
             "MEDDIC": self._meddic_patterns(),
             "Never_Split_Difference": self._voss_patterns(),
-            "Sandler": self._sandler_patterns()
+            "Sandler": self._sandler_patterns(),
+            "BANT": self._bant_patterns(),
+            "Value_Selling": self._value_selling_patterns(),
+            "Solution_Selling": self._solution_selling_patterns(),
+            "NEAT": self._neat_patterns(),
+            "Conceptual_Selling": self._conceptual_selling_patterns(),
+            "Straight_Line": []  # Already defined above
         }
 
     def detect_patterns(self, transcript: str) -> List[Dict[str, Any]]:
@@ -461,5 +467,301 @@ class PatternDetector:
                 ],
                 "description": "Setting upfront contract",
                 "effectiveness": 0.77
+            }
+        ]
+
+    def _bant_patterns(self) -> List[Dict]:
+        """BANT Qualification patterns"""
+        return [
+            {
+                "name": "Budget_Qualification",
+                "type": "qualification",
+                "keywords": [
+                    "what's your budget",
+                    "budget allocated",
+                    "how much can you spend",
+                    "budget approved"
+                ],
+                "regex": [
+                    r"what'?s (your|the) budget",
+                    r"budget (allocated|approved|available)",
+                    r"how much can you (spend|invest)"
+                ],
+                "description": "Qualifying budget availability",
+                "effectiveness": 0.82
+            },
+            {
+                "name": "Authority_Identification",
+                "type": "qualification",
+                "keywords": [
+                    "who makes the decision",
+                    "who signs off",
+                    "decision maker",
+                    "who approves"
+                ],
+                "regex": [
+                    r"who (makes|has) (the)? ?(final)? ?decision",
+                    r"who (signs off|approves)",
+                    r"who'?s the decision maker"
+                ],
+                "description": "Identifying decision authority",
+                "effectiveness": 0.89
+            },
+            {
+                "name": "Need_Qualification",
+                "type": "qualification",
+                "keywords": [
+                    "why do you need",
+                    "what problem are you solving",
+                    "why is this important"
+                ],
+                "regex": [
+                    r"why (do you need|is this important)",
+                    r"what (problem|challenge) are you solving"
+                ],
+                "description": "Qualifying need and urgency",
+                "effectiveness": 0.81
+            },
+            {
+                "name": "Timeline_Qualification",
+                "type": "qualification",
+                "keywords": [
+                    "when do you need",
+                    "what's your timeline",
+                    "by when",
+                    "implementation date"
+                ],
+                "regex": [
+                    r"when (do you need|are you looking to)",
+                    r"what'?s (your|the) timeline",
+                    r"by when"
+                ],
+                "description": "Qualifying timeline and urgency",
+                "effectiveness": 0.78
+            }
+        ]
+
+    def _value_selling_patterns(self) -> List[Dict]:
+        """Value Selling patterns"""
+        return [
+            {
+                "name": "ROI_Quantification",
+                "type": "value",
+                "keywords": [
+                    "return on investment",
+                    "ROI",
+                    "payback period",
+                    "cost savings",
+                    "revenue increase"
+                ],
+                "regex": [
+                    r"(return on investment|ROI)",
+                    r"payback (period|in)",
+                    r"(cost savings|save you|revenue increase)"
+                ],
+                "description": "Quantifying ROI and business value",
+                "effectiveness": 0.88
+            },
+            {
+                "name": "Business_Case_Building",
+                "type": "value",
+                "keywords": [
+                    "business case",
+                    "justify the investment",
+                    "present to executives",
+                    "board approval"
+                ],
+                "regex": [
+                    r"business case",
+                    r"justify (the|this) investment",
+                    r"present to (executives|board|leadership)"
+                ],
+                "description": "Building business case for decision makers",
+                "effectiveness": 0.85
+            },
+            {
+                "name": "Cost_of_Inaction",
+                "type": "value",
+                "keywords": [
+                    "cost of doing nothing",
+                    "if you don't solve this",
+                    "what's it costing you",
+                    "impact of waiting"
+                ],
+                "regex": [
+                    r"cost of (doing nothing|inaction|waiting)",
+                    r"if you don'?t solve this",
+                    r"what'?s (it|this) costing you"
+                ],
+                "description": "Quantifying cost of maintaining status quo",
+                "effectiveness": 0.90
+            }
+        ]
+
+    def _solution_selling_patterns(self) -> List[Dict]:
+        """Solution Selling patterns"""
+        return [
+            {
+                "name": "Problem_Discovery",
+                "type": "discovery",
+                "keywords": [
+                    "what problem are you trying to solve",
+                    "root cause",
+                    "underlying issue",
+                    "why is this happening"
+                ],
+                "regex": [
+                    r"what (problem|issue|challenge)",
+                    r"root cause",
+                    r"why is this happening"
+                ],
+                "description": "Deep problem discovery",
+                "effectiveness": 0.86
+            },
+            {
+                "name": "Implementation_Planning",
+                "type": "solution",
+                "keywords": [
+                    "implementation plan",
+                    "rollout strategy",
+                    "integration process",
+                    "onboarding"
+                ],
+                "regex": [
+                    r"implementation (plan|process|timeline)",
+                    r"rollout strategy",
+                    r"how (we|you) would integrate"
+                ],
+                "description": "Planning solution implementation",
+                "effectiveness": 0.82
+            },
+            {
+                "name": "Proof_of_Concept",
+                "type": "solution",
+                "keywords": [
+                    "proof of concept",
+                    "pilot program",
+                    "trial",
+                    "test it out"
+                ],
+                "regex": [
+                    r"proof of concept",
+                    r"pilot (program|project)",
+                    r"(trial|test) (it|this) out"
+                ],
+                "description": "Offering proof of concept or pilot",
+                "effectiveness": 0.84
+            }
+        ]
+
+    def _neat_patterns(self) -> List[Dict]:
+        """NEAT Selling patterns"""
+        return [
+            {
+                "name": "Core_Needs_Discovery",
+                "type": "discovery",
+                "keywords": [
+                    "core need",
+                    "fundamental challenge",
+                    "strategic priority",
+                    "business objective"
+                ],
+                "regex": [
+                    r"core (need|challenge|objective)",
+                    r"(fundamental|strategic) (challenge|priority)",
+                    r"business objective"
+                ],
+                "description": "Discovering core business needs",
+                "effectiveness": 0.85
+            },
+            {
+                "name": "Economic_Impact",
+                "type": "value",
+                "keywords": [
+                    "economic impact",
+                    "bottom line",
+                    "financial impact",
+                    "affect revenue"
+                ],
+                "regex": [
+                    r"economic impact",
+                    r"(bottom line|financial) impact",
+                    r"(affect|impact) (revenue|profit)"
+                ],
+                "description": "Discussing economic business impact",
+                "effectiveness": 0.87
+            },
+            {
+                "name": "Access_to_Authority",
+                "type": "qualification",
+                "keywords": [
+                    "introduce me to",
+                    "speak with your",
+                    "meet the",
+                    "include in conversation"
+                ],
+                "regex": [
+                    r"introduce me to",
+                    r"speak with (your|the)",
+                    r"(meet|include) the"
+                ],
+                "description": "Requesting access to decision makers",
+                "effectiveness": 0.83
+            }
+        ]
+
+    def _conceptual_selling_patterns(self) -> List[Dict]:
+        """Conceptual Selling patterns"""
+        return [
+            {
+                "name": "Concept_Questions",
+                "type": "discovery",
+                "keywords": [
+                    "ideal solution",
+                    "perfect world",
+                    "if you could wave a magic wand",
+                    "what does success look like"
+                ],
+                "regex": [
+                    r"ideal (solution|scenario|situation)",
+                    r"(perfect|ideal) world",
+                    r"(wave a magic wand|dream scenario)",
+                    r"what does success look like"
+                ],
+                "description": "Understanding buyer's concept of solution",
+                "effectiveness": 0.84
+            },
+            {
+                "name": "Win_Results",
+                "type": "value",
+                "keywords": [
+                    "what would winning look like",
+                    "how will you know if successful",
+                    "measure success",
+                    "definition of success"
+                ],
+                "regex": [
+                    r"what (would|does) winning look like",
+                    r"how (will|would) you (know|measure) (if|whether) successful",
+                    r"definition of success"
+                ],
+                "description": "Defining what winning looks like",
+                "effectiveness": 0.82
+            },
+            {
+                "name": "Buying_Vision",
+                "type": "discovery",
+                "keywords": [
+                    "envision",
+                    "picture this",
+                    "imagine if",
+                    "think about"
+                ],
+                "regex": [
+                    r"(envision|picture|imagine) (this|if|that)",
+                    r"think about (what|how)"
+                ],
+                "description": "Building buying vision with prospect",
+                "effectiveness": 0.80
             }
         ]

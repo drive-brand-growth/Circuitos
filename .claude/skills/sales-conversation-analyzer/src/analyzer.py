@@ -26,6 +26,8 @@ from .buyer_signal_detector import BuyerSignalDetector
 from .flow_analyzer import FlowAnalyzer
 from .gap_analyzer import GapAnalyzer
 from .vector_store import VectorStore
+from .ml_predictor import MLPredictor
+from .loss_analyzer import LossAnalyzer
 
 
 @dataclass
@@ -58,6 +60,11 @@ class ConversationAnalysis:
     pattern_tags: List[str]
     recommendations: List[str]
     metadata: ConversationMetadata
+    # New enhanced fields
+    ml_prediction: Optional[Dict[str, Any]] = None
+    loss_analysis: Optional[Dict[str, Any]] = None
+    consistent_buying_signals: Optional[List[Dict]] = None
+    framework_alignment: Optional[Dict] = None
 
 
 class SalesConversationAnalyzer:
@@ -82,10 +89,16 @@ class SalesConversationAnalyzer:
             frameworks: List of frameworks to use (SPIN, Challenger, etc.)
         """
         self.vector_store = VectorStore(vector_db_path)
-        self.pattern_detector = PatternDetector(frameworks or ["SPIN", "Challenger", "Gap_Selling"])
+        self.pattern_detector = PatternDetector(frameworks or [
+            "SPIN", "Challenger", "Gap_Selling", "MEDDIC", "BANT",
+            "Value_Selling", "Solution_Selling", "NEAT", "Conceptual_Selling",
+            "Never_Split_Difference", "Sandler", "Straight_Line"
+        ])
         self.buyer_signal_detector = BuyerSignalDetector()
         self.flow_analyzer = FlowAnalyzer()
         self.gap_analyzer = GapAnalyzer(self.vector_store)
+        self.ml_predictor = MLPredictor(self.vector_store)
+        self.loss_analyzer = LossAnalyzer(self.vector_store)
 
         # Initialize API clients
         self.anthropic_client = None
@@ -169,6 +182,30 @@ class SalesConversationAnalyzer:
         # Step 9: Extract pattern tags
         pattern_tags = self._extract_pattern_tags(patterns, buyer_signals)
 
+        # Step 10: ML Prediction (predict outcome and identify consistent signals)
+        ml_prediction = self.ml_predictor.predict_outcome(
+            patterns=patterns,
+            buyer_signals=buyer_signals,
+            conversation_flow=flow_analysis
+        )
+
+        # Step 11: Loss Analysis (if negative outcome)
+        loss_analysis = None
+        if conv_metadata.outcome in ['lost', 'no_response', 'unqualified'] or outcome_classification == 'negative':
+            loss_analysis = self.loss_analyzer.analyze_loss(
+                conversation_analysis=None,  # Will create temp object
+                actual_outcome=conv_metadata.outcome or 'lost'
+            )
+            # Pass the current analysis data to loss analyzer
+            loss_analysis['_temp_analysis'] = {
+                'buyer_signals': buyer_signals,
+                'key_patterns': patterns,
+                'conversation_flow': flow_analysis,
+                'gap_analysis': gap_analysis,
+                'effectiveness_score': effectiveness_score,
+                'metadata': conv_metadata
+            }
+
         # Create analysis result
         analysis = ConversationAnalysis(
             conversation_id=conv_metadata.conversation_id,
@@ -183,7 +220,12 @@ class SalesConversationAnalyzer:
             training_value=training_value,
             pattern_tags=pattern_tags,
             recommendations=recommendations,
-            metadata=conv_metadata
+            metadata=conv_metadata,
+            # Enhanced fields
+            ml_prediction=ml_prediction,
+            loss_analysis=loss_analysis,
+            consistent_buying_signals=ml_prediction.get('consistent_buying_signals', []),
+            framework_alignment=ml_prediction.get('framework_alignment', {})
         )
 
         # Step 10: Store in vector database if high value

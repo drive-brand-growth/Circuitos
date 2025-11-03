@@ -55,6 +55,81 @@
       "effectiveness": 0.76,
       "best_for": ["high_volume", "consumer_sales", "closing"],
       "components": ["Certainty_Product", "Certainty_Self", "Certainty_Company", "Tonality"]
+    },
+    "BANT": {
+      "name": "BANT Qualification",
+      "author": "IBM",
+      "description": "Budget, Authority, Need, Timeline qualification framework",
+      "effectiveness": 0.79,
+      "best_for": ["enterprise_sales", "qualification", "b2b"],
+      "components": ["Budget", "Authority", "Need", "Timeline"],
+      "buying_signals": [
+        "Mentions budget availability",
+        "Identifies decision maker",
+        "Articulates clear need",
+        "Provides specific timeline",
+        "Discusses procurement process"
+      ]
+    },
+    "Value_Selling": {
+      "name": "Value Selling",
+      "author": "Various",
+      "description": "Focus on quantifying ROI and business value rather than features",
+      "effectiveness": 0.86,
+      "best_for": ["high_ticket", "enterprise", "complex_solutions"],
+      "components": ["Value_Discovery", "ROI_Quantification", "Business_Case", "Value_Proposition"],
+      "buying_signals": [
+        "Asks about ROI metrics",
+        "Discusses business objectives",
+        "Quantifies current costs",
+        "Mentions performance targets",
+        "Requests business case"
+      ]
+    },
+    "Solution_Selling": {
+      "name": "Solution Selling",
+      "author": "Michael Bosworth",
+      "description": "Focus on solving business problems rather than selling products",
+      "effectiveness": 0.84,
+      "best_for": ["complex_sales", "consultative", "problem_solving"],
+      "components": ["Problem_Discovery", "Solution_Development", "Proof_Points", "Implementation_Plan"],
+      "buying_signals": [
+        "Shares detailed problem information",
+        "Asks about implementation",
+        "Discusses integration challenges",
+        "Requests proof of concept",
+        "Involves technical team"
+      ]
+    },
+    "NEAT": {
+      "name": "NEAT Selling",
+      "author": "Harris Consulting Group & The Sales Collective",
+      "description": "Core Needs, Economic Impact, Access to Authority, Timeline",
+      "effectiveness": 0.83,
+      "best_for": ["modern_sales", "consultative", "buyer_centric"],
+      "components": ["Core_Needs", "Economic_Impact", "Access_to_Authority", "Timeline"],
+      "buying_signals": [
+        "Articulates core business needs",
+        "Discusses economic impact",
+        "Provides access to executives",
+        "Commits to timeline",
+        "Shares strategic priorities"
+      ]
+    },
+    "Conceptual_Selling": {
+      "name": "Conceptual Selling",
+      "author": "Robert Miller & Stephen Heiman",
+      "description": "Understanding the buyer's concept of the ideal solution",
+      "effectiveness": 0.81,
+      "best_for": ["complex_sales", "strategic_sales", "long_cycles"],
+      "components": ["Concept_Questions", "Win_Results", "Success_Criteria", "Buying_Vision"],
+      "buying_signals": [
+        "Describes ideal solution",
+        "Shares success criteria",
+        "Discusses what winning looks like",
+        "Articulates vision for change",
+        "Compares to past experiences"
+      ]
     }
   },
   "world_class_combinations": [
