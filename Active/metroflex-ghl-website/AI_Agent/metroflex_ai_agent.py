@@ -34,7 +34,7 @@ class MetroFlexAIAgent:
 
         # Initialize OpenAI
         openai.api_key = openai_api_key
-        self.model = "gpt-4o"  # Latest model - faster, smarter, cost-effective (~$0.008/chat)
+        self.model = "gpt-4o-mini"  # Cost-optimized: 16x cheaper than GPT-4o (~$0.0005/chat) - Perfect for factual Q&A
 
         # Initialize vector database
         self.chroma_client = chromadb.Client()
@@ -234,13 +234,13 @@ You have access to comprehensive information about:
 
 Remember: You represent 38+ years of champion-making excellence. Be confident, helpful, and professional."""
 
-    def retrieve_relevant_context(self, query: str, n_results: int = 5) -> List[str]:
+    def retrieve_relevant_context(self, query: str, n_results: int = 3) -> List[str]:
         """
         Retrieve relevant documents from vector database using semantic search
 
         Args:
             query: User's question
-            n_results: Number of relevant documents to retrieve
+            n_results: Number of relevant documents to retrieve (optimized to 3 for cost savings)
 
         Returns:
             List of relevant document texts
@@ -266,8 +266,8 @@ Remember: You represent 38+ years of champion-making excellence. Be confident, h
         Returns:
             Dictionary with response, relevant_sources, and metadata
         """
-        # Retrieve relevant context from knowledge base
-        relevant_docs = self.retrieve_relevant_context(user_message, n_results=5)
+        # Retrieve relevant context from knowledge base (optimized to 3 docs for cost savings)
+        relevant_docs = self.retrieve_relevant_context(user_message, n_results=3)
         context = "\n\n".join([f"[Knowledge Base]: {doc}" for doc in relevant_docs])
 
         # Get or create conversation history
@@ -288,12 +288,12 @@ Remember: You represent 38+ years of champion-making excellence. Be confident, h
         messages.append({"role": "user", "content": user_message})
 
         try:
-            # Call OpenAI GPT-4
+            # Call OpenAI GPT-4o-mini (cost-optimized)
             response = openai.ChatCompletion.create(
                 model=self.model,
                 messages=messages,
                 temperature=0.7,
-                max_tokens=500
+                max_tokens=300  # Optimized for concise responses (cost savings)
             )
 
             assistant_message = response.choices[0].message['content']
