@@ -14,6 +14,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import memoryManager from './lib/memory-manager.js';
 import designWorkflow from './lib/ghl-workflow-designer.js';
 import { orchestrate } from './lib/orchestrator.js';
+import { optimizeWorkflow } from './lib/ml-workflow-optimizer.js';
 
 const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY
@@ -126,6 +127,8 @@ export default async function handler(req, res) {
         return await designGHLWorkflow(req, res, contactId, businessId, data, useMemory);
       case 'orchestrate':
         return await orchestrateAgents(req, res, contactId, businessId, data);
+      case 'optimize-workflow':
+        return await optimizeWorkflowHandler(req, res, contactId, businessId, data, useMemory);
       case 'get-summary':
         return await getConversationSummary(req, res, contactId);
       case 'record-feedback':
@@ -499,5 +502,62 @@ async function designGHLWorkflow(req, res, contactId, businessId, data, useMemor
  */
 async function orchestrateAgents(req, res, contactId, businessId, data) {
   const result = await orchestrate(data, contactId, businessId);
+  return res.status(200).json(result);
+}
+
+/**
+ * Optimize workflow using ML insights
+ */
+async function optimizeWorkflowHandler(req, res, contactId, businessId, data, useMemory) {
+  const {
+    workflowId,
+    performanceData,
+    demographicData,
+    psychographicData,
+    marketTrends
+  } = data;
+
+  // Get conversation history if using memory
+  const conversationHistory = useMemory
+    ? await memoryManager.getConversationHistory(contactId, 20)
+    : [];
+
+  // Call ML optimizer
+  const result = await optimizeWorkflow({
+    workflowId,
+    performanceData,
+    demographicData,
+    psychographicData,
+    marketTrends,
+    conversationHistory
+  });
+
+  // Save to conversation memory
+  if (useMemory) {
+    const requestPrompt = `Optimize workflow ${workflowId} using ML insights`;
+
+    await memoryManager.saveMessage(
+      contactId,
+      businessId,
+      'ML Workflow Optimizer',
+      'user',
+      requestPrompt
+    );
+
+    await memoryManager.saveMessage(
+      contactId,
+      businessId,
+      'ML Workflow Optimizer',
+      'assistant',
+      result.fullResponse,
+      {
+        action: 'OPTIMIZED_WORKFLOW',
+        mlScore: result.optimization?.ml_score?.total,
+        inputTokens: result.metadata.tokens.input,
+        outputTokens: result.metadata.tokens.output
+      }
+    );
+  }
+
   return res.status(200).json(result);
 }
