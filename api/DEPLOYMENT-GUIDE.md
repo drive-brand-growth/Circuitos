@@ -428,13 +428,151 @@ async getConversationHistory(contactId, maxTurns = 10) // Reduce from 20 to 10
 
 ---
 
+## STEP 6: Enable Observability Features (15 minutes)
+
+### 6.1 Deploy Observability Schema to Supabase
+
+```bash
+# In Supabase Dashboard:
+# 1. Go to "SQL Editor"
+# 2. Click "New Query"
+# 3. Copy contents of api/supabase-observability-schema.sql
+# 4. Paste and click "Run"
+# 5. Verify tables created: error_log, executions, scheduled_jobs
+```
+
+### 6.2 Deploy Dashboard UIs
+
+The observability UIs are static HTML files in `/public`:
+
+```bash
+# These are automatically deployed with your Vercel project:
+# - /public/test.html → Test Interface
+# - /public/errors.html → Error Dashboard
+# - /public/executions.html → Execution History
+
+# Access them at:
+# https://YOUR_VERCEL_URL/test.html
+# https://YOUR_VERCEL_URL/errors.html
+# https://YOUR_VERCEL_URL/executions.html
+```
+
+### 6.3 Access Observability Dashboards
+
+**🧪 Test Interface** - `https://YOUR_VERCEL_URL/test.html`
+- Dry-run mode (no API cost)
+- Step-by-step execution tracking
+- Mock responses for testing
+- Input validation
+- Use this to test agents without triggering full GHL workflows!
+
+**🚨 Error Dashboard** - `https://YOUR_VERCEL_URL/errors.html`
+- View all errors with severity classification (CRITICAL/HIGH/MEDIUM/LOW)
+- Filter by severity, context, resolution status
+- Automatic retry tracking
+- Critical error alerts
+- Mark errors as resolved
+
+**📊 Execution History** - `https://YOUR_VERCEL_URL/executions.html`
+- View all API executions with full input/output
+- Performance metrics by action
+- Success rate tracking
+- Token usage analytics
+- Replay executions for debugging
+
+### 6.4 Configure Slack Notifications (Optional)
+
+For critical error alerts, add Slack webhook to Vercel:
+
+```bash
+# Add Slack webhook URL
+npx vercel env add SLACK_WEBHOOK_URL production
+# Paste your Slack webhook URL when prompted
+
+# Redeploy
+npx vercel --prod
+```
+
+To create a Slack webhook:
+1. Go to https://api.slack.com/apps
+2. Create new app → "From scratch"
+3. Add "Incoming Webhooks" feature
+4. Create webhook for your channel
+5. Copy webhook URL
+
+**What you'll get:** Automatic Slack messages for CRITICAL errors with full context.
+
+### 6.5 Enable Error Tracking in Your API
+
+The error tracking is **automatically integrated** into the memory API. No code changes needed!
+
+**What's tracked:**
+- ✅ All API errors with severity classification
+- ✅ Retry attempts with exponential backoff
+- ✅ Full error context (contact ID, business ID, stack traces)
+- ✅ Slack notifications for CRITICAL errors
+- ✅ Resolution tracking
+
+**What's logged:**
+- ✅ All API executions with full input/output
+- ✅ Duration and token usage per execution
+- ✅ Success/failure status
+- ✅ Performance metrics by action
+- ✅ Replay capability for debugging
+
+### 6.6 Test Observability Features
+
+**Test the Test Interface:**
+```bash
+# Visit https://YOUR_VERCEL_URL/test.html
+# 1. Select "Score Lead" action
+# 2. Enable "Dry Run" and "Use Mock Response"
+# 3. Click "Run Test"
+# 4. You should see step-by-step execution without API cost
+```
+
+**Test Error Tracking:**
+```bash
+# Trigger an error intentionally:
+curl -X POST https://YOUR_VERCEL_URL/api/claude-agent-memory \
+  -H "Content-Type: application/json" \
+  -d '{"action": "invalid-action"}'
+
+# Then visit https://YOUR_VERCEL_URL/errors.html
+# You should see the error logged with MEDIUM severity
+```
+
+**Test Execution Tracking:**
+```bash
+# Run any valid API call (e.g., score-lead from Step 3)
+# Then visit https://YOUR_VERCEL_URL/executions.html
+# You should see the execution with full input/output data
+```
+
+### 6.7 Monitor Performance
+
+**Key Metrics to Watch:**
+
+1. **Success Rate** - Should be >95% for production
+2. **Average Duration** - <3000ms for Lead Scorer, <5000ms for Copywriter
+3. **Token Usage** - Track costs in Execution History dashboard
+4. **Error Rate by Severity:**
+   - CRITICAL: Should be 0 (if >0, investigate immediately)
+   - HIGH: <1% (API failures, rate limits)
+   - MEDIUM: <5% (network issues, timeouts)
+   - LOW: <10% (validation errors)
+
+---
+
 ## 📚 NEXT STEPS
 
-1. **Monitor Usage:** Track Claude API costs in Anthropic Console
+1. **Monitor Usage:** Track Claude API costs in Anthropic Console + Execution History dashboard
 2. **Tune Memory:** Adjust `maxTurns` based on conversation complexity
 3. **Add Agents:** Create more agents (Channel Router, Content Creator, etc.)
 4. **ML Training:** Build retraining pipeline using `ml_retraining_queue`
 5. **Scale Up:** When you exceed free tiers, upgrade (still cheap!)
+6. **Review Errors:** Check Error Dashboard weekly, resolve unresolved errors
+7. **Optimize Performance:** Use Execution History to identify slow agents
 
 ---
 

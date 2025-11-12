@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circuit OS - Execution History</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 28px;
+    }
+
+    .refresh-btn {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .refresh-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: #4facfe;
+    }
+
+    .stat-label {
+      color: #666;
+      font-size: 13px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      color: #333;
+      font-size: 20px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .filters {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .filter-group label {
+      font-size: 13px;
+      color: #666;
+      font-weight: 500;
+    }
+
+    select, input {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .execution-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .execution-table th {
+      background: #f8f9fa;
+      padding: 12px;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 600;
+      color: #555;
+      border-bottom: 2px solid #dee2e6;
+    }
+
+    .execution-table td {
+      padding: 12px;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+    }
+
+    .execution-table tr:hover {
+      background: #f8f9fa;
+      cursor: pointer;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .status-badge.success { background: #d4edda; color: #155724; }
+    .status-badge.failed { background: #f8d7da; color: #721c24; }
+    .status-badge.running { background: #fff3cd; color: #856404; }
+
+    .action-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #e3f2fd;
+      color: #1976d2;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .duration {
+      color: #666;
+      font-size: 13px;
+    }
+
+    .replay-btn, .view-btn {
+      background: #4facfe;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      margin-right: 5px;
+      transition: opacity 0.2s;
+    }
+
+    .replay-btn:hover, .view-btn:hover {
+      opacity: 0.8;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .modal-header h3 {
+      color: #333;
+      font-size: 20px;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: #999;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .close-btn:hover {
+      color: #333;
+    }
+
+    .detail-section {
+      margin-bottom: 20px;
+    }
+
+    .detail-section h4 {
+      color: #555;
+      font-size: 14px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .detail-box {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #4facfe;
+    }
+
+    .detail-box pre {
+      margin: 0;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .performance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .perf-metric {
+      text-align: center;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .perf-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #4facfe;
+      margin-bottom: 5px;
+    }
+
+    .perf-label {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #4facfe;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #4facfe;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+    }
+
+    .empty-state-icon {
+      font-size: 64px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📊 Execution History</h1>
+      <button class="refresh-btn" onclick="loadDashboard()">🔄 Refresh</button>
+    </header>
+
+    <div id="loadingState" class="loading">
+      <div class="spinner"></div>
+      <p>Loading execution data...</p>
+    </div>
+
+    <div id="dashboardContent" style="display: none;">
+      <!-- Stats Grid -->
+      <div class="stats-grid" id="statsGrid"></div>
+
+      <!-- Performance by Action -->
+      <div class="card" id="performanceCard">
+        <h2>⚡ Performance by Action</h2>
+        <div class="performance-grid" id="performanceGrid"></div>
+      </div>
+
+      <!-- Execution List -->
+      <div class="card">
+        <h2>Execution Log</h2>
+
+        <div class="filters">
+          <div class="filter-group">
+            <label>Action</label>
+            <select id="actionFilter" onchange="loadExecutions()">
+              <option value="">All Actions</option>
+              <option value="score-lead">Score Lead</option>
+              <option value="generate-copy">Generate Copy</option>
+              <option value="respond-to-review">Respond to Review</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Status</label>
+            <select id="statusFilter" onchange="loadExecutions()">
+              <option value="">All Statuses</option>
+              <option value="SUCCESS">Success</option>
+              <option value="FAILED">Failed</option>
+              <option value="RUNNING">Running</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Contact ID</label>
+            <input type="text" id="contactFilter" placeholder="Filter by contact..." onchange="loadExecutions()">
+          </div>
+
+          <div class="filter-group">
+            <label>Limit</label>
+            <select id="limitFilter" onchange="loadExecutions()">
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="executionsTableContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Execution Detail Modal -->
+  <div id="executionModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Execution Details</h3>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = window.location.origin;
+
+    async function loadDashboard() {
+      showLoading();
+
+      try {
+        // Load stats
+        const statsResponse = await fetch(`${API_URL}/api/executions/stats?days=7`);
+        const stats = await statsResponse.json();
+
+        renderStats(stats);
+        renderPerformance(stats.performance_by_action || []);
+
+        // Load execution list
+        await loadExecutions();
+
+        hideLoading();
+
+      } catch (error) {
+        console.error('Failed to load dashboard:', error);
+        alert('Failed to load execution dashboard. Check console for details.');
+        hideLoading();
+      }
+    }
+
+    function renderStats(stats) {
+      const statsGrid = document.getElementById('statsGrid');
+
+      const byStatus = stats.by_status || {};
+      const totalExecutions = stats.total_executions || 0;
+      const successRate = stats.success_rate || 0;
+      const avgDuration = stats.avg_duration_ms || 0;
+      const totalTokens = stats.total_tokens || 0;
+
+      statsGrid.innerHTML = `
+        <div class="stat-card">
+          <div class="stat-value">${totalExecutions}</div>
+          <div class="stat-label">Total Executions (7d)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${byStatus.SUCCESS || 0}</div>
+          <div class="stat-label">Successful</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${byStatus.FAILED || 0}</div>
+          <div class="stat-label">Failed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${successRate}%</div>
+          <div class="stat-label">Success Rate</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${avgDuration}ms</div>
+          <div class="stat-label">Avg Duration</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${totalTokens.toLocaleString()}</div>
+          <div class="stat-label">Total Tokens</div>
+        </div>
+      `;
+    }
+
+    function renderPerformance(performanceData) {
+      const grid = document.getElementById('performanceGrid');
+
+      if (performanceData.length === 0) {
+        grid.innerHTML = '<p style="color: #999;">No performance data available</p>';
+        return;
+      }
+
+      grid.innerHTML = performanceData.map(action => `
+        <div class="perf-metric">
+          <div style="font-weight: 600; color: #333; margin-bottom: 10px;">${action.action}</div>
+          <div class="perf-value">${action.success_rate}%</div>
+          <div class="perf-label">Success Rate</div>
+          <div class="perf-value" style="font-size: 18px; margin-top: 10px;">${action.avg_duration_ms}ms</div>
+          <div class="perf-label">Avg Duration</div>
+        </div>
+      `).join('');
+    }
+
+    async function loadExecutions() {
+      const action = document.getElementById('actionFilter').value;
+      const status = document.getElementById('statusFilter').value;
+      const contactId = document.getElementById('contactFilter').value;
+      const limit = document.getElementById('limitFilter').value;
+
+      const params = new URLSearchParams({ limit });
+      if (action) params.append('action', action);
+      if (status) params.append('status', status);
+      if (contactId) params.append('contactId', contactId);
+
+      try {
+        const response = await fetch(`${API_URL}/api/executions?${params}`);
+        const data = await response.json();
+
+        renderExecutionsTable(data.executions || []);
+
+      } catch (error) {
+        console.error('Failed to load executions:', error);
+      }
+    }
+
+    function renderExecutionsTable(executions) {
+      const container = document.getElementById('executionsTableContainer');
+
+      if (executions.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">📭</div>
+            <p>No executions found</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <table class="execution-table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Action</th>
+              <th>Status</th>
+              <th>Duration</th>
+              <th>Tokens</th>
+              <th>Contact ID</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${executions.map(exec => `
+              <tr onclick="viewExecution('${exec.execution_id}')">
+                <td>${formatTime(exec.started_at)}</td>
+                <td><span class="action-tag">${exec.action}</span></td>
+                <td><span class="status-badge ${exec.status.toLowerCase()}">${exec.status}</span></td>
+                <td class="duration">${exec.duration_ms ? exec.duration_ms + 'ms' : 'N/A'}</td>
+                <td>${exec.tokens_used || 0}</td>
+                <td>${exec.contact_id || 'N/A'}</td>
+                <td onclick="event.stopPropagation()">
+                  <button class="view-btn" onclick="viewExecution('${exec.execution_id}')">View</button>
+                  <button class="replay-btn" onclick="replayExecution('${exec.execution_id}')">Replay</button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    async function viewExecution(executionId) {
+      try {
+        const response = await fetch(`${API_URL}/api/executions/${executionId}`);
+        const execution = await response.json();
+
+        const modalBody = document.getElementById('modalBody');
+        modalBody.innerHTML = `
+          <div class="detail-section">
+            <h4>Execution ID</h4>
+            <div class="detail-box"><pre>${execution.execution_id}</pre></div>
+          </div>
+
+          <div class="detail-section">
+            <h4>Metadata</h4>
+            <div class="detail-box">
+              <pre>Action: ${execution.action}
+Status: ${execution.status}
+Contact ID: ${execution.contact_id || 'N/A'}
+Business ID: ${execution.business_id || 'N/A'}
+Started: ${new Date(execution.started_at).toLocaleString()}
+Duration: ${execution.duration_ms || 'N/A'}ms
+Tokens: ${execution.tokens_used || 0}</pre>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h4>Input Data</h4>
+            <div class="detail-box">
+              <pre>${JSON.stringify(execution.input_data, null, 2)}</pre>
+            </div>
+          </div>
+
+          ${execution.output_data ? `
+            <div class="detail-section">
+              <h4>Output Data</h4>
+              <div class="detail-box">
+                <pre>${JSON.stringify(execution.output_data, null, 2)}</pre>
+              </div>
+            </div>
+          ` : ''}
+
+          ${execution.error_message ? `
+            <div class="detail-section">
+              <h4>Error</h4>
+              <div class="detail-box" style="border-left-color: #dc3545;">
+                <pre>${execution.error_message}</pre>
+              </div>
+            </div>
+          ` : ''}
+        `;
+
+        document.getElementById('executionModal').classList.add('show');
+
+      } catch (error) {
+        console.error('Failed to load execution details:', error);
+        alert('Failed to load execution details');
+      }
+    }
+
+    async function replayExecution(executionId) {
+      if (!confirm('Replay this execution? This will create a new execution with the same input data.')) return;
+
+      try {
+        const response = await fetch(`${API_URL}/api/executions/${executionId}/replay`, {
+          method: 'POST'
+        });
+
+        const replayData = await response.json();
+
+        console.log('Replay data:', replayData);
+        alert(`Replay data retrieved! Use this in Test Interface:\n\nAction: ${replayData.action}\nContact ID: ${replayData.contactId}\nInput Data: ${JSON.stringify(replayData.inputData)}`);
+
+      } catch (error) {
+        console.error('Failed to replay execution:', error);
+        alert('Failed to replay execution');
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('executionModal').classList.remove('show');
+    }
+
+    function formatTime(timestamp) {
+      const date = new Date(timestamp);
+      const now = new Date();
+      const diffMs = now - date;
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMs / 3600000);
+      const diffDays = Math.floor(diffMs / 86400000);
+
+      if (diffMins < 60) return `${diffMins}m ago`;
+      if (diffHours < 24) return `${diffHours}h ago`;
+      if (diffDays < 7) return `${diffDays}d ago`;
+      return date.toLocaleDateString();
+    }
+
+    function showLoading() {
+      document.getElementById('loadingState').style.display = 'block';
+      document.getElementById('dashboardContent').style.display = 'none';
+    }
+
+    function hideLoading() {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('dashboardContent').style.display = 'block';
+    }
+
+    // Load dashboard on page load
+    loadDashboard();
+  </script>
+</body>
+</html>

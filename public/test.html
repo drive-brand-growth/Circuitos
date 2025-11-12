@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circuit OS - Test Interface</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .card h2 {
+      color: #333;
+      font-size: 18px;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      color: #555;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    select, input, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+      font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .results {
+      margin-top: 20px;
+      display: none;
+    }
+
+    .results.show {
+      display: block;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .status.completed { background: #d4edda; color: #155724; }
+    .status.running { background: #fff3cd; color: #856404; }
+    .status.failed { background: #f8d7da; color: #721c24; }
+    .status.skipped { background: #e2e3e5; color: #383d41; }
+
+    .step {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border-left: 4px solid #ddd;
+    }
+
+    .step.completed { border-left-color: #28a745; }
+    .step.failed { border-left-color: #dc3545; }
+    .step.skipped { border-left-color: #6c757d; }
+
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .step-name {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .step-details {
+      background: white;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    .step-details pre {
+      margin: 0;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .response-preview {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #667eea;
+      margin-top: 15px;
+    }
+
+    .response-preview h3 {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .response-preview pre {
+      background: white;
+      padding: 12px;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #667eea;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .alert {
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .alert.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🧪 Circuit OS Test Interface</h1>
+      <p class="subtitle">Test agents with step-by-step execution tracking • Dry-run mode • Mock responses</p>
+    </header>
+
+    <div class="dashboard">
+      <div class="card">
+        <h2>Test Configuration</h2>
+
+        <div class="form-group">
+          <label for="action">Action</label>
+          <select id="action" onchange="updateTestData()">
+            <option value="score-lead">Score Lead</option>
+            <option value="generate-copy">Generate Copy</option>
+            <option value="respond-to-review">Respond to Review</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="contactId">Contact ID</label>
+          <input type="text" id="contactId" value="test-contact-123" placeholder="contact-123">
+        </div>
+
+        <div class="form-group">
+          <label for="businessId">Business ID</label>
+          <input type="text" id="businessId" value="test-business-456" placeholder="business-456">
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="useMemory">
+            <label for="useMemory">Use Memory (fetch conversation history)</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="dryRun" checked>
+            <label for="dryRun">Dry Run (skip Claude API call)</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="mockResponse" checked>
+            <label for="mockResponse">Use Mock Response (no API cost)</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Test Data (JSON)</h2>
+
+        <div class="form-group">
+          <textarea id="testData" rows="14">{
+  "contact": {
+    "first_name": "John",
+    "last_name": "Doe",
+    "phone": "+1-555-0100",
+    "email": "john@example.com",
+    "city": "Brooklyn"
+  },
+  "business": {
+    "name": "Test Gym",
+    "category": "Fitness"
+  }
+}</textarea>
+        </div>
+      </div>
+
+      <div class="card full-width">
+        <button class="btn" onclick="runTest()" id="runTestBtn">▶ Run Test</button>
+      </div>
+
+      <div class="card full-width results" id="results">
+        <div id="loadingState" class="loading" style="display: none;">
+          <div class="spinner"></div>
+          <p>Running test...</p>
+        </div>
+
+        <div id="errorState" style="display: none;"></div>
+
+        <div id="successState" style="display: none;">
+          <h2>Test Results</h2>
+
+          <div class="summary" id="summary"></div>
+
+          <h3 style="margin: 20px 0 10px;">Execution Steps</h3>
+          <div id="steps"></div>
+
+          <div id="responsePreview"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = window.location.origin;
+
+    function updateTestData() {
+      const action = document.getElementById('action').value;
+      const testDataEl = document.getElementById('testData');
+
+      const testDataTemplates = {
+        'score-lead': {
+          contact: {
+            first_name: "John",
+            last_name: "Doe",
+            phone: "+1-555-0100",
+            email: "john@example.com",
+            city: "Brooklyn"
+          },
+          business: {
+            name: "Test Gym",
+            category: "Fitness"
+          },
+          virtualLPR: {
+            distance_miles: 0.3,
+            gmb_directions_clicked: true,
+            device_type: "mobile"
+          }
+        },
+        'generate-copy': {
+          contact: {
+            first_name: "John",
+            city: "Brooklyn"
+          },
+          business: {
+            name: "Test Gym"
+          },
+          channel: "EMAIL",
+          awareness_level: "Solution Aware"
+        },
+        'respond-to-review': {
+          business: {
+            name: "Test Gym"
+          },
+          rating: 5,
+          review_text: "Amazing place! Best gym in Brooklyn!",
+          reviewer_name: "Sarah M."
+        }
+      };
+
+      testDataEl.value = JSON.stringify(testDataTemplates[action] || {}, null, 2);
+    }
+
+    async function runTest() {
+      const resultsEl = document.getElementById('results');
+      const loadingEl = document.getElementById('loadingState');
+      const errorEl = document.getElementById('errorState');
+      const successEl = document.getElementById('successState');
+      const runBtn = document.getElementById('runTestBtn');
+
+      // Show results panel
+      resultsEl.classList.add('show');
+      loadingEl.style.display = 'block';
+      errorEl.style.display = 'none';
+      successEl.style.display = 'none';
+      runBtn.disabled = true;
+
+      try {
+        const testData = JSON.parse(document.getElementById('testData').value);
+
+        const payload = {
+          action: document.getElementById('action').value,
+          contactId: document.getElementById('contactId').value,
+          businessId: document.getElementById('businessId').value,
+          data: testData,
+          useMemory: document.getElementById('useMemory').checked,
+          dryRun: document.getElementById('dryRun').checked,
+          mockResponse: document.getElementById('mockResponse').checked,
+          stepByStep: true
+        };
+
+        const response = await fetch(`${API_URL}/api/test`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (!result.success) {
+          throw new Error(result.error || 'Test failed');
+        }
+
+        // Hide loading, show success
+        loadingEl.style.display = 'none';
+        successEl.style.display = 'block';
+
+        // Render summary
+        renderSummary(result.summary, result.mode);
+
+        // Render steps
+        renderSteps(result.steps);
+
+        // Render response
+        renderResponse(result.response);
+
+      } catch (error) {
+        loadingEl.style.display = 'none';
+        errorEl.style.display = 'block';
+        errorEl.innerHTML = `<div class="alert error"><strong>Error:</strong> ${error.message}</div>`;
+      } finally {
+        runBtn.disabled = false;
+      }
+    }
+
+    function renderSummary(summary, mode) {
+      const summaryEl = document.getElementById('summary');
+      summaryEl.innerHTML = `
+        <div class="stat-box">
+          <div class="stat-value">${summary.completedSteps}</div>
+          <div class="stat-label">Completed</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">${summary.failedSteps}</div>
+          <div class="stat-label">Failed</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">${summary.skippedSteps}</div>
+          <div class="stat-label">Skipped</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">${summary.totalDuration}ms</div>
+          <div class="stat-label">Duration</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">${summary.tokensUsed || 0}</div>
+          <div class="stat-label">Tokens Used</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">${mode.toUpperCase()}</div>
+          <div class="stat-label">Mode</div>
+        </div>
+      `;
+    }
+
+    function renderSteps(steps) {
+      const stepsEl = document.getElementById('steps');
+      stepsEl.innerHTML = steps.map(step => `
+        <div class="step ${step.status}">
+          <div class="step-header">
+            <span class="step-name">Step ${step.step}: ${step.name}</span>
+            <span class="status ${step.status}">${step.status}</span>
+          </div>
+          ${step.duration ? `<div style="font-size: 13px; color: #666;">Duration: ${step.duration}ms</div>` : ''}
+          ${step.result ? `
+            <div class="step-details">
+              <pre>${JSON.stringify(step.result, null, 2)}</pre>
+            </div>
+          ` : ''}
+          ${step.error ? `
+            <div class="step-details" style="background: #f8d7da;">
+              <strong>Error:</strong> ${step.error}
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    function renderResponse(response) {
+      const previewEl = document.getElementById('responsePreview');
+
+      if (!response) {
+        previewEl.innerHTML = '';
+        return;
+      }
+
+      let formattedResponse;
+      try {
+        formattedResponse = JSON.stringify(JSON.parse(response), null, 2);
+      } catch {
+        formattedResponse = response;
+      }
+
+      previewEl.innerHTML = `
+        <div class="response-preview">
+          <h3>Agent Response</h3>
+          <pre>${formattedResponse}</pre>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
