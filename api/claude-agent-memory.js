@@ -16,6 +16,7 @@ import designWorkflow from './lib/ghl-workflow-designer.js';
 import { orchestrate } from './lib/orchestrator.js';
 import { optimizeWorkflow } from './lib/ml-workflow-optimizer.js';
 import guardrail from './lib/guardrail-agent.js';
+import { getModelForTask, estimateCost } from './lib/model-router.js';
 
 const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY
@@ -204,9 +205,13 @@ ${agentContext.map(ctx => `- ${ctx.agent}: ${ctx.action} at ${ctx.timestamp}`).j
   // Add user message to history
   const messages = [...conversationHistory, { role: 'user', content: userPrompt }];
 
+  // Get optimal model for this task (world-class: Sonnet 4.5)
+  const selectedModel = getModelForTask('score-lead');
+  console.log(`[Model Router] Using ${selectedModel.name} for lead scoring`);
+
   // Call Claude with conversation history
   const message = await anthropic.messages.create({
-    model: 'claude-sonnet-4-5-20250929',
+    model: selectedModel.id,
     max_tokens: 4096,
     temperature: 0.3,
     system: DMN_PROMPTS['Lead Scorer'],
@@ -215,6 +220,10 @@ ${agentContext.map(ctx => `- ${ctx.agent}: ${ctx.action} at ${ctx.timestamp}`).j
 
   const responseText = message.content[0].text;
   const result = JSON.parse(responseText);
+
+  // Log cost estimate
+  const costEstimate = estimateCost('score-lead', message.usage.input_tokens, message.usage.output_tokens);
+  console.log(`[Cost] Lead scoring: $${costEstimate.total_cost} (${message.usage.input_tokens} in, ${message.usage.output_tokens} out)`);
 
   // Save to conversation memory
   if (useMemory) {
@@ -304,8 +313,12 @@ Return ONLY valid JSON:
 
   const messages = [...conversationHistory, { role: 'user', content: userPrompt }];
 
+  // Get optimal model for this task (world-class: Sonnet 4.5)
+  const selectedModel = getModelForTask('generate-copy');
+  console.log(`[Model Router] Using ${selectedModel.name} for copywriting`);
+
   const message = await anthropic.messages.create({
-    model: 'claude-sonnet-4-5-20250929',
+    model: selectedModel.id,
     max_tokens: 3096,
     temperature: 0.7,
     system: DMN_PROMPTS['Copywriter'],
@@ -314,6 +327,10 @@ Return ONLY valid JSON:
 
   const responseText = message.content[0].text;
   const result = JSON.parse(responseText);
+
+  // Log cost estimate
+  const costEstimate = estimateCost('generate-copy', message.usage.input_tokens, message.usage.output_tokens);
+  console.log(`[Cost] Copywriting: $${costEstimate.total_cost} (${message.usage.input_tokens} in, ${message.usage.output_tokens} out)`);
 
   // Save to memory
   if (useMemory) {
@@ -378,8 +395,12 @@ Return ONLY valid JSON:
 
   const messages = [...conversationHistory, { role: 'user', content: userPrompt }];
 
+  // Get optimal model for this task (world-class: Sonnet 4.5)
+  const selectedModel = getModelForTask('respond-to-review');
+  console.log(`[Model Router] Using ${selectedModel.name} for review response`);
+
   const message = await anthropic.messages.create({
-    model: 'claude-sonnet-4-5-20250929',
+    model: selectedModel.id,
     max_tokens: 1024,
     temperature: 0.7,
     system: DMN_PROMPTS['Reputation Guardian'],
@@ -388,6 +409,10 @@ Return ONLY valid JSON:
 
   const responseText = message.content[0].text;
   const result = JSON.parse(responseText);
+
+  // Log cost estimate
+  const costEstimate = estimateCost('respond-to-review', message.usage.input_tokens, message.usage.output_tokens);
+  console.log(`[Cost] Review response: $${costEstimate.total_cost} (${message.usage.input_tokens} in, ${message.usage.output_tokens} out)`);
 
   if (useMemory) {
     await memoryManager.saveMessage(contactId, businessId, 'Reputation Guardian', 'user', userPrompt);
