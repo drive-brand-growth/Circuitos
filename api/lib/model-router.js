@@ -76,6 +76,12 @@ const TASK_MODEL_MAP = {
   'handle-conversation': MODELS.SONNET,     // Two-way dialogue - needs human-level judgment
   'analyze-churn-risk': MODELS.SONNET,      // Retention = revenue - 5% retention increase = 25-95% profit increase
 
+  // MARKETING SYSTEM (CMO + Director + Content Engine) - TIER 1 BRAND EXPANSION
+  'generate-marketing-strategy': MODELS.SONNET,  // Strategic decisions - market analysis, budget allocation, brand positioning
+  'plan-campaign-execution': MODELS.SONNET,      // Tactical planning - content calendar, A/B tests, performance tracking
+  'create-social-content': MODELS.SONNET,        // Creative + structured - world-class copywriting for all channels
+  'discover-channels': MODELS.SONNET,            // Virtual LPR reverse lookup - find where ICP congregates
+
   // TIER 2: Security & Validation (Sonnet 4.5 - CATCHES EDGE CASES)
   // Using Sonnet because security edge cases cost more than API calls
   'guardrail-jailbreak': MODELS.SONNET,     // Security critical - catch sophisticated attacks
