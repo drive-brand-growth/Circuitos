@@ -12,6 +12,8 @@
 
 import Anthropic from '@anthropic-ai/sdk';
 import memoryManager from './lib/memory-manager.js';
+import designWorkflow from './lib/ghl-workflow-designer.js';
+import { orchestrate } from './lib/orchestrator.js';
 
 const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY
@@ -120,6 +122,10 @@ export default async function handler(req, res) {
         return await generateCopy(req, res, contactId, businessId, data, useMemory);
       case 'respond-to-review':
         return await respondToReview(req, res, contactId, businessId, data, useMemory);
+      case 'design-workflow':
+        return await designGHLWorkflow(req, res, contactId, businessId, data, useMemory);
+      case 'orchestrate':
+        return await orchestrateAgents(req, res, contactId, businessId, data);
       case 'get-summary':
         return await getConversationSummary(req, res, contactId);
       case 'record-feedback':
@@ -428,4 +434,70 @@ async function recordAgentFeedback(req, res, contactId, data) {
     success: true,
     feedback
   });
+}
+
+/**
+ * Design GHL Workflow with AI
+ */
+async function designGHLWorkflow(req, res, contactId, businessId, data, useMemory) {
+  const {
+    description,
+    useCase,
+    targetAudience,
+    channel,
+    includeAI,
+    complianceLevel
+  } = data;
+
+  // Get conversation history if using memory
+  const conversationHistory = useMemory
+    ? await memoryManager.getConversationHistory(contactId, 20)
+    : [];
+
+  // Call workflow designer
+  const result = await designWorkflow({
+    description,
+    useCase,
+    targetAudience,
+    channel,
+    includeAI,
+    complianceLevel
+  }, conversationHistory);
+
+  // Save to conversation memory
+  if (useMemory) {
+    const requestPrompt = `Design a GHL workflow: ${description}`;
+
+    await memoryManager.saveMessage(
+      contactId,
+      businessId,
+      'GHL Workflow Designer',
+      'user',
+      requestPrompt
+    );
+
+    await memoryManager.saveMessage(
+      contactId,
+      businessId,
+      'GHL Workflow Designer',
+      'assistant',
+      result.fullResponse,
+      {
+        action: 'DESIGNED_WORKFLOW',
+        workflowName: result.workflow?.workflow_name,
+        inputTokens: result.metadata.tokens.input,
+        outputTokens: result.metadata.tokens.output
+      }
+    );
+  }
+
+  return res.status(200).json(result);
+}
+
+/**
+ * Orchestrate multiple agents to accomplish complex tasks
+ */
+async function orchestrateAgents(req, res, contactId, businessId, data) {
+  const result = await orchestrate(data, contactId, businessId);
+  return res.status(200).json(result);
 }
