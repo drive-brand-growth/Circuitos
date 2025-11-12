@@ -70,6 +70,12 @@ const TASK_MODEL_MAP = {
   'optimize-workflow': MODELS.SONNET,       // ML patterns - needs advanced analysis
   'respond-to-review': MODELS.SONNET,       // Public-facing - brand reputation critical
 
+  // SALES SYSTEM (12 Frameworks + World-Class SDR) - TIER 1 CRITICAL
+  'validate-lead': MODELS.SONNET,           // 12 sales frameworks - needs best analytical reasoning
+  'generate-sdr-outreach': MODELS.SONNET,   // Revenue-critical - Eugene Schwartz + Brunson + Hormozi
+  'handle-conversation': MODELS.SONNET,     // Two-way dialogue - needs human-level judgment
+  'analyze-churn-risk': MODELS.SONNET,      // Retention = revenue - 5% retention increase = 25-95% profit increase
+
   // TIER 2: Security & Validation (Sonnet 4.5 - CATCHES EDGE CASES)
   // Using Sonnet because security edge cases cost more than API calls
   'guardrail-jailbreak': MODELS.SONNET,     // Security critical - catch sophisticated attacks

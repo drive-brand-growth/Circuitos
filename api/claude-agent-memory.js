@@ -17,6 +17,10 @@ import { orchestrate } from './lib/orchestrator.js';
 import { optimizeWorkflow } from './lib/ml-workflow-optimizer.js';
 import guardrail from './lib/guardrail-agent.js';
 import { getModelForTask, estimateCost } from './lib/model-router.js';
+import validateLead from './lib/lead-validation-agent.js';
+import generateSDROutreach from './lib/sdr-agent.js';
+import handleConversation from './lib/conversation-agent.js';
+import analyzeChurnRisk from './lib/retention-growth-agent.js';
 
 const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY
@@ -139,6 +143,14 @@ export default async function handler(req, res) {
         return await getConversationSummary(req, res, contactId);
       case 'record-feedback':
         return await recordAgentFeedback(req, res, contactId, data);
+      case 'validate-lead':
+        return await validateLeadHandler(req, res, contactId, businessId, data, useMemory);
+      case 'generate-sdr-outreach':
+        return await generateSDROutreachHandler(req, res, contactId, businessId, data, useMemory);
+      case 'handle-conversation':
+        return await handleConversationHandler(req, res, contactId, businessId, data, useMemory);
+      case 'analyze-churn-risk':
+        return await analyzeChurnRiskHandler(req, res, contactId, businessId, data, useMemory);
       default:
         return res.status(400).json({ error: 'Invalid action' });
     }
@@ -632,6 +644,201 @@ async function sanitizeTextHandler(req, res, data) {
     metadata: {
       agent: 'Guardrail (Sanitize)',
       sanitizers_applied: sanitizers.length
+    }
+  });
+}
+
+/**
+ * Validate lead using 12 sales frameworks
+ */
+async function validateLeadHandler(req, res, contactId, businessId, data, useMemory) {
+  const conversationHistory = useMemory
+    ? await memoryManager.getConversationHistory(contactId)
+    : [];
+
+  const result = await validateLead(data, conversationHistory);
+
+  // Log cost
+  const costEstimate = estimateCost('validate-lead', result.token_usage.input, result.token_usage.output);
+  console.log(`[Cost] Lead validation: $${costEstimate.total_cost} (${result.token_usage.input} in, ${result.token_usage.output} out)`);
+
+  // Save to memory if enabled
+  if (useMemory) {
+    await memoryManager.saveMessage(
+      contactId,
+      businessId,
+      'Lead Validation Agent',
+      'user',
+      JSON.stringify(data)
+    );
+
+    await memoryManager.saveMessage(
+      contactId,
+      businessId,
+      'Lead Validation Agent',
+      'assistant',
+      JSON.stringify(result)
+    );
+  }
+
+  return res.status(200).json({
+    success: true,
+    ...result,
+    metadata: {
+      agent: 'Lead Validation Agent (12 Frameworks)',
+      model_used: 'claude-sonnet-4-5-20250929',
+      cost: costEstimate.total_cost
+    }
+  });
+}
+
+/**
+ * Generate SDR outreach strategy and copy
+ */
+async function generateSDROutreachHandler(req, res, contactId, businessId, data, useMemory) {
+  const { validation_result, lead_data } = data;
+
+  if (!validation_result || !lead_data) {
+    return res.status(400).json({ error: 'Missing required fields: validation_result, lead_data' });
+  }
+
+  const conversationHistory = useMemory
+    ? await memoryManager.getConversationHistory(contactId)
+    : [];
+
+  const result = await generateSDROutreach(validation_result, lead_data, conversationHistory);
+
+  // Log cost
+  const costEstimate = estimateCost('generate-sdr-outreach', result.token_usage.input, result.token_usage.output);
+  console.log(`[Cost] SDR outreach: $${costEstimate.total_cost} (${result.token_usage.input} in, ${result.token_usage.output} out)`);
+
+  // Save to memory
+  if (useMemory) {
+    await memoryManager.saveMessage(
+      contactId,
+      businessId,
+      'SDR Agent',
+      'user',
+      JSON.stringify({ validation_result, lead_data })
+    );
+
+    await memoryManager.saveMessage(
+      contactId,
+      businessId,
+      'SDR Agent',
+      'assistant',
+      JSON.stringify(result)
+    );
+  }
+
+  return res.status(200).json({
+    success: true,
+    ...result,
+    metadata: {
+      agent: 'World-Class SDR Agent',
+      frameworks: 'Eugene Schwartz + Brunson + StoryBrand + Hormozi',
+      model_used: 'claude-sonnet-4-5-20250929',
+      cost: costEstimate.total_cost
+    }
+  });
+}
+
+/**
+ * Handle two-way conversation with lead
+ */
+async function handleConversationHandler(req, res, contactId, businessId, data, useMemory) {
+  const { lead_message, validation_result = null, sdr_context = null } = data;
+
+  if (!lead_message) {
+    return res.status(400).json({ error: 'Missing required field: lead_message' });
+  }
+
+  const conversationHistory = useMemory
+    ? await memoryManager.getConversationHistory(contactId)
+    : [];
+
+  const result = await handleConversation(lead_message, conversationHistory, validation_result, sdr_context);
+
+  // Log cost
+  const costEstimate = estimateCost('handle-conversation', result.token_usage.input, result.token_usage.output);
+  console.log(`[Cost] Conversation: $${costEstimate.total_cost} (${result.token_usage.input} in, ${result.token_usage.output} out)`);
+
+  // Save to memory
+  if (useMemory) {
+    await memoryManager.saveMessage(
+      contactId,
+      businessId,
+      'Conversation Agent',
+      'user',
+      lead_message
+    );
+
+    await memoryManager.saveMessage(
+      contactId,
+      businessId,
+      'Conversation Agent',
+      'assistant',
+      result.response.message
+    );
+  }
+
+  return res.status(200).json({
+    success: true,
+    ...result,
+    metadata: {
+      agent: 'Conversation Agent',
+      model_used: 'claude-sonnet-4-5-20250929',
+      cost: costEstimate.total_cost
+    }
+  });
+}
+
+/**
+ * Analyze churn risk and generate retention strategy
+ */
+async function analyzeChurnRiskHandler(req, res, contactId, businessId, data, useMemory) {
+  const { customer_data, behavioral_data } = data;
+
+  if (!customer_data || !behavioral_data) {
+    return res.status(400).json({ error: 'Missing required fields: customer_data, behavioral_data' });
+  }
+
+  const conversationHistory = useMemory
+    ? await memoryManager.getConversationHistory(contactId)
+    : [];
+
+  const result = await analyzeChurnRisk(customer_data, behavioral_data, conversationHistory);
+
+  // Log cost
+  const costEstimate = estimateCost('analyze-churn-risk', result.token_usage.input, result.token_usage.output);
+  console.log(`[Cost] Churn analysis: $${costEstimate.total_cost} (${result.token_usage.input} in, ${result.token_usage.output} out)`);
+
+  // Save to memory
+  if (useMemory) {
+    await memoryManager.saveMessage(
+      contactId,
+      businessId,
+      'Retention & Growth Agent',
+      'user',
+      JSON.stringify({ customer_data, behavioral_data })
+    );
+
+    await memoryManager.saveMessage(
+      contactId,
+      businessId,
+      'Retention & Growth Agent',
+      'assistant',
+      JSON.stringify(result)
+    );
+  }
+
+  return res.status(200).json({
+    success: true,
+    ...result,
+    metadata: {
+      agent: 'Retention & Growth Agent',
+      model_used: 'claude-sonnet-4-5-20250929',
+      cost: costEstimate.total_cost
     }
   });
 }
