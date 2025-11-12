@@ -82,6 +82,13 @@ const TASK_MODEL_MAP = {
   'create-social-content': MODELS.SONNET,        // Creative + structured - world-class copywriting for all channels
   'discover-channels': MODELS.SONNET,            // Virtual LPR reverse lookup - find where ICP congregates
 
+  // CONVERSION OPTIMIZATION (Final 20% to 100%) - TIER 1 REVENUE CRITICAL
+  'route-lead': MODELS.SONNET,                   // Intelligent rep assignment - maximize close rate
+  'schedule-appointment': MODELS.SONNET,         // Calendar intelligence - no-show prevention, optimal timing
+  'orchestrate-nurture': MODELS.SONNET,          // Adaptive sequences - engagement velocity based
+  'analyze-attribution': MODELS.SONNET,          // Multi-touch attribution - channel ROI optimization
+  'predict-outcomes': MODELS.SONNET,             // ML predictions - conversion probability, churn forecast, LTV
+
   // TIER 2: Security & Validation (Sonnet 4.5 - CATCHES EDGE CASES)
   // Using Sonnet because security edge cases cost more than API calls
   'guardrail-jailbreak': MODELS.SONNET,     // Security critical - catch sophisticated attacks
