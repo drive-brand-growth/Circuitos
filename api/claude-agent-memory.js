@@ -15,6 +15,7 @@ import memoryManager from './lib/memory-manager.js';
 import designWorkflow from './lib/ghl-workflow-designer.js';
 import { orchestrate } from './lib/orchestrator.js';
 import { optimizeWorkflow } from './lib/ml-workflow-optimizer.js';
+import guardrail from './lib/guardrail-agent.js';
 
 const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY
@@ -129,6 +130,10 @@ export default async function handler(req, res) {
         return await orchestrateAgents(req, res, contactId, businessId, data);
       case 'optimize-workflow':
         return await optimizeWorkflowHandler(req, res, contactId, businessId, data, useMemory);
+      case 'check-violations':
+        return await checkViolationsHandler(req, res, data);
+      case 'sanitize-text':
+        return await sanitizeTextHandler(req, res, data);
       case 'get-summary':
         return await getConversationSummary(req, res, contactId);
       case 'record-feedback':
@@ -560,4 +565,48 @@ async function optimizeWorkflowHandler(req, res, contactId, businessId, data, us
   }
 
   return res.status(200).json(result);
+}
+
+/**
+ * Check text for violations (Guardrail)
+ */
+async function checkViolationsHandler(req, res, data) {
+  const { text, guardrails = [] } = data;
+
+  if (!text) {
+    return res.status(400).json({ error: 'Missing required field: text' });
+  }
+
+  const result = await guardrail.checkTextForViolations(text, guardrails);
+
+  return res.status(200).json({
+    success: true,
+    ...result,
+    metadata: {
+      agent: 'Guardrail (Check Violations)',
+      checks_performed: guardrails.length
+    }
+  });
+}
+
+/**
+ * Sanitize text (Guardrail)
+ */
+async function sanitizeTextHandler(req, res, data) {
+  const { text, sanitizers = [] } = data;
+
+  if (!text) {
+    return res.status(400).json({ error: 'Missing required field: text' });
+  }
+
+  const result = guardrail.sanitizeText(text, sanitizers);
+
+  return res.status(200).json({
+    success: true,
+    ...result,
+    metadata: {
+      agent: 'Guardrail (Sanitize)',
+      sanitizers_applied: sanitizers.length
+    }
+  });
 }
