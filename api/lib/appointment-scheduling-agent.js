@@ -1,17 +1,25 @@
 /**
- * Appointment Scheduling Agent - Calendar Intelligence
+ * Appointment Scheduling Agent - Calendar Intelligence (Enhanced with Travel Time)
  *
  * Handles:
  * - Google Calendar / Outlook sync
- * - Optimal time slot selection (ML-powered)
+ * - Optimal time slot selection (ML-powered + travel time)
  * - Automated reminders (24hr, 2hr, 30min before)
  * - No-show prediction & prevention
  * - Rescheduling automation
+ *
+ * NEW (v2.0 with Google Maps AI):
+ * - Travel time consideration for in-person meetings
+ * - Buffer time between appointments
+ * - Route optimization for multi-appointment days
+ * - Traffic-aware scheduling
  *
  * Integrates with GHL calendar + external calendars
  */
 
 import Anthropic from '@anthropic-ai/sdk';
+import { calculateDriveTime } from './geo-lpr-agent.js';
+import { optimizeDailyRoute } from './lead-routing-agent.js';
 
 const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY
@@ -492,4 +500,353 @@ Return ONLY valid JSON matching the output format.`;
   };
 }
 
-export default scheduleAppointment;
+/**
+ * Schedule appointment with travel time optimization (v2.0)
+ *
+ * For in-person meetings, considers:
+ * - Drive time from rep's location to lead
+ * - Buffer time between consecutive appointments
+ * - Traffic patterns (morning vs afternoon vs rush hour)
+ *
+ * @param {Object} leadData - Lead information with location
+ * @param {Object} repData - Rep information with base_location and calendar
+ * @param {Object} historicalShowUpData - Historical show-up rates
+ * @param {Object} options
+ *   - meeting_type: "in_person" | "virtual" (default virtual)
+ *   - meeting_duration_minutes: number (default 60)
+ *   - buffer_time_minutes: number (default 30)
+ *   - consider_traffic: boolean (default true)
+ * @returns {Promise<Object>} Optimal appointment times with travel considerations
+ */
+export async function scheduleAppointmentWithTravelTime(
+  leadData,
+  repData,
+  historicalShowUpData,
+  options = {}
+) {
+  const {
+    meeting_type = 'virtual',
+    meeting_duration_minutes = 60,
+    buffer_time_minutes = 30,
+    consider_traffic = true
+  } = options;
+
+  // If virtual meeting, use standard scheduling
+  if (meeting_type === 'virtual') {
+    return await scheduleAppointment(leadData, repData.calendar, historicalShowUpData);
+  }
+
+  // IN-PERSON MEETING: Calculate travel time
+  if (!repData.base_location || !leadData.location) {
+    console.log('Missing location data for in-person meeting, falling back to virtual scheduling');
+    return await scheduleAppointment(leadData, repData.calendar, historicalShowUpData);
+  }
+
+  // Step 1: Calculate drive time
+  const driveTime = await calculateDriveTime(
+    repData.base_location,
+    leadData.location,
+    'driving'
+  );
+
+  // Step 2: Get rep's existing appointments for context
+  const existingAppointments = repData.calendar?.appointments || [];
+
+  // Step 3: Find available slots that account for travel time
+  const availableSlotsWithTravel = [];
+
+  for (const slot of repData.calendar?.available_slots || []) {
+    // Check if there's enough time before/after existing appointments
+    const slotTime = new Date(slot.start_time);
+
+    let hasConflict = false;
+    let travelWarning = null;
+
+    for (const existingAppt of existingAppointments) {
+      const apptTime = new Date(existingAppt.start_time);
+      const apptEnd = new Date(existingAppt.end_time);
+
+      // Check if new appointment would conflict with travel time
+      const minutesBefore = (slotTime - apptEnd) / (1000 * 60);
+      const minutesAfter = (apptTime - slotTime) / (1000 * 60);
+
+      const requiredBuffer = driveTime.duration.minutes + buffer_time_minutes;
+
+      if (minutesBefore > 0 && minutesBefore < requiredBuffer) {
+        hasConflict = true;
+        travelWarning = `Not enough time after previous appointment (need ${requiredBuffer} mins for travel + buffer, have ${Math.round(minutesBefore)} mins)`;
+        break;
+      }
+
+      if (minutesAfter > 0 && minutesAfter < requiredBuffer) {
+        hasConflict = true;
+        travelWarning = `Not enough time before next appointment (need ${requiredBuffer} mins for travel + buffer, have ${Math.round(minutesAfter)} mins)`;
+        break;
+      }
+    }
+
+    if (!hasConflict) {
+      availableSlotsWithTravel.push({
+        ...slot,
+        drive_time_minutes: driveTime.duration.minutes,
+        distance_miles: driveTime.distance.miles,
+        buffer_time_minutes,
+        total_time_required: driveTime.duration.minutes + meeting_duration_minutes + buffer_time_minutes,
+        traffic_warning: considerTrafficForSlot(slot.start_time)
+      });
+    } else {
+      availableSlotsWithTravel.push({
+        ...slot,
+        available: false,
+        conflict_reason: travelWarning
+      });
+    }
+  }
+
+  // Step 4: Filter out conflicting slots and sort by desirability
+  const feasibleSlots = availableSlotsWithTravel
+    .filter(s => s.available !== false)
+    .sort((a, b) => {
+      // Prioritize slots without traffic warnings
+      if (a.traffic_warning && !b.traffic_warning) return 1;
+      if (!a.traffic_warning && b.traffic_warning) return -1;
+
+      // Then prioritize shorter drive times
+      return a.drive_time_minutes - b.drive_time_minutes;
+    });
+
+  // Step 5: Call standard scheduling with enhanced slot data
+  const standardScheduling = await scheduleAppointment(
+    leadData,
+    { ...repData.calendar, available_slots: feasibleSlots },
+    historicalShowUpData
+  );
+
+  // Step 6: Enhance response with travel time insights
+  return {
+    ...standardScheduling,
+    travel_time_optimization: {
+      meeting_type: 'in_person',
+      drive_time: driveTime,
+      buffer_time_minutes,
+      total_time_required: driveTime.duration.minutes + meeting_duration_minutes + buffer_time_minutes,
+      feasible_slots_count: feasibleSlots.length,
+      travel_recommendations: [
+        `Allow ${driveTime.duration.minutes} mins for travel (${driveTime.distance.miles} miles)`,
+        `Total time block needed: ${driveTime.duration.minutes + meeting_duration_minutes + buffer_time_minutes} mins (travel + meeting + buffer)`,
+        feasibleSlots.length < 3
+          ? 'Limited availability due to travel time constraints. Consider virtual meeting.'
+          : 'Good availability with travel time accounted for.'
+      ]
+    }
+  };
+}
+
+/**
+ * Consider traffic patterns for a given time slot
+ */
+function considerTrafficForSlot(startTime) {
+  const hour = new Date(startTime).getHours();
+
+  if (hour >= 7 && hour <= 9) {
+    return 'Morning rush hour - expect 20-30% longer travel time';
+  } else if (hour >= 16 && hour <= 18) {
+    return 'Evening rush hour - expect 30-40% longer travel time';
+  } else if (hour >= 11 && hour <= 14) {
+    return 'Midday - optimal travel time';
+  }
+
+  return null; // No traffic warning
+}
+
+/**
+ * Optimize multi-appointment day schedule
+ *
+ * Given multiple leads to visit in a day, find optimal order and timing
+ *
+ * @param {Object} rep - Rep with base_location
+ * @param {Array<Object>} potentialAppointments - Leads to meet with location data
+ * @param {Object} options
+ *   - start_time: string (default "09:00")
+ *   - end_time: string (default "17:00")
+ *   - meeting_duration_each: number (default 60 mins)
+ *   - buffer_between: number (default 30 mins)
+ * @returns {Promise<Object>} Optimized daily schedule
+ */
+export async function optimizeMultiAppointmentDay(rep, potentialAppointments, options = {}) {
+  const {
+    start_time = '09:00',
+    end_time = '17:00',
+    meeting_duration_each = 60,
+    buffer_between = 30
+  } = options;
+
+  // Use route optimization from lead-routing-agent
+  const optimizedRoute = await optimizeDailyRoute(
+    rep,
+    potentialAppointments.map(appt => ({
+      ...appt,
+      estimated_meeting_duration: meeting_duration_each
+    }))
+  );
+
+  // Check if schedule is feasible
+  const totalTimeMinutes = optimizedRoute.summary.total_time_minutes + (buffer_between * optimizedRoute.total_stops);
+  const availableMinutes = calculateAvailableMinutes(start_time, end_time);
+
+  const feasible = totalTimeMinutes <= availableMinutes;
+
+  return {
+    rep_name: rep.name,
+    date: new Date().toISOString().split('T')[0],
+    optimized_route: optimizedRoute,
+    schedule_analysis: {
+      total_appointments: optimizedRoute.total_stops,
+      total_drive_time: optimizedRoute.summary.total_drive_time_minutes,
+      total_meeting_time: optimizedRoute.summary.total_meeting_time_minutes,
+      total_buffer_time: buffer_between * optimizedRoute.total_stops,
+      total_time_needed: totalTimeMinutes,
+      available_time: availableMinutes,
+      feasible: feasible,
+      recommendation: feasible
+        ? `Schedule is feasible. Rep can complete ${optimizedRoute.total_stops} appointments.`
+        : `Schedule too tight. Reduce to ${Math.floor(optimizedRoute.total_stops * (availableMinutes / totalTimeMinutes))} appointments or extend working hours.`
+    },
+    suggested_schedule: generateSuggestedSchedule(optimizedRoute, start_time, buffer_between),
+    optimized_at: new Date().toISOString()
+  };
+}
+
+/**
+ * Calculate available minutes in workday
+ */
+function calculateAvailableMinutes(startTime, endTime) {
+  const [startHour, startMin] = startTime.split(':').map(Number);
+  const [endHour, endMin] = endTime.split(':').map(Number);
+
+  const startMinutes = startHour * 60 + startMin;
+  const endMinutes = endHour * 60 + endMin;
+
+  return endMinutes - startMinutes;
+}
+
+/**
+ * Generate suggested schedule with specific times
+ */
+function generateSuggestedSchedule(optimizedRoute, startTime, bufferMinutes) {
+  const [startHour, startMin] = startTime.split(':').map(Number);
+  let currentMinutes = startHour * 60 + startMin;
+
+  const schedule = [];
+
+  optimizedRoute.route.forEach(stop => {
+    // Travel time
+    currentMinutes += stop.drive_time_from_previous;
+
+    // Appointment
+    const appointmentStart = formatMinutes(currentMinutes);
+    currentMinutes += stop.estimated_meeting_duration;
+    const appointmentEnd = formatMinutes(currentMinutes);
+
+    schedule.push({
+      time: `${appointmentStart} - ${appointmentEnd}`,
+      activity: `Meeting with ${stop.lead_name}`,
+      location: `${stop.location.lat.toFixed(4)}, ${stop.location.lng.toFixed(4)}`,
+      duration_minutes: stop.estimated_meeting_duration,
+      notes: `Drove ${stop.drive_time_from_previous} mins from previous location`
+    });
+
+    // Buffer
+    currentMinutes += bufferMinutes;
+    schedule.push({
+      time: `${appointmentEnd} - ${formatMinutes(currentMinutes)}`,
+      activity: 'Buffer / Travel Time',
+      duration_minutes: bufferMinutes,
+      notes: 'Time for wrap-up and travel to next appointment'
+    });
+  });
+
+  return schedule;
+}
+
+/**
+ * Helper: Format minutes to HH:MM
+ */
+function formatMinutes(totalMinutes) {
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+}
+
+/**
+ * Suggest best meeting type (virtual vs in-person) based on travel time
+ *
+ * @param {Object} repLocation - Rep's base location
+ * @param {Object} leadLocation - Lead's location
+ * @param {Object} dealContext - Deal size, lead tier, etc.
+ * @returns {Promise<Object>} Meeting type recommendation
+ */
+export async function suggestMeetingType(repLocation, leadLocation, dealContext = {}) {
+  const { deal_size = 0, lead_tier = 'WARM', relationship_stage = 'NEW' } = dealContext;
+
+  if (!repLocation || !leadLocation) {
+    return {
+      recommended_type: 'virtual',
+      reason: 'Missing location data',
+      confidence: 'high'
+    };
+  }
+
+  const driveTime = await calculateDriveTime(repLocation, leadLocation, 'driving');
+  const driveMinutes = driveTime.duration.minutes;
+
+  // Decision logic
+  let recommendedType = 'virtual';
+  let reason = '';
+  let confidence = 'medium';
+
+  if (driveMinutes <= 15) {
+    recommendedType = 'in_person';
+    reason = `Very close (${driveMinutes} mins). In-person builds stronger rapport.`;
+    confidence = 'high';
+  } else if (driveMinutes <= 30 && deal_size >= 10000) {
+    recommendedType = 'in_person';
+    reason = `Reasonable drive (${driveMinutes} mins) for $${deal_size.toLocaleString()} deal. Worth the investment.`;
+    confidence = 'high';
+  } else if (driveMinutes <= 45 && deal_size >= 50000) {
+    recommendedType = 'in_person';
+    reason = `Large deal ($${deal_size.toLocaleString()}) justifies ${driveMinutes} min drive. In-person increases close rate.`;
+    confidence = 'high';
+  } else if (driveMinutes <= 30 && relationship_stage === 'CLOSING') {
+    recommendedType = 'in_person';
+    reason = `Critical closing stage. ${driveMinutes} min drive worth it to seal the deal.`;
+    confidence = 'medium';
+  } else if (driveMinutes > 60) {
+    recommendedType = 'virtual';
+    reason = `Too far (${driveMinutes} mins). Virtual meeting more efficient.`;
+    confidence = 'high';
+  } else {
+    recommendedType = 'virtual';
+    reason = `Moderate distance (${driveMinutes} mins). Start with virtual, do in-person if needed later.`;
+    confidence = 'medium';
+  }
+
+  return {
+    recommended_type: recommendedType,
+    alternative_type: recommendedType === 'virtual' ? 'in_person' : 'virtual',
+    drive_time: driveTime,
+    reason,
+    confidence,
+    roi_consideration: deal_size > 0
+      ? `ROI: $${deal_size.toLocaleString()} deal ÷ ${Math.round(driveMinutes * 2 / 60)}h total time = $${Math.round(deal_size / (driveMinutes * 2 / 60)).toLocaleString()}/hour`
+      : null,
+    analyzed_at: new Date().toISOString()
+  };
+}
+
+export default {
+  scheduleAppointment,
+  scheduleAppointmentWithTravelTime,
+  optimizeMultiAppointmentDay,
+  suggestMeetingType
+};

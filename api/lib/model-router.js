@@ -96,6 +96,16 @@ const TASK_MODEL_MAP = {
   'analyze-community-member': MODELS.SONNET,     // Community health - identify advocates, ambassadors
   'check-social-response-safety': MODELS.SONNET, // Brand safety - competitor mentions, defamation, sensitive topics
 
+  // GEO-INTELLIGENCE SYSTEM (Google Maps AI Integration) - TIER 1 REVENUE & TERRITORY OPTIMIZATION
+  'find-icp-locations': MODELS.SONNET,           // Geo-LPR - find ICP businesses by location ("all gyms in Austin")
+  'enrich-business-data': MODELS.SONNET,         // Location enrichment - detailed business intelligence from Google Maps
+  'analyze-market-territory': MODELS.SONNET,     // Market intelligence - opportunity scoring, competitive density, expansion recommendations
+  'score-territories': MODELS.SONNET,            // Territory prioritization - rank markets for sales focus
+  'enrich-lead-location': MODELS.SONNET,         // Lead enrichment - add location data, competitors, market position
+  'route-with-geo-intelligence': MODELS.SONNET,  // Enhanced lead routing - drive time, territory fit, coverage analysis
+  'optimize-travel-schedule': MODELS.SONNET,     // Appointment scheduling - travel time optimization, route planning
+  'monitor-competitor': MODELS.SONNET,           // Competitive intelligence - ratings, reviews, trends, threats, opportunities
+
   // TIER 2: Security & Validation (Sonnet 4.5 - CATCHES EDGE CASES)
   // Using Sonnet because security edge cases cost more than API calls
   'guardrail-jailbreak': MODELS.SONNET,     // Security critical - catch sophisticated attacks

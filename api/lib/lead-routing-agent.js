@@ -1,17 +1,25 @@
 /**
- * Lead Routing Agent - Intelligent Rep Assignment
+ * Lead Routing Agent - Intelligent Rep Assignment (Enhanced with Geo-Intelligence)
  *
  * Assigns leads to optimal sales reps based on:
  * - Rep availability & capacity
  * - Rep specialization (industry, product expertise)
- * - Geographic territory
+ * - Geographic territory (ENHANCED: drive time, territory coverage)
  * - Historical performance (close rate with similar leads)
  * - Current workload balance
  *
- * Uses ML + round-robin + performance-based routing
+ * NEW (v2.0 with Google Maps AI):
+ * - Actual drive time calculations (not just distance)
+ * - Territory density analysis
+ * - Route optimization for multi-lead days
+ * - Market coverage scoring
+ *
+ * Uses ML + round-robin + performance-based routing + geo-intelligence
  */
 
 import Anthropic from '@anthropic-ai/sdk';
+import { calculateDriveTime } from './geo-lpr-agent.js';
+import { enrichLead } from './lead-enrichment-service.js';
 
 const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY
@@ -371,4 +379,405 @@ Return ONLY valid JSON matching the output format.`;
   };
 }
 
-export default routeLead;
+/**
+ * Enhanced Lead Routing with Geo-Intelligence (v2.0)
+ *
+ * @param {Object} leadData - Lead information
+ * @param {Object} validationResult - Lead validation score/tier
+ * @param {Array<Object>} availableReps - Sales reps with location data
+ * @param {Object} historicalData - Historical performance
+ * @param {Object} options
+ *   - enable_geo_intelligence: boolean (default true)
+ *   - max_drive_time_minutes: number (default 60)
+ *   - prioritize_territory: boolean (default false)
+ * @returns {Promise<Object>} Enhanced routing decision with drive times
+ */
+export async function routeLeadWithGeoIntelligence(
+  leadData,
+  validationResult,
+  availableReps,
+  historicalData,
+  options = {}
+) {
+  const {
+    enable_geo_intelligence = true,
+    max_drive_time_minutes = 60,
+    prioritize_territory = false
+  } = options;
+
+  // Step 1: Enrich lead with location data (if not already enriched)
+  let enrichedLead = leadData;
+  if (enable_geo_intelligence && !leadData.location) {
+    try {
+      enrichedLead = await enrichLead(leadData, { include_competitors: false });
+    } catch (error) {
+      console.log('Could not enrich lead location, using basic routing');
+      enrichedLead = leadData;
+    }
+  }
+
+  // Step 2: Calculate drive times for each rep (if lead has location)
+  const repsWithDriveTime = [];
+
+  if (enable_geo_intelligence && enrichedLead.location) {
+    for (const rep of availableReps) {
+      if (rep.base_location?.lat && rep.base_location?.lng) {
+        try {
+          const driveTime = await calculateDriveTime(
+            rep.base_location,
+            enrichedLead.location,
+            'driving'
+          );
+
+          repsWithDriveTime.push({
+            ...rep,
+            drive_time: driveTime,
+            within_territory: driveTime.duration.minutes <= max_drive_time_minutes,
+            territory_score: calculateTerritoryScore(driveTime.duration.minutes, max_drive_time_minutes)
+          });
+        } catch (error) {
+          console.error(`Error calculating drive time for rep ${rep.name}:`, error);
+          repsWithDriveTime.push({
+            ...rep,
+            drive_time: null,
+            within_territory: true, // Assume yes if can't calculate
+            territory_score: 15 // Average score
+          });
+        }
+      } else {
+        // Rep doesn't have location data
+        repsWithDriveTime.push({
+          ...rep,
+          drive_time: null,
+          within_territory: true,
+          territory_score: 15
+        });
+      }
+    }
+
+    // Filter out reps outside max drive time (if prioritizing territory)
+    const filteredReps = prioritize_territory
+      ? repsWithDriveTime.filter(r => r.within_territory)
+      : repsWithDriveTime;
+
+    // If no reps within territory, expand search
+    const repsToUse = filteredReps.length > 0 ? filteredReps : repsWithDriveTime;
+
+    // Step 3: Call standard routing with enhanced territory data
+    const routingDecision = await routeLead(
+      enrichedLead,
+      validationResult,
+      repsToUse,
+      historicalData
+    );
+
+    // Step 4: Enhance response with geo-intelligence insights
+    const assignedRep = repsToUse.find(r => r.rep_id === routingDecision.routing_decision.assigned_rep.rep_id);
+
+    return {
+      ...routingDecision,
+      geo_intelligence: {
+        lead_location: enrichedLead.location,
+        lead_enrichment_status: enrichedLead.enrichment_status,
+        assigned_rep_drive_time: assignedRep?.drive_time,
+        territory_fit: assignedRep?.within_territory ? 'GOOD' : 'OUT_OF_TERRITORY',
+        territory_score: assignedRep?.territory_score || 0,
+        all_reps_drive_times: repsWithDriveTime.map(r => ({
+          rep_name: r.name,
+          drive_time_minutes: r.drive_time?.duration.minutes,
+          distance_miles: r.drive_time?.distance.miles,
+          within_territory: r.within_territory
+        })),
+        routing_recommendation: generateGeoRoutingRecommendation(assignedRep, repsWithDriveTime)
+      }
+    };
+
+  } else {
+    // Geo-intelligence disabled or no location data - use standard routing
+    return await routeLead(leadData, validationResult, availableReps, historicalData);
+  }
+}
+
+/**
+ * Calculate territory score based on drive time
+ *
+ * Closer = better score
+ */
+function calculateTerritoryScore(driveTimeMinutes, maxDriveTime) {
+  if (driveTimeMinutes <= 20) {
+    return 30; // Excellent - very close
+  } else if (driveTimeMinutes <= 30) {
+    return 25; // Good - reasonable distance
+  } else if (driveTimeMinutes <= 45) {
+    return 20; // Fair - manageable
+  } else if (driveTimeMinutes <= maxDriveTime) {
+    return 10; // Marginal - edge of territory
+  } else {
+    return 0; // Out of territory
+  }
+}
+
+/**
+ * Generate geo-specific routing recommendation
+ */
+function generateGeoRoutingRecommendation(assignedRep, allReps) {
+  if (!assignedRep?.drive_time) {
+    return 'Standard routing applied (no location data available)';
+  }
+
+  const driveTimeMinutes = assignedRep.drive_time.duration.minutes;
+  const closerReps = allReps.filter(r =>
+    r.drive_time &&
+    r.drive_time.duration.minutes < driveTimeMinutes &&
+    r.status === 'AVAILABLE'
+  );
+
+  if (driveTimeMinutes <= 20) {
+    return `Excellent territory fit. Rep is ${driveTimeMinutes} minutes away (${assignedRep.drive_time.distance.miles} miles). Optimal for in-person meetings.`;
+  } else if (driveTimeMinutes <= 45) {
+    if (closerReps.length > 0) {
+      return `Good territory fit (${driveTimeMinutes} mins away), though ${closerReps.length} rep(s) are closer. Assigned based on specialization/performance.`;
+    } else {
+      return `Good territory fit. Rep is ${driveTimeMinutes} minutes away. Reasonable for in-person meetings.`;
+    }
+  } else if (driveTimeMinutes <= 60) {
+    return `Marginal territory fit (${driveTimeMinutes} mins away). Consider virtual meeting first, in-person if deal size justifies.`;
+  } else {
+    return `Out of primary territory (${driveTimeMinutes} mins away). Recommend virtual meeting or consider reassignment if in-person required.`;
+  }
+}
+
+/**
+ * Analyze territory coverage for team
+ *
+ * @param {Array<Object>} salesReps - Reps with base_location
+ * @param {Array<Object>} leads - Leads with location data
+ * @returns {Object} Territory coverage analysis
+ */
+export async function analyzeTerritoryCoverage(salesReps, leads) {
+  const coverage = {
+    total_reps: salesReps.length,
+    total_leads: leads.length,
+    coverage_by_rep: [],
+    uncovered_leads: [],
+    territory_gaps: []
+  };
+
+  // For each rep, find leads within their territory (60 min drive)
+  for (const rep of salesReps) {
+    if (!rep.base_location?.lat || !rep.base_location?.lng) {
+      coverage.coverage_by_rep.push({
+        rep_name: rep.name,
+        rep_id: rep.rep_id,
+        error: 'No location data'
+      });
+      continue;
+    }
+
+    const leadsInTerritory = [];
+
+    for (const lead of leads) {
+      if (lead.location?.lat && lead.location?.lng) {
+        try {
+          const driveTime = await calculateDriveTime(
+            rep.base_location,
+            lead.location,
+            'driving'
+          );
+
+          if (driveTime.duration.minutes <= 60) {
+            leadsInTerritory.push({
+              lead_name: lead.business_name || lead.name,
+              drive_time_minutes: driveTime.duration.minutes,
+              distance_miles: driveTime.distance.miles
+            });
+          }
+        } catch (error) {
+          // Skip this lead
+        }
+      }
+    }
+
+    coverage.coverage_by_rep.push({
+      rep_name: rep.name,
+      rep_id: rep.rep_id,
+      base_location: `${rep.city}, ${rep.state}`,
+      leads_in_territory: leadsInTerritory.length,
+      leads: leadsInTerritory,
+      territory_density: leadsInTerritory.length >= 20 ? 'HIGH' :
+                         leadsInTerritory.length >= 10 ? 'MEDIUM' : 'LOW'
+    });
+  }
+
+  // Find leads not covered by any rep
+  for (const lead of leads) {
+    if (!lead.location?.lat || !lead.location?.lng) continue;
+
+    let covered = false;
+    for (const repCoverage of coverage.coverage_by_rep) {
+      if (repCoverage.leads?.some(l => l.lead_name === (lead.business_name || lead.name))) {
+        covered = true;
+        break;
+      }
+    }
+
+    if (!covered) {
+      coverage.uncovered_leads.push({
+        lead_name: lead.business_name || lead.name,
+        location: `${lead.city}, ${lead.state}`,
+        reason: 'No rep within 60 minute drive time'
+      });
+    }
+  }
+
+  // Identify territory gaps
+  if (coverage.uncovered_leads.length > 0) {
+    const gapLocations = {};
+    coverage.uncovered_leads.forEach(lead => {
+      const locationKey = lead.location;
+      gapLocations[locationKey] = (gapLocations[locationKey] || 0) + 1;
+    });
+
+    Object.entries(gapLocations).forEach(([location, count]) => {
+      if (count >= 3) { // 3+ uncovered leads in same area = gap
+        coverage.territory_gaps.push({
+          location,
+          uncovered_lead_count: count,
+          recommendation: count >= 10
+            ? `HIGH PRIORITY: ${count} leads in ${location}. Consider hiring rep here.`
+            : `MEDIUM PRIORITY: ${count} leads in ${location}. Expand nearby rep's territory or use virtual selling.`
+        });
+      }
+    });
+  }
+
+  return {
+    ...coverage,
+    summary: {
+      coverage_rate: ((leads.length - coverage.uncovered_leads.length) / leads.length) * 100,
+      avg_leads_per_rep: coverage.coverage_by_rep.reduce((sum, r) => sum + (r.leads_in_territory || 0), 0) / salesReps.length,
+      territory_gaps_count: coverage.territory_gaps.length,
+      recommendation: generateCoverageRecommendation(coverage)
+    },
+    analyzed_at: new Date().toISOString()
+  };
+}
+
+/**
+ * Generate territory coverage recommendation
+ */
+function generateCoverageRecommendation(coverage) {
+  const coverageRate = ((coverage.total_leads - coverage.uncovered_leads.length) / coverage.total_leads) * 100;
+
+  if (coverageRate >= 90) {
+    return 'Excellent territory coverage. Current team can handle lead volume.';
+  } else if (coverageRate >= 75) {
+    return `Good coverage (${Math.round(coverageRate)}%), but ${coverage.uncovered_leads.length} leads outside territories. Consider expanding rep territories or hiring.`;
+  } else if (coverageRate >= 50) {
+    return `Moderate coverage (${Math.round(coverageRate)}%). ${coverage.territory_gaps.length} territory gaps identified. Recommend hiring additional reps in gap areas.`;
+  } else {
+    return `Poor coverage (${Math.round(coverageRate)}%). Major territory gaps. Urgent: Hire additional reps or transition to virtual-first selling model.`;
+  }
+}
+
+/**
+ * Optimize daily route for rep visiting multiple leads
+ *
+ * @param {Object} rep - Rep with base_location
+ * @param {Array<Object>} leadsToVisit - Leads with location data
+ * @returns {Promise<Object>} Optimized route
+ */
+export async function optimizeDailyRoute(rep, leadsToVisit) {
+  if (!rep.base_location || leadsToVisit.length === 0) {
+    return {
+      error: 'Rep location or leads missing',
+      route: []
+    };
+  }
+
+  // Simple greedy algorithm: nearest neighbor
+  const route = [];
+  let currentLocation = rep.base_location;
+  const remainingLeads = [...leadsToVisit];
+
+  while (remainingLeads.length > 0) {
+    let closestLead = null;
+    let shortestTime = Infinity;
+    let closestIndex = -1;
+
+    for (let i = 0; i < remainingLeads.length; i++) {
+      const lead = remainingLeads[i];
+      if (!lead.location) continue;
+
+      const driveTime = await calculateDriveTime(currentLocation, lead.location, 'driving');
+
+      if (driveTime.duration.minutes < shortestTime) {
+        shortestTime = driveTime.duration.minutes;
+        closestLead = lead;
+        closestIndex = i;
+      }
+    }
+
+    if (closestLead) {
+      route.push({
+        order: route.length + 1,
+        lead_name: closestLead.business_name || closestLead.name,
+        lead_id: closestLead.lead_id,
+        location: closestLead.location,
+        drive_time_from_previous: shortestTime,
+        estimated_meeting_duration: closestLead.estimated_meeting_duration || 60, // minutes
+        arrival_time: null // Calculate below
+      });
+
+      currentLocation = closestLead.location;
+      remainingLeads.splice(closestIndex, 1);
+    } else {
+      break; // No more reachable leads
+    }
+  }
+
+  // Calculate arrival times (assuming 9am start)
+  let currentTime = 9 * 60; // 9am in minutes
+  route.forEach(stop => {
+    currentTime += stop.drive_time_from_previous;
+    stop.arrival_time = formatTime(currentTime);
+    currentTime += stop.estimated_meeting_duration;
+  });
+
+  const totalDriveTime = route.reduce((sum, stop) => sum + stop.drive_time_from_previous, 0);
+  const totalMeetingTime = route.reduce((sum, stop) => sum + stop.estimated_meeting_duration, 0);
+
+  return {
+    rep_name: rep.name,
+    date: new Date().toISOString().split('T')[0],
+    total_stops: route.length,
+    route: route,
+    summary: {
+      total_drive_time_minutes: totalDriveTime,
+      total_meeting_time_minutes: totalMeetingTime,
+      total_time_minutes: totalDriveTime + totalMeetingTime,
+      estimated_end_time: formatTime(currentTime),
+      feasibility: currentTime <= 17 * 60 ? 'FEASIBLE' : 'TOO_LONG' // 5pm = 17:00
+    },
+    optimized_at: new Date().toISOString()
+  };
+}
+
+/**
+ * Helper: Format minutes since midnight to HH:MM AM/PM
+ */
+function formatTime(minutes) {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  const period = hours >= 12 ? 'PM' : 'AM';
+  const displayHours = hours > 12 ? hours - 12 : hours === 0 ? 12 : hours;
+
+  return `${displayHours}:${mins.toString().padStart(2, '0')} ${period}`;
+}
+
+export default {
+  routeLead,
+  routeLeadWithGeoIntelligence,
+  analyzeTerritoryCoverage,
+  optimizeDailyRoute
+};
