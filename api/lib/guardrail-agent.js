@@ -579,9 +579,254 @@ function sanitizeCustom(text, regex, replacement = '[REDACTED]') {
   return { text: sanitized, redactions };
 }
 
+// ============================================================================
+// Social-Specific Guardrails (for public comments and responses)
+// ============================================================================
+
+/**
+ * Check for brand safety issues (defamation, false claims, competitor attacks)
+ * Use for PUBLIC responses that could damage reputation
+ */
+export async function checkBrandSafety(text, config = {}) {
+  const { competitors = [], prohibited_claims = [] } = config;
+
+  const prompt = `Analyze this public social media response for brand safety issues.
+
+Response text:
+"""
+${text}
+"""
+
+${competitors.length > 0 ? `Known competitors: ${competitors.join(', ')}` : ''}
+${prohibited_claims.length > 0 ? `Prohibited claims: ${prohibited_claims.join(', ')}` : ''}
+
+Check for:
+1. Defamation or false claims about competitors
+2. Unsubstantiated superlatives ("best", "#1", "only") without proof
+3. Health/medical claims that need regulatory compliance
+4. Financial/investment claims that need disclaimers
+5. Testimonial authenticity issues
+6. Competitor comparisons that could be challenged
+
+Return JSON:
+{
+  "safe": true/false,
+  "risk_level": "low" | "medium" | "high",
+  "issues": [{"type": "defamation" | "false_claim" | "regulatory" | "comparison", "detail": "explanation"}],
+  "recommendation": "proceed" | "revise" | "escalate"
+}`;
+
+  try {
+    const message = await anthropic.messages.create({
+      model: 'claude-sonnet-4-5-20250929',
+      max_tokens: 1024,
+      temperature: 0,
+      messages: [{ role: 'user', content: prompt }]
+    });
+
+    const responseText = message.content[0].text;
+    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+    const result = jsonMatch ? JSON.parse(jsonMatch[0]) : { safe: false, risk_level: 'high', issues: [], recommendation: 'escalate' };
+
+    return {
+      violated: !result.safe,
+      confidence: result.risk_level === 'high' ? 0.9 : result.risk_level === 'medium' ? 0.6 : 0.3,
+      reason: result.issues.length > 0 ? `Brand safety issues: ${result.issues.map(i => i.type).join(', ')}` : 'Passed brand safety check',
+      details: result
+    };
+  } catch (error) {
+    console.error('[Guardrail] Brand safety check error:', error);
+    // Fail-safe: escalate on error
+    return {
+      violated: true,
+      confidence: 1.0,
+      reason: `Error in brand safety check: ${error.message}`,
+      details: { error: error.message }
+    };
+  }
+}
+
+/**
+ * Detect competitor mentions and evaluate response appropriateness
+ */
+export async function checkCompetitorMention(text, competitors = []) {
+  const lowerText = text.toLowerCase();
+  const mentionedCompetitors = competitors.filter(comp =>
+    lowerText.includes(comp.toLowerCase())
+  );
+
+  if (mentionedCompetitors.length === 0) {
+    return { violated: false, confidence: 0, reason: 'No competitor mentions' };
+  }
+
+  // Competitor mentioned - analyze if response is appropriate
+  const prompt = `This public social media response mentions competitor(s): ${mentionedCompetitors.join(', ')}
+
+Response text:
+"""
+${text}
+"""
+
+Evaluate:
+1. Is the comparison factual and provable?
+2. Is it respectful (no trash-talking)?
+3. Could it trigger legal issues (defamation, false advertising)?
+4. Is it helpful to the customer or just attacking competition?
+
+Return JSON:
+{
+  "appropriate": true/false,
+  "issues": ["list of issues if any"],
+  "recommendation": "post" | "revise" | "escalate_to_legal"
+}`;
+
+  try {
+    const message = await anthropic.messages.create({
+      model: 'claude-sonnet-4-5-20250929',
+      max_tokens: 1024,
+      temperature: 0,
+      messages: [{ role: 'user', content: prompt }]
+    });
+
+    const responseText = message.content[0].text;
+    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+    const result = jsonMatch ? JSON.parse(jsonMatch[0]) : { appropriate: false, issues: [], recommendation: 'escalate_to_legal' };
+
+    return {
+      violated: !result.appropriate,
+      flagged: true, // Always flag competitor mentions for review
+      confidence: 0.8,
+      reason: result.appropriate
+        ? `Competitor mention OK: ${mentionedCompetitors.join(', ')}`
+        : `Inappropriate competitor mention: ${result.issues.join(', ')}`,
+      details: { competitors: mentionedCompetitors, ...result }
+    };
+  } catch (error) {
+    console.error('[Guardrail] Competitor mention check error:', error);
+    return {
+      violated: true,
+      flagged: true,
+      confidence: 1.0,
+      reason: `Competitor mentioned (${mentionedCompetitors.join(', ')}), escalate due to error`,
+      details: { error: error.message }
+    };
+  }
+}
+
+/**
+ * Check for sensitive topics that should be escalated
+ */
+export async function checkSensitiveTopics(text) {
+  const prompt = `Analyze this text for sensitive topics that should not be discussed in public social media responses.
+
+Text:
+"""
+${text}
+"""
+
+Sensitive topics to flag:
+- Politics (elections, politicians, policy debates)
+- Religion (religious beliefs, practices, conflicts)
+- Social justice (race, gender, sexuality debates)
+- Controversial current events
+- Personal/private medical information
+- Legal disputes
+- Workplace issues (labor disputes, discrimination)
+
+Return JSON:
+{
+  "contains_sensitive": true/false,
+  "topics": ["list of sensitive topics found"],
+  "severity": "low" | "medium" | "high",
+  "recommendation": "proceed" | "revise_to_neutral" | "escalate"
+}`;
+
+  try {
+    const message = await anthropic.messages.create({
+      model: 'claude-sonnet-4-5-20250929',
+      max_tokens: 1024,
+      temperature: 0,
+      messages: [{ role: 'user', content: prompt }]
+    });
+
+    const responseText = message.content[0].text;
+    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+    const result = jsonMatch ? JSON.parse(jsonMatch[0]) : { contains_sensitive: true, topics: [], severity: 'high', recommendation: 'escalate' };
+
+    return {
+      violated: result.contains_sensitive && result.severity === 'high',
+      flagged: result.contains_sensitive,
+      confidence: result.severity === 'high' ? 0.9 : result.severity === 'medium' ? 0.6 : 0.3,
+      reason: result.contains_sensitive
+        ? `Sensitive topics detected: ${result.topics.join(', ')}`
+        : 'No sensitive topics',
+      details: result
+    };
+  } catch (error) {
+    console.error('[Guardrail] Sensitive topic check error:', error);
+    return {
+      violated: false,
+      flagged: true,
+      confidence: 0.5,
+      reason: `Error in sensitive topic check: ${error.message}`,
+      details: { error: error.message }
+    };
+  }
+}
+
+/**
+ * Comprehensive social response safety check
+ * Combines all social-specific guardrails
+ */
+export async function checkSocialResponseSafety(responseText, config = {}) {
+  const {
+    competitors = [],
+    prohibited_claims = [],
+    check_brand_safety = true,
+    check_competitors = true,
+    check_sensitive_topics = true
+  } = config;
+
+  const checks = [];
+
+  if (check_brand_safety) {
+    checks.push(checkBrandSafety(responseText, { competitors, prohibited_claims }));
+  }
+
+  if (check_competitors && competitors.length > 0) {
+    checks.push(checkCompetitorMention(responseText, competitors));
+  }
+
+  if (check_sensitive_topics) {
+    checks.push(checkSensitiveTopics(responseText));
+  }
+
+  const results = await Promise.all(checks);
+
+  const violations = results.filter(r => r.violated);
+  const flags = results.filter(r => r.flagged);
+
+  return {
+    safe: violations.length === 0,
+    requires_review: flags.length > 0,
+    violations,
+    flags,
+    recommendation: violations.length > 0
+      ? 'BLOCK - Do not post publicly'
+      : flags.length > 0
+      ? 'REVIEW - Human approval needed'
+      : 'PROCEED - Safe to post',
+    details: results
+  };
+}
+
 export default {
   checkTextForViolations,
   sanitizeText,
+  checkBrandSafety,
+  checkCompetitorMention,
+  checkSensitiveTopics,
+  checkSocialResponseSafety,
   GUARDRAIL_TYPES,
   PII_ENTITIES
 };

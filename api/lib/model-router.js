@@ -89,6 +89,13 @@ const TASK_MODEL_MAP = {
   'analyze-attribution': MODELS.SONNET,          // Multi-touch attribution - channel ROI optimization
   'predict-outcomes': MODELS.SONNET,             // ML predictions - conversion probability, churn forecast, LTV
 
+  // SOCIAL RESPONSE SYSTEM (World-Class 100x) - TIER 1 BRAND & REVENUE CRITICAL
+  'respond-to-social-comment': MODELS.SONNET,    // Public brand presence - platform-specific responses, lead conversion
+  'manage-reputation': MODELS.SONNET,            // Reputation protection - reviews, negative comments, crisis management
+  'score-social-lead': MODELS.SONNET,            // Social lead scoring - different formula than regular leads
+  'analyze-community-member': MODELS.SONNET,     // Community health - identify advocates, ambassadors
+  'check-social-response-safety': MODELS.SONNET, // Brand safety - competitor mentions, defamation, sensitive topics
+
   // TIER 2: Security & Validation (Sonnet 4.5 - CATCHES EDGE CASES)
   // Using Sonnet because security edge cases cost more than API calls
   'guardrail-jailbreak': MODELS.SONNET,     // Security critical - catch sophisticated attacks
