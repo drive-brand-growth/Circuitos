@@ -1,0 +1,194 @@
+╔═══════════════════════════════════════════════════════════════════════╗
+║                  CONTEXT7 MCP QUICK REFERENCE                         ║
+║              Up-to-Date Code Documentation for AI                     ║
+║                     CircuitOS - Steve Jobs Edition                    ║
+╚═══════════════════════════════════════════════════════════════════════╝
+
+🎯 WHAT IS CONTEXT7?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Context7 fetches the LATEST documentation for any framework/library
+in real-time, ensuring your AI generates code with current best practices.
+
+NO MORE outdated React 17 patterns when React 19 is available!
+NO MORE deprecated API methods from 2023 training data!
+
+💡 BASIC USAGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Simply prefix your prompt with "use context7:"
+
+Example:
+  use context7: Create a React 19 component with TypeScript 5.5
+
+🚀 CIRCUITOS-SPECIFIC EXAMPLES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. UPDATE VIRTUAL LPR SYSTEM
+   use context7: Refactor the Virtual LPR system to use the latest
+   Google Maps JavaScript API v3 with Places API v2 and TypeScript types
+
+2. BUILD GHL WORKFLOWS
+   use context7: Create GHL workflow automation using the latest
+   GoHighLevel API v2 with webhooks and custom fields
+
+3. INTEGRATE SUPABASE
+   use context7: Integrate Supabase v2 with TypeScript for lead storage,
+   using Row Level Security and real-time subscriptions
+
+4. CLONE WEBSITE WITH LATEST STACK
+   use context7: Clone stripe.com homepage using React 19, Next.js 15,
+   TypeScript 5.5, and Tailwind CSS v4
+
+5. UPDATE DASHBOARDS
+   use context7: Build a dashboard using Next.js 15 App Router,
+   Server Components, and shadcn/ui components
+
+6. ADD STRIPE INTEGRATION
+   use context7: Implement Stripe subscription management with the
+   latest Stripe API and webhook handlers
+
+7. BUILD AI AGENTS
+   use context7: Create a DMN agent using the latest OpenAI SDK v4
+   with function calling and streaming responses
+
+8. ADD EMAIL AUTOMATION
+   use context7: Set up Resend email automation with React Email
+   templates and TypeScript
+
+📚 SUPPORTED FRAMEWORKS (1000+)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Frontend:     React, Vue, Angular, Svelte, Next.js, Nuxt, Astro
+Backend:      Node.js, Express, Fastify, NestJS, Hono, Bun
+Databases:    Supabase, PostgreSQL, MongoDB, Redis, Prisma
+APIs:         Google Maps, Stripe, Twilio, SendGrid, OpenAI
+CSS:          Tailwind CSS, shadcn/ui, Material UI, Chakra UI
+DevOps:       Vercel, Docker, GitHub Actions, AWS Lambda
+
+✨ BEST PRACTICES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ GOOD:
+  use context7: Create a React 19 component with TypeScript 5.5
+  (Specifies exact versions)
+
+❌ BAD:
+  use context7: Create a React component
+  (AI might fetch older versions)
+
+✅ GOOD:
+  use context7: Build a Next.js 15 app with Supabase v2, Stripe webhooks,
+  and Tailwind CSS v4
+  (Combines multiple technologies with versions)
+
+❌ BAD:
+  Create a Next.js app with Supabase
+  (No Context7, AI uses outdated training data)
+
+🔧 DEBUGGING WITH CONTEXT7
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Example 1:
+  use context7: Why is my Next.js Server Action returning undefined?
+  I'm using Next.js 15 and TypeScript.
+
+Example 2:
+  use context7: How do I fix "Type instantiation is excessively deep"
+  error in TypeScript 5.5?
+
+Example 3:
+  use context7: What changed in React 19 from React 18?
+  Show me migration examples.
+
+📊 FREE TIER LIMITS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• 100 requests/day = 3,000 requests/month
+• All public framework documentation
+• Perfect for individual developers
+
+💰 Paid Tier: $10/month
+• Unlimited requests
+• Private repository documentation
+• Priority rate limits
+
+⚙️ SETUP COMMANDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Quick Setup (Run this script):
+  ./CONTEXT7-QUICK-START.sh
+
+Manual Setup for Claude Code:
+  claude mcp add --transport http context7 \
+    https://mcp.context7.com/mcp \
+    --header "CONTEXT7_API_KEY: YOUR_KEY"
+
+Manual Setup for Cursor (~/.cursor/mcp.json):
+  {
+    "mcpServers": {
+      "context7": {
+        "url": "https://mcp.context7.com/mcp",
+        "headers": {
+          "CONTEXT7_API_KEY": "YOUR_KEY"
+        }
+      }
+    }
+  }
+
+🧪 TEST YOUR SETUP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Test 1: Verify Connection
+  use context7: What's new in TypeScript 5.5?
+
+Test 2: Generate Code
+  use context7: Create a TypeScript function that validates email
+  addresses using the latest Zod v3 schema validation
+
+Test 3: CircuitOS Integration
+  use context7: Show me how to fetch Google Maps Places API data
+  using the latest @googlemaps/google-maps-services-js library
+
+🐛 TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Issue: "Context7 MCP server not responding"
+Fix:  1. Check API key is correct
+      2. Verify Node.js >= v18: node --version
+      3. Test manually: npx -y @upstash/context7-mcp --api-key YOUR_KEY --test
+
+Issue: "Rate limit exceeded"
+Fix:  Free tier = 100 requests/day
+      Upgrade at https://context7.com/pricing
+
+Issue: "Documentation not found for framework X"
+Fix:  1. Check if framework is supported: https://context7.com/docs
+      2. Specify exact version: use context7: React 19 (not just "React")
+
+📚 RESOURCES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Full Setup Guide:  /Docs/CONTEXT7-MCP-SETUP.md
+• MCP Integration:   /Docs/FREE-MCP-INTEGRATION-GUIDE.md
+• Context7 Homepage: https://context7.com
+• Dashboard:         https://context7.com/dashboard (get API key)
+• Documentation:     https://context7.com/docs
+• GitHub:            https://github.com/upstash/context7
+
+🎯 MONTHLY WORKFLOW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Every month, run an audit:
+
+1. use context7: What's new in React [current version]?
+2. use context7: What's new in Next.js [current version]?
+3. use context7: What's new in TypeScript [current version]?
+4. use context7: What's new in Tailwind CSS [current version]?
+
+Then update your CircuitOS codebase with the latest patterns!
+
+═══════════════════════════════════════════════════════════════════════
+
+© 2025 CircuitOS™ - Context7 MCP Integration
+Part of the Steve Jobs Edition AI Stack
+
+FREE Forever (100 requests/day) • Setup Time: 5 minutes • 1000+ Frameworks
+Always Up-to-Date • Version-Specific • TypeScript Types Included
+
+═══════════════════════════════════════════════════════════════════════

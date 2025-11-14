@@ -31,6 +31,10 @@ graph TB
         Vercel[Vercel MCP<br/>100GB FREE]
     end
 
+    subgraph "🟣 Developer Tools MCPs (FREE)"
+        Context7[Context7 MCP<br/>100 requests/day FREE<br/>Up-to-date code docs]
+    end
+
     subgraph "Circuit OS Intelligence Layers"
         VirtualLPR[Virtual LPR™<br/>Hyperlocal scoring]
         VirtualTraffic[Virtual Traffic System<br/>Footfall estimation]
@@ -51,6 +55,9 @@ graph TB
     GH --> Vercel
     Vercel --> Supa
 
+    Context7 --> DMN
+    Context7 --> ML
+
     VirtualTraffic --> ML
     VirtualLPR --> ML
     DMN --> ML
@@ -59,6 +66,7 @@ graph TB
     style GA4 fill:#38FF6A,stroke:#27D85A,color:#0B0C0D
     style GMB fill:#38FF6A,stroke:#27D85A,color:#0B0C0D
     style Census fill:#38FF6A,stroke:#27D85A,color:#0B0C0D
+    style Context7 fill:#9D4EDD,stroke:#7B2CBF,color:#FFFFFF
 ```
 
 ---
@@ -624,6 +632,82 @@ vercel deploy --prod
 
 ---
 
+## 🟣 Developer Tools MCPs (FREE)
+
+### 🔟 Context7 MCP (100 requests/day FREE)
+
+**What it does:** Provides up-to-date, version-specific documentation for any framework or library directly to your AI coding assistant.
+
+**Why you need it:** Ensures your AI generates code using the **latest** patterns and APIs, not outdated training data from 2023.
+
+```bash
+# Get FREE API key
+# 1. Go to: https://context7.com/dashboard
+# 2. Sign up (FREE)
+# 3. Copy API key
+
+# Install for Claude Code (Remote - Easiest)
+claude mcp add --transport http context7 https://mcp.context7.com/mcp --header "CONTEXT7_API_KEY: YOUR_KEY"
+
+# OR Install for Claude Code (Local - More Control)
+claude mcp add context7 -- npx -y @upstash/context7-mcp --api-key YOUR_KEY
+```
+
+### Environment Setup
+
+```bash
+# .env
+CONTEXT7_API_KEY=your-api-key-here
+```
+
+### Usage Example
+
+```javascript
+// Instead of asking:
+// "Create a React component"
+// (AI might use React 17 patterns from 2023)
+
+// Use Context7:
+// "use context7: Create a React 19 component with TypeScript 5.5"
+// (AI fetches React 19 docs in real-time, uses latest patterns)
+```
+
+### Practical Examples for CircuitOS
+
+**Example 1: Update Virtual LPR with Latest Google Maps API**
+```
+use context7: Refactor the Virtual LPR system to use the latest Google Maps JavaScript API v3 with Places API v2 and TypeScript types
+```
+
+**Example 2: Build GHL Workflows with Current API**
+```
+use context7: Create GHL workflow automation using the latest GoHighLevel API v2 with webhooks and custom fields
+```
+
+**Example 3: Add Supabase with Latest Patterns**
+```
+use context7: Integrate Supabase v2 with TypeScript for lead storage, using Row Level Security and real-time subscriptions
+```
+
+**Example 4: Clone Website with Latest Stack**
+```
+use context7: Clone stripe.com homepage using React 19, Next.js 15, TypeScript 5.5, and Tailwind CSS v4
+```
+
+### Benefits for CircuitOS Development
+
+1. **Always Current:** Get latest framework updates as they're released
+2. **Version-Specific:** Specify exact versions (React 19, Next.js 15, etc.)
+3. **Best Practices:** AI uses official documentation, not Stack Overflow from 2020
+4. **Multi-Framework:** Works with 1000+ frameworks (React, Vue, Angular, Svelte, etc.)
+5. **TypeScript Types:** Get current type definitions for better type safety
+
+**Cost:** $0/month (100 requests/day FREE tier)
+
+**Full Setup Guide:** See `/Docs/CONTEXT7-MCP-SETUP.md`
+
+---
+
 ## 🎯 Complete Integration Example
 
 ### Virtual LPR™ System Using All FREE MCPs
@@ -732,6 +816,7 @@ Generate:
 | US Census Data | Unlimited | Unlimited | $0 |
 | OpenStreetMap | Unlimited | Unlimited | $0 |
 | OpenWeatherMap | 1,000/day | 30,000/month | $0 |
+| Context7 | 100/day | 3,000/month | $0 |
 | Perplexity | 5/day | 150/month | $0 |
 | Exa | 1,000/month | 1,000/month | $0 |
 | Supabase | 500MB DB | 2GB bandwidth | $0 |
