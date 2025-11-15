@@ -1,0 +1,265 @@
+{
+  "dashboard": {
+    "title": "Circuit OS - Complete Monitoring Dashboard",
+    "tags": ["circuit-os", "circuits", "ml", "security"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Circuit Executions (Total)",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0},
+        "targets": [
+          {
+            "expr": "sum(circuit_executions_total)"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Circuit Success Rate",
+        "type": "gauge",
+        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0},
+        "targets": [
+          {
+            "expr": "sum(rate(circuit_executions_total{status=\"success\"}[5m])) / sum(rate(circuit_executions_total[5m])) * 100"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 90, "color": "yellow"},
+                {"value": 95, "color": "green"}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 3,
+        "title": "Active Circuits",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0},
+        "targets": [
+          {
+            "expr": "circuits_active"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Average Circuit Duration",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 18, "y": 0},
+        "targets": [
+          {
+            "expr": "rate(circuit_execution_duration_seconds_sum[5m]) / rate(circuit_execution_duration_seconds_count[5m])"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        }
+      },
+      {
+        "id": 5,
+        "title": "Circuit Execution Rate (per minute)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4},
+        "targets": [
+          {
+            "expr": "sum(rate(circuit_executions_total[1m])) by (circuit_name) * 60",
+            "legendFormat": "{{ circuit_name }}"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Circuit Duration (p95)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, sum(rate(circuit_execution_duration_seconds_bucket[5m])) by (le, circuit_name))",
+            "legendFormat": "{{ circuit_name }}"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "HTTP Requests (per minute)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
+        "targets": [
+          {
+            "expr": "sum(rate(http_requests_total[1m])) by (method, endpoint) * 60",
+            "legendFormat": "{{ method }} {{ endpoint }}"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "HTTP Status Codes",
+        "type": "piechart",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 12},
+        "targets": [
+          {
+            "expr": "sum(increase(http_requests_total[5m])) by (status)",
+            "legendFormat": "{{ status }}"
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "ML Predictions (per minute)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 20},
+        "targets": [
+          {
+            "expr": "sum(rate(ml_predictions_total[1m])) by (model_name) * 60",
+            "legendFormat": "{{ model_name }}"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "ML Prediction Confidence (avg)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 20},
+        "targets": [
+          {
+            "expr": "rate(ml_prediction_confidence_sum[5m]) / rate(ml_prediction_confidence_count[5m])",
+            "legendFormat": "Average Confidence"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "RAG Queries (per minute)",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 28},
+        "targets": [
+          {
+            "expr": "sum(rate(rag_queries_total[1m])) * 60"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "RAG Documents Retrieved (avg)",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 28},
+        "targets": [
+          {
+            "expr": "rate(rag_documents_retrieved_sum[5m]) / rate(rag_documents_retrieved_count[5m])"
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Authentication Success Rate",
+        "type": "gauge",
+        "gridPos": {"h": 4, "w": 6, "x": 12, "y": 28},
+        "targets": [
+          {
+            "expr": "sum(rate(auth_attempts_total{status=\"success\"}[5m])) / sum(rate(auth_attempts_total[5m])) * 100"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 70, "color": "yellow"},
+                {"value": 90, "color": "green"}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 14,
+        "title": "Rate Limit Hits",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 18, "y": 28},
+        "targets": [
+          {
+            "expr": "sum(increase(rate_limit_hits_total[5m]))"
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "title": "Injection Attempts Blocked",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 32},
+        "targets": [
+          {
+            "expr": "sum(rate(injection_attempts_blocked_total[5m])) by (attack_type)",
+            "legendFormat": "{{ attack_type }}"
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "title": "Active User Sessions",
+        "type": "stat",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 32},
+        "targets": [
+          {
+            "expr": "active_sessions"
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "title": "Circuit Errors by Type",
+        "type": "table",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 40},
+        "targets": [
+          {
+            "expr": "sum(increase(circuit_errors_total[5m])) by (circuit_name, error_type)"
+          }
+        ]
+      },
+      {
+        "id": 18,
+        "title": "System Health Score",
+        "type": "gauge",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 40},
+        "targets": [
+          {
+            "expr": "(sum(rate(circuit_executions_total{status=\"success\"}[5m])) / sum(rate(circuit_executions_total[5m]))) * 50 + (sum(rate(http_requests_total{status=~\"2..\"}[5m])) / sum(rate(http_requests_total[5m]))) * 50"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 70, "color": "yellow"},
+                {"value": 90, "color": "green"}
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "refresh": "10s"
+  }
+}

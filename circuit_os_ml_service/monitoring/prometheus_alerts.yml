@@ -1,0 +1,270 @@
+groups:
+  - name: circuit_os_alerts
+    interval: 30s
+    rules:
+      # ======================================================================
+      # CIRCUIT ALERTS
+      # ======================================================================
+
+      - alert: HighCircuitErrorRate
+        expr: |
+          (
+            sum(rate(circuit_executions_total{status="error"}[5m]))
+            /
+            sum(rate(circuit_executions_total[5m]))
+          ) > 0.10
+        for: 5m
+        labels:
+          severity: warning
+          component: circuits
+        annotations:
+          summary: "High circuit error rate detected"
+          description: "Circuit error rate is {{ $value | humanizePercentage }} (threshold: 10%)"
+
+      - alert: CriticalCircuitErrorRate
+        expr: |
+          (
+            sum(rate(circuit_executions_total{status="error"}[5m]))
+            /
+            sum(rate(circuit_executions_total[5m]))
+          ) > 0.25
+        for: 5m
+        labels:
+          severity: critical
+          component: circuits
+        annotations:
+          summary: "CRITICAL: Very high circuit error rate"
+          description: "Circuit error rate is {{ $value | humanizePercentage }} (threshold: 25%)"
+
+      - alert: SlowCircuitExecution
+        expr: |
+          histogram_quantile(0.95,
+            sum(rate(circuit_execution_duration_seconds_bucket[5m])) by (le, circuit_name)
+          ) > 30
+        for: 10m
+        labels:
+          severity: warning
+          component: circuits
+        annotations:
+          summary: "Slow circuit execution detected"
+          description: "Circuit {{ $labels.circuit_name }} p95 latency is {{ $value }}s (threshold: 30s)"
+
+      - alert: CircuitExecutionStalled
+        expr: |
+          circuits_active > 0 AND
+          rate(circuit_executions_total[5m]) == 0
+        for: 5m
+        labels:
+          severity: critical
+          component: circuits
+        annotations:
+          summary: "Circuit execution appears stalled"
+          description: "Active circuits exist but no executions completing for 5 minutes"
+
+      # ======================================================================
+      # API ALERTS
+      # ======================================================================
+
+      - alert: HighAPIErrorRate
+        expr: |
+          (
+            sum(rate(http_requests_total{status=~"5.."}[5m]))
+            /
+            sum(rate(http_requests_total[5m]))
+          ) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          component: api
+        annotations:
+          summary: "High API error rate detected"
+          description: "API 5xx error rate is {{ $value | humanizePercentage }} (threshold: 5%)"
+
+      - alert: SlowAPIResponse
+        expr: |
+          histogram_quantile(0.95,
+            sum(rate(http_request_duration_seconds_bucket[5m])) by (le, endpoint)
+          ) > 5
+        for: 10m
+        labels:
+          severity: warning
+          component: api
+        annotations:
+          summary: "Slow API response times"
+          description: "Endpoint {{ $labels.endpoint }} p95 latency is {{ $value }}s (threshold: 5s)"
+
+      - alert: HighActiveRequests
+        expr: http_requests_active > 100
+        for: 5m
+        labels:
+          severity: warning
+          component: api
+        annotations:
+          summary: "High number of concurrent requests"
+          description: "{{ $value }} concurrent requests active (threshold: 100)"
+
+      # ======================================================================
+      # INTELLIGENCE ALERTS
+      # ======================================================================
+
+      - alert: HighMLPredictionErrorRate
+        expr: |
+          (
+            sum(rate(ml_predictions_total{status="error"}[5m]))
+            /
+            sum(rate(ml_predictions_total[5m]))
+          ) > 0.10
+        for: 5m
+        labels:
+          severity: warning
+          component: ml
+        annotations:
+          summary: "High ML prediction error rate"
+          description: "ML error rate is {{ $value | humanizePercentage }} for model {{ $labels.model_name }}"
+
+      - alert: LowMLPredictionConfidence
+        expr: |
+          (
+            rate(ml_prediction_confidence_sum[10m])
+            /
+            rate(ml_prediction_confidence_count[10m])
+          ) < 0.60
+        for: 15m
+        labels:
+          severity: warning
+          component: ml
+        annotations:
+          summary: "Low ML prediction confidence"
+          description: "Average ML confidence is {{ $value | humanizePercentage }} (threshold: 60%)"
+
+      - alert: HighRAGQueryErrorRate
+        expr: |
+          (
+            sum(rate(rag_queries_total{status="error"}[5m]))
+            /
+            sum(rate(rag_queries_total[5m]))
+          ) > 0.10
+        for: 5m
+        labels:
+          severity: warning
+          component: rag
+        annotations:
+          summary: "High RAG query error rate"
+          description: "RAG error rate is {{ $value | humanizePercentage }} (threshold: 10%)"
+
+      # ======================================================================
+      # SECURITY ALERTS
+      # ======================================================================
+
+      - alert: HighAuthenticationFailureRate
+        expr: |
+          (
+            sum(rate(auth_attempts_total{status="failed"}[5m]))
+            /
+            sum(rate(auth_attempts_total[5m]))
+          ) > 0.20
+        for: 5m
+        labels:
+          severity: warning
+          component: security
+        annotations:
+          summary: "High authentication failure rate"
+          description: "Auth failure rate is {{ $value | humanizePercentage }} (threshold: 20%) - possible brute force attack"
+
+      - alert: InjectionAttacksDetected
+        expr: sum(rate(injection_attempts_blocked_total[5m])) > 1
+        for: 2m
+        labels:
+          severity: critical
+          component: security
+        annotations:
+          summary: "Injection attacks detected"
+          description: "{{ $value }} injection attempts per second detected - type: {{ $labels.attack_type }}"
+
+      - alert: ExcessiveRateLimiting
+        expr: sum(rate(rate_limit_hits_total[5m])) > 10
+        for: 5m
+        labels:
+          severity: warning
+          component: security
+        annotations:
+          summary: "Excessive rate limiting"
+          description: "{{ $value }} rate limit hits per second - possible DoS attempt"
+
+      - alert: UnauthorizedAccessAttempts
+        expr: |
+          sum(rate(authz_checks_total{status="denied"}[5m])) > 5
+        for: 5m
+        labels:
+          severity: warning
+          component: security
+        annotations:
+          summary: "Multiple unauthorized access attempts"
+          description: "{{ $value }} authorization denials per second for permission {{ $labels.permission }}"
+
+      # ======================================================================
+      # SYSTEM ALERTS
+      # ======================================================================
+
+      - alert: ServiceDown
+        expr: up{job="circuit-os"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: system
+        annotations:
+          summary: "Circuit OS service is down"
+          description: "Service has been down for 1 minute"
+
+      - alert: NoMetricsReceived
+        expr: |
+          absent(up{job="circuit-os"}) == 1
+          OR
+          (time() - timestamp(up{job="circuit-os"})) > 120
+        for: 2m
+        labels:
+          severity: critical
+          component: system
+        annotations:
+          summary: "No metrics received from Circuit OS"
+          description: "No metrics received for 2 minutes - service may be down"
+
+      - alert: LowThroughput
+        expr: |
+          sum(rate(circuit_executions_total[5m])) < 0.1
+          AND
+          sum(rate(circuit_executions_total[1h] offset 1h)) > 1
+        for: 10m
+        labels:
+          severity: warning
+          component: system
+        annotations:
+          summary: "Low system throughput detected"
+          description: "Circuit execution rate dropped significantly compared to historical baseline"
+
+      # ======================================================================
+      # BUSINESS LOGIC ALERTS
+      # ======================================================================
+
+      - alert: FrequentMLRetraining
+        expr: sum(rate(ml_model_retraining_total[1h])) > 5
+        for: 30m
+        labels:
+          severity: info
+          component: ml
+        annotations:
+          summary: "Frequent ML model retraining"
+          description: "Model {{ $labels.model_name }} retrained {{ $value }} times in last hour"
+
+      - alert: NoCircuitExecutions
+        expr: |
+          sum(rate(circuit_executions_total[10m])) == 0
+          AND
+          circuits_registered > 0
+        for: 15m
+        labels:
+          severity: info
+          component: circuits
+        annotations:
+          summary: "No circuit executions"
+          description: "No circuits have executed in 15 minutes despite {{ $value }} circuits registered"
