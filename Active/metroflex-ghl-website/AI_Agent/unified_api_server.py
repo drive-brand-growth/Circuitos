@@ -63,7 +63,7 @@ except Exception as e:
 try:
     gym_agent = GymMemberOnboardingAgent(
         openai_api_key=OPENAI_API_KEY,
-        knowledge_base_path='METROFLEX_GYM_KB_V1.json'
+        knowledge_base_path='METROFLEX_COMPLETE_KB_V3.json'
     )
     logger.info("✅ Gym Member Agent initialized")
 except Exception as e:
