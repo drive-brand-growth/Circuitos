@@ -2,7 +2,7 @@
 nixPkgs = ["python39", "python39Packages.pip"]
 
 [phases.install]
-cmds = ["cd AI_Agent", "pip3 install --upgrade pip", "pip3 install -r requirements-production.txt"]
+cmds = ["pip3 install --upgrade pip", "pip3 install -r requirements.txt"]
 
 [start]
 cmd = "gunicorn unified_api_server:app --bind 0.0.0.0:${PORT:-5001} --workers 2 --timeout 120"
