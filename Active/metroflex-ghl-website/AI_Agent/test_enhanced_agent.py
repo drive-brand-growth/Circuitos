@@ -10,7 +10,7 @@ from metroflex_ai_agent_enhanced import MetroFlexAIAgentEnhanced
 
 # Set OpenAI API key (replace with your actual key)
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "your-key-here")
-KNOWLEDGE_BASE_PATH = "METROFLEX_COMPLETE_KB_V3.json"
+KNOWLEDGE_BASE_PATH = "METROFLEX_EVENTS_KB_V3_EVENTS_ONLY.json"
 
 def print_response(query: str, response_data: dict):
     """Pretty print agent response"""
@@ -76,22 +76,7 @@ def main():
         # Test 10: Vendor booth rental (NEW - HIGH INTENT)
         "I want to rent a vendor booth at the Ronnie Coleman Classic",
 
-        # Test 11: Apparel purchase (NEW)
-        "Where can I buy MetroFlex shirts?",
-
-        # Test 12: Gym membership (NEW - HIGH INTENT)
-        "When does MetroFlex Miami open and how much is membership?",
-
-        # Test 13: Licensing inquiry (NEW - HIGH INTENT)
-        "I want to open a MetroFlex gym in my city. What are the requirements?",
-
-        # Test 14: Founder's membership (NEW - HIGH INTENT)
-        "Tell me about the Founder's Lifetime Membership",
-
-        # Test 15: Apparel sizing
-        "What sizes do you have for hoodies?",
-
-        # Test 16: Multiple revenue streams (complex query)
+        # Test 11: Multiple revenue streams (complex query)
         "Can I buy VIP tickets and also rent a vendor booth?",
     ]
 
@@ -134,7 +119,7 @@ def main():
     print("✅ ALL TESTS COMPLETE!")
     print("="*80)
 
-    print("\n📈 SUMMARY OF V3 KNOWLEDGE BASE IMPROVEMENTS:")
+    print("\n📈 SUMMARY - EVENTS-ONLY RAG SYSTEM:")
     print("  ✅ Intent classification optimizes RAG retrieval")
     print("  ✅ Date queries return event info (not legacy)")
     print("  ✅ Sponsor queries detect high intent + trigger lead capture")
@@ -142,30 +127,29 @@ def main():
     print("  ✅ Division queries prioritize rules over general info")
     print("  ✅ First-timer queries prioritize guide over procedures")
     print("")
-    print("🆕 NEW V3 CAPABILITIES (Complete Menu Items):")
+    print("🆕 EVENTS-ONLY CAPABILITIES:")
     print("  ✅ Spectator ticketing via TicketSpice (4 ticket types)")
     print("  ✅ Vendor booth rentals (3 packages: $500, $1,200, $3,500)")
     print("  ✅ Sponsorship opportunities (4 tiers: Title, Platinum, Gold, Category)")
-    print("  ✅ MetroFlex Apparel catalog (8 SKUs with sizes, colors, pricing)")
-    print("  ✅ Miami gym memberships (5 tiers including Founder's Lifetime)")
-    print("  ✅ Licensing program (New Build $60k, Rebrand $40k)")
-    print("  ✅ AI/ML integration notes for predictive analytics")
+    print("  ✅ Competitor registration via MuscleWare platform")
     print("")
-    print("🎯 HIGH-INTENT TRIGGERS NOW INCLUDE:")
-    print("  🔥 Competitor registration (existing)")
-    print("  🔥 Sponsorship inquiries (existing)")
-    print("  🔥 Vendor booth rentals (NEW)")
-    print("  🔥 Gym membership signups (NEW - Founder's esp.)")
-    print("  🔥 Licensing applications (NEW - $40k-60k deals)")
-    print("  🔥 Apparel purchases (NEW - lower intent but trackable)")
+    print("🎯 HIGH-INTENT TRIGGERS (EVENTS ONLY):")
+    print("  🔥 Competitor registration")
+    print("  🔥 Sponsorship inquiries")
+    print("  🔥 Vendor booth rentals")
+    print("")
+    print("⚠️  NOT IN THIS RAG (See Gym RAG instead):")
+    print("  ❌ Gym memberships (use METROFLEX_GYM_KB_V1.json)")
+    print("  ❌ Licensing program (use METROFLEX_GYM_KB_V1.json)")
+    print("  ❌ MetroFlex Apparel (use METROFLEX_GYM_KB_V1.json)")
     print("")
     print("💡 NEXT STEPS:")
     print("  1. Set GHL_LEAD_CAPTURE_WEBHOOK environment variable")
     print("  2. Deploy to Railway/Fly.io")
     print("  3. Configure GHL Chat Widget to call /webhook/chat")
     print("  4. Monitor leads in GHL dashboard")
-    print("  5. Build 6 missing agents (Licensing, Gym Member, Ticket Sales, Apparel, Event Fulfillment, Sponsor)")
-    print("  6. Integrate ML models (lead scoring, churn prediction, size recommendation)")
+    print("  5. Build 6 missing agents (Licensing, Gym Member, Ticket Sales, Event Fulfillment, Sponsor)")
+    print("  6. Integrate ML models (lead scoring, churn prediction, attendance prediction)")
     print("")
 
 if __name__ == "__main__":
