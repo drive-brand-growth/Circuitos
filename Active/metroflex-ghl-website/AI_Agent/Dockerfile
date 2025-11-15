@@ -20,9 +20,9 @@ COPY *.json .
 # Expose port
 EXPOSE 5001
 
-# Health check
+# Health check (uses PORT variable to match app binding)
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
-  CMD curl -f http://localhost:5001/health || exit 1
+  CMD curl -f http://localhost:${PORT:-5001}/health || exit 1
 
 # Run with Gunicorn (unified_api_server has all 5 agents)
 # Use Railway's PORT env var, fallback to 5001 for local development
