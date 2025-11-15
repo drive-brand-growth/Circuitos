@@ -1,0 +1,44 @@
+{
+  "terminalCommandPolicy": {
+    "autoApprove": true,
+    "requireConfirmation": [
+      "delete",
+      "remove",
+      "rm ",
+      "unlink",
+      "wipe",
+      "reset",
+      "drop",
+      "truncate",
+      "clear",
+      "clean",
+      "purge",
+      "destroy",
+      "git reset",
+      "git clean",
+      "git checkout --force",
+      "rm -rf",
+      "rm -r",
+      "rmdir",
+      "uninstall",
+      "destroy",
+      "format"
+    ],
+    "destructivePatterns": [
+      "DELETE FROM",
+      "DROP TABLE",
+      "DROP DATABASE",
+      "TRUNCATE",
+      "ALTER TABLE.*DROP",
+      "rm -rf",
+      "rm -r",
+      "git reset --hard",
+      "git clean -fd",
+      "wipe",
+      "format"
+    ],
+    "notes": "Auto-approve all non-destructive commands. Only ask for confirmation on destructive operations involving file deletion, data wiping, Git resets, or database modifications."
+  },
+  "lastUpdated": "2025-01-27"
+}
+

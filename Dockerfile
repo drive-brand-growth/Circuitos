@@ -22,5 +22,5 @@ EXPOSE 5001
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD curl -f http://localhost:5001/health || exit 1
 
-# Start command
-CMD ["python", "metroflex_ai_agent_enhanced.py"]
+# Start command - Run unified API server with all 3 agents
+CMD ["python", "unified_api_server.py"]

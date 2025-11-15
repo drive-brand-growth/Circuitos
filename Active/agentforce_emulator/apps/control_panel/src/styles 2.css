@@ -1,0 +1,100 @@
+/* Salesforce Lightning Design System 2.0 Variables */
+:root {
+  /* Primary Colors */
+  --sf-primary-blue: #3A49DA;
+  --sf-dark-navy: #001642;
+  --sf-dark-slate: #03234D;
+
+  /* Neutral Colors */
+  --sf-white: #FFFFFF;
+  --sf-light-gray: #F6F6F6;
+  --sf-medium-gray: #E5E5E5;
+  --sf-text-gray: #444444;
+  --sf-secondary-gray: #5C5C5C;
+
+  /* Semantic Colors */
+  --sf-info: #066AFE;
+  --sf-success: #DEF9F3;
+  --sf-success-dark: #04844B;
+  --sf-error: #FEF0F3;
+  --sf-error-dark: #EA001E;
+  --sf-warning: #FBF3E0;
+  --sf-warning-dark: #FE9339;
+  --sf-neutral-info: #EDF4FF;
+
+  /* Component States */
+  --sf-active-link: #3A49DA;
+  --sf-sidebar-active: #E0E5F8;
+  --sf-sidebar-hover: #F3F3F3;
+  --sf-border-color: #E5E5E5;
+  --sf-hover-bg: #F6F6F6;
+
+  /* Typography */
+  --sf-font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --sf-font-heading: "Salesforce Sans", "Inter", sans-serif;
+
+  /* Spacing */
+  --sf-spacing-xs: 4px;
+  --sf-spacing-sm: 8px;
+  --sf-spacing-md: 12px;
+  --sf-spacing-lg: 16px;
+  --sf-spacing-xl: 24px;
+  --sf-spacing-xxl: 32px;
+
+  /* Shadows */
+  --sf-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --sf-shadow-md: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  --sf-shadow-lg: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+
+  /* Border Radius */
+  --sf-radius-sm: 4px;
+  --sf-radius-md: 8px;
+  --sf-radius-lg: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--sf-font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: var(--sf-light-gray);
+  color: var(--sf-text-gray);
+}
+
+a {
+  color: var(--sf-primary-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--sf-font-body);
+}
+
+/* Salesforce-style scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sf-light-gray);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sf-medium-gray);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sf-secondary-gray);
+}

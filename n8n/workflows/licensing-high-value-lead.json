@@ -1,0 +1,222 @@
+{
+  "name": "Licensing High-Value Lead Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "licensing-webhook",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Webhook - Licensing Lead",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{$json.qualification_score.total_score}}",
+              "operation": "largerEqual",
+              "value2": 85
+            }
+          ]
+        }
+      },
+      "name": "IF Fast-Track (Score >= 85)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{$env.GHL_API_URL}}/contacts",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "gohighlevelApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "firstName",
+              "value": "={{$json.contact.name.split(' ')[0]}}"
+            },
+            {
+              "name": "lastName",
+              "value": "={{$json.contact.name.split(' ')[1]}}"
+            },
+            {
+              "name": "email",
+              "value": "={{$json.contact.email}}"
+            },
+            {
+              "name": "phone",
+              "value": "={{$json.contact.phone}}"
+            },
+            {
+              "name": "tags",
+              "value": "={{$json.contact.tags.join(',')}}"
+            },
+            {
+              "name": "customFields",
+              "value": "={{JSON.stringify($json.contact.custom_fields)}}"
+            }
+          ]
+        }
+      },
+      "name": "Create GHL Contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [650, 200]
+    },
+    {
+      "parameters": {
+        "url": "={{$env.SLACK_WEBHOOK_URL}}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "🚨 FAST-TRACK LICENSING LEAD!\n\n*Name:* {{$json.contact.name}}\n*Score:* {{$json.qualification_score.total_score}}/100\n*Capital:* ${{$json.contact.custom_fields.liquid_capital}}\n*Location:* {{$json.contact.custom_fields.location}}\n*Deal Value:* ${{$json.opportunity.value}}\n\n⚡ ACTION REQUIRED: Call within 24 hours"
+            }
+          ]
+        }
+      },
+      "name": "Alert Brian (Slack) - Fast Track",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [850, 100]
+    },
+    {
+      "parameters": {
+        "to": "={{$env.BRIAN_EMAIL}}",
+        "subject": "🚨 Fast-Track Licensing Lead: ${{$json.opportunity.value}}",
+        "emailFormat": "html",
+        "html": "<h2>New Fast-Track Licensing Lead</h2>\n<p><strong>Name:</strong> {{$json.contact.name}}</p>\n<p><strong>Qualification Score:</strong> {{$json.qualification_score.total_score}}/100 (FAST-TRACK)</p>\n<p><strong>Liquid Capital:</strong> ${{$json.contact.custom_fields.liquid_capital}}</p>\n<p><strong>Experience:</strong> {{$json.contact.custom_fields.industry_experience_years}} years</p>\n<p><strong>Location:</strong> {{$json.contact.custom_fields.location}}</p>\n<p><strong>Recommended Package:</strong> {{$json.contact.custom_fields.recommended_package}}</p>\n<hr>\n<p><strong>Deal Value:</strong> ${{$json.opportunity.value}}</p>\n<p><strong>Action Required:</strong> Phone call within 24 hours</p>\n<p><strong>Email:</strong> {{$json.contact.email}}</p>\n<p><strong>Phone:</strong> {{$json.contact.phone}}</p>"
+      },
+      "name": "Email Brian - Fast Track",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [850, 200]
+    },
+    {
+      "parameters": {
+        "url": "={{$env.GHL_API_URL}}/opportunities",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "gohighlevelApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "contactId",
+              "value": "={{$json.id}}"
+            },
+            {
+              "name": "name",
+              "value": "={{$json.opportunity.name}}"
+            },
+            {
+              "name": "monetaryValue",
+              "value": "={{$json.opportunity.value}}"
+            },
+            {
+              "name": "pipelineStageId",
+              "value": "licensing-qualification"
+            },
+            {
+              "name": "assignedTo",
+              "value": "brian-dobson-id"
+            }
+          ]
+        }
+      },
+      "name": "Create GHL Opportunity",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "mode": "jsonData",
+        "jsonData": "={{ {\"status\": \"success\", \"message\": \"Lead captured\", \"fast_track\": true} }}"
+      },
+      "name": "Response - Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1050, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{$env.GHL_API_URL}}/contacts",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "gohighlevelApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "firstName",
+              "value": "={{$json.contact.name.split(' ')[0]}}"
+            },
+            {
+              "name": "lastName",
+              "value": "={{$json.contact.name.split(' ')[1]}}"
+            },
+            {
+              "name": "email",
+              "value": "={{$json.contact.email}}"
+            },
+            {
+              "name": "phone",
+              "value": "={{$json.contact.phone}}"
+            },
+            {
+              "name": "tags",
+              "value": "={{$json.contact.tags.join(',')}}"
+            }
+          ]
+        }
+      },
+      "name": "Create GHL Contact - Standard",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [650, 400]
+    },
+    {
+      "parameters": {
+        "campaignId": "licensing-nurture-sequence"
+      },
+      "name": "Add to Nurture Email Sequence",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [850, 400]
+    }
+  ],
+  "connections": {
+    "Webhook - Licensing Lead": {
+      "main": [[{"node": "IF Fast-Track (Score >= 85)", "type": "main", "index": 0}]]
+    },
+    "IF Fast-Track (Score >= 85)": {
+      "main": [
+        [{"node": "Create GHL Contact", "type": "main", "index": 0}],
+        [{"node": "Create GHL Contact - Standard", "type": "main", "index": 0}]
+      ]
+    },
+    "Create GHL Contact": {
+      "main": [[
+        {"node": "Alert Brian (Slack) - Fast Track", "type": "main", "index": 0},
+        {"node": "Email Brian - Fast Track", "type": "main", "index": 0},
+        {"node": "Create GHL Opportunity", "type": "main", "index": 0}
+      ]]
+    },
+    "Create GHL Opportunity": {
+      "main": [[{"node": "Response - Success", "type": "main", "index": 0}]]
+    },
+    "Create GHL Contact - Standard": {
+      "main": [[{"node": "Add to Nurture Email Sequence", "type": "main", "index": 0}]]
+    },
+    "Add to Nurture Email Sequence": {
+      "main": [[{"node": "Response - Success", "type": "main", "index": 0}]]
+    }
+  }
+}

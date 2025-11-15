@@ -1,0 +1,50 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║                   🚀 WARP PROTOCOL: QUICK START                          ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+Open your terminal and run this ONE command:
+
+    ./warp/DEPLOY_NOW.sh
+
+This will:
+  ✅ Guide you through Railway login (opens browser)
+  ✅ Create Railway project
+  ✅ Link to GitHub
+  ✅ Set all environment variables automatically
+  ✅ Deploy all 16 services to production
+
+⏱️  Total time: 40 minutes
+💰 Monthly cost: $45-65
+📊 Result: Live AI-powered lead generation system
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OR run these 5 commands manually:
+
+1. Login (opens browser):
+   $HOME/.npm-global/bin/railway login
+
+2. Create project:
+   cd /Users/noelpena/Desktop/CircuitOS_Local_Complete_Package
+   $HOME/.npm-global/bin/railway init
+
+3. Link GitHub:
+   $HOME/.npm-global/bin/railway link
+   (Select: drive-brand-growth/Circuitos, branch: main)
+
+4. Set variables:
+   $HOME/.npm-global/bin/railway variables set OPENAI_API_KEY="$(grep '^OPENAI_API_KEY=' .env | cut -d'=' -f2)"
+   $HOME/.npm-global/bin/railway variables set POSTGRES_PASSWORD="$(openssl rand -base64 32)"
+   $HOME/.npm-global/bin/railway variables set ENVIRONMENT="production"
+   $HOME/.npm-global/bin/railway variables set DEBUG="false"
+   $HOME/.npm-global/bin/railway variables set GHL_LEAD_CAPTURE_WEBHOOK="https://placeholder-get-real-webhook-from-brian.com"
+
+5. Deploy:
+   $HOME/.npm-global/bin/railway up
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 Full documentation: DEPLOY_NOW_APPROVED.md
+📊 Check status anytime: ./warp/status-check.sh
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

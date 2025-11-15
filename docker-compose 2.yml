@@ -1,0 +1,456 @@
+# CircuitOS Unified Docker Compose Stack
+# Version: 1.0
+# Purpose: Run entire CircuitOS ecosystem with one command
+
+version: '3.8'
+
+services:
+  # ============================================================================
+  # CORE AI SERVICES
+  # ============================================================================
+
+  # MetroFlex AI Chat Agent
+  metroflex-ai:
+    build:
+      context: ./Active/metroflex-ghl-website/AI_Agent
+      dockerfile: Dockerfile
+    container_name: metroflex-ai-agent
+    restart: unless-stopped
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - PORT=5001
+      - FLASK_ENV=${ENVIRONMENT:-production}
+      - REDIS_URL=redis://redis:6379/1
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./Active/metroflex-ghl-website/AI_Agent/logs:/app/logs
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=metroflex-ai"
+      - "com.circuitos.environment=${ENVIRONMENT:-production}"
+
+  # ML Model API (Lead Qualification)
+  ml-api:
+    build:
+      context: ../CircuitOS-Project
+      dockerfile: Dockerfile
+    container_name: ml-lead-qualifier
+    restart: unless-stopped
+    environment:
+      - MODEL_PATH=/app/trained_models/lead_qualifier_v1.pkl
+      - DATABASE_URL=postgresql://circuitos:${POSTGRES_PASSWORD:-changeme}@postgres:5432/ml_audit
+      - REDIS_URL=redis://redis:6379/2
+    ports:
+      - "5000:5000"
+    volumes:
+      - ../CircuitOS-Project/trained_models:/app/trained_models:ro
+      - ./logs/ml-api:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=ml-api"
+
+  # Agentforce Emulator - API
+  agentforce-api:
+    build:
+      context: ./Active/agentforce_emulator
+      dockerfile: Dockerfile.api
+    container_name: agentforce-api
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgresql://circuitos:${POSTGRES_PASSWORD:-changeme}@postgres:5432/agentforce
+      - REDIS_URL=redis://redis:6379/3
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./Active/agentforce_emulator/logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=agentforce-api"
+
+  # Agentforce Emulator - Web UI
+  agentforce-web:
+    build:
+      context: ./Active/agentforce_emulator
+      dockerfile: Dockerfile.web
+    container_name: agentforce-web
+    restart: unless-stopped
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    ports:
+      - "3001:3001"
+    depends_on:
+      - agentforce-api
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=agentforce-web"
+
+  # Virtual Agentforce (Python Service)
+  virtual-agentforce:
+    build:
+      context: ./Active/virtual-agentforce
+      dockerfile: Dockerfile
+    container_name: virtual-agentforce
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgresql://circuitos:${POSTGRES_PASSWORD:-changeme}@postgres:5432/virtual_agentforce
+      - REDIS_URL=redis://redis:6379/4
+    ports:
+      - "8001:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=virtual-agentforce"
+
+  # Circuit Script Runtime (Node.js)
+  circuit-script:
+    build:
+      context: ./Active/circuit-script-runtime
+      dockerfile: Dockerfile
+    container_name: circuit-script-runtime
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=${ENVIRONMENT:-production}
+      - REDIS_URL=redis://redis:6379/5
+    ports:
+      - "3000:3000"
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=circuit-script"
+
+  # ============================================================================
+  # INFRASTRUCTURE SERVICES
+  # ============================================================================
+
+  # PostgreSQL (Shared Database)
+  postgres:
+    image: postgres:16-alpine
+    container_name: circuitos-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=circuitos
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeme}
+      - POSTGRES_MULTIPLE_DATABASES=agentforce,ml_audit,circuit_runtime,virtual_agentforce
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres-init.sh:/docker-entrypoint-initdb.d/init.sh:ro
+      - ./docker/postgres-backup:/backup
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U circuitos"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=postgres"
+      - "com.circuitos.backup=daily"
+
+  # Redis (Shared Cache & Pub/Sub)
+  redis:
+    image: redis:7-alpine
+    container_name: circuitos-redis
+    restart: unless-stopped
+    command: >
+      redis-server
+      --maxmemory 512mb
+      --maxmemory-policy allkeys-lru
+      --appendonly yes
+      --appendfsync everysec
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=redis"
+
+  # NGINX Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: circuitos-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/ssl:/etc/nginx/ssl:ro
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      - metroflex-ai
+      - ml-api
+      - agentforce-api
+      - agentforce-web
+      - circuit-script
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=nginx"
+      - "com.circuitos.component=proxy"
+
+  # ============================================================================
+  # MONITORING & OBSERVABILITY
+  # ============================================================================
+
+  # Prometheus (Metrics Collection)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: circuitos-metrics
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+    volumes:
+      - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./docker/prometheus-alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=prometheus"
+      - "com.circuitos.component=monitoring"
+
+  # Grafana (Dashboards)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: circuitos-dashboards
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_SERVER_ROOT_URL=http://localhost:3000
+      - GF_INSTALL_PLUGINS=redis-datasource
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./docker/grafana-dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./docker/grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
+    ports:
+      - "3002:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=grafana"
+      - "com.circuitos.component=monitoring"
+
+  # Alertmanager (Alert Routing)
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: circuitos-alerts
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+    volumes:
+      - ./docker/alertmanager.yml:/etc/alertmanager/config.yml:ro
+      - alertmanager_data:/alertmanager
+    ports:
+      - "9093:9093"
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=alertmanager"
+
+  # Loki (Log Aggregation)
+  loki:
+    image: grafana/loki:latest
+    container_name: circuitos-logs
+    restart: unless-stopped
+    command: -config.file=/etc/loki/config.yml
+    volumes:
+      - ./docker/loki-config.yml:/etc/loki/config.yml:ro
+      - loki_data:/loki
+    ports:
+      - "3100:3100"
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=loki"
+
+  # Promtail (Log Shipper)
+  promtail:
+    image: grafana/promtail:latest
+    container_name: circuitos-log-shipper
+    restart: unless-stopped
+    command: -config.file=/etc/promtail/config.yml
+    volumes:
+      - ./docker/promtail-config.yml:/etc/promtail/config.yml:ro
+      - ./logs:/var/log/circuitos:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - loki
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=promtail"
+
+  # ============================================================================
+  # UTILITY SERVICES
+  # ============================================================================
+
+  # Backup Service (Automated Backups)
+  backup:
+    image: prodrigestivill/postgres-backup-local:16
+    container_name: circuitos-backup
+    restart: unless-stopped
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=agentforce,ml_audit,circuit_runtime
+      - POSTGRES_USER=circuitos
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeme}
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+      - BACKUP_KEEP_WEEKS=4
+      - BACKUP_KEEP_MONTHS=6
+    volumes:
+      - ./docker/postgres-backup:/backups
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=backup"
+
+  # Health Check Dashboard
+  healthcheck-ui:
+    image: willfarrell/autoheal:latest
+    container_name: circuitos-autoheal
+    restart: unless-stopped
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=all
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - circuitos-network
+    labels:
+      - "com.circuitos.service=autoheal"
+
+# ============================================================================
+# VOLUMES
+# ============================================================================
+
+volumes:
+  postgres_data:
+    driver: local
+    labels:
+      - "com.circuitos.volume=postgres"
+  redis_data:
+    driver: local
+    labels:
+      - "com.circuitos.volume=redis"
+  prometheus_data:
+    driver: local
+    labels:
+      - "com.circuitos.volume=prometheus"
+  grafana_data:
+    driver: local
+    labels:
+      - "com.circuitos.volume=grafana"
+  alertmanager_data:
+    driver: local
+    labels:
+      - "com.circuitos.volume=alertmanager"
+  loki_data:
+    driver: local
+    labels:
+      - "com.circuitos.volume=loki"
+
+# ============================================================================
+# NETWORKS
+# ============================================================================
+
+networks:
+  circuitos-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+    labels:
+      - "com.circuitos.network=main"
