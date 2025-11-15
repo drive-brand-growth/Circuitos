@@ -1,0 +1,177 @@
+version: '3.8'
+
+services:
+  # n8n - Workflow Automation
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: metroflex-n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD}
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - NODE_ENV=production
+      - WEBHOOK_URL=https://${N8N_HOST}/
+      - GENERIC_TIMEZONE=${TIMEZONE:-America/Chicago}
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+      # Claude API
+      - CLAUDE_API_KEY=${CLAUDE_API_KEY}
+      # GHL Webhook
+      - GHL_WEBHOOK_URL=${GHL_WEBHOOK_URL}
+      # Database
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB}
+      - DB_POSTGRESDB_USER=${POSTGRES_USER}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./shared-files:/files
+      - ./audio-training:/audio-training:ro
+    depends_on:
+      - postgres
+    networks:
+      - metroflex-network
+
+  # PostgreSQL - Database for n8n
+  postgres:
+    image: postgres:15-alpine
+    container_name: metroflex-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-n8n}
+      - POSTGRES_USER=${POSTGRES_USER:-n8n}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - metroflex-network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-n8n}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Qdrant - Vector Database for RAG
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: metroflex-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+      - ./qdrant-config:/qdrant/config
+    networks:
+      - metroflex-network
+    environment:
+      - QDRANT__SERVICE__GRPC_PORT=6334
+
+  # Redis - Caching & Queue Management
+  redis:
+    image: redis:7-alpine
+    container_name: metroflex-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - metroflex-network
+    command: redis-server --appendonly yes
+
+  # Nginx - Reverse Proxy (optional but recommended)
+  nginx:
+    image: nginx:alpine
+    container_name: metroflex-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - n8n
+    networks:
+      - metroflex-network
+
+  # Portainer - Docker Management UI (optional but helpful)
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: metroflex-portainer
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+      - "8000:8000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - metroflex-network
+
+  # Python API Server - For Custom AI Agents
+  ai-agent-api:
+    build: ./ai-agent-api
+    container_name: metroflex-ai-agents
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - CLAUDE_API_KEY=${CLAUDE_API_KEY}
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - ./ai-agent-api:/app
+      - ./shared-files:/files
+      - ./audio-training:/audio-training:ro
+    depends_on:
+      - qdrant
+      - redis
+    networks:
+      - metroflex-network
+
+  # File Management - MinIO (S3-compatible object storage)
+  minio:
+    image: minio/minio:latest
+    container_name: metroflex-minio
+    restart: unless-stopped
+    ports:
+      - "9001:9001"
+      - "9002:9002"
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER:-minioadmin}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+    volumes:
+      - minio_data:/data
+    networks:
+      - metroflex-network
+    command: server /data --console-address ":9001" --address ":9002"
+
+volumes:
+  n8n_data:
+    driver: local
+  postgres_data:
+    driver: local
+  qdrant_data:
+    driver: local
+  redis_data:
+    driver: local
+  portainer_data:
+    driver: local
+  minio_data:
+    driver: local
+
+networks:
+  metroflex-network:
+    driver: bridge

@@ -1,0 +1,281 @@
+{
+  "name": "NPC Competitor Scraper - Metroflex Events",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "apify-webhook",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Apify Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "REPLACE_WITH_YOUR_WEBHOOK_ID"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Parse Apify scraper results\nconst apifyData = $input.first().json;\n\n// Extract athlete profiles from Apify response\nlet profiles = [];\n\nif (apifyData.resource?.defaultDatasetId) {\n  // Data is in dataset format\n  profiles = apifyData.items || [];\n} else if (Array.isArray(apifyData)) {\n  // Data is direct array\n  profiles = apifyData;\n} else if (apifyData.profiles) {\n  // Data is in profiles key\n  profiles = apifyData.profiles;\n}\n\n// Clean and structure data\nconst cleanedProfiles = profiles.map((profile, index) => {\n  return {\n    id: index + 1,\n    username: profile.username || profile.ownerUsername || '',\n    displayName: profile.fullName || profile.displayName || '',\n    bio: profile.biography || profile.bio || '',\n    followerCount: profile.followersCount || profile.followers || 0,\n    followingCount: profile.followsCount || profile.following || 0,\n    postsCount: profile.postsCount || profile.posts || 0,\n    isVerified: profile.verified || false,\n    isPrivate: profile.private || false,\n    profilePicUrl: profile.profilePicUrl || profile.profilePic || '',\n    externalUrl: profile.externalUrl || profile.url || '',\n    location: extractLocation(profile.biography || profile.bio || ''),\n    recentPosts: profile.latestPosts || [],\n    engagementRate: calculateEngagementRate(profile),\n    scrapedAt: new Date().toISOString(),\n    source: 'instagram_apify'\n  };\n});\n\n// Helper functions\nfunction extractLocation(bio) {\n  // Extract location from bio (Texas, Dallas, Houston, etc.)\n  const locationPatterns = [\n    /(?:^|\\s)(Dallas|Houston|Austin|San Antonio|Fort Worth|Arlington|Plano|Irving|Frisco|McKinney|DFW),?\\s*(?:TX|Texas)?/i,\n    /(?:^|\\s)(Oklahoma|OKC|Tulsa|Norman),?\\s*(?:OK)?/i,\n    /(?:^|\\s)(Louisiana|LA|New Orleans|Baton Rouge|Shreveport)/i,\n    /(?:^|\\s)(Arkansas|AR|Little Rock)/i,\n    /(?:^|\\s)(Texas|TX)(?:\\s|$)/i\n  ];\n  \n  for (const pattern of locationPatterns) {\n    const match = bio.match(pattern);\n    if (match) return match[1] || match[0].trim();\n  }\n  return '';\n}\n\nfunction calculateEngagementRate(profile) {\n  const followers = profile.followersCount || profile.followers || 0;\n  const avgLikes = profile.avgLikes || 0;\n  if (followers === 0) return 0;\n  return ((avgLikes / followers) * 100).toFixed(2);\n}\n\n// Return cleaned profiles\nreturn cleanedProfiles.map(profile => ({ json: profile }));"
+      },
+      "id": "parse-apify-data",
+      "name": "Parse Apify Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "loop-profiles",
+      "name": "Loop Through Profiles",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{ $credentials.anthropicApiKey }}"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "claude-3-5-sonnet-20241022"
+            },
+            {
+              "name": "max_tokens",
+              "value": 1024
+            },
+            {
+              "name": "messages",
+              "value": "={{ [{\"role\": \"user\", \"content\": $json.claudePrompt}] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "call-claude-api",
+      "name": "Analyze Profile with Claude",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1050, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "CLAUDE_API_CREDENTIALS",
+          "name": "Claude API Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "functionCode": "// Build Claude API prompt for athlete analysis\nconst profile = $input.first().json;\n\nconst prompt = `You are an expert NPC bodybuilding competition analyst. Analyze this Instagram profile and determine if this person is an NPC competitor or prospect.\n\n**PROFILE DATA:**\nUsername: ${profile.username}\nDisplay Name: ${profile.displayName}\nBio: ${profile.bio}\nFollowers: ${profile.followerCount}\nFollowing: ${profile.followingCount}\nPosts: ${profile.postsCount}\nEngagement Rate: ${profile.engagementRate}%\nLocation: ${profile.location}\nExternal URL: ${profile.externalUrl}\n\n**RECENT POST CAPTIONS:**\n${profile.recentPosts?.slice(0, 3).map((p, i) => `Post ${i + 1}: ${p.caption || 'No caption'}`).join('\\n') || 'No recent posts available'}\n\n**YOUR TASK:**\nAnalyze this profile and return ONLY a valid JSON object (no markdown, no extra text) with this exact structure:\n\n{\n  \"isNPCCompetitor\": true/false,\n  \"competitiveStatus\": \"Active Competitor\" | \"Preparing for Show\" | \"Off-Season\" | \"Retired\" | \"Not a Competitor\" | \"Fitness Enthusiast\",\n  \"division\": \"Men's Physique\" | \"Classic Physique\" | \"Bodybuilding\" | \"Women's Bikini\" | \"Women's Figure\" | \"Women's Physique\" | \"Wellness\" | \"Unknown\",\n  \"experienceLevel\": \"Beginner\" | \"Intermediate\" | \"Advanced\" | \"Pro\" | \"Unknown\",\n  \"location\": \"City, State\" (extract from bio/posts),\n  \"gym\": \"Gym name\" (if mentioned),\n  \"coach\": \"Coach name\" (if mentioned),\n  \"recentShows\": [\"Show names mentioned in bio/posts\"],\n  \"upcomingShows\": [\"Shows they're preparing for\"],\n  \"influenceScore\": 0-100 (based on followers + engagement),\n  \"recruitmentPotential\": 0-100,\n  \"recruitmentReason\": \"1-2 sentence explanation of why they're a good or bad target\",\n  \"personalizedOutreach\": \"A personalized Instagram DM or email message (2-3 sentences) to recruit them to Ronnie Coleman Classic. Reference specific details from their profile.\",\n  \"tags\": [\"Array of relevant tags like NPC_Competitor, Division_Bikini, Location_Dallas, Influence_High, etc.\"]\n}\n\n**SCORING GUIDELINES:**\n- influenceScore: 0-30 (micro), 31-60 (medium), 61-85 (influencer), 86-100 (celebrity)\n- recruitmentPotential: High (75-100) if active competitor in Texas/nearby, Medium (40-74) if competitor but far or inactive, Low (0-39) if not competitor\n\n**IMPORTANT:** Return ONLY the JSON object, no other text.`;\n\nreturn [{\n  json: {\n    ...profile,\n    claudePrompt: prompt\n  }\n}];"
+      },
+      "id": "build-claude-prompt",
+      "name": "Build Claude Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Parse Claude API response\nconst claudeResponse = $input.first().json;\nconst originalProfile = $node[\"Build Claude Prompt\"].json;\n\ntry {\n  // Extract JSON from Claude response\n  let analysisText = claudeResponse.content?.[0]?.text || '';\n  \n  // Remove markdown code blocks if present\n  analysisText = analysisText.replace(/```json\\n?/g, '').replace(/```\\n?/g, '').trim();\n  \n  // Parse JSON\n  const analysis = JSON.parse(analysisText);\n  \n  // Combine original profile data with Claude analysis\n  const enrichedProfile = {\n    // Original data\n    username: originalProfile.username,\n    displayName: originalProfile.displayName,\n    bio: originalProfile.bio,\n    followerCount: originalProfile.followerCount,\n    followingCount: originalProfile.followingCount,\n    postsCount: originalProfile.postsCount,\n    engagementRate: originalProfile.engagementRate,\n    profilePicUrl: originalProfile.profilePicUrl,\n    externalUrl: originalProfile.externalUrl,\n    scrapedAt: originalProfile.scrapedAt,\n    source: originalProfile.source,\n    \n    // Claude AI analysis\n    isNPCCompetitor: analysis.isNPCCompetitor,\n    competitiveStatus: analysis.competitiveStatus,\n    division: analysis.division,\n    experienceLevel: analysis.experienceLevel,\n    location: analysis.location || originalProfile.location,\n    gym: analysis.gym || '',\n    coach: analysis.coach || '',\n    recentShows: analysis.recentShows || [],\n    upcomingShows: analysis.upcomingShows || [],\n    influenceScore: analysis.influenceScore,\n    recruitmentPotential: analysis.recruitmentPotential,\n    recruitmentReason: analysis.recruitmentReason,\n    personalizedOutreach: analysis.personalizedOutreach,\n    tags: analysis.tags || [],\n    \n    // Add additional computed fields\n    priority: analysis.recruitmentPotential >= 75 ? 'High' : \n              analysis.recruitmentPotential >= 40 ? 'Medium' : 'Low',\n    shouldContact: analysis.recruitmentPotential >= 40,\n    instagramUrl: `https://instagram.com/${originalProfile.username}`\n  };\n  \n  return [{ json: enrichedProfile }];\n  \n} catch (error) {\n  // If parsing fails, log error and return original profile with error flag\n  return [{\n    json: {\n      ...originalProfile,\n      error: true,\n      errorMessage: error.message,\n      recruitmentPotential: 0,\n      shouldContact: false\n    }\n  }];\n}"
+      },
+      "id": "parse-claude-response",
+      "name": "Parse Claude Analysis",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1250, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "filter-high-potential",
+              "leftValue": "={{ $json.shouldContact }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            },
+            {
+              "id": "filter-no-error",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "false"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "filter-qualified",
+      "name": "Filter Qualified Athletes",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1450, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Format data for GHL webhook\nconst athlete = $input.first().json;\n\n// Map to GHL contact structure\nconst ghlContact = {\n  // Standard fields\n  firstName: athlete.displayName?.split(' ')[0] || '',\n  lastName: athlete.displayName?.split(' ').slice(1).join(' ') || '',\n  email: '', // Will need to be enriched separately or captured if in bio\n  phone: '', // Will need to be enriched separately\n  \n  // Custom fields (configure these in GHL first)\n  customFields: {\n    instagram_username: athlete.username,\n    instagram_url: athlete.instagramUrl,\n    instagram_followers: athlete.followerCount,\n    instagram_engagement_rate: athlete.engagementRate,\n    npc_competitor: athlete.isNPCCompetitor ? 'Yes' : 'No',\n    competitive_status: athlete.competitiveStatus,\n    division: athlete.division,\n    experience_level: athlete.experienceLevel,\n    location: athlete.location,\n    gym: athlete.gym,\n    coach: athlete.coach,\n    recent_shows: athlete.recentShows?.join(', ') || '',\n    upcoming_shows: athlete.upcomingShows?.join(', ') || '',\n    influence_score: athlete.influenceScore,\n    recruitment_potential: athlete.recruitmentPotential,\n    recruitment_reason: athlete.recruitmentReason,\n    personalized_message: athlete.personalizedOutreach,\n    priority: athlete.priority,\n    source: 'NPC_Competitor_Scraper',\n    scraped_date: athlete.scrapedAt,\n    profile_bio: athlete.bio?.substring(0, 500) || '' // Truncate if too long\n  },\n  \n  // Tags (will be added to contact in GHL)\n  tags: [\n    'NPC_Scraper',\n    athlete.isNPCCompetitor ? 'NPC_Competitor' : 'Fitness_Enthusiast',\n    `Division_${athlete.division?.replace(/[^a-zA-Z]/g, '_')}`,\n    `Experience_${athlete.experienceLevel}`,\n    `Priority_${athlete.priority}`,\n    `Influence_${athlete.influenceScore >= 60 ? 'High' : athlete.influenceScore >= 30 ? 'Medium' : 'Low'}`,\n    athlete.location ? `Location_${athlete.location.replace(/[^a-zA-Z]/g, '_')}` : 'Location_Unknown',\n    athlete.competitiveStatus?.replace(/\\s+/g, '_')\n  ].filter(Boolean), // Remove empty tags\n  \n  // Source tracking\n  source: 'Instagram_NPC_Scraper',\n  \n  // Additional metadata\n  notes: `Found via NPC competitor scraping on ${new Date().toLocaleDateString()}\\n\\nRecruitment Reason: ${athlete.recruitmentReason}\\n\\nSuggested Outreach:\\n${athlete.personalizedOutreach}\\n\\nRecent Shows: ${athlete.recentShows?.join(', ') || 'None'}\\nUpcoming Shows: ${athlete.upcomingShows?.join(', ') || 'None'}`\n};\n\nreturn [{ json: ghlContact }];"
+      },
+      "id": "format-for-ghl",
+      "name": "Format for GHL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1650, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.GHL_WEBHOOK_URL }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "timeout": 10000,
+          "retry": {
+            "enabled": true,
+            "maxTries": 3,
+            "waitBetween": 1000
+          }
+        }
+      },
+      "id": "send-to-ghl",
+      "name": "Send to GHL",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1850, 200]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Log rejected profiles for analysis\nconst rejected = $input.first().json;\n\nconst logEntry = {\n  username: rejected.username,\n  displayName: rejected.displayName,\n  recruitmentPotential: rejected.recruitmentPotential,\n  reason: rejected.recruitmentReason || 'Did not meet qualification criteria',\n  followerCount: rejected.followerCount,\n  location: rejected.location,\n  rejectedAt: new Date().toISOString()\n};\n\nconsole.log('REJECTED PROFILE:', JSON.stringify(logEntry, null, 2));\n\nreturn [{ json: logEntry }];"
+      },
+      "id": "log-rejected",
+      "name": "Log Rejected Profiles",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1650, 400]
+    },
+    {
+      "parameters": {
+        "keepOnlySets": "selected",
+        "values": {
+          "string": [
+            {
+              "name": "summary",
+              "value": "={{ \"Processed batch. Sent to GHL: \" + $json.sentToGHL + \", Rejected: \" + $json.rejected }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "batch-complete",
+      "name": "Batch Complete",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [2050, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Final summary of workflow execution\nconst allItems = $input.all();\n\nconst summary = {\n  totalProcessed: allItems.length,\n  sentToGHL: allItems.filter(item => item.json.sentToGHL).length,\n  rejected: allItems.filter(item => item.json.rejected).length,\n  errors: allItems.filter(item => item.json.error).length,\n  completedAt: new Date().toISOString(),\n  workflow: 'NPC Competitor Scraper'\n};\n\nconsole.log('WORKFLOW COMPLETE:', JSON.stringify(summary, null, 2));\n\nreturn [{ json: summary }];"
+      },
+      "id": "workflow-summary",
+      "name": "Workflow Summary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2250, 300]
+    }
+  ],
+  "connections": {
+    "Apify Webhook Trigger": {
+      "main": [[{ "node": "Parse Apify Data", "type": "main", "index": 0 }]]
+    },
+    "Parse Apify Data": {
+      "main": [[{ "node": "Loop Through Profiles", "type": "main", "index": 0 }]]
+    },
+    "Loop Through Profiles": {
+      "main": [
+        [{ "node": "Build Claude Prompt", "type": "main", "index": 0 }],
+        [{ "node": "Workflow Summary", "type": "main", "index": 0 }]
+      ]
+    },
+    "Build Claude Prompt": {
+      "main": [[{ "node": "Analyze Profile with Claude", "type": "main", "index": 0 }]]
+    },
+    "Analyze Profile with Claude": {
+      "main": [[{ "node": "Parse Claude Analysis", "type": "main", "index": 0 }]]
+    },
+    "Parse Claude Analysis": {
+      "main": [[{ "node": "Filter Qualified Athletes", "type": "main", "index": 0 }]]
+    },
+    "Filter Qualified Athletes": {
+      "main": [
+        [{ "node": "Format for GHL", "type": "main", "index": 0 }],
+        [{ "node": "Log Rejected Profiles", "type": "main", "index": 0 }]
+      ]
+    },
+    "Format for GHL": {
+      "main": [[{ "node": "Send to GHL", "type": "main", "index": 0 }]]
+    },
+    "Send to GHL": {
+      "main": [[{ "node": "Batch Complete", "type": "main", "index": 0 }]]
+    },
+    "Log Rejected Profiles": {
+      "main": [[{ "node": "Batch Complete", "type": "main", "index": 0 }]]
+    },
+    "Batch Complete": {
+      "main": [[{ "node": "Loop Through Profiles", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-01-15T00:00:00.000Z",
+  "versionId": "1"
+}
