@@ -27,7 +27,18 @@ from dataclasses import dataclass
 from datetime import datetime
 from openai import OpenAI
 
-client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+# Lazy initialization - only create client when needed (not at import time)
+_client = None
+
+def get_openai_client():
+    """Get or create OpenAI client (lazy initialization)"""
+    global _client
+    if _client is None:
+        api_key = os.getenv('OPENAI_API_KEY')
+        if not api_key:
+            raise ValueError("OPENAI_API_KEY environment variable not set")
+        _client = OpenAI(api_key=api_key)
+    return _client
 
 # =============================================================================
 # OBJECTION DETECTION FRAMEWORK
@@ -159,7 +170,7 @@ def detect_objection(message: str) -> Dict:
     }}
     """
 
-    response = client.chat.completions.create(
+    response = get_openai_client().chat.completions.create(
         model="gpt-4o-mini",
         messages=[{"role": "user", "content": prompt}],
         response_format={"type": "json_object"},
@@ -221,7 +232,7 @@ def assess_awareness_level(
     }}
     """
 
-    response = client.chat.completions.create(
+    response = get_openai_client().chat.completions.create(
         model="gpt-4o-mini",
         messages=[{"role": "user", "content": prompt}],
         response_format={"type": "json_object"},
@@ -363,7 +374,7 @@ def generate_response(
     }}
     """
 
-    response = client.chat.completions.create(
+    response = get_openai_client().chat.completions.create(
         model="gpt-4o-mini",
         messages=[{"role": "user", "content": prompt}],
         response_format={"type": "json_object"},

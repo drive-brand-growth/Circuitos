@@ -44,13 +44,22 @@ class GymMemberOnboardingAgent:
     """
 
     def __init__(self, openai_api_key: str, knowledge_base_path: str):
-        self.client = OpenAI(api_key=openai_api_key)
+        self.api_key = openai_api_key
+        self._client = None  # Lazy initialization
         self.knowledge_base = self._load_knowledge_base(knowledge_base_path)
         self.model = "gpt-4o-mini"
 
         # Founder's membership tracking
         self.founders_total = 100
         self.founders_deadline = datetime(2026, 5, 15)
+
+    def _get_openai_client(self):
+        """Get or create OpenAI client (lazy initialization)"""
+        if self._client is None:
+            if not self.api_key:
+                raise ValueError("OPENAI_API_KEY not provided")
+            self._client = OpenAI(api_key=self.api_key)
+        return self._client
 
     def _load_knowledge_base(self, path: str) -> Dict:
         """Load gym knowledge base"""
@@ -236,7 +245,7 @@ Always emphasize the MetroFlex legacy and community."""
             {"role": "user", "content": query}
         ]
 
-        response = self.client.chat.completions.create(
+        response = self._get_openai_client().chat.completions.create(
             model=self.model,
             messages=messages,
             temperature=0.7,
