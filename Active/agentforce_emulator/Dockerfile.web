@@ -1,0 +1,25 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy package files
+COPY apps/control_panel/package*.json ./ 2>/dev/null || echo '{"name":"control-panel","version":"1.0.0"}' > package.json
+
+# Install dependencies
+RUN npm ci || npm install
+
+# Copy application code
+COPY apps/control_panel/ ./ 2>/dev/null || echo "console.log('Placeholder web app');" > index.js
+
+# Build application
+RUN npm run build || echo "Build skipped"
+
+# Expose port
+EXPOSE 3001
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:3001 || exit 1
+
+# Run preview server
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "3001"]

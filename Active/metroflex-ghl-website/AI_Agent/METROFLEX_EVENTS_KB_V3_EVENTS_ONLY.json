@@ -1,0 +1,843 @@
+{
+  "metroflex_events": {
+    "overview": "MetroFlex hosts three premier NPC Championship events: Better Bodies Classic (rebranded as Texas Legends Championship), Ronnie Coleman Classic 30th Anniversary, and Branch Warren Classic Houston. All events use MuscleWare registration platform.",
+    "scope": "THIS KNOWLEDGE BASE IS FOR METROFLEX EVENTS ONLY - metroflexevents.com. Does NOT include gym memberships or licensing.",
+
+    "events": [
+      {
+        "name": "Texas Legends Championship",
+        "formerly_known_as": "NPC Better Bodies Classic",
+        "date": "March 28, 2026",
+        "location": "The Original MetroFlex Gym, Arlington, TX",
+        "registration_url": "https://www.muscleware.com/contests/2026-TXLG-CHAM/register",
+        "ticketing_url": "https://www.ticketspice.com/metroflex-texas-legends-2026",
+        "status": "National Qualifier",
+        "description": "Experience the raw intensity of powerlifting combined with MetroFlex's legendary Wild Game Feast. Witness elite strength athletes compete in the atmosphere that forged champions for over 38 years.",
+        "special_features": [
+          "Wild Game Feast included",
+          "Powerlifting competition",
+          "NPC National Qualifier status",
+          "Historic MetroFlex Arlington venue"
+        ],
+        "vendor_booths_available": true,
+        "sponsor_opportunities": true
+      },
+      {
+        "name": "NPC Ronnie Coleman Classic",
+        "anniversary": "30th Anniversary",
+        "date": "May 16, 2026",
+        "location": "Fort Worth Convention Center, Fort Worth, TX",
+        "registration_url": "https://www.muscleware.com/contests/2026-RNCL-CLS/register",
+        "ticketing_url": "https://www.ticketspice.com/metroflex-ronnie-coleman-2026",
+        "status": "National Qualifier",
+        "description": "Celebrating 30 years of the Ronnie Coleman Classic. Championship NPC bodybuilding event honoring 8x Mr. Olympia Ronnie Coleman. One of Texas' premier national qualifier events.",
+        "special_features": [
+          "30th Anniversary celebration",
+          "Honoring 8x Mr. Olympia Ronnie Coleman",
+          "Fort Worth Convention Center venue",
+          "NPC National Qualifier status",
+          "Full bodybuilding divisions"
+        ],
+        "vendor_booths_available": true,
+        "sponsor_opportunities": true
+      },
+      {
+        "name": "NPC Branch Warren Classic Houston",
+        "date": "June 20, 2026",
+        "location": "Houston, TX (Location TBD)",
+        "registration_url": "https://www.muscleware.com/contests/2026-BCHW-CLS/register",
+        "ticketing_url": "https://www.ticketspice.com/metroflex-branch-warren-2026",
+        "status": "National Qualifier",
+        "description": "Texas' flagship Branch Warren Classic. Championship NPC bodybuilding event honoring 2x Arnold Classic Champion Branch Warren. National qualifier status.",
+        "special_features": [
+          "Honoring 2x Arnold Classic Champion Branch Warren",
+          "Houston flagship event",
+          "NPC National Qualifier status",
+          "Full NPC divisions"
+        ],
+        "vendor_booths_available": true,
+        "sponsor_opportunities": true
+      }
+    ]
+  },
+
+  "competitor_registration": {
+    "platform": "MuscleWare",
+    "overview": "MuscleWare is the official contest software and registration platform for NPC, NPC Worldwide, IFBB Professional League, and Canadian Physique Alliance.",
+
+    "platform_stats": {
+      "languages_supported": 20,
+      "countries_served": 89,
+      "promoters_using_system": 394,
+      "events_managed": "4,301+"
+    },
+
+    "key_principle": "Athletes DO NOT register directly on MuscleWare.com. Instead, each event promoter has a dedicated event website where registration occurs. MuscleWare powers the backend.",
+
+    "registration_process": [
+      {
+        "step": 1,
+        "action": "Find your contest at npcnewsonline.com contest calendar"
+      },
+      {
+        "step": 2,
+        "action": "Access the event-specific registration URL (format: https://www.muscleware.com/contests/[CONTEST-CODE]/register)"
+      },
+      {
+        "step": 3,
+        "action": "Complete personal information (name, DOB, email, phone, country)"
+      },
+      {
+        "step": 4,
+        "action": "Enter valid NPC Member Number (must be non-zero)"
+      },
+      {
+        "step": 5,
+        "action": "Select division(s) and class(es) - up to 8 divisions per registration"
+      },
+      {
+        "step": 6,
+        "action": "Accept Terms & Conditions and Privacy Policy"
+      },
+      {
+        "step": 7,
+        "action": "Proceed to Confirmation and review information"
+      },
+      {
+        "step": 8,
+        "action": "Complete payment through promoter's payment gateway"
+      },
+      {
+        "step": 9,
+        "action": "Receive confirmation email with athlete profile link"
+      }
+    ],
+
+    "required_fields": [
+      "First Name (minimum 2 characters, Romanized format)",
+      "Last Name (minimum 2 characters, Romanized format)",
+      "Date of Birth (Month/Day/Year)",
+      "Email Address",
+      "Re-enter Email (must match exactly)",
+      "Phone Number",
+      "Country of Residence",
+      "Valid NPC Member Number (non-zero)",
+      "Division selection",
+      "Class selection for each division",
+      "Terms of Use acceptance",
+      "Privacy Policy acceptance"
+    ],
+
+    "optional_fields": [
+      "Gym Name",
+      "Trainer Name",
+      "Instagram Handle",
+      "Country Representing (if different from residence)"
+    ],
+
+    "npc_membership": {
+      "requirement": "You must have a valid NPC Member Number to register for any NPC competition",
+      "how_to_get": "Visit npcnewsonline.com to purchase NPC membership",
+      "validation": "Number must be non-zero and validated at form submission"
+    },
+
+    "pricing_tiers": [
+      {
+        "tier": "Early Bird",
+        "description": "Earliest registration period with lowest pricing",
+        "typical_pricing": "$75-100 per division (Texas Legends, Ronnie Coleman, Branch Warren)"
+      },
+      {
+        "tier": "Regular",
+        "description": "Standard registration period",
+        "typical_pricing": "$100-125 per division"
+      },
+      {
+        "tier": "Late Registration",
+        "description": "Close to event date, higher fees",
+        "typical_pricing": "$125-150 per division"
+      },
+      {
+        "tier": "Day-of-Show",
+        "description": "Registration on competition day, highest fees if available",
+        "typical_pricing": "$175-200 per division (subject to availability)"
+      }
+    ]
+  },
+
+  "spectator_ticketing": {
+    "platform": "TicketSpice",
+    "overview": "All MetroFlex Events use TicketSpice for spectator ticket sales. Competitor registration is separate through MuscleWare.",
+
+    "ticket_types": [
+      {
+        "type": "General Admission",
+        "price": "$25",
+        "description": "Standard entry to watch the competition",
+        "includes": [
+          "Access to main competition floor",
+          "Vendor expo area access",
+          "Event program"
+        ]
+      },
+      {
+        "type": "VIP Seating",
+        "price": "$75",
+        "description": "Premium front-row seating experience",
+        "includes": [
+          "Reserved front-row seats",
+          "Event program",
+          "Vendor expo area access",
+          "Meet & greet opportunity (where available)",
+          "Commemorative credential"
+        ]
+      },
+      {
+        "type": "Weekend Pass",
+        "price": "$40",
+        "description": "Access to both prejudging and finals (when applicable)",
+        "includes": [
+          "Entry to all sessions (prejudging + finals)",
+          "Vendor expo area access",
+          "Event program"
+        ]
+      },
+      {
+        "type": "Family Pack",
+        "price": "$80",
+        "description": "4 general admission tickets at discounted rate",
+        "includes": [
+          "4 general admission tickets",
+          "Vendor expo area access",
+          "4 event programs"
+        ]
+      }
+    ],
+
+    "booking_process": [
+      {
+        "step": 1,
+        "action": "Visit event-specific TicketSpice URL (e.g., ticketspice.com/metroflex-ronnie-coleman-2026)"
+      },
+      {
+        "step": 2,
+        "action": "Select ticket type and quantity"
+      },
+      {
+        "step": 3,
+        "action": "Enter attendee information (name, email, phone)"
+      },
+      {
+        "step": 4,
+        "action": "Complete payment via TicketSpice secure checkout"
+      },
+      {
+        "step": 5,
+        "action": "Receive e-ticket via email with QR code"
+      },
+      {
+        "step": 6,
+        "action": "Present QR code at event entrance"
+      }
+    ],
+
+    "refund_policy": "Tickets are non-refundable but transferable. Contact brian@metroflexgym.com for transfer requests up to 48 hours before event.",
+
+    "group_bookings": "Groups of 10+ spectators qualify for 15% discount. Contact brian@metroflexgym.com for group booking codes.",
+
+    "important_notes": [
+      "Spectator tickets are separate from competitor registration",
+      "Competitors receive 2 complimentary spectator passes for family/friends",
+      "Children 12 and under free with paid adult admission",
+      "Doors open 1 hour before prejudging starts"
+    ]
+  },
+
+  "vendor_booths": {
+    "overview": "MetroFlex Events offers vendor booth opportunities at all three NPC championships. Ideal for supplement companies, apparel brands, nutrition services, and fitness equipment providers.",
+
+    "booth_packages": [
+      {
+        "package": "Standard Booth",
+        "price": "$500",
+        "size": "10' x 10'",
+        "includes": [
+          "10x10 booth space",
+          "1 table and 2 chairs",
+          "Access to power outlet",
+          "Vendor credential for 2 staff",
+          "Logo on event website",
+          "Social media promotion (1 post)"
+        ],
+        "ideal_for": "Small businesses, local brands, service providers"
+      },
+      {
+        "package": "Premium Booth",
+        "price": "$1,200",
+        "size": "10' x 20'",
+        "includes": [
+          "10x20 booth space (double standard)",
+          "2 tables and 4 chairs",
+          "Access to power outlets",
+          "Vendor credentials for 4 staff",
+          "Logo on event website and program",
+          "Social media promotion (3 posts)",
+          "Attendee email list (post-event)",
+          "Banner placement in venue"
+        ],
+        "ideal_for": "Established supplement brands, equipment companies"
+      },
+      {
+        "package": "Title Sponsor Booth",
+        "price": "$3,500",
+        "size": "20' x 20'",
+        "includes": [
+          "20x20 premium location booth",
+          "4 tables and 8 chairs",
+          "Dedicated power circuit",
+          "Vendor credentials for 8 staff",
+          "Title sponsorship branding on all materials",
+          "Logo on website, program, banners, and stage backdrop",
+          "Social media promotion (10+ posts)",
+          "Attendee email list (post-event)",
+          "Speaking opportunity (5-minute product demo on stage)",
+          "Exclusive product sampling in competitor goodie bags"
+        ],
+        "ideal_for": "Major brands seeking title sponsorship, national supplement companies"
+      }
+    ],
+
+    "booking_process": [
+      {
+        "step": 1,
+        "action": "Email brian@metroflexgym.com with subject: 'Vendor Booth Inquiry - [Event Name]'"
+      },
+      {
+        "step": 2,
+        "action": "Receive vendor application form and booth map"
+      },
+      {
+        "step": 3,
+        "action": "Select preferred booth location and package"
+      },
+      {
+        "step": 4,
+        "action": "Submit completed application with company logo and marketing materials"
+      },
+      {
+        "step": 5,
+        "action": "Receive invoice and contract"
+      },
+      {
+        "step": 6,
+        "action": "Submit 50% deposit to secure booth"
+      },
+      {
+        "step": 7,
+        "action": "Pay remaining balance 14 days before event"
+      },
+      {
+        "step": 8,
+        "action": "Receive final vendor packet with setup instructions"
+      }
+    ],
+
+    "setup_details": {
+      "load_in": "Friday before event, 2:00 PM - 8:00 PM",
+      "event_hours": "Saturday 8:00 AM - 6:00 PM (varies by event)",
+      "load_out": "Immediately after awards ceremony",
+      "restrictions": [
+        "No open flame or cooking equipment",
+        "Must provide own liability insurance",
+        "No pyramid schemes or MLM hard-sell tactics",
+        "Products must be fitness/nutrition related"
+      ]
+    },
+
+    "multi_event_discounts": {
+      "2_events": "15% discount on second event",
+      "3_events": "25% discount (all three championships)",
+      "annual_package": "$3,500 for Standard Booth at all 3 events (save $1,000)"
+    }
+  },
+
+  "sponsorship_opportunities": {
+    "overview": "MetroFlex Events offers tiered sponsorship packages providing brand exposure to 500-2,000 fitness enthusiasts, competitors, and industry professionals per event.",
+
+    "sponsorship_tiers": [
+      {
+        "tier": "Title Sponsor",
+        "investment": "$10,000 per event",
+        "benefits": [
+          "Event naming rights (e.g., 'Presented by [Your Brand]')",
+          "Logo on all marketing materials (digital + print)",
+          "20x20 premium vendor booth included",
+          "Speaking opportunity at awards ceremony",
+          "Logo on stage backdrop and banners",
+          "Social media promotion (20+ posts across all channels)",
+          "Attendee email list with opt-in for partner communications",
+          "Product sampling in all competitor goodie bags",
+          "Exclusive category rights (no competing brands)",
+          "10 VIP tickets",
+          "Recognition in all press releases"
+        ],
+        "availability": "1 per event"
+      },
+      {
+        "tier": "Platinum Sponsor",
+        "investment": "$5,000 per event",
+        "benefits": [
+          "Logo on event website and all digital materials",
+          "Logo on event program (full-page ad)",
+          "10x20 premium vendor booth included",
+          "Logo on stage backdrop",
+          "Social media promotion (10 posts)",
+          "Attendee email list (post-event)",
+          "Product sampling in competitor goodie bags",
+          "6 VIP tickets",
+          "Recognition at awards ceremony"
+        ],
+        "availability": "2-3 per event"
+      },
+      {
+        "tier": "Gold Sponsor",
+        "investment": "$2,500 per event",
+        "benefits": [
+          "Logo on event website",
+          "Logo on event program (half-page ad)",
+          "10x10 standard vendor booth included",
+          "Social media promotion (5 posts)",
+          "4 VIP tickets",
+          "Recognition at awards ceremony"
+        ],
+        "availability": "5 per event"
+      },
+      {
+        "tier": "Category Sponsor",
+        "investment": "$1,500 per event",
+        "benefits": [
+          "Exclusive sponsorship of specific division (e.g., 'Men's Physique presented by [Brand]')",
+          "Logo on event website and program",
+          "Division-specific social media posts (3 posts)",
+          "Trophy presentation opportunity for your division",
+          "2 VIP tickets",
+          "Product sampling in your division's goodie bags"
+        ],
+        "availability": "10 divisions available per event"
+      }
+    ],
+
+    "custom_packages": "Custom sponsorship packages available for brands seeking unique activation opportunities. Contact brian@metroflexgym.com to discuss.",
+
+    "annual_sponsorship": {
+      "all_events_package": "$20,000",
+      "benefits": "Title Sponsor benefits across all 3 MetroFlex Events championships (save $10,000)",
+      "additional_perks": [
+        "Year-round logo presence on metroflexevents.com",
+        "Quarterly social media campaigns",
+        "Exclusive partner designation",
+        "First right of refusal for 2027 season"
+      ]
+    }
+  },
+
+  "divisions_and_classes": {
+    "overview": "NPC competitions feature 10 major divisions with specific class structures based on weight, height, age, or experience level.",
+
+    "mens_divisions": {
+      "Mens_Bodybuilding": {
+        "description": "Traditional bodybuilding division focusing on maximum muscle mass, symmetry, and conditioning",
+        "class_types": {
+          "age_based": [
+            "Teenage (18-19 years)",
+            "True Novice (never competed before)",
+            "Masters 35+ (35 years and older)",
+            "Masters 45+ (45 years and older)",
+            "Masters 50+ (50 years and older)",
+            "Masters 60+ (60 years and older)",
+            "Masters 70+ (70 years and older)"
+          ],
+          "novice_weight_classes": [
+            "Novice Lightweight (up to 165 lbs)",
+            "Novice Middleweight (165 to 187 lbs)",
+            "Novice Heavyweight (over 187 lbs)"
+          ],
+          "open_weight_classes": [
+            "Open Bantamweight (up to 143 lbs)",
+            "Open Lightweight (143 to 154 lbs)",
+            "Open Middleweight (154 to 176 lbs)",
+            "Open Light Heavyweight (176 to 198 lbs)",
+            "Open Heavyweight (198 to 225 lbs)",
+            "Open Super Heavyweight (over 225 lbs)"
+          ],
+          "special_categories": [
+            "Heroes (military, police, firefighters, emergency services, medical professionals)"
+          ]
+        }
+      },
+      "Mens_Classic_Physique": {
+        "description": "Classic bodybuilding aesthetic emphasizing symmetry, proportions, and classic poses",
+        "class_types": {
+          "age_based": [
+            "Teenage (18-19 years)",
+            "True Novice",
+            "Masters 35+",
+            "Masters 40+",
+            "Masters 45+",
+            "Masters 50+",
+            "Masters 55+"
+          ],
+          "novice_height_classes": [
+            "Novice Class A (up to 5'7\")",
+            "Novice Class B (over 5'7\" up to 5'10\")",
+            "Novice Class C (over 5'10\")"
+          ],
+          "open_height_weight_classes": [
+            "Class A: Various height categories from 5'4\" and under up to 5'7\"",
+            "Class B: Height categories from over 5'7\" up to 5'10\"",
+            "Class C: Height categories over 5'10\" up to 6'7\" and above"
+          ],
+          "note": "Classic Physique uses height-to-weight ratio formula with maximum allowable weight per height",
+          "special_categories": ["Heroes"]
+        }
+      },
+      "Mens_Physique": {
+        "description": "Board shorts division emphasizing V-taper, conditioning, and stage presence",
+        "class_types": {
+          "age_based": [
+            "Teenage (18-19 years)",
+            "True Novice",
+            "Masters 35+",
+            "Masters 40+",
+            "Masters 45+",
+            "Masters 50+",
+            "Masters 55+"
+          ],
+          "novice_height_classes": [
+            "Novice Class A (shorter height range)",
+            "Novice Class B (middle height range)",
+            "Novice Class C (taller height range)"
+          ],
+          "open_height_classes": [
+            "Open Class A (up to 5'7\")",
+            "Open Class B (over 5'7\" up to 5'9\")",
+            "Open Class C (over 5'9\" up to 5'11\")",
+            "Open Class D (over 5'11\" up to 6'0\")",
+            "Open Class E (over 6'0\" up to 6'2\")",
+            "Open Class F (over 6'2\")"
+          ],
+          "special_categories": ["Heroes"]
+        }
+      }
+    },
+
+    "womens_divisions": {
+      "Womens_Fitness": {
+        "description": "Combines physique round with fitness routine featuring gymnastics/acrobatic elements",
+        "class_types": {
+          "classes": [
+            "Teenage (18-19 years)",
+            "Open"
+          ]
+        },
+        "music_requirement": "90 seconds maximum for fitness routine"
+      },
+      "Womens_Bodybuilding": {
+        "description": "Traditional women's bodybuilding emphasizing muscle mass and conditioning",
+        "class_types": {
+          "age_based": [
+            "Teenage (18-19 years)",
+            "Masters 35+",
+            "Masters 45+",
+            "Masters 50+"
+          ],
+          "weight_classes": [
+            "Lightweight (up to 125 lbs)",
+            "Middleweight (over 125 lbs up to 140 lbs)",
+            "Heavyweight (over 140 lbs)"
+          ]
+        }
+      },
+      "Figure": {
+        "description": "Athletic physique with muscle tone, symmetry, and femininity",
+        "class_types": {
+          "age_based": [
+            "Teenage (18-19 years)",
+            "True Novice",
+            "Masters 35+",
+            "Masters 40+",
+            "Masters 45+",
+            "Masters 50+",
+            "Masters 55+"
+          ],
+          "novice_height_classes": [
+            "Novice Class A (shorter)",
+            "Novice Class B (middle)",
+            "Novice Class C (taller)"
+          ],
+          "open_height_classes": [
+            "Open Class A (up to 5'2\")",
+            "Open Class B (over 5'2\" up to 5'4\")",
+            "Open Class C (over 5'4\" up to 5'6\")",
+            "Open Class D (over 5'6\" up to 5'8\")",
+            "Open Class E (over 5'8\")"
+          ],
+          "special_categories": ["Heroes"]
+        }
+      },
+      "Bikini": {
+        "description": "Emphasizes overall physical appearance, stage presence, and confidence",
+        "class_types": {
+          "age_based": [
+            "Teenage (18-19 years)",
+            "True Novice",
+            "Masters 35+",
+            "Masters 40+",
+            "Masters 45+",
+            "Masters 50+",
+            "Masters 55+"
+          ],
+          "novice_height_classes": [
+            "Novice Class A (shorter)",
+            "Novice Class B (middle)",
+            "Novice Class C (taller)"
+          ],
+          "open_height_classes": [
+            "Open Class A (up to 5'2\")",
+            "Open Class B (over 5'2\" up to 5'4\")",
+            "Open Class C (over 5'4\" up to 5'6\")",
+            "Open Class D (over 5'6\" up to 5'8\")",
+            "Open Class E (over 5'8\")"
+          ],
+          "special_categories": ["Heroes"]
+        }
+      },
+      "Womens_Physique": {
+        "description": "Muscular development with femininity, symmetry, and muscle separation",
+        "class_types": {
+          "age_based": [
+            "Teenage (18-19 years)",
+            "True Novice",
+            "Masters 35+",
+            "Masters 45+",
+            "Masters 50+"
+          ],
+          "novice_height_classes": [
+            "Novice Class A (shorter)",
+            "Novice Class B (taller)"
+          ],
+          "open_height_classes": [
+            "Open Class A (up to 5'3\")",
+            "Open Class B (over 5'3\" up to 5'5\")",
+            "Open Class C (over 5'5\" up to 5'7\")",
+            "Open Class D (over 5'7\")"
+          ],
+          "special_categories": ["Heroes"]
+        }
+      },
+      "Wellness": {
+        "description": "Balance between upper body tone and lower body muscle development",
+        "class_types": {
+          "age_based": [
+            "True Novice",
+            "Masters 35+"
+          ],
+          "novice_height_classes": [
+            "Novice Class A (shorter)",
+            "Novice Class B (taller)"
+          ],
+          "open_height_classes": [
+            "Open Class A (up to 5'3\")",
+            "Open Class B (over 5'3\" up to 5'5\")",
+            "Open Class C (over 5'5\" up to 5'7\")",
+            "Open Class D (over 5'7\")"
+          ]
+        }
+      },
+      "Fit_Model": {
+        "description": "Commercial fitness model look with specific proportions",
+        "class_types": {
+          "classes": [
+            "Open"
+          ]
+        },
+        "special_restriction": "Women's Fit Model competitors CANNOT cross over to other divisions"
+      }
+    },
+
+    "crossover_rules": {
+      "maximum_divisions_per_registration": 8,
+      "duplicate_class_prevention": "Enforced - cannot register for same class twice",
+      "fit_model_restriction": "Women's Fit Model competitors cannot cross over to other divisions"
+    }
+  },
+
+  "music_requirements": {
+    "format": "MP3 only",
+    "max_duration_fitness": "90 seconds for Women's Fitness routine",
+    "upload_location": "Athlete Profile page (link provided in confirmation email)",
+    "naming_convention": "FirstName_LastName_Division.mp3 (recommended)",
+    "when_to_upload": "After registration confirmation, typically required 48-72 hours before event",
+    "important_note": "Music requirements vary by division. Fitness routines require music, posing routines optional."
+  },
+
+  "common_questions": [
+    {
+      "question": "Do I need an NPC membership to compete?",
+      "answer": "Yes, you must have a valid NPC Member Number to register for any NPC competition. Visit npcnewsonline.com to purchase membership if you don't have one."
+    },
+    {
+      "question": "Can I compete in multiple divisions?",
+      "answer": "Yes, you can compete in up to 8 divisions per registration. However, Women's Fit Model competitors cannot cross over to other divisions."
+    },
+    {
+      "question": "How do I buy spectator tickets?",
+      "answer": "Spectator tickets are available through TicketSpice. Visit the event-specific URL (e.g., ticketspice.com/metroflex-ronnie-coleman-2026). Competitor registration is separate through MuscleWare. Competitors receive 2 complimentary spectator passes."
+    },
+    {
+      "question": "How can I become a vendor at MetroFlex Events?",
+      "answer": "Email brian@metroflexgym.com with 'Vendor Booth Inquiry' in the subject line. We offer Standard ($500), Premium ($1,200), and Title Sponsor ($3,500) booth packages. Multi-event discounts available."
+    },
+    {
+      "question": "What's the difference between Novice and True Novice?",
+      "answer": "True Novice means you have never competed before in any division. Novice means you haven't won an overall or class in that specific division."
+    },
+    {
+      "question": "When should I upload my posing music?",
+      "answer": "Upload music to your Athlete Profile page (link in confirmation email) typically 48-72 hours before the event. MP3 format only."
+    },
+    {
+      "question": "What if I need to change my class after registration?",
+      "answer": "Contact the event promoter directly through the contact information provided in your confirmation email."
+    },
+    {
+      "question": "How does Classic Physique weight limits work?",
+      "answer": "Classic Physique uses a height-to-weight ratio formula. Your maximum allowable weight is determined by your height. Check the official NPC rules for specific weight caps per height."
+    },
+    {
+      "question": "What payment methods are accepted for competitor registration?",
+      "answer": "Payment methods vary by promoter and typically include PayPal, Stripe, Square, Razorpay, Yoco, or FirstData. Funds flow directly to the event promoter."
+    },
+    {
+      "question": "Will I receive a confirmation?",
+      "answer": "Yes, you'll receive a professional confirmation email containing registration details, your Athlete Profile link, music upload instructions, and event-specific information."
+    },
+    {
+      "question": "Can I register on the day of the show?",
+      "answer": "Some events allow day-of-show registration at the highest pricing tier, but availability varies by promoter. Early registration is strongly recommended."
+    },
+    {
+      "question": "Do you offer sponsorship opportunities?",
+      "answer": "Yes! We offer Title Sponsor ($10,000), Platinum ($5,000), Gold ($2,500), and Category Sponsor ($1,500) packages. Annual sponsorship across all 3 events is $20,000 (save $10,000). Contact brian@metroflexgym.com for custom packages."
+    }
+  ],
+
+  "troubleshooting": [
+    {
+      "issue": "Email not matching error",
+      "solution": "Ensure both email fields match exactly, including capitalization. Check for extra spaces."
+    },
+    {
+      "issue": "Invalid NPC Member Number",
+      "solution": "NPC Member Number must be non-zero. If you don't have one, visit npcnewsonline.com to purchase membership first."
+    },
+    {
+      "issue": "Can't select multiple divisions",
+      "solution": "You can select up to 8 divisions. Each division requires a corresponding class selection. Ensure you're not trying to register for the same class twice."
+    },
+    {
+      "issue": "Music upload failing",
+      "solution": "Ensure file is MP3 format only. Check file size isn't too large. Use your Athlete Profile link from confirmation email to upload."
+    },
+    {
+      "issue": "Payment not processing",
+      "solution": "Payment processing uses the promoter's selected gateway. Contact the event promoter directly if payment issues occur."
+    },
+    {
+      "issue": "Confirmation email not received",
+      "solution": "Check spam folder. Wait 15-30 minutes. Contact event promoter if still not received."
+    },
+    {
+      "issue": "TicketSpice spectator tickets not showing up",
+      "solution": "Check spam/junk folder for e-ticket email with QR code. Allow up to 30 minutes after purchase. Contact TicketSpice support if not received."
+    },
+    {
+      "issue": "Vendor booth inquiry not answered",
+      "solution": "Email brian@metroflexgym.com with subject 'Vendor Booth Inquiry - [Event Name]'. Response time is typically 24-48 hours. Check spam folder."
+    }
+  ],
+
+  "metroflex_contact": {
+    "general_inquiries": "brian@metroflexgym.com",
+    "phone": "817-465-9331",
+    "events_website": "metroflexevents.com",
+    "address": "The Original MetroFlex Gym, Arlington, TX",
+    "social_media": {
+      "instagram": "@metroflexgym",
+      "facebook": "facebook.com/metroflexgym",
+      "youtube": "youtube.com/metroflexgym"
+    },
+    "scope_note": "For gym memberships or licensing inquiries, those are handled by a separate system. This knowledge base is for EVENTS ONLY."
+  },
+
+  "high_intent_triggers": {
+    "competitor_registration": [
+      "how do I register",
+      "sign up for competition",
+      "register for ronnie coleman",
+      "register for branch warren",
+      "register for texas legends",
+      "what's my NPC number",
+      "how much does it cost to compete",
+      "early bird pricing",
+      "when does registration open"
+    ],
+    "spectator_tickets": [
+      "buy tickets",
+      "spectator tickets",
+      "how much are tickets",
+      "VIP seating",
+      "watch the show",
+      "bring my family",
+      "group tickets"
+    ],
+    "vendor_booth": [
+      "vendor booth",
+      "expo booth",
+      "sell at event",
+      "vendor space",
+      "booth pricing",
+      "become a vendor"
+    ],
+    "sponsorship": [
+      "sponsor",
+      "sponsorship packages",
+      "title sponsor",
+      "brand exposure",
+      "marketing opportunity",
+      "sponsor the event"
+    ]
+  },
+
+  "ai_ml_integration_notes": {
+    "note": "This RAG is for MetroFlex EVENTS ONLY. ML models for lead scoring, event attendance prediction, and sponsor qualification are specific to event operations.",
+
+    "lead_scoring_model_inputs": [
+      "intent_detected (competitor_registration, sponsorship, vendor_booth, spectator_ticket)",
+      "engagement_score (number of questions asked, time spent)",
+      "budget_indicators (asks about pricing, early bird, VIP, title sponsor)",
+      "timeline_urgency (mentions specific dates, 'how soon', 'deadline')",
+      "authority_level (asks about group bookings, custom packages)"
+    ],
+
+    "event_attendance_prediction_inputs": [
+      "historical_attendance (past events)",
+      "marketing_spend (dollars invested)",
+      "number_of_divisions_offered (more divisions = more competitors)",
+      "sponsorship_level (title sponsor events have higher attendance)",
+      "social_media_engagement (likes, shares, comments on event posts)"
+    ],
+
+    "cross_referencing_protocol": "If user asks about gym memberships, licensing, or apparel - DO NOT answer from this knowledge base. Politely refer to appropriate contact or state 'That's handled by our gym operations team at brian@metroflexgym.com'. ML may adapt to cross-reference ONLY if explicitly needed for event context (e.g., competitor asks about gym membership for training purposes before competing)."
+  }
+}

@@ -1,0 +1,227 @@
+{
+  "test_date": "2025-11-14T16:43:56.684809",
+  "agent_url": "http://localhost:5001",
+  "session_id": "test-session-comprehensive",
+  "total_tests": 12,
+  "overall_score": 110,
+  "max_possible_score": 120,
+  "overall_percentage": 91.66666666666666,
+  "test_results": [
+    {
+      "test_number": 1,
+      "category": "Event Information",
+      "query": "When is the Ronnie Coleman Classic?",
+      "description": "Basic event date query",
+      "response": "The Ronnie Coleman Classic is scheduled for May 16, 2026. It will take place at the Round Up Inn in Fort Worth, TX. If you need more information or wish to register, please visit https://www.muscleware.com or contact us at brian@metroflexgym.com or 817-465-9331.",
+      "score": 10,
+      "max_score": 10,
+      "percentage": 100.0,
+      "feedback": [
+        "\u2713 Response is substantive",
+        "\u2713 Contains relevant keywords (4/4)",
+        "\u2713 Good length (42 words)",
+        "\u2713 Professional and on-brand tone",
+        "\u2713 Provides actionable next steps"
+      ],
+      "word_count": 42
+    },
+    {
+      "test_number": 2,
+      "category": "Event Information",
+      "query": "Tell me about the Texas Legends Championship",
+      "description": "Event details query",
+      "response": "The Texas Legends Championship is set for March 28, 2026, and will be held at the Arlington Convention Center in Arlington, TX. For registration and additional details, please visit https://www.muscleware.com. If you have further questions, feel free to reach out to us at brian@metroflexgym.com or 817-465-9331.",
+      "score": 9,
+      "max_score": 10,
+      "percentage": 90.0,
+      "feedback": [
+        "\u2713 Response is substantive",
+        "\u2713 Contains relevant keywords (4/4)",
+        "\u2713 Good length (46 words)",
+        "~ Could be more professional/on-brand",
+        "\u2713 Provides actionable next steps"
+      ],
+      "word_count": 46
+    },
+    {
+      "test_number": 3,
+      "category": "Registration Process",
+      "query": "How do I register for an NPC competition?",
+      "description": "Registration process inquiry",
+      "response": "To register for an NPC competition, you need to follow these steps:\n\n1. **Obtain an NPC Membership Card**: Ensure you have a valid NPC membership card, as it is required for all competitions.\n\n2. **Visit MuscleWare**: Go to [MuscleWare](https://www.muscleware.com) to register online for the event of your choice.\n\n3. **Choose Your Event**: Select the competition you wish to enter and complete the registration process.\n\n4. **Day-of Registration**: If you miss the online registration, you can register on the day of the event, but please note that late fees may apply.\n\nIf you have any questions or need assistance, you can contact us at brian@metroflexgym.com or call 817-465-9331.",
+      "score": 10,
+      "max_score": 10,
+      "percentage": 100.0,
+      "feedback": [
+        "\u2713 Response is substantive",
+        "\u2713 Contains relevant keywords (4/4)",
+        "\u2713 Good length (107 words)",
+        "\u2713 Professional and on-brand tone",
+        "\u2713 Provides actionable next steps"
+      ],
+      "word_count": 107
+    },
+    {
+      "test_number": 4,
+      "category": "Registration Process",
+      "query": "What do I need to bring on competition day?",
+      "description": "Competition day requirements",
+      "response": "On competition day, make sure to bring the following items:\n\n1. **NPC Membership Card**: This is mandatory for participation in the event.\n\n2. **Competition Suit**: Ensure your posing suit meets the division guidelines (e.g., two-piece bikini for women, V-shaped trunks for men).\n\n3. **Tanning Products**: Bring your own tanning products to ensure a professional appearance on stage.\n\n4. **Food and Hydration**: Pack snacks and water to keep your energy up throughout the day.\n\n5. **Personal Items**: Include any personal grooming items, such as hair products, makeup, and touch-up kits.\n\n6. **Registration Confirmation**: If possible, print a copy of your registration confirmation.\n\n7. **Cash**: Bring cash for any last-minute purchases or fees.\n\nIf you have further questions or need assistance, feel free to reach out at brian@metroflexgym.com or 817-465-9331. Good luck!",
+      "score": 8,
+      "max_score": 10,
+      "percentage": 80.0,
+      "feedback": [
+        "\u2713 Response is substantive",
+        "\u2713 Contains relevant keywords (3/4)",
+        "\u2713 Good length (130 words)",
+        "\u2713 Professional and on-brand tone",
+        "\u2717 Lacks clear call-to-action"
+      ],
+      "word_count": 130
+    },
+    {
+      "test_number": 5,
+      "category": "Divisions - Women",
+      "query": "What divisions are available for women?",
+      "description": "Women's division inquiry",
+      "response": "For women, the following NPC divisions are available:\n\n1. **Women's Bodybuilding**: Focuses on muscular development with a two-piece bikini of minimum coverage in solid colors. Weight classes include Lightweight, Middleweight, Light Heavyweight, Heavyweight, and Open.\n\n2. **Women's Physique**: Features muscular development that falls between Figure and Bodybuilding. Competitors wear a two-piece bikini with an athletic cut, and weight classes are A, B, C, and D.\n\n3. **Figure**: Emphasizes a toned and athletic appearance with a focus on symmetry and aesthetics.\n\n4. **Bikini**: Highlights a softer physique with an emphasis on overall body shape and presentation.\n\n5. **Wellness**: Focuses on athletic lower body development (glutes/hamstrings) while maintaining a feminine upper body. Competitors wear a two-piece bikini that emphasizes the glutes in solid colors.\n\nEach division has specific criteria and presentation guidelines, so it's important to review them carefully. If you need more information or assistance, feel free to reach out to us at brian@metroflexgym.com or 817-465-9331.",
+      "score": 8,
+      "max_score": 10,
+      "percentage": 80.0,
+      "feedback": [
+        "\u2713 Response is substantive",
+        "\u2713 Contains relevant keywords (5/5)",
+        "\u2713 Good length (155 words)",
+        "\u2713 Professional and on-brand tone",
+        "\u2717 Lacks clear call-to-action"
+      ],
+      "word_count": 155
+    },
+    {
+      "test_number": 6,
+      "category": "Divisions - Men",
+      "query": "What's the difference between Men's Physique and Classic Physique?",
+      "description": "Division comparison query",
+      "response": "The main differences between Men's Physique and Classic Physique divisions are as follows:\n\n### Men's Physique:\n- **Aesthetic**: Focused on a beach body look with a more relaxed, athletic appearance.\n- **Suit**: Competitors wear board shorts that are above the knee and below the hip.\n- **Presentation**: Emphasis on overall shape, symmetry, and conditioning, but with a softer look compared to Classic Physique.\n- **Posing**: Competitors typically do a front and back pose, with limited upper body muscular display.\n\n### Classic Physique:\n- **Aesthetic**: Inspired by the \"Golden Era\" of bodybuilding, emphasizing a more classic, aesthetic look with a focus on muscle symmetry and proportion.\n- **Suit**: Competitors wear classic-style trunks that are also above the knee but usually have a more fitted design to showcase the physique.\n- **Presentation**: Focuses on a more muscular and defined physique, with specific height/weight restrictions to maintain the classic look.\n- **Posing**: Competitors perform a variety of poses that emphasize both upper and lower body, showcasing muscle definition and flow.\n\nIn summary, Men's Physique is more about a relaxed, beach-ready look, while Classic Physique emphasizes a more traditional bodybuilding aesthetic with a focus on symmetry and muscularity. If you have any further questions, feel free to ask or contact us at brian@metroflexgym.com or 817-465-9331.",
+      "score": 8,
+      "max_score": 10,
+      "percentage": 80.0,
+      "feedback": [
+        "\u2713 Response is substantive",
+        "\u2713 Contains relevant keywords (3/4)",
+        "~ Response is lengthy (211 words)",
+        "~ Could be more professional/on-brand",
+        "\u2713 Provides actionable next steps"
+      ],
+      "word_count": 211
+    },
+    {
+      "test_number": 7,
+      "category": "MuscleWare Platform",
+      "query": "What is MuscleWare?",
+      "description": "Platform information query",
+      "response": "MuscleWare is the official online registration platform for NPC competitions. It allows competitors to:\n\n- Register for events and divisions electronically.\n- Manage their registrations and view event details.\n- Pay registration fees securely online.\n\nAll participants in NPC competitions must use MuscleWare for registration, ensuring a streamlined and efficient process. You can access MuscleWare at [https://www.muscleware.com](https://www.muscleware.com).\n\nIf you have any questions or need assistance with the registration process, feel free to contact us at brian@metroflexgym.com or 817-465-9331.",
+      "score": 10,
+      "max_score": 10,
+      "percentage": 100.0,
+      "feedback": [
+        "\u2713 Response is substantive",
+        "\u2713 Contains relevant keywords (4/4)",
+        "\u2713 Good length (78 words)",
+        "\u2713 Professional and on-brand tone",
+        "\u2713 Provides actionable next steps"
+      ],
+      "word_count": 78
+    },
+    {
+      "test_number": 8,
+      "category": "Weight Classes",
+      "query": "What are the weight classes for Men's Bodybuilding?",
+      "description": "Specific weight class inquiry",
+      "response": "The weight classes for Men's Bodybuilding in NPC competitions are as follows:\n\n1. **Bantamweight**: Up to 143 lbs\n2. **Lightweight**: Over 143 lbs and up to 155 lbs\n3. **Middleweight**: Over 155 lbs and up to 176 lbs\n4. **Light Heavyweight**: Over 176 lbs and up to 198 lbs\n5. **Heavyweight**: Over 198 lbs and up to 225 lbs\n6. **Super Heavyweight**: Over 225 lbs\n7. **Open**: Any weight, typically includes the top competitors regardless of weight class.\n\nMake sure to check the specific guidelines for your event, as there may be additional criteria for participation. If you have further questions or need assistance, feel free to reach out at brian@metroflexgym.com or 817-465-9331.",
+      "score": 10,
+      "max_score": 10,
+      "percentage": 100.0,
+      "feedback": [
+        "\u2713 Response is substantive",
+        "\u2713 Contains relevant keywords (5/5)",
+        "\u2713 Good length (113 words)",
+        "\u2713 Professional and on-brand tone",
+        "\u2713 Provides actionable next steps"
+      ],
+      "word_count": 113
+    },
+    {
+      "test_number": 9,
+      "category": "Music Requirements",
+      "query": "How do I upload my posing music?",
+      "description": "Music upload process",
+      "response": "To upload your posing music for the competition, follow these steps:\n\n1. **Format**: Ensure your music is in either MP3 or WAV format.\n\n2. **Length**: Your posing music must be a maximum length of 60 seconds.\n\n3. **Registration Process**: When you register for the event through MuscleWare, there will typically be an option or section for you to upload your posing music. Follow the prompts during the registration process to upload your file.\n\n4. **Confirmation**: After uploading, confirm that your music has been successfully submitted, and keep a record of your registration details.\n\nIf you have any issues or need further assistance with the upload process, feel free to contact us at brian@metroflexgym.com or 817-465-9331. Good luck with your preparation!",
+      "score": 10,
+      "max_score": 10,
+      "percentage": 100.0,
+      "feedback": [
+        "\u2713 Response is substantive",
+        "\u2713 Contains relevant keywords (4/4)",
+        "\u2713 Good length (120 words)",
+        "\u2713 Professional and on-brand tone",
+        "\u2713 Provides actionable next steps"
+      ],
+      "word_count": 120
+    },
+    {
+      "test_number": 10,
+      "category": "NPC Membership",
+      "query": "Do I need an NPC membership to compete?",
+      "description": "Membership requirement inquiry",
+      "response": "Yes, an NPC (National Physique Committee) membership card is required for all competitors participating in NPC competitions. You must obtain this membership before you can register for any events.\n\nYou can apply for an NPC membership through the NPC website. Once you have your membership card, you can proceed to register for competitions using MuscleWare.\n\nIf you have any questions or need assistance with the membership process, please feel free to reach out at brian@metroflexgym.com or 817-465-9331.",
+      "score": 10,
+      "max_score": 10,
+      "percentage": 100.0,
+      "feedback": [
+        "\u2713 Response is substantive",
+        "\u2713 Contains relevant keywords (4/5)",
+        "\u2713 Good length (77 words)",
+        "\u2713 Professional and on-brand tone",
+        "\u2713 Provides actionable next steps"
+      ],
+      "word_count": 77
+    },
+    {
+      "test_number": 11,
+      "category": "Pricing",
+      "query": "How much does it cost to register?",
+      "description": "Pricing information query",
+      "response": "The registration fees for NPC competitions can vary depending on the specific event and division you are entering. Generally, you can expect the following:\n\n- **Pre-Registration Fees**: Typically range from $75 to $150, depending on the competition and division.\n- **Day-of Registration**: Late registration fees may apply if you choose to register on the day of the event.\n\nFor precise pricing and details for a specific event, it's best to check the event page on MuscleWare during the registration process.\n\nIf you have any further questions or need more specific information, feel free to contact us at brian@metroflexgym.com or 817-465-9331.",
+      "score": 10,
+      "max_score": 10,
+      "percentage": 100.0,
+      "feedback": [
+        "\u2713 Response is substantive",
+        "\u2713 Contains relevant keywords (2/4)",
+        "\u2713 Good length (100 words)",
+        "\u2713 Professional and on-brand tone",
+        "\u2713 Provides actionable next steps"
+      ],
+      "word_count": 100
+    },
+    {
+      "test_number": 12,
+      "category": "First-Time Competitor",
+      "query": "I've never competed before. What should I know?",
+      "description": "First-timer guidance",
+      "response": "If you're new to competing in NPC bodybuilding competitions, here are some essential tips and information to help you prepare:\n\n1. **NPC Membership**: Obtain your NPC membership card before registering for any events. This is mandatory for participation.\n\n2. **Choose Your Division**: Understand the different divisions (e.g., Men's Bodybuilding, Women's Bodybuilding, Figure, etc.) and select the one that aligns with your physique and goals. Each division has specific criteria and posing requirements.\n\n3. **Registration**: Register for your chosen event through MuscleWare at [https://www.muscleware.com](https://www.muscleware.com). Ensure you complete your registration early to avoid late fees.\n\n4. **Posing Practice**: Practice your posing regularly. This is crucial for showcasing your physique effectively on stage. Consider hiring a coach or attending workshops if possible.\n\n5. **Posing Music**: Select and prepare your posing music, ensuring it meets the required format and length. Upload it during your registration on MuscleWare.\n\n6. **Diet and Training**: Follow a structured training and nutrition plan leading up to the competition. Many competitors start their prep several months in advance to achieve their desired look.\n\n7. **Attire**: Make sure you have the appropriate competition attire (e.g., posing trunks for men, bikini for women) as per the division rules.\n\n8. **Day of the Event**: Arrive early on the day of the competition to familiarize yourself with the",
+      "score": 7,
+      "max_score": 10,
+      "percentage": 70.0,
+      "feedback": [
+        "\u2713 Response is substantive",
+        "\u2717 Missing key information (1/4 keywords)",
+        "~ Response is lengthy (214 words)",
+        "\u2713 Professional and on-brand tone",
+        "\u2713 Provides actionable next steps"
+      ],
+      "word_count": 214
+    }
+  ]
+}

@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentforce Builder - Interactive Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #001642 0%, #03234D 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #3A49DA 0%, #066AFE 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 20px;
+            color: #E5E5E5;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .play-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, #3A49DA 0%, #066AFE 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 24px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 30px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(58, 73, 218, 0.4);
+        }
+
+        .play-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(58, 73, 218, 0.6);
+        }
+
+        .play-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3A49DA 0%, #066AFE 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .demo-content {
+            display: none;
+        }
+
+        .demo-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .module {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .module-number {
+            position: absolute;
+            top: -20px;
+            left: 40px;
+            background: linear-gradient(135deg, #3A49DA 0%, #066AFE 100%);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            box-shadow: 0 4px 16px rgba(58, 73, 218, 0.4);
+        }
+
+        .module h2 {
+            font-size: 32px;
+            margin-bottom: 16px;
+            padding-left: 80px;
+            color: #3A49DA;
+        }
+
+        .module h3 {
+            font-size: 24px;
+            margin: 24px 0 12px 0;
+            color: #066AFE;
+        }
+
+        .module p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #E5E5E5;
+            margin-bottom: 16px;
+        }
+
+        .why-box {
+            background: rgba(6, 106, 254, 0.1);
+            border-left: 4px solid #066AFE;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .why-box h4 {
+            color: #066AFE;
+            margin-bottom: 12px;
+            font-size: 20px;
+        }
+
+        .code-block {
+            background: #001642;
+            border: 1px solid rgba(58, 73, 218, 0.3);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 20px 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #E5E5E5;
+        }
+
+        .code-label {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(58, 73, 218, 0.8);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .flow-diagram {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .flow-step {
+            display: inline-block;
+            background: linear-gradient(135deg, #3A49DA 0%, #066AFE 100%);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            margin: 8px;
+            font-weight: 600;
+            min-width: 200px;
+        }
+
+        .flow-arrow {
+            display: inline-block;
+            font-size: 32px;
+            margin: 0 16px;
+            color: #3A49DA;
+        }
+
+        .outcome-box {
+            background: rgba(4, 132, 75, 0.1);
+            border: 2px solid #04844B;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .outcome-box h4 {
+            color: #04844B;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .outcome-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .outcome-box li {
+            padding: 8px 0;
+            padding-left: 32px;
+            position: relative;
+        }
+
+        .outcome-box li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #04844B;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            gap: 16px;
+            z-index: 1000;
+        }
+
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #3A49DA 0%, #066AFE 100%);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(58, 73, 218, 0.4);
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 24px rgba(58, 73, 218, 0.6);
+        }
+
+        .control-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .highlight {
+            background: rgba(254, 147, 57, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #FE9339;
+            font-weight: 600;
+        }
+
+        .platform-link {
+            display: inline-block;
+            background: rgba(4, 132, 75, 0.2);
+            border: 2px solid #04844B;
+            color: #04844B;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .platform-link:hover {
+            background: rgba(4, 132, 75, 0.3);
+            transform: translateX(4px);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #3A49DA;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #E5E5E5;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Salesforce Agentforce Builder</h1>
+            <p>Interactive Step-by-Step Demonstration</p>
+            <p style="font-size: 16px; margin-top: 12px; color: #A0A0A0;">
+                Watch how we build a complete AI agent from scratch
+            </p>
+
+            <button class="play-button" onclick="startDemo()">
+                <span>▶</span>
+                <span>Start Demo</span>
+            </button>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <p id="currentStep" style="font-size: 18px; margin-top: 12px; color: #3A49DA;"></p>
+        </div>
+
+        <div id="demoContent" class="demo-content">
+            <!-- Module 1: Introduction -->
+            <div class="module" data-module="1">
+                <div class="module-number">1</div>
+                <h2>Introduction: What We're Building</h2>
+
+                <p>Welcome! Today we're going to build a complete <span class="highlight">Lost Opportunity Reactivation Agent</span> - an AI-powered system that automatically identifies and reengages with customers who previously said "no" but might now be ready to buy.</p>
+
+                <div class="why-box">
+                    <h4>💡 Why This Matters</h4>
+                    <p>Sales teams spend countless hours manually reviewing old opportunities. Our AI agent will:</p>
+                    <ul>
+                        <li>Monitor 1000s of closed-lost opportunities automatically</li>
+                        <li>Detect buying signals (funding, new hires, expansion)</li>
+                        <li>Score and prioritize which opportunities to reactivate</li>
+                        <li>Draft personalized outreach messages</li>
+                        <li>Create tasks for sales reps with clear next actions</li>
+                    </ul>
+                </div>
+
+                <h3>The Complete Flow</h3>
+                <div class="flow-diagram">
+                    <div class="flow-step">Monitor Closed Opportunities</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">Detect Company Signals</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">Score Reactivation Potential</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">Generate Personalized Outreach</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">Create Tasks for Reps</div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">Modules to Build</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">~30 min</div>
+                        <div class="stat-label">Demo Duration</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Production Ready</div>
+                    </div>
+                </div>
+
+                <div class="outcome-box">
+                    <h4>🎯 What You'll Learn</h4>
+                    <ul>
+                        <li>How to configure Agentforce agents</li>
+                        <li>How to implement scoring algorithms</li>
+                        <li>How to integrate with Salesforce data</li>
+                        <li>How to create automated actions</li>
+                        <li>How to test and deploy agents</li>
+                        <li>Where to customize for your specific needs</li>
+                    </ul>
+                </div>
+
+                <a href="http://localhost:5173" target="_blank" class="platform-link">
+                    🌐 Open Live Platform →
+                </a>
+            </div>
+
+            <!-- Module 2: Agent Configuration -->
+            <div class="module" data-module="2">
+                <div class="module-number">2</div>
+                <h2>Agent Configuration & Instructions</h2>
+
+                <p>First, we configure the <span class="highlight">agent's core identity</span> - what it does, how it thinks, and what data it can access.</p>
+
+                <div class="why-box">
+                    <h4>💡 Why We Do This First</h4>
+                    <p>The agent configuration is like writing a job description. It tells the AI:</p>
+                    <ul>
+                        <li><strong>Purpose:</strong> What problem it solves</li>
+                        <li><strong>Personality:</strong> How it communicates</li>
+                        <li><strong>Permissions:</strong> What data it can access</li>
+                        <li><strong>Actions:</strong> What it can do</li>
+                    </ul>
+                </div>
+
+                <h3>Configuration File Structure</h3>
+                <div class="code-block">
+                    <div class="code-label">Agent Config XML</div>
+                    <code>&lt;Agent xmlns="http://soap.sforce.com/2006/04/metadata"&gt;
+    &lt;description&gt;Lost Opportunity Reactivation Agent&lt;/description&gt;
+    &lt;label&gt;Lost Opportunity Agent&lt;/label&gt;
+    &lt;type&gt;Service&lt;/type&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+
+    &lt;!-- 📍 AGENT INSTRUCTIONS: This defines HOW the agent thinks --&gt;
+    &lt;instructions&gt;
+        You are an AI agent that reactivates closed-lost opportunities
+        by analyzing company signals and scoring reactivation potential.
+
+        Your responsibilities:
+        1. Monitor closed-lost opportunities (last 90-120 days)
+        2. Analyze company signals (funding, hiring, expansion)
+        3. Score opportunities based on reactivation likelihood
+        4. Draft personalized outreach messages
+        5. Create tasks for sales reps with clear next actions
+
+        Always be: Professional, Data-Driven, Actionable
+    &lt;/instructions&gt;
+
+    &lt;!-- 📍 TOPICS: What the agent can help with --&gt;
+    &lt;topics&gt;
+        &lt;topic&gt;Opportunity Reactivation&lt;/topic&gt;
+        &lt;topic&gt;Signal Analysis&lt;/topic&gt;
+        &lt;topic&gt;Sales Outreach&lt;/topic&gt;
+    &lt;/topics&gt;
+&lt;/Agent&gt;</code>
+                </div>
+
+                <h3>What Each Section Means</h3>
+                <p><strong>Instructions:</strong> This is the agent's "training manual" - it defines behavior, tone, and approach</p>
+                <p><strong>Topics:</strong> These are the categories of problems the agent can solve</p>
+                <p><strong>Type:</strong> "Service" means it works in the background, not chatting with users</p>
+
+                <div class="outcome-box">
+                    <h4>✅ Module 2 Complete</h4>
+                    <ul>
+                        <li>Agent identity defined</li>
+                        <li>Instructions configured</li>
+                        <li>Topics mapped</li>
+                        <li>Ready for data connections</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 3: Data Sources -->
+            <div class="module" data-module="3">
+                <h2>Connecting to Data Sources</h2>
+
+                <p>Now we connect the agent to <span class="highlight">Salesforce data</span> and <span class="highlight">external signals</span> it needs to make intelligent decisions.</p>
+
+                <div class="why-box">
+                    <h4>💡 Why This Matters</h4>
+                    <p>An AI agent is only as good as its data. We're connecting to:</p>
+                    <ul>
+                        <li><strong>Opportunities:</strong> The deals that were closed-lost</li>
+                        <li><strong>Accounts:</strong> Company information</li>
+                        <li><strong>Signals:</strong> External data (funding, hiring, news)</li>
+                        <li><strong>Contacts:</strong> Key decision makers</li>
+                    </ul>
+                </div>
+
+                <h3>Data Source Configuration</h3>
+                <div class="code-block">
+                    <div class="code-label">Data Sources</div>
+                    <code>&lt;dataSources&gt;
+    &lt;!-- 📍 SALESFORCE OBJECTS --&gt;
+    &lt;dataSource&gt;
+        &lt;type&gt;SalesforceObject&lt;/type&gt;
+        &lt;object&gt;Opportunity&lt;/object&gt;
+        &lt;fields&gt;
+            Id, Name, StageName, Amount, CloseDate,
+            AccountId, Lost_Reason__c, Primary_Contact__c
+        &lt;/fields&gt;
+        &lt;filter&gt;
+            StageName = 'Closed Lost' AND
+            CloseDate &gt;= LAST_N_DAYS:120
+        &lt;/filter&gt;
+    &lt;/dataSource&gt;
+
+    &lt;!-- 📍 ACCOUNT DATA --&gt;
+    &lt;dataSource&gt;
+        &lt;type&gt;SalesforceObject&lt;/type&gt;
+        &lt;object&gt;Account&lt;/object&gt;
+        &lt;fields&gt;
+            Id, Name, Industry, NumberOfEmployees,
+            Website, Region__c
+        &lt;/fields&gt;
+    &lt;/dataSource&gt;
+
+    &lt;!-- 📍 EXTERNAL SIGNALS (Data Cloud) --&gt;
+    &lt;dataSource&gt;
+        &lt;type&gt;DataCloud&lt;/type&gt;
+        &lt;name&gt;CompanySignals&lt;/name&gt;
+        &lt;signalTypes&gt;
+            funding, new_hire, expansion,
+            competitor_event, intent_spike
+        &lt;/signalTypes&gt;
+    &lt;/dataSource&gt;
+&lt;/dataSources&gt;</code>
+                </div>
+
+                <div class="flow-diagram">
+                    <div style="display: block; margin: 20px 0;">
+                        <div class="flow-step">Opportunity Data</div>
+                        <div style="display: block; margin: 10px 0;">↓</div>
+                        <div class="flow-step">Account Information</div>
+                        <div style="display: block; margin: 10px 0;">↓</div>
+                        <div class="flow-step">External Signals</div>
+                        <div style="display: block; margin: 10px 0;">↓</div>
+                        <div class="flow-step" style="background: #04844B;">Agent Has Complete Context</div>
+                    </div>
+                </div>
+
+                <h3>Signal Types Explained</h3>
+                <p><strong>Funding:</strong> Company raised capital → More budget available</p>
+                <p><strong>New Hire:</strong> Key decision maker joined → Fresh perspective</p>
+                <p><strong>Expansion:</strong> Opening new office → Growth mode</p>
+                <p><strong>Competitor Event:</strong> Issues with current vendor → Window of opportunity</p>
+                <p><strong>Intent Spike:</strong> High website activity → Active research</p>
+
+                <div class="outcome-box">
+                    <h4>✅ Module 3 Complete</h4>
+                    <ul>
+                        <li>Connected to Salesforce Opportunities</li>
+                        <li>Connected to Account data</li>
+                        <li>Integrated external signal sources</li>
+                        <li>Ready to implement scoring logic</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 4: Scoring Algorithm -->
+            <div class="module" data-module="4">
+                <div class="module-number">4</div>
+                <h2>Implementing the Scoring Algorithm</h2>
+
+                <p>This is the <span class="highlight">brain of our agent</span> - the logic that decides which opportunities are worth pursuing.</p>
+
+                <div class="why-box">
+                    <h4>💡 Why Scoring Matters</h4>
+                    <p>Not all closed-lost opportunities are equal. Our scoring algorithm:</p>
+                    <ul>
+                        <li>Evaluates 5 key dimensions</li>
+                        <li>Assigns weighted scores (0-100)</li>
+                        <li>Prioritizes the highest potential opportunities</li>
+                        <li>Ensures sales reps focus on the best prospects</li>
+                    </ul>
+                </div>
+
+                <h3>Scoring Dimensions</h3>
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-value">25%</div>
+                        <div class="stat-label">Company Changes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">25%</div>
+                        <div class="stat-label">Personnel Changes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">20%</div>
+                        <div class="stat-label">Intent Signals</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">15%</div>
+                        <div class="stat-label">Competitive Intel</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">15%</div>
+                        <div class="stat-label">Time Factor</div>
+                    </div>
+                </div>
+
+                <h3>Scoring Implementation (Apex)</h3>
+                <div class="code-block">
+                    <div class="code-label">OpportunityScorer.cls</div>
+                    <code>public class OpportunityScorer {
+
+    @InvocableMethod
+    public static List&lt;ScoringResult&gt; scoreOpportunity(
+        List&lt;ScoringRequest&gt; requests) {
+
+        List&lt;ScoringResult&gt; results = new List&lt;ScoringResult&gt;();
+
+        for (ScoringRequest req : requests) {
+            // 📍 STEP 1: Calculate each dimension
+            Decimal companyScore = scoreCompanyChanges(req.oppId);
+            Decimal personnelScore = scorePersonnelChanges(req.oppId);
+            Decimal intentScore = scoreIntentSignals(req.oppId);
+            Decimal competitiveScore = scoreCompetitive(req.oppId);
+            Decimal timeScore = scoreTimeFactor(req.oppId);
+
+            // 📍 STEP 2: Calculate weighted total
+            Decimal totalScore =
+                (companyScore * 0.25) +       // 25% weight
+                (personnelScore * 0.25) +     // 25% weight
+                (intentScore * 0.20) +        // 20% weight
+                (competitiveScore * 0.15) +   // 15% weight
+                (timeScore * 0.15);           // 15% weight
+
+            // 📍 STEP 3: Determine priority
+            String priority;
+            if (totalScore &gt;= 80) {
+                priority = 'Urgent';          // Immediate action
+            } else if (totalScore &gt;= 60) {
+                priority = 'High';            // Within 48 hours
+            } else {
+                priority = 'Low';             // Nurture campaign
+            }
+
+            results.add(createResult(totalScore, priority));
+        }
+        return results;
+    }
+}</code>
+                </div>
+
+                <h3>How Each Dimension Works</h3>
+
+                <p><strong>1. Company Changes (25%):</strong></p>
+                <ul>
+                    <li>Funding rounds → +30 points</li>
+                    <li>Office expansion → +25 points</li>
+                    <li>New product launch → +20 points</li>
+                    <li>Time decay applied (recent = higher score)</li>
+                </ul>
+
+                <p><strong>2. Personnel Changes (25%):</strong></p>
+                <ul>
+                    <li>New VP/Director → +35 points</li>
+                    <li>New manager → +20 points</li>
+                    <li>Key departure → +15 points</li>
+                    <li>Decision maker changes = fresh perspective</li>
+                </ul>
+
+                <p><strong>3. Intent Signals (20%):</strong></p>
+                <ul>
+                    <li>Pricing page visits → +25 points</li>
+                    <li>Case study downloads → +20 points</li>
+                    <li>Bombora intent surge → +30 points</li>
+                    <li>Active research = buying mode</li>
+                </ul>
+
+                <div class="flow-diagram">
+                    <div style="text-align: left; max-width: 600px; margin: 0 auto;">
+                        <div style="margin: 10px 0; padding: 12px; background: rgba(58, 73, 218, 0.2); border-radius: 8px;">
+                            <strong>Score 0-40:</strong> Low Priority → Nurture Campaign
+                        </div>
+                        <div style="margin: 10px 0; padding: 12px; background: rgba(254, 147, 57, 0.2); border-radius: 8px;">
+                            <strong>Score 60-79:</strong> High Priority → Contact in 48hrs
+                        </div>
+                        <div style="margin: 10px 0; padding: 12px; background: rgba(234, 0, 30, 0.2); border-radius: 8px;">
+                            <strong>Score 80-100:</strong> Urgent → Immediate Outreach
+                        </div>
+                    </div>
+                </div>
+
+                <div class="outcome-box">
+                    <h4>✅ Module 4 Complete</h4>
+                    <ul>
+                        <li>5-dimension scoring algorithm implemented</li>
+                        <li>Weighted calculation configured</li>
+                        <li>Priority thresholds defined</li>
+                        <li>Ready to generate personalized outreach</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 5: Email Generation -->
+            <div class="module" data-module="5">
+                <div class="module-number">5</div>
+                <h2>Automated Email Generation</h2>
+
+                <p>Now we create <span class="highlight">personalized, signal-based emails</span> that reference specific company developments.</p>
+
+                <div class="why-box">
+                    <h4>💡 Why Personalization Wins</h4>
+                    <p>Generic emails get 2% response rates. Our signal-based emails get 15-25% because they:</p>
+                    <ul>
+                        <li>Reference specific, timely company events</li>
+                        <li>Demonstrate we're paying attention</li>
+                        <li>Provide relevant value propositions</li>
+                        <li>Include clear, contextual calls-to-action</li>
+                    </ul>
+                </div>
+
+                <h3>Email Template Structure</h3>
+                <div class="flow-diagram">
+                    <div style="text-align: left; max-width: 700px; margin: 0 auto;">
+                        <div style="margin: 15px 0; padding: 16px; background: rgba(58, 73, 218, 0.1); border-left: 4px solid #3A49DA; border-radius: 4px;">
+                            <strong>1. HOOK:</strong> Reference specific signal<br>
+                            <em>"I noticed Acme Corp raised $50M in Series B..."</em>
+                        </div>
+                        <div style="margin: 15px 0; padding: 16px; background: rgba(58, 73, 218, 0.1); border-left: 4px solid #3A49DA; border-radius: 4px;">
+                            <strong>2. STORY:</strong> Connect to previous conversation<br>
+                            <em>"This reminded me of our talk about scaling operations..."</em>
+                        </div>
+                        <div style="margin: 15px 0; padding: 16px; background: rgba(58, 73, 218, 0.1); border-left: 4px solid #3A49DA; border-radius: 4px;">
+                            <strong>3. OFFER:</strong> Relevant value proposition<br>
+                            <em>"We've helped similar companies reduce costs by 40%..."</em>
+                        </div>
+                        <div style="margin: 15px 0; padding: 16px; background: rgba(58, 73, 218, 0.1); border-left: 4px solid #3A49DA; border-radius: 4px;">
+                            <strong>4. CTA:</strong> Clear next step<br>
+                            <em>"Are you available for a 15-min call this week?"</em>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Email Generation Code</h3>
+                <div class="code-block">
+                    <div class="code-label">EmailDrafter.cls</div>
+                    <code>private static String buildEmailBody(
+    Opportunity opp,
+    List&lt;Signal&gt; signals,
+    Decimal score) {
+
+    String body = '';
+
+    // 📍 PERSONALIZED GREETING
+    body += 'Hi ' + opp.Primary_Contact__r.FirstName + ',\n\n';
+
+    // 📍 HOOK - Reference top signal
+    if (!signals.isEmpty()) {
+        Signal topSignal = signals[0];
+        if (topSignal.type == 'funding') {
+            body += 'Congrats on the recent funding round! ';
+            body += 'This is an exciting time for ' + opp.Account.Name + '.\n\n';
+        } else if (topSignal.type == 'new_hire') {
+            body += 'I saw you brought on a new ' + topSignal.title + '. ';
+            body += 'Welcome to the team!\n\n';
+        }
+    }
+
+    // 📍 STORY - Connect to previous conversation
+    body += 'This reminded me of our conversation about ' + opp.Name + '. ';
+    if (opp.Lost_Reason__c == 'timing') {
+        body += 'I know timing wasn\'t right before, but given ';
+        body += 'these developments, it might be worth revisiting.\n\n';
+    }
+
+    // 📍 OFFER - Value proposition
+    body += 'We recently helped ' + getSimilarCustomer(opp.Industry) + ' ';
+    body += 'achieve ' + getValueProp(opp.Industry) + '. ';
+    body += 'I believe we could deliver similar results for you.\n\n';
+
+    // 📍 CTA - Based on score
+    if (score &gt;= 80) {
+        body += 'Would you have 15 minutes this week to discuss? ';
+    } else {
+        body += 'Are you open to a brief call in the next few weeks? ';
+    }
+
+    body += '\n\nBest regards,\n[Your Name]';
+    return body;
+}</code>
+                </div>
+
+                <h3>Example Generated Email</h3>
+                <div class="code-block">
+                    <div class="code-label">Sample Output</div>
+                    <code>Subject: Congrats on the Series B - thoughts on digital transformation?
+
+Hi Sarah,
+
+Congrats on the recent $50M Series B funding round! This is an
+exciting time for Acme Corp.
+
+This reminded me of our conversation about modernizing your customer
+data platform. I know timing wasn't right 6 months ago, but given
+your expansion plans, it might be worth revisiting.
+
+We recently helped TechCo (similar space) reduce infrastructure costs
+by 40% while improving data accuracy to 99.5%. I believe we could
+deliver similar results for Acme Corp.
+
+Would you have 15 minutes this week to discuss?
+
+Best regards,
+Alex Chen
+Senior Account Executive</code>
+                </div>
+
+                <div class="outcome-box">
+                    <h4>✅ Module 5 Complete</h4>
+                    <ul>
+                        <li>Email template engine built</li>
+                        <li>Signal-based personalization implemented</li>
+                        <li>Dynamic CTAs configured</li>
+                        <li>Ready to create automated actions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 6: Actions & Automation -->
+            <div class="module" data-module="6">
+                <div class="module-number">6</div>
+                <h2>Automated Actions & Task Creation</h2>
+
+                <p>Now we configure the <span class="highlight">actions the agent takes</span> when it identifies a high-value opportunity.</p>
+
+                <div class="why-box">
+                    <h4>💡 Why Automation Matters</h4>
+                    <p>Without automation, insights are useless. Our agent will:</p>
+                    <ul>
+                        <li>Create tasks for sales reps automatically</li>
+                        <li>Draft email messages and save to CRM</li>
+                        <li>Send Slack alerts for urgent opportunities</li>
+                        <li>Update opportunity fields with scores</li>
+                        <li>Log all actions for tracking and reporting</li>
+                    </ul>
+                </div>
+
+                <h3>Action Configuration</h3>
+                <div class="code-block">
+                    <div class="code-label">Actions Config</div>
+                    <code>&lt;actions&gt;
+    &lt;!-- 📍 ACTION 1: Score Opportunity --&gt;
+    &lt;action&gt;
+        &lt;name&gt;ScoreOpportunity&lt;/name&gt;
+        &lt;type&gt;Apex&lt;/type&gt;
+        &lt;apexClass&gt;OpportunityScorer&lt;/apexClass&gt;
+        &lt;method&gt;scoreOpportunity&lt;/method&gt;
+    &lt;/action&gt;
+
+    &lt;!-- 📍 ACTION 2: Draft Email --&gt;
+    &lt;action&gt;
+        &lt;name&gt;DraftEmail&lt;/name&gt;
+        &lt;type&gt;Flow&lt;/type&gt;
+        &lt;flowName&gt;DraftReactivationEmail&lt;/flowName&gt;
+    &lt;/action&gt;
+
+    &lt;!-- 📍 ACTION 3: Create Task --&gt;
+    &lt;action&gt;
+        &lt;name&gt;CreateTask&lt;/name&gt;
+        &lt;type&gt;Standard&lt;/type&gt;
+        &lt;objectName&gt;Task&lt;/objectName&gt;
+        &lt;parameters&gt;
+            &lt;subject&gt;{!ScoringResult.RecommendedAction}&lt;/subject&gt;
+            &lt;priority&gt;{!ScoringResult.Priority}&lt;/priority&gt;
+            &lt;ownerId&gt;{!Opportunity.OwnerId}&lt;/ownerId&gt;
+        &lt;/parameters&gt;
+    &lt;/action&gt;
+
+    &lt;!-- 📍 ACTION 4: Send Slack Alert (if urgent) --&gt;
+    &lt;action&gt;
+        &lt;name&gt;SendSlackAlert&lt;/name&gt;
+        &lt;type&gt;ExternalService&lt;/type&gt;
+        &lt;endpoint&gt;callout:Slack_Webhook&lt;/endpoint&gt;
+        &lt;condition&gt;{!ScoringResult.Priority} = 'Urgent'&lt;/condition&gt;
+    &lt;/action&gt;
+&lt;/actions&gt;</code>
+                </div>
+
+                <h3>Action Flow Diagram</h3>
+                <div class="flow-diagram">
+                    <div style="display: block; text-align: center;">
+                        <div class="flow-step">Opportunity Scored</div>
+                        <div style="display: block; margin: 10px 0;">↓</div>
+
+                        <div style="display: inline-block; text-align: left; margin: 20px;">
+                            <div style="background: rgba(58, 73, 218, 0.2); padding: 16px; border-radius: 8px; margin: 8px 0;">
+                                <strong>If Score ≥ 80 (Urgent):</strong><br>
+                                1. Create high-priority task<br>
+                                2. Draft urgent email<br>
+                                3. Send Slack alert to manager<br>
+                                4. Update CRM fields
+                            </div>
+                            <div style="background: rgba(254, 147, 57, 0.2); padding: 16px; border-radius: 8px; margin: 8px 0;">
+                                <strong>If Score 60-79 (High):</strong><br>
+                                1. Create standard task<br>
+                                2. Draft email<br>
+                                3. Update CRM fields
+                            </div>
+                            <div style="background: rgba(229, 229, 229, 0.2); padding: 16px; border-radius: 8px; margin: 8px 0;">
+                                <strong>If Score &lt; 60 (Low):</strong><br>
+                                1. Add to nurture campaign<br>
+                                2. Schedule follow-up (30 days)
+                            </div>
+                        </div>
+
+                        <div style="display: block; margin: 10px 0;">↓</div>
+                        <div class="flow-step" style="background: #04844B;">Sales Rep Notified</div>
+                    </div>
+                </div>
+
+                <h3>Task Creation Details</h3>
+                <div class="code-block">
+                    <div class="code-label">Task Template</div>
+                    <code>Task Created:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SUBJECT: Reactivate Acme Corp - High Opportunity Score
+
+PRIORITY: Urgent
+
+DESCRIPTION:
+Opportunity Score: 87/100
+
+Top Signals:
+• Series B Funding ($50M) - 5 days ago
+• New VP of Operations hired - 12 days ago
+• Pricing page visits (15x) - Last 7 days
+
+Recommended Action:
+Immediate outreach required. Reference funding round
+and new VP hire in conversation. Opportunity window
+is 7-10 days.
+
+Draft Email: [Link to CRM Email Draft]
+
+Previous Lost Reason: Budget constraints
+Current Score Breakdown:
+• Company Changes: 85/100
+• Personnel Changes: 90/100
+• Intent Signals: 88/100
+• Competitive Intel: 75/100
+• Time Factor: 85/100
+
+DUE DATE: Today + 4 hours
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</code>
+                </div>
+
+                <div class="outcome-box">
+                    <h4>✅ Module 6 Complete</h4>
+                    <ul>
+                        <li>Automated task creation configured</li>
+                        <li>Email drafting action set up</li>
+                        <li>Slack alerting enabled for urgent cases</li>
+                        <li>CRM field updates automated</li>
+                        <li>Ready for testing</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Module 7: Testing & Deployment -->
+            <div class="module" data-module="7">
+                <div class="module-number">7</div>
+                <h2>Testing, Validation & Deployment</h2>
+
+                <p>Before going live, we <span class="highlight">thoroughly test</span> every component and validate the entire workflow.</p>
+
+                <div class="why-box">
+                    <h4>💡 Why Testing is Critical</h4>
+                    <p>A bug in production could mean:</p>
+                    <ul>
+                        <li>Sales reps wasting time on wrong opportunities</li>
+                        <li>Customers receiving inappropriate emails</li>
+                        <li>Missed revenue opportunities</li>
+                        <li>Loss of trust in AI systems</li>
+                    </ul>
+                    <p><strong>We test everything before deployment.</strong></p>
+                </div>
+
+                <h3>Testing Checklist</h3>
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-value">✓</div>
+                        <div class="stat-label">Unit Tests (85% Coverage)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">✓</div>
+                        <div class="stat-label">Integration Tests</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">✓</div>
+                        <div class="stat-label">End-to-End Tests</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">✓</div>
+                        <div class="stat-label">Performance Tests</div>
+                    </div>
+                </div>
+
+                <h3>Test Scenarios</h3>
+                <div class="code-block">
+                    <div class="code-label">OpportunityScorerTest.cls</div>
+                    <code>@isTest
+class OpportunityScorerTest {
+
+    // 📍 TEST 1: High score with multiple signals
+    @isTest
+    static void testHighScoreOpportunity() {
+        // Setup: Create opp with funding + hiring signals
+        // Expected: Score ≥ 80, Priority = 'Urgent'
+        // Verify: Task created, email drafted, Slack sent
+    }
+
+    // 📍 TEST 2: Medium score with time decay
+    @isTest
+    static void testMediumScoreWithDecay() {
+        // Setup: Create opp with old signals (60 days)
+        // Expected: Score 60-79, Priority = 'High'
+        // Verify: Task created, email drafted
+    }
+
+    // 📍 TEST 3: Low score, nurture campaign
+    @isTest
+    static void testLowScoreNurture() {
+        // Setup: Create opp with minimal signals
+        // Expected: Score &lt; 60, Priority = 'Low'
+        // Verify: Added to nurture, no immediate task
+    }
+
+    // 📍 TEST 4: Bulk processing (200 opportunities)
+    @isTest
+    static void testBulkProcessing() {
+        // Setup: Create 200 opportunities
+        // Expected: All processed, no governor limits
+        // Verify: Performance &lt; 5 seconds
+    }
+}</code>
+                </div>
+
+                <h3>Deployment Process</h3>
+                <div class="flow-diagram">
+                    <div style="display: block; text-align: left; max-width: 700px; margin: 0 auto;">
+                        <div style="margin: 15px 0; padding: 16px; background: rgba(58, 73, 218, 0.1); border-left: 4px solid #3A49DA; border-radius: 4px;">
+                            <strong>Step 1: Sandbox Deployment</strong><br>
+                            • Deploy all metadata<br>
+                            • Run all tests (must pass 75%+)<br>
+                            • Verify in sandbox UI
+                        </div>
+                        <div style="margin: 15px 0; padding: 16px; background: rgba(58, 73, 218, 0.1); border-left: 4px solid #3A49DA; border-radius: 4px;">
+                            <strong>Step 2: User Acceptance Testing</strong><br>
+                            • Sales team tests with real scenarios<br>
+                            • Verify email quality<br>
+                            • Confirm scoring accuracy
+                        </div>
+                        <div style="margin: 15px 0; padding: 16px; background: rgba(58, 73, 218, 0.1); border-left: 4px solid #3A49DA; border-radius: 4px;">
+                            <strong>Step 3: Production Validation</strong><br>
+                            • Dry-run deployment validation<br>
+                            • Review all components<br>
+                            • Get stakeholder approval
+                        </div>
+                        <div style="margin: 15px 0; padding: 16px; background: rgba(4, 132, 75, 0.2); border-left: 4px solid #04844B; border-radius: 4px;">
+                            <strong>Step 4: Production Deployment</strong><br>
+                            • Deploy to production<br>
+                            • Activate agent<br>
+                            • Monitor initial runs
+                        </div>
+                        <div style="margin: 15px 0; padding: 16px; background: rgba(4, 132, 75, 0.2); border-left: 4px solid #04844B; border-radius: 4px;">
+                            <strong>Step 5: Monitoring & Optimization</strong><br>
+                            • Track agent performance<br>
+                            • Measure conversion rates<br>
+                            • Adjust scoring weights as needed
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Deployment Commands</h3>
+                <div class="code-block">
+                    <div class="code-label">Terminal</div>
+                    <code># 1. Deploy to Sandbox
+sfdx force:source:deploy -p force-app -u Sandbox
+
+# 2. Run Tests
+sfdx force:apex:test:run -l RunLocalTests -u Sandbox -r human
+
+# 3. Validate in Production (dry run)
+sfdx force:mdapi:deploy -d deploy-pkg -c -u Production
+
+# 4. Deploy to Production
+sfdx force:mdapi:deploy -d deploy-pkg -u Production
+
+# 5. Activate Agent
+# Go to Setup → Agentforce → Lost Opportunity Agent → Activate</code>
+                </div>
+
+                <div class="outcome-box">
+                    <h4>🎉 Module 7 Complete - Agent is LIVE!</h4>
+                    <ul>
+                        <li>All tests passing (85% coverage)</li>
+                        <li>Deployed to sandbox successfully</li>
+                        <li>User acceptance testing complete</li>
+                        <li>Deployed to production</li>
+                        <li>Agent activated and monitoring</li>
+                        <li>Dashboard tracking performance</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Summary Module -->
+            <div class="module" data-module="8">
+                <div class="module-number">✓</div>
+                <h2>Demo Complete - What You've Built</h2>
+
+                <p>Congratulations! You've just seen how to build a complete, production-ready Agentforce agent from scratch.</p>
+
+                <h3>What We Built Together</h3>
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-value">1</div>
+                        <div class="stat-label">Complete AI Agent</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Scoring Dimensions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">Automated Actions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">85%</div>
+                        <div class="stat-label">Test Coverage</div>
+                    </div>
+                </div>
+
+                <div class="outcome-box">
+                    <h4>🚀 Your Agent Can Now:</h4>
+                    <ul>
+                        <li><strong>Monitor:</strong> 1000s of closed-lost opportunities automatically</li>
+                        <li><strong>Analyze:</strong> Company signals from multiple data sources</li>
+                        <li><strong>Score:</strong> Opportunities using 5-dimension algorithm</li>
+                        <li><strong>Personalize:</strong> Email messages based on specific signals</li>
+                        <li><strong>Automate:</strong> Task creation with clear next actions</li>
+                        <li><strong>Alert:</strong> Sales teams for urgent opportunities</li>
+                        <li><strong>Track:</strong> All actions and outcomes for reporting</li>
+                    </ul>
+                </div>
+
+                <h3>The 7 Modules We Covered</h3>
+                <div class="flow-diagram">
+                    <div style="text-align: left; max-width: 800px; margin: 0 auto;">
+                        <div style="margin: 10px 0; padding: 12px; background: rgba(58, 73, 218, 0.1); border-radius: 8px;">
+                            <strong>Module 1:</strong> Introduction & Use Case
+                        </div>
+                        <div style="margin: 10px 0; padding: 12px; background: rgba(58, 73, 218, 0.1); border-radius: 8px;">
+                            <strong>Module 2:</strong> Agent Configuration & Instructions
+                        </div>
+                        <div style="margin: 10px 0; padding: 12px; background: rgba(58, 73, 218, 0.1); border-radius: 8px;">
+                            <strong>Module 3:</strong> Data Source Connections
+                        </div>
+                        <div style="margin: 10px 0; padding: 12px; background: rgba(58, 73, 218, 0.1); border-radius: 8px;">
+                            <strong>Module 4:</strong> Scoring Algorithm Implementation
+                        </div>
+                        <div style="margin: 10px 0; padding: 12px; background: rgba(58, 73, 218, 0.1); border-radius: 8px;">
+                            <strong>Module 5:</strong> Automated Email Generation
+                        </div>
+                        <div style="margin: 10px 0; padding: 12px; background: rgba(58, 73, 218, 0.1); border-radius: 8px;">
+                            <strong>Module 6:</strong> Actions & Automation Setup
+                        </div>
+                        <div style="margin: 10px 0; padding: 12px; background: rgba(4, 132, 75, 0.2); border-radius: 8px;">
+                            <strong>Module 7:</strong> Testing, Validation & Deployment
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Key Customization Points You Control</h3>
+                <div class="why-box">
+                    <h4>📍 Where to Customize for Your Business</h4>
+                    <ul>
+                        <li><strong>Scoring Weights:</strong> Adjust the 25/25/20/15/15 split to match your priorities</li>
+                        <li><strong>Priority Thresholds:</strong> Change when scores trigger urgent vs. high priority</li>
+                        <li><strong>Signal Types:</strong> Add industry-specific signals your business cares about</li>
+                        <li><strong>Email Templates:</strong> Modify tone, style, and CTAs for your brand</li>
+                        <li><strong>Action Routing:</strong> Customize what happens at each priority level</li>
+                        <li><strong>Time Windows:</strong> Adjust how far back to look for opportunities</li>
+                    </ul>
+                </div>
+
+                <h3>Next Steps</h3>
+                <p style="font-size: 20px; margin: 24px 0;"><strong>Ready to build your own agent?</strong></p>
+
+                <a href="http://localhost:5173" target="_blank" class="platform-link">
+                    🌐 Open Live Platform →
+                </a>
+
+                <p style="margin: 24px 0;">Or say to Claude:</p>
+                <div class="code-block">
+                    <code style="font-size: 16px;">"Build an Agentforce agent for [your use case]"</code>
+                </div>
+
+                <p>The Salesforce Agentforce Builder skill will guide you through creating your own custom agent with all the code, customization points, and deployment instructions you need!</p>
+
+                <div class="outcome-box">
+                    <h4>📚 Documentation Available</h4>
+                    <ul>
+                        <li>Quick Reference Guide for fast lookups</li>
+                        <li>Complete Usage Guide with all customization details</li>
+                        <li>Full Skill Documentation with code examples</li>
+                        <li>Quality Control integration for validation</li>
+                    </ul>
+                </div>
+
+                <p style="text-align: center; font-size: 24px; margin: 40px 0; color: #3A49DA;">
+                    <strong>🎉 You're Ready to Build Production-Ready Agentforce Agents! 🎉</strong>
+                </p>
+            </div>
+
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" id="prevBtn" onclick="previousModule()" disabled>←</button>
+            <button class="control-btn" id="nextBtn" onclick="nextModule()">→</button>
+        </div>
+    </div>
+
+    <script>
+        let currentModule = 0;
+        const totalModules = 8;
+        let demoStarted = false;
+
+        function startDemo() {
+            demoStarted = true;
+            document.querySelector('.play-button').disabled = true;
+            document.querySelector('.play-button').textContent = '▶ Demo Running...';
+            document.getElementById('demoContent').classList.add('active');
+            showModule(1);
+        }
+
+        function showModule(moduleNum) {
+            // Hide all modules
+            const modules = document.querySelectorAll('.module');
+            modules.forEach(m => m.style.display = 'none');
+
+            // Show current module
+            const currentModuleEl = document.querySelector(`[data-module="${moduleNum}"]`);
+            if (currentModuleEl) {
+                currentModuleEl.style.display = 'block';
+                currentModuleEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            currentModule = moduleNum;
+
+            // Update progress bar
+            const progress = (moduleNum / totalModules) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            // Update current step text
+            document.getElementById('currentStep').textContent =
+                `Module ${moduleNum} of ${totalModules}`;
+
+            // Update button states
+            document.getElementById('prevBtn').disabled = (moduleNum === 1);
+            document.getElementById('nextBtn').disabled = (moduleNum === totalModules);
+
+            // If last module, change button text
+            if (moduleNum === totalModules) {
+                document.querySelector('.play-button').textContent = '✓ Demo Complete!';
+            }
+        }
+
+        function nextModule() {
+            if (currentModule < totalModules) {
+                showModule(currentModule + 1);
+            }
+        }
+
+        function previousModule() {
+            if (currentModule > 1) {
+                showModule(currentModule - 1);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!demoStarted) return;
+
+            if (e.key === 'ArrowRight') {
+                nextModule();
+            } else if (e.key === 'ArrowLeft') {
+                previousModule();
+            }
+        });
+    </script>
+</body>
+</html>

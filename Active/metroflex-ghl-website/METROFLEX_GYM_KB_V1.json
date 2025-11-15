@@ -1,0 +1,592 @@
+{
+  "metroflex_gym_system": {
+    "overview": "MetroFlex Gym operates three distinct business verticals: (1) Original MetroFlex Arlington gym (OPERATIONAL), (2) MetroFlex Miami HQ (PROSPECT - Pre-sale starting March 2026, opens June 2026), and (3) MetroFlex Licensing Program for nationwide expansion. This knowledge base covers gym operations and licensing ONLY.",
+    "scope": "THIS KNOWLEDGE BASE IS FOR METROFLEX GYM & LICENSING ONLY. Does NOT include event registration, ticketing, or sponsorships - those are handled by MetroFlex Events system.",
+    "operational_locations": [
+      {
+        "name": "The Original MetroFlex Gym",
+        "location": "Arlington, TX",
+        "status": "✅ OPERATIONAL since 1983",
+        "type": "Legendary hardcore gym",
+        "legacy": "Home gym of 8x Mr. Olympia Ronnie Coleman, 2x Arnold Classic Champion Branch Warren",
+        "current_business": "Active memberships, day passes, personal training"
+      }
+    ],
+    "prospect_locations": [
+      {
+        "name": "MetroFlex Miami HQ",
+        "location": "Miami, FL (South Beach area - TBD)",
+        "status": "⚠️ PROSPECT - NOT OPERATIONAL YET",
+        "type": "Flagship expansion (pre-sale phase)",
+        "pre_sale_launch": "March 1, 2026",
+        "opening_date": "June 1, 2026 (planned)",
+        "current_business": "Lead generation, Founder's Membership pre-sales (limited to 100), prospect nurturing",
+        "important_note": "Miami is NOT open yet. This is a lead generation opportunity. Founder's Memberships are pre-sales for future access."
+      }
+    ]
+  },
+
+  "arlington_gym_memberships": {
+    "overview": "The Original MetroFlex Gym in Arlington, TX offers day passes and memberships for hardcore training in the legendary facility that produced champions.",
+
+    "membership_options": [
+      {
+        "tier": "Day Pass",
+        "price": "$20/day",
+        "benefits": [
+          "Single-day access to legendary MetroFlex Arlington",
+          "Train where Ronnie Coleman and Branch Warren trained",
+          "Access to all equipment and training areas",
+          "No commitment required"
+        ]
+      },
+      {
+        "tier": "Monthly Membership",
+        "price": "$75/month",
+        "contract": "Month-to-month, cancel anytime",
+        "benefits": [
+          "Unlimited access to MetroFlex Arlington",
+          "24/7 gym access (key fob provided)",
+          "Access to all equipment",
+          "Guest pass (1 per month)",
+          "10% discount on MetroFlex apparel"
+        ]
+      },
+      {
+        "tier": "Annual Membership",
+        "price": "$750/year (save $150 vs monthly)",
+        "contract": "12-month commitment",
+        "benefits": [
+          "Unlimited 24/7 access",
+          "2 guest passes per month",
+          "Free MetroFlex t-shirt ($30 value)",
+          "15% discount on apparel",
+          "Priority access during peak hours"
+        ]
+      }
+    ],
+
+    "facilities": [
+      "Legendary free weight area (dumbbells up to 200 lbs)",
+      "Olympic lifting platforms",
+      "Powerlifting equipment (cages, benches, specialty bars)",
+      "Cardio equipment (limited - this is a hardcore gym)",
+      "Locker rooms",
+      "Pro shop (apparel and supplements)"
+    ],
+
+    "location_details": {
+      "address": "The Original MetroFlex Gym, Arlington, TX",
+      "phone": "817-465-9331",
+      "email": "brian@metroflexgym.com",
+      "hours": "24/7 with key fob (staffed Mon-Fri 9am-6pm)",
+      "parking": "Free parking lot"
+    },
+
+    "important_notes": [
+      "This is a HARDCORE gym - no air conditioning, raw training environment",
+      "Chalk allowed and encouraged",
+      "No judgment zone - all levels welcome from beginners to pros",
+      "Competitive bodybuilders and powerlifters train here daily",
+      "Tour the gym where Ronnie Coleman trained during his Olympia reign"
+    ]
+  },
+
+  "miami_gym_prospect": {
+    "overview": "⚠️ IMPORTANT: MetroFlex Miami HQ is NOT operational yet. This is a PROSPECT/LEAD GENERATION opportunity. We are taking Founder's Membership pre-sales (March 1, 2026) for a gym that will open June 1, 2026. State-of-the-art hardcore training facility planned for South Beach area.",
+
+    "current_status": "PRE-SALE PHASE - Lead generation and Founder's Membership reservations only",
+    "pre_sale_launch": "March 1, 2026 (Founder's Memberships go on sale)",
+    "planned_opening": "June 1, 2026 (Grand Opening - PLANNED, not guaranteed)",
+    "location": "Miami, FL (South Beach area - specific location TBD and NOT finalized)",
+
+    "membership_tiers": [
+      {
+        "tier": "Founder's Lifetime Membership",
+        "price": "$2,500 (one-time payment)",
+        "availability": "Limited to first 100 members only",
+        "pre_sale_date": "March 1, 2026",
+        "deadline": "May 15, 2026 (last day to purchase)",
+        "benefits": [
+          "Lifetime gym access (no recurring fees EVER)",
+          "Founder's name on permanent wall plaque",
+          "Exclusive Founder's merch package ($150 value)",
+          "Priority access to all MetroFlex events",
+          "10% discount on all apparel purchases for life",
+          "Guest privileges (bring 2 guests per visit)",
+          "Access to all future MetroFlex locations nationwide"
+        ],
+        "status": "Pre-sale opening March 1, 2026",
+        "value_proposition": "One payment of $2,500 = LIFETIME access. No monthly fees ever. If you plan to be a member for 3+ years, this is your best value."
+      },
+      {
+        "tier": "Monthly Unlimited",
+        "price": "$89/month",
+        "contract": "No contract - cancel anytime",
+        "benefits": [
+          "Unlimited gym access 24/7",
+          "Access to all equipment and training areas",
+          "1 guest pass per month",
+          "Discount on personal training (10% off)",
+          "Access to member-only workshops"
+        ]
+      },
+      {
+        "tier": "Annual Membership",
+        "price": "$899/year (save $169 vs monthly)",
+        "contract": "12-month commitment",
+        "benefits": [
+          "Unlimited gym access 24/7",
+          "Access to all equipment and training areas",
+          "2 guest passes per month",
+          "15% discount on personal training",
+          "Free MetroFlex t-shirt ($30 value)",
+          "Priority equipment access during peak hours",
+          "Access to member-only workshops and seminars"
+        ]
+      },
+      {
+        "tier": "Day Pass",
+        "price": "$25/day",
+        "benefits": [
+          "Single-day gym access",
+          "Access to all equipment and training areas",
+          "No commitment required"
+        ]
+      },
+      {
+        "tier": "10-Pack Punch Card",
+        "price": "$199 (save $51)",
+        "benefits": [
+          "10 day passes at discounted rate",
+          "No expiration date",
+          "Transferable to friends/family",
+          "Access to all equipment and training areas"
+        ]
+      }
+    ],
+
+    "facilities": [
+      "Free weights (dumbbells up to 200 lbs)",
+      "Olympic lifting platforms (6 stations)",
+      "Powerlifting cages with competition benches",
+      "Hammer Strength plate-loaded equipment",
+      "Cardio area (treadmills, bikes, rowers)",
+      "Functional training zone",
+      "Posing room with mirrors",
+      "Supplement shop",
+      "Locker rooms with showers",
+      "Member lounge"
+    ],
+
+    "personal_training": {
+      "overview": "Elite coaching from NPC-certified trainers and former competitors",
+      "single_session": "$80/hour",
+      "package_10_sessions": "$700 ($70/hour - save $100)",
+      "package_20_sessions": "$1,200 ($60/hour - save $400)",
+      "contest_prep_special": "12-week contest prep package - $2,400 (includes nutrition, posing, training)"
+    },
+
+    "grand_opening": {
+      "date": "June 1, 2026 (tentative)",
+      "opening_event": "Free workout day + meet & greet with Ronnie Coleman and Branch Warren",
+      "founding_member_deadline": "May 15, 2026 (last day to purchase Founder's Membership)",
+      "limited_availability": "Only 100 Founder's Memberships available - first come, first served"
+    },
+
+    "contact": {
+      "email": "miami@metroflexgym.com (launching March 1, 2026)",
+      "general_inquiries": "brian@metroflexgym.com",
+      "website": "metroflexmiami.com (launches March 1, 2026)"
+    }
+  },
+
+  "metroflex_licensing": {
+    "overview": "MetroFlex Licensing Program allows qualified gym owners to open MetroFlex-branded facilities. Leverage the legendary name with full operational support.",
+    "launch_date": "March 1, 2026",
+    "website": "metroflexlicensing.com (launches March 1, 2026)",
+
+    "licensing_packages": [
+      {
+        "package": "New Build License",
+        "investment": "$60,000",
+        "description": "Complete turnkey package for building a new MetroFlex gym from scratch",
+        "includes": [
+          "20-year exclusive territory license",
+          "Complete MetroFlex branding package (logos, signage, marketing materials)",
+          "Architectural gym layout and design consultation",
+          "Equipment sourcing partnerships (20% discount with preferred vendors)",
+          "Staff training program (2-week on-site training at Arlington HQ)",
+          "Marketing launch package (website, social media templates, local advertising)",
+          "Operations manual (300+ pages covering all procedures)",
+          "Ongoing support (monthly coaching calls, annual in-person visits)",
+          "Access to MetroFlex Events promoter network",
+          "Co-branded apparel for resale (wholesale pricing)"
+        ],
+        "ideal_for": "Entrepreneurs building a new gym or converting existing space over 5,000 sq ft",
+        "territory_exclusivity": "10-mile radius protection",
+        "term": "20 years with renewal options"
+      },
+      {
+        "package": "Rebrand License",
+        "investment": "$40,000",
+        "description": "Rebrand your existing gym as a MetroFlex location",
+        "includes": [
+          "15-year exclusive territory license",
+          "Complete MetroFlex branding package",
+          "Existing gym audit and optimization recommendations",
+          "Equipment assessment and upgrade consultation",
+          "Staff training program (1-week on-site training)",
+          "Marketing rebrand package",
+          "Operations manual",
+          "Ongoing support (quarterly coaching calls)",
+          "Access to MetroFlex Events promoter network",
+          "Co-branded apparel for resale"
+        ],
+        "ideal_for": "Existing gym owners with 3,000+ sq ft looking to rebrand under legendary MetroFlex name",
+        "territory_exclusivity": "7-mile radius protection",
+        "requirements": "Gym must have been operational for at least 2 years with verified membership base",
+        "term": "15 years with renewal options"
+      }
+    ],
+
+    "ongoing_fees": {
+      "monthly_royalty": "5% of gross monthly revenue (capped at $2,500/month)",
+      "marketing_fund": "$500/month contribution to national MetroFlex marketing fund",
+      "annual_renewal": "$1,500/year (covers updated materials, training, support)"
+    },
+
+    "qualification_requirements": [
+      "Clean criminal background check",
+      "Minimum $150,000 liquid capital (beyond license fee)",
+      "Gym industry experience (owner or management role, 3+ years preferred)",
+      "Passion for hardcore training culture",
+      "Business plan and financial projections",
+      "Suitable location with 3,000+ sq ft (New Build) or existing gym (Rebrand)",
+      "Proof of funds (bank statement showing required capital)"
+    ],
+
+    "application_process": [
+      {
+        "step": 1,
+        "action": "Submit initial inquiry form at metroflexlicensing.com (launching March 1, 2026)"
+      },
+      {
+        "step": 2,
+        "action": "Phone interview with Brian Dobson or licensing team (30-45 min)"
+      },
+      {
+        "step": 3,
+        "action": "Submit full application with business plan, financials, and location details"
+      },
+      {
+        "step": 4,
+        "action": "Application review (2-3 weeks)"
+      },
+      {
+        "step": 5,
+        "action": "In-person visit to proposed location (travel at applicant's expense)"
+      },
+      {
+        "step": 6,
+        "action": "Final approval decision"
+      },
+      {
+        "step": 7,
+        "action": "Sign licensing agreement and pay initial license fee"
+      },
+      {
+        "step": 8,
+        "action": "Begin onboarding and training (6-12 weeks before grand opening)"
+      }
+    ],
+
+    "success_stories": "Join the legacy - Arlington location has produced 8x Mr. Olympia Ronnie Coleman, 2x Arnold Classic Champion Branch Warren, and hundreds of NPC/IFBB champions.",
+
+    "beta_program": {
+      "overview": "2026 Beta Licensing Program - Test phase",
+      "target": "2-3 test gyms (Q2-Q3 2026)",
+      "scale_goal": "6-10 licensed locations by end of 2026",
+      "beta_incentive": "First 3 licensees receive $10,000 discount on New Build package ($50,000 total)",
+      "application_deadline": "May 1, 2026 for beta program consideration"
+    },
+
+    "support_structure": {
+      "dedicated_success_coach": "Assigned from day 1 through first year",
+      "monthly_group_calls": "All MetroFlex licensees connect for best practices",
+      "annual_conference": "Mandatory annual conference at Arlington HQ (3 days)",
+      "24_7_support_portal": "Access to operations manual, training videos, marketing assets",
+      "emergency_hotline": "Direct line to Arlington HQ for urgent issues"
+    },
+
+    "financial_projections": {
+      "typical_revenue": "$30,000-50,000/month (300-500 members @ $80-100/month avg)",
+      "breakeven_timeline": "18-24 months typical",
+      "roi_projection": "3-5 years to full ROI on initial investment",
+      "ongoing_profitability": "$10,000-20,000/month net profit after expenses and royalties"
+    }
+  },
+
+  "metroflex_apparel": {
+    "overview": "MetroFlex Apparel offers premium gym wear featuring the iconic Original MetroFlex branding. Available at gyms, online, and at events.",
+    "launch_date": "February 15, 2026",
+    "website": "metroflexapparel.com",
+
+    "product_catalog": [
+      {
+        "sku": "MF-TEE-001",
+        "name": "Original MetroFlex Classic Tee",
+        "price": "$29.99",
+        "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+        "colors": ["Black", "Charcoal Gray", "Military Green"],
+        "description": "100% cotton classic fit tee with vintage MetroFlex logo",
+        "in_stock": true
+      },
+      {
+        "sku": "MF-TANK-001",
+        "name": "Old School Stringer Tank",
+        "price": "$24.99",
+        "sizes": ["S", "M", "L", "XL", "2XL"],
+        "colors": ["Black", "White", "Red"],
+        "description": "Classic Y-back stringer tank, gym-tested and Ronnie-approved",
+        "in_stock": true
+      },
+      {
+        "sku": "MF-HOOD-001",
+        "name": "MetroFlex Heavy Hoodie",
+        "price": "$54.99",
+        "sizes": ["M", "L", "XL", "2XL", "3XL"],
+        "colors": ["Black", "Charcoal", "Navy"],
+        "description": "12oz heavyweight hoodie with embroidered front logo",
+        "in_stock": true
+      },
+      {
+        "sku": "MF-SHORT-001",
+        "name": "Training Shorts",
+        "price": "$34.99",
+        "sizes": ["S", "M", "L", "XL", "2XL"],
+        "colors": ["Black", "Gray", "Navy"],
+        "description": "Performance training shorts with 7-inch inseam",
+        "in_stock": true
+      },
+      {
+        "sku": "MF-HAT-001",
+        "name": "Snapback Cap",
+        "price": "$24.99",
+        "sizes": ["One Size (Adjustable)"],
+        "colors": ["Black/White", "Navy/White", "Gray/Black"],
+        "description": "Classic snapback with embroidered logo",
+        "in_stock": true
+      },
+      {
+        "sku": "MF-GYM-001",
+        "name": "Gym Bag - Duffel",
+        "price": "$49.99",
+        "sizes": ["One Size (24\" x 12\" x 12\")"],
+        "colors": ["Black", "Charcoal"],
+        "description": "Heavy-duty duffel bag with multiple compartments",
+        "in_stock": true
+      },
+      {
+        "sku": "MF-WRIST-001",
+        "name": "Wrist Wraps (Pair)",
+        "price": "$19.99",
+        "sizes": ["18 inch", "24 inch"],
+        "colors": ["Black", "Red/Black"],
+        "description": "Competition-grade wrist wraps",
+        "in_stock": true
+      },
+      {
+        "sku": "MF-BELT-001",
+        "name": "Leather Lifting Belt",
+        "price": "$89.99",
+        "sizes": ["S (28-32\")", "M (32-36\")", "L (36-40\")", "XL (40-44\")"],
+        "colors": ["Black", "Brown"],
+        "description": "10mm thick genuine leather powerlifting belt",
+        "in_stock": false,
+        "restock_date": "March 1, 2026"
+      }
+    ],
+
+    "ordering": {
+      "website": "metroflexapparel.com (launching Feb 15, 2026)",
+      "in_gym_sales": "Available at MetroFlex Arlington front desk and MetroFlex Miami (June 2026)",
+      "event_sales": "Pop-up shop at all MetroFlex Events championships",
+      "wholesale_inquiries": "brian@metroflexgym.com for gym/retailer wholesale pricing"
+    },
+
+    "shipping": {
+      "domestic_standard": "$6.99 (5-7 business days)",
+      "domestic_express": "$14.99 (2-3 business days)",
+      "free_shipping_threshold": "Orders over $75",
+      "international": "Available - calculated at checkout"
+    },
+
+    "size_recommendation_tool": "AI-powered size recommender available on product pages (inputs: height, weight, preferred fit)",
+
+    "returns": "30-day return policy for unworn items with tags attached. Exchange or store credit only."
+  },
+
+  "common_questions": [
+    {
+      "question": "What's the difference between Arlington and Miami memberships?",
+      "answer": "Arlington is the legendary original gym (since 1983) with hardcore training environment. Miami HQ (opening June 2026) is a state-of-the-art facility with more amenities. Both maintain the MetroFlex hardcore culture. Founder's Memberships at Miami include access to future MetroFlex locations nationwide."
+    },
+    {
+      "question": "When does MetroFlex Miami open?",
+      "answer": "MetroFlex Miami HQ is scheduled to open June 1, 2026. Founder's Lifetime Memberships ($2,500) are limited to first 100 members and go on sale March 1, 2026. This is a one-time payment for lifetime access with no recurring fees."
+    },
+    {
+      "question": "How can I open a MetroFlex gym in my city?",
+      "answer": "MetroFlex Licensing Program launches March 1, 2026. We offer New Build License ($60,000) and Rebrand License ($40,000) packages. Visit metroflexlicensing.com to apply. Requirements include $150,000 liquid capital, industry experience, and suitable location."
+    },
+    {
+      "question": "What sizes do you have for hoodies?",
+      "answer": "Most apparel items are available in S, M, L, XL, 2XL, and 3XL. Hoodies specifically are available in M-3XL. We offer an AI-powered size recommendation tool on product pages - just enter your height, weight, and preferred fit."
+    },
+    {
+      "question": "Can I try a day pass at MetroFlex Miami before committing to membership?",
+      "answer": "Yes! Day passes are $25/day with no commitment. We also offer a 10-Pack Punch Card for $199 (save $51) with no expiration date."
+    },
+    {
+      "question": "What's included in the Founder's Lifetime Membership?",
+      "answer": "For $2,500 one-time payment, you get LIFETIME access to MetroFlex Miami (no recurring fees ever), access to all future MetroFlex locations nationwide, Founder's plaque on wall, exclusive merch package, priority event access, 10% apparel discount for life, and guest privileges (2 guests per visit). Limited to first 100 members only."
+    },
+    {
+      "question": "How much does it cost to license a MetroFlex gym?",
+      "answer": "New Build License is $60,000 (20-year exclusive territory) and Rebrand License is $40,000 (15-year exclusive territory). Ongoing fees include 5% royalty (capped at $2,500/month) + $500/month marketing fund. First 3 beta licensees receive $10,000 discount."
+    },
+    {
+      "question": "Do I need gym experience to get a license?",
+      "answer": "Preferred but not absolutely required. We look for 3+ years of gym industry experience (owner or management role) plus minimum $150,000 liquid capital beyond the license fee. Passion for hardcore training culture is essential."
+    },
+    {
+      "question": "Where can I buy MetroFlex apparel?",
+      "answer": "MetroFlex Apparel launches February 15, 2026 at metroflexapparel.com. Products will also be available at MetroFlex Arlington front desk, MetroFlex Miami (June 2026), and at all MetroFlex Events championships."
+    },
+    {
+      "question": "Do you offer personal training?",
+      "answer": "Yes! MetroFlex Miami offers personal training from NPC-certified trainers and former competitors. Single session: $80/hour. Package deals: 10 sessions for $700 ($70/hr), 20 sessions for $1,200 ($60/hr). We also offer 12-week contest prep package for $2,400 (includes nutrition, posing, training)."
+    }
+  ],
+
+  "troubleshooting": [
+    {
+      "issue": "Apparel size recommendation tool not working",
+      "solution": "Ensure JavaScript is enabled in your browser. Clear cache and cookies. Contact support@metroflexapparel.com if issue persists."
+    },
+    {
+      "issue": "Founder's Membership sold out",
+      "solution": "Founder's Memberships are limited to first 100 members only. If sold out, consider Annual Membership ($899/year) which offers excellent value and similar benefits minus lifetime access."
+    },
+    {
+      "issue": "Licensing application not answered",
+      "solution": "Email brian@metroflexgym.com with subject 'Licensing Inquiry'. Response time is typically 48-72 hours. Check spam folder."
+    },
+    {
+      "issue": "Can't find Miami gym location",
+      "solution": "Specific Miami location address will be announced by April 1, 2026. It will be in South Beach area. Join the waitlist at metroflexmiami.com (launching March 1) for location updates."
+    }
+  },
+
+  "metroflex_contact": {
+    "arlington_gym": {
+      "email": "brian@metroflexgym.com",
+      "phone": "817-465-9331",
+      "address": "The Original MetroFlex Gym, Arlington, TX"
+    },
+    "miami_gym": {
+      "email": "miami@metroflexgym.com (launches March 1, 2026)",
+      "general_inquiries": "brian@metroflexgym.com",
+      "website": "metroflexmiami.com (launches March 1, 2026)"
+    },
+    "licensing": {
+      "email": "licensing@metroflexgym.com (launches March 1, 2026)",
+      "general_inquiries": "brian@metroflexgym.com",
+      "website": "metroflexlicensing.com (launches March 1, 2026)"
+    },
+    "apparel": {
+      "website": "metroflexapparel.com (launches Feb 15, 2026)",
+      "customer_support": "support@metroflexapparel.com",
+      "wholesale": "brian@metroflexgym.com"
+    },
+    "social_media": {
+      "instagram": "@metroflexgym",
+      "facebook": "facebook.com/metroflexgym",
+      "youtube": "youtube.com/metroflexgym"
+    },
+    "scope_note": "For event registration, ticketing, or sponsorships, those are handled by MetroFlex Events system. This knowledge base is for GYM & LICENSING ONLY."
+  },
+
+  "high_intent_triggers": {
+    "gym_membership_arlington": [
+      "join metroflex arlington",
+      "arlington membership",
+      "day pass arlington",
+      "monthly membership arlington"
+    ],
+    "gym_membership_miami": [
+      "join metroflex miami",
+      "membership prices",
+      "founder's membership",
+      "when does miami open",
+      "personal training",
+      "day pass miami"
+    ],
+    "licensing": [
+      "open a metroflex gym",
+      "franchise",
+      "licensing cost",
+      "how to become a licensee",
+      "metroflex license",
+      "requirements to open gym",
+      "new build license",
+      "rebrand license"
+    ],
+    "apparel_purchase": [
+      "buy shirt",
+      "metroflex apparel",
+      "order hoodie",
+      "gym bag",
+      "where to buy merch",
+      "apparel sizing"
+    ]
+  },
+
+  "ai_ml_integration_notes": {
+    "note": "This RAG is for MetroFlex GYM & LICENSING ONLY. ML models for lead scoring, churn prediction, size recommendation, and licensing qualification are specific to gym operations.",
+
+    "lead_scoring_model_inputs": [
+      "intent_detected (membership, licensing, apparel)",
+      "engagement_score (number of questions asked, time spent)",
+      "budget_indicators (asks about Founder's membership $2,500, licensing $40-60k)",
+      "timeline_urgency (mentions March 1 launch, May 15 deadline, 'how soon')",
+      "authority_level (business plan, capital requirements, wholesale inquiries)"
+    ],
+
+    "churn_prediction_inputs": [
+      "membership_type (founder, monthly, annual)",
+      "engagement_frequency (gym visits per week for Miami members)",
+      "event_participation (registered for competitions, attended as spectator)",
+      "apparel_purchases (repeat customer indicator)",
+      "support_ticket_volume (indicator of dissatisfaction)"
+    ],
+
+    "size_recommendation_model_inputs": [
+      "height (in inches)",
+      "weight (in lbs)",
+      "preferred_fit (tight, regular, loose)",
+      "product_category (tee, tank, hoodie, shorts)"
+    ],
+
+    "licensing_qualification_score_inputs": [
+      "liquid_capital (dollar amount)",
+      "industry_experience_years (number of years in gym industry)",
+      "existing_gym_sqft (if rebrand package)",
+      "location_population_density (high/medium/low)",
+      "passion_score (derived from questionnaire responses)"
+    ],
+
+    "cross_referencing_protocol": "If user asks about event registration, ticketing, vendor booths, or sponsorships - DO NOT answer from this knowledge base. Politely refer to metroflexevents.com or state 'That's handled by our events team at brian@metroflexgym.com'. ML may adapt to cross-reference ONLY if explicitly needed for gym context (e.g., member asks about competing at MetroFlex Events)."
+  }
+}

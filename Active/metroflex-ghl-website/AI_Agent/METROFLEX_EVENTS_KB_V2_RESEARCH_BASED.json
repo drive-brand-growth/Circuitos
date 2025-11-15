@@ -1,0 +1,469 @@
+{
+  "metroflex_events": {
+    "overview": "MetroFlex hosts three premier NPC Championship events: Better Bodies Classic (rebranded as Texas Legends Championship), Ronnie Coleman Classic 30th Anniversary, and Branch Warren Classic Houston. All events use MuscleWare registration platform.",
+
+    "events": [
+      {
+        "name": "Texas Legends Championship",
+        "formerly_known_as": "NPC Better Bodies Classic",
+        "date": "March 28, 2026",
+        "location": "The Original MetroFlex Gym, Arlington, TX",
+        "registration_url": "https://www.muscleware.com/contests/2026-TXLG-CHAM/register",
+        "status": "National Qualifier",
+        "description": "Experience the raw intensity of powerlifting combined with MetroFlex's legendary Wild Game Feast. Witness elite strength athletes compete in the atmosphere that forged champions for over 38 years.",
+        "special_features": [
+          "Wild Game Feast included",
+          "Powerlifting competition",
+          "NPC National Qualifier status",
+          "Historic MetroFlex Arlington venue"
+        ]
+      },
+      {
+        "name": "NPC Ronnie Coleman Classic",
+        "anniversary": "30th Anniversary",
+        "date": "May 16, 2026",
+        "location": "Fort Worth Convention Center, Fort Worth, TX",
+        "registration_url": "https://www.muscleware.com/contests/2026-RNCL-CLS/register",
+        "status": "National Qualifier",
+        "description": "Celebrating 30 years of the Ronnie Coleman Classic. Championship NPC bodybuilding event honoring 8x Mr. Olympia Ronnie Coleman. One of Texas' premier national qualifier events.",
+        "special_features": [
+          "30th Anniversary celebration",
+          "Honoring 8x Mr. Olympia Ronnie Coleman",
+          "Fort Worth Convention Center venue",
+          "NPC National Qualifier status",
+          "Full bodybuilding divisions"
+        ]
+      },
+      {
+        "name": "NPC Branch Warren Classic Houston",
+        "date": "June 20, 2026",
+        "location": "Houston, TX (Location TBD)",
+        "registration_url": "https://www.muscleware.com/contests/2026-BCHW-CLS/register",
+        "status": "National Qualifier",
+        "description": "Texas' flagship Branch Warren Classic. Championship NPC bodybuilding event honoring 2x Arnold Classic Champion Branch Warren. National qualifier status.",
+        "special_features": [
+          "Honoring 2x Arnold Classic Champion Branch Warren",
+          "Houston flagship event",
+          "NPC National Qualifier status",
+          "Full NPC divisions"
+        ]
+      }
+    ]
+  },
+
+  "muscleware_platform": {
+    "overview": "MuscleWare is the official contest software and registration platform for NPC, NPC Worldwide, IFBB Professional League, and Canadian Physique Alliance.",
+
+    "platform_stats": {
+      "languages_supported": 20,
+      "countries_served": 89,
+      "promoters_using_system": 394,
+      "events_managed": "4,301+"
+    },
+
+    "key_principle": "Athletes DO NOT register directly on MuscleWare.com. Instead, each event promoter has a dedicated event website where registration occurs. MuscleWare powers the backend.",
+
+    "registration_process": [
+      {
+        "step": 1,
+        "action": "Find your contest at npcnewsonline.com contest calendar"
+      },
+      {
+        "step": 2,
+        "action": "Access the event-specific registration URL (format: https://www.muscleware.com/contests/[CONTEST-CODE]/register)"
+      },
+      {
+        "step": 3,
+        "action": "Complete personal information (name, DOB, email, phone, country)"
+      },
+      {
+        "step": 4,
+        "action": "Enter valid NPC Member Number (must be non-zero)"
+      },
+      {
+        "step": 5,
+        "action": "Select division(s) and class(es) - up to 8 divisions per registration"
+      },
+      {
+        "step": 6,
+        "action": "Accept Terms & Conditions and Privacy Policy"
+      },
+      {
+        "step": 7,
+        "action": "Proceed to Confirmation and review information"
+      },
+      {
+        "step": 8,
+        "action": "Complete payment through promoter's payment gateway"
+      },
+      {
+        "step": 9,
+        "action": "Receive confirmation email with athlete profile link"
+      }
+    ],
+
+    "required_fields": [
+      "First Name (minimum 2 characters, Romanized format)",
+      "Last Name (minimum 2 characters, Romanized format)",
+      "Date of Birth (Month/Day/Year)",
+      "Email Address",
+      "Re-enter Email (must match exactly)",
+      "Phone Number",
+      "Country of Residence",
+      "Valid NPC Member Number (non-zero)",
+      "Division selection",
+      "Class selection for each division",
+      "Terms of Use acceptance",
+      "Privacy Policy acceptance"
+    ],
+
+    "optional_fields": [
+      "Gym Name",
+      "Trainer Name",
+      "Instagram Handle",
+      "Country Representing (if different from residence)"
+    ],
+
+    "npc_membership": {
+      "requirement": "You must have a valid NPC Member Number to register for any NPC competition",
+      "how_to_get": "Visit npcnewsonline.com to purchase NPC membership",
+      "validation": "Number must be non-zero and validated at form submission"
+    },
+
+    "pricing_tiers": [
+      {
+        "tier": "Early Bird",
+        "description": "Earliest registration period with lowest pricing"
+      },
+      {
+        "tier": "Regular",
+        "description": "Standard registration period"
+      },
+      {
+        "tier": "Late Registration",
+        "description": "Close to event date, higher fees"
+      },
+      {
+        "tier": "Day-of-Show",
+        "description": "Registration on competition day, highest fees if available"
+      }
+    ]
+  },
+
+  "divisions_and_classes": {
+    "overview": "NPC competitions feature 10 major divisions with specific class structures based on weight, height, age, or experience level.",
+
+    "mens_divisions": {
+      "Mens_Bodybuilding": {
+        "description": "Traditional bodybuilding division focusing on maximum muscle mass, symmetry, and conditioning",
+        "class_types": {
+          "age_based": [
+            "Teenage (18-19 years)",
+            "True Novice (never competed before)",
+            "Masters 35+ (35 years and older)",
+            "Masters 45+ (45 years and older)",
+            "Masters 50+ (50 years and older)",
+            "Masters 60+ (60 years and older)",
+            "Masters 70+ (70 years and older)"
+          ],
+          "novice_weight_classes": [
+            "Novice Lightweight (up to 165[ lbs)",
+            "Novice Middleweight (165[ to 187[ lbs)",
+            "Novice Heavyweight (over 187[ lbs)"
+          ],
+          "open_weight_classes": [
+            "Open Bantamweight (up to 143[ lbs)",
+            "Open Lightweight (143[ to 154[ lbs)",
+            "Open Middleweight (154[ to 176[ lbs)",
+            "Open Light Heavyweight (176[ to 198[ lbs)",
+            "Open Heavyweight (198[ to 225[ lbs)",
+            "Open Super Heavyweight (over 225[ lbs)"
+          ],
+          "special_categories": [
+            "Heroes (military, police, firefighters, emergency services, medical professionals)"
+          ]
+        }
+      },
+      "Mens_Classic_Physique": {
+        "description": "Classic bodybuilding aesthetic emphasizing symmetry, proportions, and classic poses",
+        "class_types": {
+          "age_based": [
+            "Teenage (18-19 years)",
+            "True Novice",
+            "Masters 35+",
+            "Masters 40+",
+            "Masters 45+",
+            "Masters 50+",
+            "Masters 55+"
+          ],
+          "novice_height_classes": [
+            "Novice Class A (up to 5'7\")",
+            "Novice Class B (over 5'7\" up to 5'10\")",
+            "Novice Class C (over 5'10\")"
+          ],
+          "open_height_weight_classes": [
+            "Class A: Various height categories from 5'4\" and under up to 5'7\"",
+            "Class B: Height categories from over 5'7\" up to 5'10\"",
+            "Class C: Height categories over 5'10\" up to 6'7\" and above"
+          ],
+          "note": "Classic Physique uses height-to-weight ratio formula with maximum allowable weight per height",
+          "special_categories": ["Heroes"]
+        }
+      },
+      "Mens_Physique": {
+        "description": "Board shorts division emphasizing V-taper, conditioning, and stage presence",
+        "class_types": {
+          "age_based": [
+            "Teenage (18-19 years)",
+            "True Novice",
+            "Masters 35+",
+            "Masters 40+",
+            "Masters 45+",
+            "Masters 50+",
+            "Masters 55+"
+          ],
+          "novice_height_classes": [
+            "Novice Class A (shorter height range)",
+            "Novice Class B (middle height range)",
+            "Novice Class C (taller height range)"
+          ],
+          "open_height_classes": [
+            "Open Class A (up to 5'7\")",
+            "Open Class B (over 5'7\" up to 5'9\")",
+            "Open Class C (over 5'9\" up to 5'11\")",
+            "Open Class D (over 5'11\" up to 6'0\")",
+            "Open Class E (over 6'0\" up to 6'2\")",
+            "Open Class F (over 6'2\")"
+          ],
+          "special_categories": ["Heroes"]
+        }
+      }
+    },
+
+    "womens_divisions": {
+      "Womens_Fitness": {
+        "description": "Combines physique round with fitness routine featuring gymnastics/acrobatic elements",
+        "class_types": {
+          "classes": [
+            "Teenage (18-19 years)",
+            "Open"
+          ]
+        },
+        "music_requirement": "90 seconds maximum for fitness routine"
+      },
+      "Womens_Bodybuilding": {
+        "description": "Traditional women's bodybuilding emphasizing muscle mass and conditioning",
+        "class_types": {
+          "age_based": [
+            "Teenage (18-19 years)",
+            "Masters 35+",
+            "Masters 45+",
+            "Masters 50+"
+          ],
+          "weight_classes": [
+            "Lightweight (up to 125 lbs)",
+            "Middleweight (over 125 lbs up to 140 lbs)",
+            "Heavyweight (over 140 lbs)"
+          ]
+        }
+      },
+      "Figure": {
+        "description": "Athletic physique with muscle tone, symmetry, and femininity",
+        "class_types": {
+          "age_based": [
+            "Teenage (18-19 years)",
+            "True Novice",
+            "Masters 35+",
+            "Masters 40+",
+            "Masters 45+",
+            "Masters 50+",
+            "Masters 55+"
+          ],
+          "novice_height_classes": [
+            "Novice Class A (shorter)",
+            "Novice Class B (middle)",
+            "Novice Class C (taller)"
+          ],
+          "open_height_classes": [
+            "Open Class A (up to 5'2\")",
+            "Open Class B (over 5'2\" up to 5'4\")",
+            "Open Class C (over 5'4\" up to 5'6\")",
+            "Open Class D (over 5'6\" up to 5'8\")",
+            "Open Class E (over 5'8\")"
+          ],
+          "special_categories": ["Heroes"]
+        }
+      },
+      "Bikini": {
+        "description": "Emphasizes overall physical appearance, stage presence, and confidence",
+        "class_types": {
+          "age_based": [
+            "Teenage (18-19 years)",
+            "True Novice",
+            "Masters 35+",
+            "Masters 40+",
+            "Masters 45+",
+            "Masters 50+",
+            "Masters 55+"
+          ],
+          "novice_height_classes": [
+            "Novice Class A (shorter)",
+            "Novice Class B (middle)",
+            "Novice Class C (taller)"
+          ],
+          "open_height_classes": [
+            "Open Class A (up to 5'2\")",
+            "Open Class B (over 5'2\" up to 5'4\")",
+            "Open Class C (over 5'4\" up to 5'6\")",
+            "Open Class D (over 5'6\" up to 5'8\")",
+            "Open Class E (over 5'8\")"
+          ],
+          "special_categories": ["Heroes"]
+        }
+      },
+      "Womens_Physique": {
+        "description": "Muscular development with femininity, symmetry, and muscle separation",
+        "class_types": {
+          "age_based": [
+            "Teenage (18-19 years)",
+            "True Novice",
+            "Masters 35+",
+            "Masters 45+",
+            "Masters 50+"
+          ],
+          "novice_height_classes": [
+            "Novice Class A (shorter)",
+            "Novice Class B (taller)"
+          ],
+          "open_height_classes": [
+            "Open Class A (up to 5'3\")",
+            "Open Class B (over 5'3\" up to 5'5\")",
+            "Open Class C (over 5'5\" up to 5'7\")",
+            "Open Class D (over 5'7\")"
+          ],
+          "special_categories": ["Heroes"]
+        }
+      },
+      "Wellness": {
+        "description": "Balance between upper body tone and lower body muscle development",
+        "class_types": {
+          "age_based": [
+            "True Novice",
+            "Masters 35+"
+          ],
+          "novice_height_classes": [
+            "Novice Class A (shorter)",
+            "Novice Class B (taller)"
+          ],
+          "open_height_classes": [
+            "Open Class A (up to 5'3\")",
+            "Open Class B (over 5'3\" up to 5'5\")",
+            "Open Class C (over 5'5\" up to 5'7\")",
+            "Open Class D (over 5'7\")"
+          ]
+        }
+      },
+      "Fit_Model": {
+        "description": "Commercial fitness model look with specific proportions",
+        "class_types": {
+          "classes": [
+            "Open"
+          ]
+        },
+        "special_restriction": "Women's Fit Model competitors CANNOT cross over to other divisions"
+      }
+    },
+
+    "crossover_rules": {
+      "maximum_divisions_per_registration": 8,
+      "duplicate_class_prevention": "Enforced - cannot register for same class twice",
+      "fit_model_restriction": "Women's Fit Model competitors cannot cross over to other divisions"
+    }
+  },
+
+  "music_requirements": {
+    "format": "MP3 only",
+    "max_duration_fitness": "90 seconds for Women's Fitness routine",
+    "upload_location": "Athlete Profile page (link provided in confirmation email)",
+    "naming_convention": "FirstName_LastName_Division.mp3 (recommended)",
+    "when_to_upload": "After registration confirmation, typically required 48-72 hours before event",
+    "important_note": "Music requirements vary by division. Fitness routines require music, posing routines optional."
+  },
+
+  "common_questions": [
+    {
+      "question": "Do I need an NPC membership to compete?",
+      "answer": "Yes, you must have a valid NPC Member Number to register for any NPC competition. Visit npcnewsonline.com to purchase membership if you don't have one."
+    },
+    {
+      "question": "Can I compete in multiple divisions?",
+      "answer": "Yes, you can compete in up to 8 divisions per registration. However, Women's Fit Model competitors cannot cross over to other divisions."
+    },
+    {
+      "question": "How do I know which class to choose?",
+      "answer": "Classes are determined by weight, height, age, or experience level depending on the division. Review the complete class structures for your division. If unsure, contact the event promoter."
+    },
+    {
+      "question": "What's the difference between Novice and True Novice?",
+      "answer": "True Novice means you have never competed before in any division. Novice means you haven't won an overall or class in that specific division."
+    },
+    {
+      "question": "When should I upload my posing music?",
+      "answer": "Upload music to your Athlete Profile page (link in confirmation email) typically 48-72 hours before the event. MP3 format only."
+    },
+    {
+      "question": "What if I need to change my class after registration?",
+      "answer": "Contact the event promoter directly through the contact information provided in your confirmation email."
+    },
+    {
+      "question": "How does Classic Physique weight limits work?",
+      "answer": "Classic Physique uses a height-to-weight ratio formula. Your maximum allowable weight is determined by your height. Check the official NPC rules for specific weight caps per height."
+    },
+    {
+      "question": "What payment methods are accepted?",
+      "answer": "Payment methods vary by promoter and typically include PayPal, Stripe, Square, Razorpay, Yoco, or FirstData. Funds flow directly to the event promoter."
+    },
+    {
+      "question": "Will I receive a confirmation?",
+      "answer": "Yes, you'll receive a professional confirmation email containing registration details, your Athlete Profile link, music upload instructions, and event-specific information."
+    },
+    {
+      "question": "Can I register on the day of the show?",
+      "answer": "Some events allow day-of-show registration at the highest pricing tier, but availability varies by promoter. Early registration is strongly recommended."
+    }
+  ],
+
+  "troubleshooting": [
+    {
+      "issue": "Email not matching error",
+      "solution": "Ensure both email fields match exactly, including capitalization. Check for extra spaces."
+    },
+    {
+      "issue": "Invalid NPC Member Number",
+      "solution": "NPC Member Number must be non-zero. If you don't have one, visit npcnewsonline.com to purchase membership first."
+    },
+    {
+      "issue": "Can't select multiple divisions",
+      "solution": "You can select up to 8 divisions. Each division requires a corresponding class selection. Ensure you're not trying to register for the same class twice."
+    },
+    {
+      "issue": "Music upload failing",
+      "solution": "Ensure file is MP3 format only. Check file size isn't too large. Use your Athlete Profile link from confirmation email to upload."
+    },
+    {
+      "issue": "Payment not processing",
+      "solution": "Payment processing uses the promoter's selected gateway. Contact the event promoter directly if payment issues occur."
+    },
+    {
+      "issue": "Confirmation email not received",
+      "solution": "Check spam folder. Wait 15-30 minutes. Contact event promoter if still not received."
+    }
+  ],
+
+  "metroflex_contact": {
+    "email": "brian@metroflexgym.com",
+    "phone": "817-465-9331",
+    "website": "metroflexevents.com",
+    "address": "The Original MetroFlex Gym, Arlington, TX"
+  }
+}

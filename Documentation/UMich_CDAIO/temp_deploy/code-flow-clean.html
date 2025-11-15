@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit OS - Code Flow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Vercel Geist Design System + Circuit OS Colors */
+        :root {
+            --neon-green: #38FF6A;
+            --neon-green-bright: #5aff88;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'Menlo', 'Monaco', 'Courier New', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-mono);
+            background: #000000;
+            color: var(--neon-green);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Logo at top */
+        .logo-container {
+            position: absolute;
+            top: 60px;
+            text-align: center;
+        }
+
+        .logo-container img {
+            height: 80px;
+            width: auto;
+            opacity: 0;
+            animation: logoFadeIn 1s ease 0.5s forwards;
+        }
+
+        @keyframes logoFadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Code container */
+        .code-container {
+            width: 90%;
+            max-width: 800px;
+            padding: 40px;
+        }
+
+        /* Individual code line */
+        .code-line {
+            font-size: 18px;
+            line-height: 2;
+            opacity: 0;
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        /* Circuit connector line between code lines */
+        .code-line::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: -4px;
+            width: 2px;
+            height: 0;
+            background: linear-gradient(180deg, transparent, var(--neon-green), var(--neon-green));
+            opacity: 0;
+        }
+
+        .code-line.flow::before {
+            animation: lineGrow 0.6s ease forwards;
+        }
+
+        @keyframes lineGrow {
+            to {
+                height: calc(100% + 8px);
+                opacity: 1;
+            }
+        }
+
+        /* Circuit node dot */
+        .code-line::after {
+            content: '';
+            position: absolute;
+            left: -3px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--neon-green);
+            opacity: 0;
+        }
+
+        .code-line.active::after {
+            animation: nodePulse 0.5s ease 0.3s forwards;
+        }
+
+        @keyframes nodePulse {
+            0% {
+                opacity: 0;
+                transform: translateY(-50%) scale(0);
+            }
+            50% {
+                transform: translateY(-50%) scale(1.5);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(-50%) scale(1);
+            }
+        }
+
+        /* Typing animation */
+        .code-line.active {
+            animation: typeLine 0.8s ease forwards;
+        }
+
+        @keyframes typeLine {
+            to { opacity: 1; }
+        }
+
+        .code-line span {
+            opacity: 0;
+        }
+
+        .code-line.active span {
+            animation: charFadeIn 0.05s ease forwards;
+        }
+
+        @keyframes charFadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Syntax colors - Vercel style */
+        .comment { color: #666666; }
+        .keyword { color: #ff6b9d; }
+        .string { color: var(--neon-green); }
+        .function { color: #00bfff; }
+        .variable { color: #ffa500; }
+        .number { color: #ff9f43; }
+
+        /* Tagline */
+        .tagline {
+            position: absolute;
+            bottom: 60px;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0;
+        }
+
+        .tagline.show {
+            animation: taglineFadeIn 1.5s ease forwards;
+        }
+
+        @keyframes taglineFadeIn {
+            to { opacity: 1; }
+        }
+
+        .command { color: #00ff88; }
+        .eliminate { color: #a0a0a0; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .code-container {
+                padding: 20px;
+            }
+
+            .code-line {
+                font-size: 14px;
+            }
+
+            .logo-container img {
+                height: 60px;
+            }
+
+            .tagline {
+                font-size: 14px;
+                padding: 0 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo -->
+    <div class="logo-container">
+        <img src="Brand-Assets/circuit-os-horizontal.svg" alt="Circuit OS">
+    </div>
+
+    <!-- Code lines -->
+    <div class="code-container">
+        <div class="code-line" id="line1">
+            <span class="comment">// Deploy AI lead qualification in 3 lines</span>
+        </div>
+
+        <div class="code-line" id="line2"></div>
+
+        <div class="code-line" id="line3"></div>
+
+        <div class="code-line" id="line4"></div>
+
+        <div class="code-line" id="line5"></div>
+
+        <div class="code-line" id="line6"></div>
+
+        <div class="code-line" id="line7"></div>
+
+        <div class="code-line" id="line8"></div>
+
+        <div class="code-line" id="line9"></div>
+
+        <div class="code-line" id="line10"></div>
+
+        <div class="code-line" id="line11"></div>
+
+        <div class="code-line" id="line12"></div>
+    </div>
+
+    <!-- Tagline -->
+    <div class="tagline">
+        <span class="command">Command Revenue.</span> <span class="eliminate">Eliminate Chaos.</span>
+    </div>
+
+    <script>
+        const codeLines = [
+            { id: 'line1', html: '<span class="comment">// Deploy AI lead qualification in 3 lines</span>', delay: 0 },
+            { id: 'line2', html: '', delay: 600 },
+            { id: 'line3', html: '<span class="keyword">import</span> { <span class="function">CircuitOS</span> } <span class="keyword">from</span> <span class="string">\'@circuit-os/sdk\'</span>;', delay: 800 },
+            { id: 'line4', html: '', delay: 1600 },
+            { id: 'line5', html: '<span class="keyword">const</span> <span class="variable">gateway</span> = <span class="keyword">new</span> <span class="function">CircuitOS</span>({', delay: 1800 },
+            { id: 'line6', html: '  <span class="variable">apiKey</span>: process.env.CIRCUIT_API_KEY,', delay: 2600 },
+            { id: 'line7', html: '  <span class="variable">model</span>: <span class="string">\'lead-qualification-v2\'</span>', delay: 3400 },
+            { id: 'line8', html: '});', delay: 4200 },
+            { id: 'line9', html: '', delay: 5000 },
+            { id: 'line10', html: '<span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> gateway.<span class="function">qualify</span>({ ... });', delay: 5200 },
+            { id: 'line11', html: '', delay: 6000 },
+            { id: 'line12', html: '<span class="comment">// { score: <span class="number">0.94</span>, tier: <span class="string">\'A\'</span>, confidence: <span class="number">0.92</span> }</span>', delay: 6200 }
+        ];
+
+        // Animate each line sequentially
+        codeLines.forEach((line, index) => {
+            setTimeout(() => {
+                const el = document.getElementById(line.id);
+                el.innerHTML = line.html;
+
+                // Show flow connector from previous line
+                if (index > 0) {
+                    el.classList.add('flow');
+                }
+
+                // Activate line (fade in + typing effect)
+                setTimeout(() => {
+                    el.classList.add('active');
+
+                    // Animate each character
+                    const chars = el.querySelectorAll('span');
+                    chars.forEach((char, charIndex) => {
+                        char.style.animationDelay = `${charIndex * 0.02}s`;
+                    });
+                }, 100);
+            }, line.delay);
+        });
+
+        // Show tagline at the end
+        setTimeout(() => {
+            document.querySelector('.tagline').classList.add('show');
+        }, 7000);
+
+        // Auto-loop
+        setTimeout(() => {
+            location.reload();
+        }, 12000);
+    </script>
+</body>
+</html>

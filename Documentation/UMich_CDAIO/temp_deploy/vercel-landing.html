@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit OS - AI-Powered Revenue Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Vercel Geist Design System + Circuit OS Colors */
+        :root {
+            /* Colors - Circuit OS palette */
+            --background: #000000;
+            --foreground: #FAFAFA;
+            --accents-1: #0a0a0a;
+            --accents-2: #1a1a1a;
+            --accents-3: #333333;
+            --accents-4: #666666;
+            --accents-5: #8B9198;
+            --accents-6: #999999;
+            --accents-7: #B8BCC2;
+            --accents-8: #CCCCCC;
+
+            /* Circuit OS Brand Colors */
+            --neon-green: #38FF6A;
+            --neon-green-bright: #5aff88;
+            --neon-green-dark: #2ecc54;
+            --neon-glow: rgba(56, 255, 106, 0.6);
+
+            /* Steel Gray */
+            --steel-gray: #8B9198;
+            --steel-light: #B8BCC2;
+            --steel-dark: #6B6F75;
+
+            /* Typography - Geist-inspired */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            --font-mono: 'Menlo', 'Monaco', 'Courier New', monospace;
+
+            /* Spacing */
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-12: 48px;
+            --space-16: 64px;
+            --space-24: 96px;
+            --space-32: 128px;
+
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 8px;
+            --radius-full: 9999px;
+
+            /* Shadows */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 8px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 16px rgba(0,0,0,0.15);
+            --shadow-border: 0 0 0 1px rgba(255,255,255,0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* Navigation - Vercel style */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--accents-2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--space-6);
+        }
+
+        .nav-logo {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--foreground);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--space-6);
+            align-items: center;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--accents-6);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--foreground);
+        }
+
+        .nav-cta {
+            padding: 6px 12px;
+            background: var(--neon-green);
+            color: var(--background);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .nav-cta:hover {
+            background: var(--neon-green-bright);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--neon-glow);
+        }
+
+        /* Hero Section - Vercel style */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-16) var(--space-6);
+            padding-top: calc(64px + var(--space-16));
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Grid background - subtle */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 64px 64px;
+            mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: 6px 12px;
+            background: var(--accents-1);
+            border: 1px solid var(--accents-2);
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--accents-6);
+            margin-bottom: var(--space-8);
+            transition: all 0.2s ease;
+        }
+
+        .hero-badge:hover {
+            border-color: var(--accents-3);
+            background: var(--accents-2);
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--neon-glow);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        h1 {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: var(--space-6);
+            background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--neon-green) 0%, var(--neon-green-bright) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 20px;
+            line-height: 1.6;
+            color: var(--accents-6);
+            margin-bottom: var(--space-12);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: var(--space-4);
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            padding: 12px 24px;
+            background: var(--neon-green);
+            color: var(--background);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .btn-primary:hover {
+            background: var(--neon-green-bright);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px var(--neon-glow);
+        }
+
+        .btn-secondary {
+            padding: 12px 24px;
+            background: transparent;
+            color: var(--foreground);
+            border: 1px solid var(--accents-2);
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accents-4);
+            background: var(--accents-1);
+        }
+
+        /* Features Section - Vercel grid style */
+        .features {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-24) var(--space-6);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-16);
+        }
+
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accents-6);
+            margin-bottom: var(--space-3);
+        }
+
+        .section-title {
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            color: var(--foreground);
+            margin-bottom: var(--space-4);
+        }
+
+        .section-description {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--accents-6);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--space-6);
+        }
+
+        .feature-card {
+            padding: var(--space-8);
+            background: var(--accents-1);
+            border: 1px solid var(--accents-2);
+            border-radius: var(--radius-lg);
+            transition: all 0.2s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accents-3);
+            background: rgba(17, 17, 17, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accents-2);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-4);
+            font-size: 20px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            color: var(--foreground);
+        }
+
+        .feature-description {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--accents-6);
+        }
+
+        /* Stats Section */
+        .stats {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-24) var(--space-6);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-8);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #FFFFFF 0%, #666666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-2);
+        }
+
+        .stat-label {
+            font-size: 15px;
+            color: var(--accents-6);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--accents-2);
+            padding: var(--space-16) var(--space-6);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--accents-6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 40px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="/" class="nav-logo">CIRCUIT OS</a>
+        <div class="nav-links">
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#platform" class="nav-link">Platform</a>
+            <a href="#pricing" class="nav-link">Pricing</a>
+            <a href="main-dashboard.html" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                <span>Now Live: AI-Powered Revenue Intelligence</span>
+            </div>
+
+            <h1>
+                Command Revenue.<br>
+                <span class="highlight">Eliminate Chaos.</span>
+            </h1>
+
+            <p class="hero-description">
+                Deploy enterprise-grade AI lead qualification, sales automation, and revenue intelligence in minutes. Built for Fortune 100 scale.
+            </p>
+
+            <div class="cta-group">
+                <a href="circuit-loading.html" class="btn-primary">
+                    Start Building
+                    <span>→</span>
+                </a>
+                <a href="main-dashboard.html" class="btn-secondary">
+                    View Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <div class="section-label">Features</div>
+            <h2 class="section-title">Built for Scale</h2>
+            <p class="section-description">
+                Enterprise-grade infrastructure with the simplicity of a single API call.
+            </p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">AI Lead Qualification</h3>
+                <p class="feature-description">
+                    Score and qualify leads in real-time with 94% accuracy. Deploy in 3 lines of code.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Instant Deployment</h3>
+                <p class="feature-description">
+                    Go from prototype to production in minutes. No infrastructure required.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3 class="feature-title">Enterprise Security</h3>
+                <p class="feature-description">
+                    SOC 2 Type II compliant. GDPR ready. Your data stays yours.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Real-time Analytics</h3>
+                <p class="feature-description">
+                    Track every metric that matters. Pipeline visibility at Fortune 100 scale.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3 class="feature-title">Autonomous Agents</h3>
+                <p class="feature-description">
+                    AI agents that work 24/7 to qualify, nurture, and convert leads automatically.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3 class="feature-title">Global Edge Network</h3>
+                <p class="feature-description">
+                    Deploy to 300+ cities worldwide. Sub-50ms response times, everywhere.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="section-header">
+            <div class="section-label">Trusted By Industry Leaders</div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">94%</div>
+                <div class="stat-label">Lead Qualification Accuracy</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">3 Lines</div>
+                <div class="stat-label">To Production Deployment</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">&lt;50ms</div>
+                <div class="stat-label">Global Response Time</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">$2.4M</div>
+                <div class="stat-label">Avg Revenue Increase</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text">© 2025 Circuit OS. Command Revenue. Eliminate Chaos.</p>
+        </div>
+    </footer>
+</body>
+</html>

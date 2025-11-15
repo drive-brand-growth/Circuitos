@@ -1,0 +1,1948 @@
+[
+  {
+    "opportunity": {
+      "id": "opp_001",
+      "name": "A&M Auto Sales DRNsights '25",
+      "amount": 850.0
+    },
+    "results": {
+      "qualification": {
+        "qualification_score": 12.5,
+        "missing_criteria": [
+          "economic_buyer_identified",
+          "budget_discussed",
+          "timeline_established",
+          "roi_calculated",
+          "decision_process_mapped",
+          "champion_identified",
+          "multiple_stakeholders"
+        ],
+        "recommendation": "CRITICALLY UNQUALIFIED - would need to start from scratch",
+        "apply_penalty": -15,
+        "score_cap": 40,
+        "meddic_breakdown": {
+          "economic_buyer_identified": false,
+          "budget_discussed": false,
+          "need_quantified": true,
+          "timeline_established": false,
+          "roi_calculated": false,
+          "decision_process_mapped": false,
+          "champion_identified": false,
+          "multiple_stakeholders": false
+        }
+      },
+      "sentiment": {
+        "sentiment": "NEUTRAL",
+        "engagement_level": "MODERATE",
+        "key_themes": [],
+        "question_count": 2,
+        "last_meaningful_interaction": {
+          "date": "2024-10-10",
+          "summary": "No problem, thank you!"
+        },
+        "engagement_score": 1
+      },
+      "competitive": {
+        "competitive_loss": false,
+        "competitor_name": null,
+        "competitive_position": "UNKNOWN",
+        "competitive_score": 5,
+        "reasoning": "Non-competitive loss. Customer hasn't committed to alternative solution. Door still open."
+      },
+      "industry": {
+        "industry_growth_rate": "+19% YoY",
+        "company_news": [],
+        "funding_events": [],
+        "employee_count": "UNKNOWN",
+        "local_market_conditions": "Auto Sales market stable",
+        "company_score": 3,
+        "industry_score": 3,
+        "data_sources": [
+          "Industry Report 2024 (Auto Sales)",
+          "Google Search (limited results)",
+          "Crunchbase (company not found)"
+        ]
+      },
+      "scoring": {
+        "final_score": 5,
+        "tier": "SKIP",
+        "category_breakdown": {
+          "company_changes": 3,
+          "personnel_changes": 0,
+          "competitive_intel": 5,
+          "customer_reengagement": 0,
+          "conversation_quality": 1,
+          "loss_reason": 7,
+          "timing": 3
+        },
+        "penalties_applied": -36,
+        "qualification_gate_applied": true,
+        "multi_signal_count": 0,
+        "reasoning": "Qualification: 12.5% (CRITICALLY UNQUALIFIED - would need to start from scratch). Engagement: MODERATE (NEUTRAL sentiment). Competitive: Non-competitive loss. Customer hasn't committed to alternative solution. Door still open.. Days since close: 270. Penalties applied: -36. Multi-signal count: 0. Final: 5/100 (SKIP tier)."
+      },
+      "strategy": {
+        "recommended_action": "Do not contact",
+        "resource_allocation": {
+          "rep_time": false,
+          "marketing_automation": false,
+          "time_investment": "0 minutes"
+        },
+        "expected_outcome": {
+          "revival_probability": "<5%",
+          "rationale": "Very low score (5/100)"
+        },
+        "next_steps": [],
+        "draft_email": null
+      },
+      "quality": {
+        "quality_score": 92,
+        "grade": "A (Excellent quality)",
+        "dimension_scores": {
+          "reasoning_clarity": 9,
+          "signal_detection_accuracy": 8,
+          "methodology_adherence": 10,
+          "score_consistency": 10,
+          "risk_identification": 9,
+          "recommendation_quality": 9,
+          "data_completeness": 8,
+          "bias_detection": 9,
+          "multi_signal_convergence": 10,
+          "transparency": 10
+        },
+        "strengths": [
+          "Clear reasoning with cited evidence",
+          "All MEDDIC/BANT criteria checked rigorously",
+          "Transparent category breakdown",
+          "Specific, actionable recommendations"
+        ],
+        "weaknesses": [
+          "Could have more external data (limited by MCP availability)",
+          "Personnel change detection not available in test"
+        ],
+        "recommendations": [
+          "Add LinkedIn API for personnel change detection",
+          "Expand company research data sources",
+          "Add real-time website tracking integration"
+        ],
+        "rerun_required": false
+      }
+    },
+    "processing_time_seconds": 0.000178,
+    "audit_log": [
+      {
+        "agent": "Agent_1_Qualification",
+        "timestamp": "2025-11-06T05:19:57.758159",
+        "processing_time_ms": 0.014,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "qualification_score": 12.5,
+          "missing_criteria": [
+            "economic_buyer_identified",
+            "budget_discussed",
+            "timeline_established",
+            "roi_calculated",
+            "decision_process_mapped",
+            "champion_identified",
+            "multiple_stakeholders"
+          ],
+          "recommendation": "CRITICALLY UNQUALIFIED - would need to start from scratch",
+          "apply_penalty": -15,
+          "score_cap": 40,
+          "meddic_breakdown": {
+            "economic_buyer_identified": false,
+            "budget_discussed": false,
+            "need_quantified": true,
+            "timeline_established": false,
+            "roi_calculated": false,
+            "decision_process_mapped": false,
+            "champion_identified": false,
+            "multiple_stakeholders": false
+          }
+        }
+      },
+      {
+        "agent": "Agent_2_Sentiment",
+        "timestamp": "2025-11-06T05:19:57.758209",
+        "processing_time_ms": 0.030000000000000002,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "sentiment": "NEUTRAL",
+          "engagement_level": "MODERATE",
+          "key_themes": [],
+          "question_count": 2,
+          "last_meaningful_interaction": {
+            "date": "2024-10-10",
+            "summary": "No problem, thank you!"
+          },
+          "engagement_score": 1
+        }
+      },
+      {
+        "agent": "Agent_3_Competitive",
+        "timestamp": "2025-11-06T05:19:57.758229",
+        "processing_time_ms": 0.009000000000000001,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "competitive_loss": false,
+          "competitor_name": null,
+          "competitive_position": "UNKNOWN",
+          "competitive_score": 5,
+          "reasoning": "Non-competitive loss. Customer hasn't committed to alternative solution. Door still open."
+        }
+      },
+      {
+        "agent": "Agent_4_Industry_MCP",
+        "timestamp": "2025-11-06T05:19:57.758244",
+        "processing_time_ms": 0.008,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "industry_growth_rate": "+19% YoY",
+          "company_news": [],
+          "funding_events": [],
+          "employee_count": "UNKNOWN",
+          "local_market_conditions": "Auto Sales market stable",
+          "company_score": 3,
+          "industry_score": 3,
+          "data_sources": [
+            "Industry Report 2024 (Auto Sales)",
+            "Google Search (limited results)",
+            "Crunchbase (company not found)"
+          ]
+        }
+      },
+      {
+        "agent": "Agent_5_Scoring",
+        "timestamp": "2025-11-06T05:19:57.758269",
+        "processing_time_ms": 0.019,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "final_score": 5,
+          "tier": "SKIP",
+          "category_breakdown": {
+            "company_changes": 3,
+            "personnel_changes": 0,
+            "competitive_intel": 5,
+            "customer_reengagement": 0,
+            "conversation_quality": 1,
+            "loss_reason": 7,
+            "timing": 3
+          },
+          "penalties_applied": -36,
+          "qualification_gate_applied": true,
+          "multi_signal_count": 0,
+          "reasoning": "Qualification: 12.5% (CRITICALLY UNQUALIFIED - would need to start from scratch). Engagement: MODERATE (NEUTRAL sentiment). Competitive: Non-competitive loss. Customer hasn't committed to alternative solution. Door still open.. Days since close: 270. Penalties applied: -36. Multi-signal count: 0. Final: 5/100 (SKIP tier)."
+        }
+      },
+      {
+        "agent": "Agent_6_Strategy",
+        "timestamp": "2025-11-06T05:19:57.758284",
+        "processing_time_ms": 0.007,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "recommended_action": "Do not contact",
+          "resource_allocation": {
+            "rep_time": false,
+            "marketing_automation": false,
+            "time_investment": "0 minutes"
+          },
+          "expected_outcome": {
+            "revival_probability": "<5%",
+            "rationale": "Very low score (5/100)"
+          },
+          "next_steps": [],
+          "draft_email": null
+        }
+      },
+      {
+        "agent": "Agent_7_Quality",
+        "timestamp": "2025-11-06T05:19:57.758298",
+        "processing_time_ms": 0.007,
+        "input": {},
+        "output": {
+          "quality_score": 92,
+          "grade": "A (Excellent quality)",
+          "dimension_scores": {
+            "reasoning_clarity": 9,
+            "signal_detection_accuracy": 8,
+            "methodology_adherence": 10,
+            "score_consistency": 10,
+            "risk_identification": 9,
+            "recommendation_quality": 9,
+            "data_completeness": 8,
+            "bias_detection": 9,
+            "multi_signal_convergence": 10,
+            "transparency": 10
+          },
+          "strengths": [
+            "Clear reasoning with cited evidence",
+            "All MEDDIC/BANT criteria checked rigorously",
+            "Transparent category breakdown",
+            "Specific, actionable recommendations"
+          ],
+          "weaknesses": [
+            "Could have more external data (limited by MCP availability)",
+            "Personnel change detection not available in test"
+          ],
+          "recommendations": [
+            "Add LinkedIn API for personnel change detection",
+            "Expand company research data sources",
+            "Add real-time website tracking integration"
+          ],
+          "rerun_required": false
+        }
+      },
+      {
+        "agent": "Agent_1_Qualification",
+        "timestamp": "2025-11-06T05:19:57.758326",
+        "processing_time_ms": 0.006,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "qualification_score": 100.0,
+          "missing_criteria": [],
+          "recommendation": "WELL QUALIFIED - strong foundation",
+          "apply_penalty": 0,
+          "score_cap": null,
+          "meddic_breakdown": {
+            "economic_buyer_identified": true,
+            "budget_discussed": true,
+            "need_quantified": true,
+            "timeline_established": true,
+            "roi_calculated": true,
+            "decision_process_mapped": true,
+            "champion_identified": true,
+            "multiple_stakeholders": true
+          }
+        }
+      },
+      {
+        "agent": "Agent_2_Sentiment",
+        "timestamp": "2025-11-06T05:19:57.758346",
+        "processing_time_ms": 0.016,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "sentiment": "POSITIVE",
+          "engagement_level": "MODERATE",
+          "key_themes": [
+            "Timeline"
+          ],
+          "question_count": 2,
+          "last_meaningful_interaction": {
+            "date": "2024-09-15",
+            "summary": "This looks great! What's the timeline?"
+          },
+          "engagement_score": 10
+        }
+      },
+      {
+        "agent": "Agent_3_Competitive",
+        "timestamp": "2025-11-06T05:19:57.758354",
+        "processing_time_ms": 0.004,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "competitive_loss": false,
+          "competitor_name": null,
+          "competitive_position": "UNKNOWN",
+          "competitive_score": 5,
+          "reasoning": "Non-competitive loss. Customer hasn't committed to alternative solution. Door still open."
+        }
+      },
+      {
+        "agent": "Agent_4_Industry_MCP",
+        "timestamp": "2025-11-06T05:19:57.758362",
+        "processing_time_ms": 0.005,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "industry_growth_rate": "+12% YoY",
+          "company_news": [
+            "Company expanding into new markets"
+          ],
+          "funding_events": [],
+          "employee_count": "50-200",
+          "local_market_conditions": "Technology market stable",
+          "company_score": 3,
+          "industry_score": 3,
+          "data_sources": [
+            "Industry Report 2024 (Technology)",
+            "Google Search (limited results)",
+            "Crunchbase (company not found)"
+          ]
+        }
+      },
+      {
+        "agent": "Agent_5_Scoring",
+        "timestamp": "2025-11-06T05:19:57.758374",
+        "processing_time_ms": 0.009000000000000001,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "final_score": 17,
+          "tier": "SKIP",
+          "category_breakdown": {
+            "company_changes": 3,
+            "personnel_changes": 0,
+            "competitive_intel": 5,
+            "customer_reengagement": 0,
+            "conversation_quality": 10,
+            "loss_reason": 7,
+            "timing": 3
+          },
+          "penalties_applied": -3,
+          "qualification_gate_applied": false,
+          "multi_signal_count": 0,
+          "reasoning": "Qualification: 100.0% (WELL QUALIFIED - strong foundation). Engagement: MODERATE (POSITIVE sentiment). Competitive: Non-competitive loss. Customer hasn't committed to alternative solution. Door still open.. Days since close: 45. Penalties applied: -3. Multi-signal count: 0. Final: 17/100 (SKIP tier)."
+        }
+      },
+      {
+        "agent": "Agent_6_Strategy",
+        "timestamp": "2025-11-06T05:19:57.758381",
+        "processing_time_ms": 0.003,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "recommended_action": "Do not contact",
+          "resource_allocation": {
+            "rep_time": false,
+            "marketing_automation": false,
+            "time_investment": "0 minutes"
+          },
+          "expected_outcome": {
+            "revival_probability": "<5%",
+            "rationale": "Very low score (17/100)"
+          },
+          "next_steps": [],
+          "draft_email": null
+        }
+      },
+      {
+        "agent": "Agent_7_Quality",
+        "timestamp": "2025-11-06T05:19:57.758387",
+        "processing_time_ms": 0.003,
+        "input": {},
+        "output": {
+          "quality_score": 92,
+          "grade": "A (Excellent quality)",
+          "dimension_scores": {
+            "reasoning_clarity": 9,
+            "signal_detection_accuracy": 8,
+            "methodology_adherence": 10,
+            "score_consistency": 10,
+            "risk_identification": 9,
+            "recommendation_quality": 9,
+            "data_completeness": 8,
+            "bias_detection": 9,
+            "multi_signal_convergence": 10,
+            "transparency": 10
+          },
+          "strengths": [
+            "Clear reasoning with cited evidence",
+            "All MEDDIC/BANT criteria checked rigorously",
+            "Transparent category breakdown",
+            "Specific, actionable recommendations"
+          ],
+          "weaknesses": [
+            "Could have more external data (limited by MCP availability)",
+            "Personnel change detection not available in test"
+          ],
+          "recommendations": [
+            "Add LinkedIn API for personnel change detection",
+            "Expand company research data sources",
+            "Add real-time website tracking integration"
+          ],
+          "rerun_required": false
+        }
+      },
+      {
+        "agent": "Agent_1_Qualification",
+        "timestamp": "2025-11-06T05:19:57.758407",
+        "processing_time_ms": 0.004,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "qualification_score": 37.5,
+          "missing_criteria": [
+            "timeline_established",
+            "roi_calculated",
+            "decision_process_mapped",
+            "champion_identified",
+            "multiple_stakeholders"
+          ],
+          "recommendation": "POORLY QUALIFIED - significant gaps exist",
+          "apply_penalty": -10,
+          "score_cap": 60,
+          "meddic_breakdown": {
+            "economic_buyer_identified": true,
+            "budget_discussed": true,
+            "need_quantified": true,
+            "timeline_established": false,
+            "roi_calculated": false,
+            "decision_process_mapped": false,
+            "champion_identified": false,
+            "multiple_stakeholders": false
+          }
+        }
+      },
+      {
+        "agent": "Agent_2_Sentiment",
+        "timestamp": "2025-11-06T05:19:57.758420",
+        "processing_time_ms": 0.01,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "sentiment": "NEUTRAL",
+          "engagement_level": "MODERATE",
+          "key_themes": [],
+          "question_count": 0,
+          "last_meaningful_interaction": {
+            "date": "2024-07-20",
+            "summary": "We decided to go with Square. Thank you!"
+          },
+          "engagement_score": 10
+        }
+      },
+      {
+        "agent": "Agent_3_Competitive",
+        "timestamp": "2025-11-06T05:19:57.758426",
+        "processing_time_ms": 0.003,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "competitive_loss": true,
+          "competitor_name": "Unknown Competitor",
+          "competitive_position": "WEAK",
+          "competitive_score": 2,
+          "reasoning": "Lost to competitor - difficult to revive"
+        }
+      },
+      {
+        "agent": "Agent_4_Industry_MCP",
+        "timestamp": "2025-11-06T05:19:57.758432",
+        "processing_time_ms": 0.003,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "industry_growth_rate": "+3% YoY",
+          "company_news": [],
+          "funding_events": [
+            "Series B $50M"
+          ],
+          "employee_count": "50-200",
+          "local_market_conditions": "Retail market stable",
+          "company_score": 10,
+          "industry_score": 3,
+          "data_sources": [
+            "Industry Report 2024 (Retail)",
+            "Google Search (limited results)",
+            "Crunchbase"
+          ]
+        }
+      },
+      {
+        "agent": "Agent_5_Scoring",
+        "timestamp": "2025-11-06T05:19:57.758441",
+        "processing_time_ms": 0.007,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "final_score": 10,
+          "tier": "SKIP",
+          "category_breakdown": {
+            "company_changes": 10,
+            "personnel_changes": 0,
+            "competitive_intel": 2,
+            "customer_reengagement": 0,
+            "conversation_quality": 10,
+            "loss_reason": 7,
+            "timing": 3
+          },
+          "penalties_applied": -18,
+          "qualification_gate_applied": false,
+          "multi_signal_count": 1,
+          "reasoning": "Qualification: 37.5% (POORLY QUALIFIED - significant gaps exist). Engagement: MODERATE (NEUTRAL sentiment). Competitive: Lost to competitor - difficult to revive. Days since close: 120. Penalties applied: -18. Multi-signal count: 1. Final: 10/100 (SKIP tier)."
+        }
+      },
+      {
+        "agent": "Agent_6_Strategy",
+        "timestamp": "2025-11-06T05:19:57.758447",
+        "processing_time_ms": 0.002,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "recommended_action": "Do not contact",
+          "resource_allocation": {
+            "rep_time": false,
+            "marketing_automation": false,
+            "time_investment": "0 minutes"
+          },
+          "expected_outcome": {
+            "revival_probability": "<5%",
+            "rationale": "Very low score (10/100)"
+          },
+          "next_steps": [],
+          "draft_email": null
+        }
+      },
+      {
+        "agent": "Agent_7_Quality",
+        "timestamp": "2025-11-06T05:19:57.758452",
+        "processing_time_ms": 0.002,
+        "input": {},
+        "output": {
+          "quality_score": 92,
+          "grade": "A (Excellent quality)",
+          "dimension_scores": {
+            "reasoning_clarity": 9,
+            "signal_detection_accuracy": 8,
+            "methodology_adherence": 10,
+            "score_consistency": 10,
+            "risk_identification": 9,
+            "recommendation_quality": 9,
+            "data_completeness": 8,
+            "bias_detection": 9,
+            "multi_signal_convergence": 10,
+            "transparency": 10
+          },
+          "strengths": [
+            "Clear reasoning with cited evidence",
+            "All MEDDIC/BANT criteria checked rigorously",
+            "Transparent category breakdown",
+            "Specific, actionable recommendations"
+          ],
+          "weaknesses": [
+            "Could have more external data (limited by MCP availability)",
+            "Personnel change detection not available in test"
+          ],
+          "recommendations": [
+            "Add LinkedIn API for personnel change detection",
+            "Expand company research data sources",
+            "Add real-time website tracking integration"
+          ],
+          "rerun_required": false
+        }
+      }
+    ]
+  },
+  {
+    "opportunity": {
+      "id": "opp_002",
+      "name": "Enterprise Corp Cloud Migration '25",
+      "amount": 500000.0
+    },
+    "results": {
+      "qualification": {
+        "qualification_score": 100.0,
+        "missing_criteria": [],
+        "recommendation": "WELL QUALIFIED - strong foundation",
+        "apply_penalty": 0,
+        "score_cap": null,
+        "meddic_breakdown": {
+          "economic_buyer_identified": true,
+          "budget_discussed": true,
+          "need_quantified": true,
+          "timeline_established": true,
+          "roi_calculated": true,
+          "decision_process_mapped": true,
+          "champion_identified": true,
+          "multiple_stakeholders": true
+        }
+      },
+      "sentiment": {
+        "sentiment": "POSITIVE",
+        "engagement_level": "MODERATE",
+        "key_themes": [
+          "Timeline"
+        ],
+        "question_count": 2,
+        "last_meaningful_interaction": {
+          "date": "2024-09-15",
+          "summary": "This looks great! What's the timeline?"
+        },
+        "engagement_score": 10
+      },
+      "competitive": {
+        "competitive_loss": false,
+        "competitor_name": null,
+        "competitive_position": "UNKNOWN",
+        "competitive_score": 5,
+        "reasoning": "Non-competitive loss. Customer hasn't committed to alternative solution. Door still open."
+      },
+      "industry": {
+        "industry_growth_rate": "+12% YoY",
+        "company_news": [
+          "Company expanding into new markets"
+        ],
+        "funding_events": [],
+        "employee_count": "50-200",
+        "local_market_conditions": "Technology market stable",
+        "company_score": 3,
+        "industry_score": 3,
+        "data_sources": [
+          "Industry Report 2024 (Technology)",
+          "Google Search (limited results)",
+          "Crunchbase (company not found)"
+        ]
+      },
+      "scoring": {
+        "final_score": 17,
+        "tier": "SKIP",
+        "category_breakdown": {
+          "company_changes": 3,
+          "personnel_changes": 0,
+          "competitive_intel": 5,
+          "customer_reengagement": 0,
+          "conversation_quality": 10,
+          "loss_reason": 7,
+          "timing": 3
+        },
+        "penalties_applied": -3,
+        "qualification_gate_applied": false,
+        "multi_signal_count": 0,
+        "reasoning": "Qualification: 100.0% (WELL QUALIFIED - strong foundation). Engagement: MODERATE (POSITIVE sentiment). Competitive: Non-competitive loss. Customer hasn't committed to alternative solution. Door still open.. Days since close: 45. Penalties applied: -3. Multi-signal count: 0. Final: 17/100 (SKIP tier)."
+      },
+      "strategy": {
+        "recommended_action": "Do not contact",
+        "resource_allocation": {
+          "rep_time": false,
+          "marketing_automation": false,
+          "time_investment": "0 minutes"
+        },
+        "expected_outcome": {
+          "revival_probability": "<5%",
+          "rationale": "Very low score (17/100)"
+        },
+        "next_steps": [],
+        "draft_email": null
+      },
+      "quality": {
+        "quality_score": 92,
+        "grade": "A (Excellent quality)",
+        "dimension_scores": {
+          "reasoning_clarity": 9,
+          "signal_detection_accuracy": 8,
+          "methodology_adherence": 10,
+          "score_consistency": 10,
+          "risk_identification": 9,
+          "recommendation_quality": 9,
+          "data_completeness": 8,
+          "bias_detection": 9,
+          "multi_signal_convergence": 10,
+          "transparency": 10
+        },
+        "strengths": [
+          "Clear reasoning with cited evidence",
+          "All MEDDIC/BANT criteria checked rigorously",
+          "Transparent category breakdown",
+          "Specific, actionable recommendations"
+        ],
+        "weaknesses": [
+          "Could have more external data (limited by MCP availability)",
+          "Personnel change detection not available in test"
+        ],
+        "recommendations": [
+          "Add LinkedIn API for personnel change detection",
+          "Expand company research data sources",
+          "Add real-time website tracking integration"
+        ],
+        "rerun_required": false
+      }
+    },
+    "processing_time_seconds": 7.6e-05,
+    "audit_log": [
+      {
+        "agent": "Agent_1_Qualification",
+        "timestamp": "2025-11-06T05:19:57.758159",
+        "processing_time_ms": 0.014,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "qualification_score": 12.5,
+          "missing_criteria": [
+            "economic_buyer_identified",
+            "budget_discussed",
+            "timeline_established",
+            "roi_calculated",
+            "decision_process_mapped",
+            "champion_identified",
+            "multiple_stakeholders"
+          ],
+          "recommendation": "CRITICALLY UNQUALIFIED - would need to start from scratch",
+          "apply_penalty": -15,
+          "score_cap": 40,
+          "meddic_breakdown": {
+            "economic_buyer_identified": false,
+            "budget_discussed": false,
+            "need_quantified": true,
+            "timeline_established": false,
+            "roi_calculated": false,
+            "decision_process_mapped": false,
+            "champion_identified": false,
+            "multiple_stakeholders": false
+          }
+        }
+      },
+      {
+        "agent": "Agent_2_Sentiment",
+        "timestamp": "2025-11-06T05:19:57.758209",
+        "processing_time_ms": 0.030000000000000002,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "sentiment": "NEUTRAL",
+          "engagement_level": "MODERATE",
+          "key_themes": [],
+          "question_count": 2,
+          "last_meaningful_interaction": {
+            "date": "2024-10-10",
+            "summary": "No problem, thank you!"
+          },
+          "engagement_score": 1
+        }
+      },
+      {
+        "agent": "Agent_3_Competitive",
+        "timestamp": "2025-11-06T05:19:57.758229",
+        "processing_time_ms": 0.009000000000000001,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "competitive_loss": false,
+          "competitor_name": null,
+          "competitive_position": "UNKNOWN",
+          "competitive_score": 5,
+          "reasoning": "Non-competitive loss. Customer hasn't committed to alternative solution. Door still open."
+        }
+      },
+      {
+        "agent": "Agent_4_Industry_MCP",
+        "timestamp": "2025-11-06T05:19:57.758244",
+        "processing_time_ms": 0.008,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "industry_growth_rate": "+19% YoY",
+          "company_news": [],
+          "funding_events": [],
+          "employee_count": "UNKNOWN",
+          "local_market_conditions": "Auto Sales market stable",
+          "company_score": 3,
+          "industry_score": 3,
+          "data_sources": [
+            "Industry Report 2024 (Auto Sales)",
+            "Google Search (limited results)",
+            "Crunchbase (company not found)"
+          ]
+        }
+      },
+      {
+        "agent": "Agent_5_Scoring",
+        "timestamp": "2025-11-06T05:19:57.758269",
+        "processing_time_ms": 0.019,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "final_score": 5,
+          "tier": "SKIP",
+          "category_breakdown": {
+            "company_changes": 3,
+            "personnel_changes": 0,
+            "competitive_intel": 5,
+            "customer_reengagement": 0,
+            "conversation_quality": 1,
+            "loss_reason": 7,
+            "timing": 3
+          },
+          "penalties_applied": -36,
+          "qualification_gate_applied": true,
+          "multi_signal_count": 0,
+          "reasoning": "Qualification: 12.5% (CRITICALLY UNQUALIFIED - would need to start from scratch). Engagement: MODERATE (NEUTRAL sentiment). Competitive: Non-competitive loss. Customer hasn't committed to alternative solution. Door still open.. Days since close: 270. Penalties applied: -36. Multi-signal count: 0. Final: 5/100 (SKIP tier)."
+        }
+      },
+      {
+        "agent": "Agent_6_Strategy",
+        "timestamp": "2025-11-06T05:19:57.758284",
+        "processing_time_ms": 0.007,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "recommended_action": "Do not contact",
+          "resource_allocation": {
+            "rep_time": false,
+            "marketing_automation": false,
+            "time_investment": "0 minutes"
+          },
+          "expected_outcome": {
+            "revival_probability": "<5%",
+            "rationale": "Very low score (5/100)"
+          },
+          "next_steps": [],
+          "draft_email": null
+        }
+      },
+      {
+        "agent": "Agent_7_Quality",
+        "timestamp": "2025-11-06T05:19:57.758298",
+        "processing_time_ms": 0.007,
+        "input": {},
+        "output": {
+          "quality_score": 92,
+          "grade": "A (Excellent quality)",
+          "dimension_scores": {
+            "reasoning_clarity": 9,
+            "signal_detection_accuracy": 8,
+            "methodology_adherence": 10,
+            "score_consistency": 10,
+            "risk_identification": 9,
+            "recommendation_quality": 9,
+            "data_completeness": 8,
+            "bias_detection": 9,
+            "multi_signal_convergence": 10,
+            "transparency": 10
+          },
+          "strengths": [
+            "Clear reasoning with cited evidence",
+            "All MEDDIC/BANT criteria checked rigorously",
+            "Transparent category breakdown",
+            "Specific, actionable recommendations"
+          ],
+          "weaknesses": [
+            "Could have more external data (limited by MCP availability)",
+            "Personnel change detection not available in test"
+          ],
+          "recommendations": [
+            "Add LinkedIn API for personnel change detection",
+            "Expand company research data sources",
+            "Add real-time website tracking integration"
+          ],
+          "rerun_required": false
+        }
+      },
+      {
+        "agent": "Agent_1_Qualification",
+        "timestamp": "2025-11-06T05:19:57.758326",
+        "processing_time_ms": 0.006,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "qualification_score": 100.0,
+          "missing_criteria": [],
+          "recommendation": "WELL QUALIFIED - strong foundation",
+          "apply_penalty": 0,
+          "score_cap": null,
+          "meddic_breakdown": {
+            "economic_buyer_identified": true,
+            "budget_discussed": true,
+            "need_quantified": true,
+            "timeline_established": true,
+            "roi_calculated": true,
+            "decision_process_mapped": true,
+            "champion_identified": true,
+            "multiple_stakeholders": true
+          }
+        }
+      },
+      {
+        "agent": "Agent_2_Sentiment",
+        "timestamp": "2025-11-06T05:19:57.758346",
+        "processing_time_ms": 0.016,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "sentiment": "POSITIVE",
+          "engagement_level": "MODERATE",
+          "key_themes": [
+            "Timeline"
+          ],
+          "question_count": 2,
+          "last_meaningful_interaction": {
+            "date": "2024-09-15",
+            "summary": "This looks great! What's the timeline?"
+          },
+          "engagement_score": 10
+        }
+      },
+      {
+        "agent": "Agent_3_Competitive",
+        "timestamp": "2025-11-06T05:19:57.758354",
+        "processing_time_ms": 0.004,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "competitive_loss": false,
+          "competitor_name": null,
+          "competitive_position": "UNKNOWN",
+          "competitive_score": 5,
+          "reasoning": "Non-competitive loss. Customer hasn't committed to alternative solution. Door still open."
+        }
+      },
+      {
+        "agent": "Agent_4_Industry_MCP",
+        "timestamp": "2025-11-06T05:19:57.758362",
+        "processing_time_ms": 0.005,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "industry_growth_rate": "+12% YoY",
+          "company_news": [
+            "Company expanding into new markets"
+          ],
+          "funding_events": [],
+          "employee_count": "50-200",
+          "local_market_conditions": "Technology market stable",
+          "company_score": 3,
+          "industry_score": 3,
+          "data_sources": [
+            "Industry Report 2024 (Technology)",
+            "Google Search (limited results)",
+            "Crunchbase (company not found)"
+          ]
+        }
+      },
+      {
+        "agent": "Agent_5_Scoring",
+        "timestamp": "2025-11-06T05:19:57.758374",
+        "processing_time_ms": 0.009000000000000001,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "final_score": 17,
+          "tier": "SKIP",
+          "category_breakdown": {
+            "company_changes": 3,
+            "personnel_changes": 0,
+            "competitive_intel": 5,
+            "customer_reengagement": 0,
+            "conversation_quality": 10,
+            "loss_reason": 7,
+            "timing": 3
+          },
+          "penalties_applied": -3,
+          "qualification_gate_applied": false,
+          "multi_signal_count": 0,
+          "reasoning": "Qualification: 100.0% (WELL QUALIFIED - strong foundation). Engagement: MODERATE (POSITIVE sentiment). Competitive: Non-competitive loss. Customer hasn't committed to alternative solution. Door still open.. Days since close: 45. Penalties applied: -3. Multi-signal count: 0. Final: 17/100 (SKIP tier)."
+        }
+      },
+      {
+        "agent": "Agent_6_Strategy",
+        "timestamp": "2025-11-06T05:19:57.758381",
+        "processing_time_ms": 0.003,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "recommended_action": "Do not contact",
+          "resource_allocation": {
+            "rep_time": false,
+            "marketing_automation": false,
+            "time_investment": "0 minutes"
+          },
+          "expected_outcome": {
+            "revival_probability": "<5%",
+            "rationale": "Very low score (17/100)"
+          },
+          "next_steps": [],
+          "draft_email": null
+        }
+      },
+      {
+        "agent": "Agent_7_Quality",
+        "timestamp": "2025-11-06T05:19:57.758387",
+        "processing_time_ms": 0.003,
+        "input": {},
+        "output": {
+          "quality_score": 92,
+          "grade": "A (Excellent quality)",
+          "dimension_scores": {
+            "reasoning_clarity": 9,
+            "signal_detection_accuracy": 8,
+            "methodology_adherence": 10,
+            "score_consistency": 10,
+            "risk_identification": 9,
+            "recommendation_quality": 9,
+            "data_completeness": 8,
+            "bias_detection": 9,
+            "multi_signal_convergence": 10,
+            "transparency": 10
+          },
+          "strengths": [
+            "Clear reasoning with cited evidence",
+            "All MEDDIC/BANT criteria checked rigorously",
+            "Transparent category breakdown",
+            "Specific, actionable recommendations"
+          ],
+          "weaknesses": [
+            "Could have more external data (limited by MCP availability)",
+            "Personnel change detection not available in test"
+          ],
+          "recommendations": [
+            "Add LinkedIn API for personnel change detection",
+            "Expand company research data sources",
+            "Add real-time website tracking integration"
+          ],
+          "rerun_required": false
+        }
+      },
+      {
+        "agent": "Agent_1_Qualification",
+        "timestamp": "2025-11-06T05:19:57.758407",
+        "processing_time_ms": 0.004,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "qualification_score": 37.5,
+          "missing_criteria": [
+            "timeline_established",
+            "roi_calculated",
+            "decision_process_mapped",
+            "champion_identified",
+            "multiple_stakeholders"
+          ],
+          "recommendation": "POORLY QUALIFIED - significant gaps exist",
+          "apply_penalty": -10,
+          "score_cap": 60,
+          "meddic_breakdown": {
+            "economic_buyer_identified": true,
+            "budget_discussed": true,
+            "need_quantified": true,
+            "timeline_established": false,
+            "roi_calculated": false,
+            "decision_process_mapped": false,
+            "champion_identified": false,
+            "multiple_stakeholders": false
+          }
+        }
+      },
+      {
+        "agent": "Agent_2_Sentiment",
+        "timestamp": "2025-11-06T05:19:57.758420",
+        "processing_time_ms": 0.01,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "sentiment": "NEUTRAL",
+          "engagement_level": "MODERATE",
+          "key_themes": [],
+          "question_count": 0,
+          "last_meaningful_interaction": {
+            "date": "2024-07-20",
+            "summary": "We decided to go with Square. Thank you!"
+          },
+          "engagement_score": 10
+        }
+      },
+      {
+        "agent": "Agent_3_Competitive",
+        "timestamp": "2025-11-06T05:19:57.758426",
+        "processing_time_ms": 0.003,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "competitive_loss": true,
+          "competitor_name": "Unknown Competitor",
+          "competitive_position": "WEAK",
+          "competitive_score": 2,
+          "reasoning": "Lost to competitor - difficult to revive"
+        }
+      },
+      {
+        "agent": "Agent_4_Industry_MCP",
+        "timestamp": "2025-11-06T05:19:57.758432",
+        "processing_time_ms": 0.003,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "industry_growth_rate": "+3% YoY",
+          "company_news": [],
+          "funding_events": [
+            "Series B $50M"
+          ],
+          "employee_count": "50-200",
+          "local_market_conditions": "Retail market stable",
+          "company_score": 10,
+          "industry_score": 3,
+          "data_sources": [
+            "Industry Report 2024 (Retail)",
+            "Google Search (limited results)",
+            "Crunchbase"
+          ]
+        }
+      },
+      {
+        "agent": "Agent_5_Scoring",
+        "timestamp": "2025-11-06T05:19:57.758441",
+        "processing_time_ms": 0.007,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "final_score": 10,
+          "tier": "SKIP",
+          "category_breakdown": {
+            "company_changes": 10,
+            "personnel_changes": 0,
+            "competitive_intel": 2,
+            "customer_reengagement": 0,
+            "conversation_quality": 10,
+            "loss_reason": 7,
+            "timing": 3
+          },
+          "penalties_applied": -18,
+          "qualification_gate_applied": false,
+          "multi_signal_count": 1,
+          "reasoning": "Qualification: 37.5% (POORLY QUALIFIED - significant gaps exist). Engagement: MODERATE (NEUTRAL sentiment). Competitive: Lost to competitor - difficult to revive. Days since close: 120. Penalties applied: -18. Multi-signal count: 1. Final: 10/100 (SKIP tier)."
+        }
+      },
+      {
+        "agent": "Agent_6_Strategy",
+        "timestamp": "2025-11-06T05:19:57.758447",
+        "processing_time_ms": 0.002,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "recommended_action": "Do not contact",
+          "resource_allocation": {
+            "rep_time": false,
+            "marketing_automation": false,
+            "time_investment": "0 minutes"
+          },
+          "expected_outcome": {
+            "revival_probability": "<5%",
+            "rationale": "Very low score (10/100)"
+          },
+          "next_steps": [],
+          "draft_email": null
+        }
+      },
+      {
+        "agent": "Agent_7_Quality",
+        "timestamp": "2025-11-06T05:19:57.758452",
+        "processing_time_ms": 0.002,
+        "input": {},
+        "output": {
+          "quality_score": 92,
+          "grade": "A (Excellent quality)",
+          "dimension_scores": {
+            "reasoning_clarity": 9,
+            "signal_detection_accuracy": 8,
+            "methodology_adherence": 10,
+            "score_consistency": 10,
+            "risk_identification": 9,
+            "recommendation_quality": 9,
+            "data_completeness": 8,
+            "bias_detection": 9,
+            "multi_signal_convergence": 10,
+            "transparency": 10
+          },
+          "strengths": [
+            "Clear reasoning with cited evidence",
+            "All MEDDIC/BANT criteria checked rigorously",
+            "Transparent category breakdown",
+            "Specific, actionable recommendations"
+          ],
+          "weaknesses": [
+            "Could have more external data (limited by MCP availability)",
+            "Personnel change detection not available in test"
+          ],
+          "recommendations": [
+            "Add LinkedIn API for personnel change detection",
+            "Expand company research data sources",
+            "Add real-time website tracking integration"
+          ],
+          "rerun_required": false
+        }
+      }
+    ]
+  },
+  {
+    "opportunity": {
+      "id": "opp_003",
+      "name": "RetailCo POS System",
+      "amount": 75000.0
+    },
+    "results": {
+      "qualification": {
+        "qualification_score": 37.5,
+        "missing_criteria": [
+          "timeline_established",
+          "roi_calculated",
+          "decision_process_mapped",
+          "champion_identified",
+          "multiple_stakeholders"
+        ],
+        "recommendation": "POORLY QUALIFIED - significant gaps exist",
+        "apply_penalty": -10,
+        "score_cap": 60,
+        "meddic_breakdown": {
+          "economic_buyer_identified": true,
+          "budget_discussed": true,
+          "need_quantified": true,
+          "timeline_established": false,
+          "roi_calculated": false,
+          "decision_process_mapped": false,
+          "champion_identified": false,
+          "multiple_stakeholders": false
+        }
+      },
+      "sentiment": {
+        "sentiment": "NEUTRAL",
+        "engagement_level": "MODERATE",
+        "key_themes": [],
+        "question_count": 0,
+        "last_meaningful_interaction": {
+          "date": "2024-07-20",
+          "summary": "We decided to go with Square. Thank you!"
+        },
+        "engagement_score": 10
+      },
+      "competitive": {
+        "competitive_loss": true,
+        "competitor_name": "Unknown Competitor",
+        "competitive_position": "WEAK",
+        "competitive_score": 2,
+        "reasoning": "Lost to competitor - difficult to revive"
+      },
+      "industry": {
+        "industry_growth_rate": "+3% YoY",
+        "company_news": [],
+        "funding_events": [
+          "Series B $50M"
+        ],
+        "employee_count": "50-200",
+        "local_market_conditions": "Retail market stable",
+        "company_score": 10,
+        "industry_score": 3,
+        "data_sources": [
+          "Industry Report 2024 (Retail)",
+          "Google Search (limited results)",
+          "Crunchbase"
+        ]
+      },
+      "scoring": {
+        "final_score": 10,
+        "tier": "SKIP",
+        "category_breakdown": {
+          "company_changes": 10,
+          "personnel_changes": 0,
+          "competitive_intel": 2,
+          "customer_reengagement": 0,
+          "conversation_quality": 10,
+          "loss_reason": 7,
+          "timing": 3
+        },
+        "penalties_applied": -18,
+        "qualification_gate_applied": false,
+        "multi_signal_count": 1,
+        "reasoning": "Qualification: 37.5% (POORLY QUALIFIED - significant gaps exist). Engagement: MODERATE (NEUTRAL sentiment). Competitive: Lost to competitor - difficult to revive. Days since close: 120. Penalties applied: -18. Multi-signal count: 1. Final: 10/100 (SKIP tier)."
+      },
+      "strategy": {
+        "recommended_action": "Do not contact",
+        "resource_allocation": {
+          "rep_time": false,
+          "marketing_automation": false,
+          "time_investment": "0 minutes"
+        },
+        "expected_outcome": {
+          "revival_probability": "<5%",
+          "rationale": "Very low score (10/100)"
+        },
+        "next_steps": [],
+        "draft_email": null
+      },
+      "quality": {
+        "quality_score": 92,
+        "grade": "A (Excellent quality)",
+        "dimension_scores": {
+          "reasoning_clarity": 9,
+          "signal_detection_accuracy": 8,
+          "methodology_adherence": 10,
+          "score_consistency": 10,
+          "risk_identification": 9,
+          "recommendation_quality": 9,
+          "data_completeness": 8,
+          "bias_detection": 9,
+          "multi_signal_convergence": 10,
+          "transparency": 10
+        },
+        "strengths": [
+          "Clear reasoning with cited evidence",
+          "All MEDDIC/BANT criteria checked rigorously",
+          "Transparent category breakdown",
+          "Specific, actionable recommendations"
+        ],
+        "weaknesses": [
+          "Could have more external data (limited by MCP availability)",
+          "Personnel change detection not available in test"
+        ],
+        "recommendations": [
+          "Add LinkedIn API for personnel change detection",
+          "Expand company research data sources",
+          "Add real-time website tracking integration"
+        ],
+        "rerun_required": false
+      }
+    },
+    "processing_time_seconds": 5.7e-05,
+    "audit_log": [
+      {
+        "agent": "Agent_1_Qualification",
+        "timestamp": "2025-11-06T05:19:57.758159",
+        "processing_time_ms": 0.014,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "qualification_score": 12.5,
+          "missing_criteria": [
+            "economic_buyer_identified",
+            "budget_discussed",
+            "timeline_established",
+            "roi_calculated",
+            "decision_process_mapped",
+            "champion_identified",
+            "multiple_stakeholders"
+          ],
+          "recommendation": "CRITICALLY UNQUALIFIED - would need to start from scratch",
+          "apply_penalty": -15,
+          "score_cap": 40,
+          "meddic_breakdown": {
+            "economic_buyer_identified": false,
+            "budget_discussed": false,
+            "need_quantified": true,
+            "timeline_established": false,
+            "roi_calculated": false,
+            "decision_process_mapped": false,
+            "champion_identified": false,
+            "multiple_stakeholders": false
+          }
+        }
+      },
+      {
+        "agent": "Agent_2_Sentiment",
+        "timestamp": "2025-11-06T05:19:57.758209",
+        "processing_time_ms": 0.030000000000000002,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "sentiment": "NEUTRAL",
+          "engagement_level": "MODERATE",
+          "key_themes": [],
+          "question_count": 2,
+          "last_meaningful_interaction": {
+            "date": "2024-10-10",
+            "summary": "No problem, thank you!"
+          },
+          "engagement_score": 1
+        }
+      },
+      {
+        "agent": "Agent_3_Competitive",
+        "timestamp": "2025-11-06T05:19:57.758229",
+        "processing_time_ms": 0.009000000000000001,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "competitive_loss": false,
+          "competitor_name": null,
+          "competitive_position": "UNKNOWN",
+          "competitive_score": 5,
+          "reasoning": "Non-competitive loss. Customer hasn't committed to alternative solution. Door still open."
+        }
+      },
+      {
+        "agent": "Agent_4_Industry_MCP",
+        "timestamp": "2025-11-06T05:19:57.758244",
+        "processing_time_ms": 0.008,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "industry_growth_rate": "+19% YoY",
+          "company_news": [],
+          "funding_events": [],
+          "employee_count": "UNKNOWN",
+          "local_market_conditions": "Auto Sales market stable",
+          "company_score": 3,
+          "industry_score": 3,
+          "data_sources": [
+            "Industry Report 2024 (Auto Sales)",
+            "Google Search (limited results)",
+            "Crunchbase (company not found)"
+          ]
+        }
+      },
+      {
+        "agent": "Agent_5_Scoring",
+        "timestamp": "2025-11-06T05:19:57.758269",
+        "processing_time_ms": 0.019,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "final_score": 5,
+          "tier": "SKIP",
+          "category_breakdown": {
+            "company_changes": 3,
+            "personnel_changes": 0,
+            "competitive_intel": 5,
+            "customer_reengagement": 0,
+            "conversation_quality": 1,
+            "loss_reason": 7,
+            "timing": 3
+          },
+          "penalties_applied": -36,
+          "qualification_gate_applied": true,
+          "multi_signal_count": 0,
+          "reasoning": "Qualification: 12.5% (CRITICALLY UNQUALIFIED - would need to start from scratch). Engagement: MODERATE (NEUTRAL sentiment). Competitive: Non-competitive loss. Customer hasn't committed to alternative solution. Door still open.. Days since close: 270. Penalties applied: -36. Multi-signal count: 0. Final: 5/100 (SKIP tier)."
+        }
+      },
+      {
+        "agent": "Agent_6_Strategy",
+        "timestamp": "2025-11-06T05:19:57.758284",
+        "processing_time_ms": 0.007,
+        "input": {
+          "opportunity_id": "opp_001"
+        },
+        "output": {
+          "recommended_action": "Do not contact",
+          "resource_allocation": {
+            "rep_time": false,
+            "marketing_automation": false,
+            "time_investment": "0 minutes"
+          },
+          "expected_outcome": {
+            "revival_probability": "<5%",
+            "rationale": "Very low score (5/100)"
+          },
+          "next_steps": [],
+          "draft_email": null
+        }
+      },
+      {
+        "agent": "Agent_7_Quality",
+        "timestamp": "2025-11-06T05:19:57.758298",
+        "processing_time_ms": 0.007,
+        "input": {},
+        "output": {
+          "quality_score": 92,
+          "grade": "A (Excellent quality)",
+          "dimension_scores": {
+            "reasoning_clarity": 9,
+            "signal_detection_accuracy": 8,
+            "methodology_adherence": 10,
+            "score_consistency": 10,
+            "risk_identification": 9,
+            "recommendation_quality": 9,
+            "data_completeness": 8,
+            "bias_detection": 9,
+            "multi_signal_convergence": 10,
+            "transparency": 10
+          },
+          "strengths": [
+            "Clear reasoning with cited evidence",
+            "All MEDDIC/BANT criteria checked rigorously",
+            "Transparent category breakdown",
+            "Specific, actionable recommendations"
+          ],
+          "weaknesses": [
+            "Could have more external data (limited by MCP availability)",
+            "Personnel change detection not available in test"
+          ],
+          "recommendations": [
+            "Add LinkedIn API for personnel change detection",
+            "Expand company research data sources",
+            "Add real-time website tracking integration"
+          ],
+          "rerun_required": false
+        }
+      },
+      {
+        "agent": "Agent_1_Qualification",
+        "timestamp": "2025-11-06T05:19:57.758326",
+        "processing_time_ms": 0.006,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "qualification_score": 100.0,
+          "missing_criteria": [],
+          "recommendation": "WELL QUALIFIED - strong foundation",
+          "apply_penalty": 0,
+          "score_cap": null,
+          "meddic_breakdown": {
+            "economic_buyer_identified": true,
+            "budget_discussed": true,
+            "need_quantified": true,
+            "timeline_established": true,
+            "roi_calculated": true,
+            "decision_process_mapped": true,
+            "champion_identified": true,
+            "multiple_stakeholders": true
+          }
+        }
+      },
+      {
+        "agent": "Agent_2_Sentiment",
+        "timestamp": "2025-11-06T05:19:57.758346",
+        "processing_time_ms": 0.016,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "sentiment": "POSITIVE",
+          "engagement_level": "MODERATE",
+          "key_themes": [
+            "Timeline"
+          ],
+          "question_count": 2,
+          "last_meaningful_interaction": {
+            "date": "2024-09-15",
+            "summary": "This looks great! What's the timeline?"
+          },
+          "engagement_score": 10
+        }
+      },
+      {
+        "agent": "Agent_3_Competitive",
+        "timestamp": "2025-11-06T05:19:57.758354",
+        "processing_time_ms": 0.004,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "competitive_loss": false,
+          "competitor_name": null,
+          "competitive_position": "UNKNOWN",
+          "competitive_score": 5,
+          "reasoning": "Non-competitive loss. Customer hasn't committed to alternative solution. Door still open."
+        }
+      },
+      {
+        "agent": "Agent_4_Industry_MCP",
+        "timestamp": "2025-11-06T05:19:57.758362",
+        "processing_time_ms": 0.005,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "industry_growth_rate": "+12% YoY",
+          "company_news": [
+            "Company expanding into new markets"
+          ],
+          "funding_events": [],
+          "employee_count": "50-200",
+          "local_market_conditions": "Technology market stable",
+          "company_score": 3,
+          "industry_score": 3,
+          "data_sources": [
+            "Industry Report 2024 (Technology)",
+            "Google Search (limited results)",
+            "Crunchbase (company not found)"
+          ]
+        }
+      },
+      {
+        "agent": "Agent_5_Scoring",
+        "timestamp": "2025-11-06T05:19:57.758374",
+        "processing_time_ms": 0.009000000000000001,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "final_score": 17,
+          "tier": "SKIP",
+          "category_breakdown": {
+            "company_changes": 3,
+            "personnel_changes": 0,
+            "competitive_intel": 5,
+            "customer_reengagement": 0,
+            "conversation_quality": 10,
+            "loss_reason": 7,
+            "timing": 3
+          },
+          "penalties_applied": -3,
+          "qualification_gate_applied": false,
+          "multi_signal_count": 0,
+          "reasoning": "Qualification: 100.0% (WELL QUALIFIED - strong foundation). Engagement: MODERATE (POSITIVE sentiment). Competitive: Non-competitive loss. Customer hasn't committed to alternative solution. Door still open.. Days since close: 45. Penalties applied: -3. Multi-signal count: 0. Final: 17/100 (SKIP tier)."
+        }
+      },
+      {
+        "agent": "Agent_6_Strategy",
+        "timestamp": "2025-11-06T05:19:57.758381",
+        "processing_time_ms": 0.003,
+        "input": {
+          "opportunity_id": "opp_002"
+        },
+        "output": {
+          "recommended_action": "Do not contact",
+          "resource_allocation": {
+            "rep_time": false,
+            "marketing_automation": false,
+            "time_investment": "0 minutes"
+          },
+          "expected_outcome": {
+            "revival_probability": "<5%",
+            "rationale": "Very low score (17/100)"
+          },
+          "next_steps": [],
+          "draft_email": null
+        }
+      },
+      {
+        "agent": "Agent_7_Quality",
+        "timestamp": "2025-11-06T05:19:57.758387",
+        "processing_time_ms": 0.003,
+        "input": {},
+        "output": {
+          "quality_score": 92,
+          "grade": "A (Excellent quality)",
+          "dimension_scores": {
+            "reasoning_clarity": 9,
+            "signal_detection_accuracy": 8,
+            "methodology_adherence": 10,
+            "score_consistency": 10,
+            "risk_identification": 9,
+            "recommendation_quality": 9,
+            "data_completeness": 8,
+            "bias_detection": 9,
+            "multi_signal_convergence": 10,
+            "transparency": 10
+          },
+          "strengths": [
+            "Clear reasoning with cited evidence",
+            "All MEDDIC/BANT criteria checked rigorously",
+            "Transparent category breakdown",
+            "Specific, actionable recommendations"
+          ],
+          "weaknesses": [
+            "Could have more external data (limited by MCP availability)",
+            "Personnel change detection not available in test"
+          ],
+          "recommendations": [
+            "Add LinkedIn API for personnel change detection",
+            "Expand company research data sources",
+            "Add real-time website tracking integration"
+          ],
+          "rerun_required": false
+        }
+      },
+      {
+        "agent": "Agent_1_Qualification",
+        "timestamp": "2025-11-06T05:19:57.758407",
+        "processing_time_ms": 0.004,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "qualification_score": 37.5,
+          "missing_criteria": [
+            "timeline_established",
+            "roi_calculated",
+            "decision_process_mapped",
+            "champion_identified",
+            "multiple_stakeholders"
+          ],
+          "recommendation": "POORLY QUALIFIED - significant gaps exist",
+          "apply_penalty": -10,
+          "score_cap": 60,
+          "meddic_breakdown": {
+            "economic_buyer_identified": true,
+            "budget_discussed": true,
+            "need_quantified": true,
+            "timeline_established": false,
+            "roi_calculated": false,
+            "decision_process_mapped": false,
+            "champion_identified": false,
+            "multiple_stakeholders": false
+          }
+        }
+      },
+      {
+        "agent": "Agent_2_Sentiment",
+        "timestamp": "2025-11-06T05:19:57.758420",
+        "processing_time_ms": 0.01,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "sentiment": "NEUTRAL",
+          "engagement_level": "MODERATE",
+          "key_themes": [],
+          "question_count": 0,
+          "last_meaningful_interaction": {
+            "date": "2024-07-20",
+            "summary": "We decided to go with Square. Thank you!"
+          },
+          "engagement_score": 10
+        }
+      },
+      {
+        "agent": "Agent_3_Competitive",
+        "timestamp": "2025-11-06T05:19:57.758426",
+        "processing_time_ms": 0.003,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "competitive_loss": true,
+          "competitor_name": "Unknown Competitor",
+          "competitive_position": "WEAK",
+          "competitive_score": 2,
+          "reasoning": "Lost to competitor - difficult to revive"
+        }
+      },
+      {
+        "agent": "Agent_4_Industry_MCP",
+        "timestamp": "2025-11-06T05:19:57.758432",
+        "processing_time_ms": 0.003,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "industry_growth_rate": "+3% YoY",
+          "company_news": [],
+          "funding_events": [
+            "Series B $50M"
+          ],
+          "employee_count": "50-200",
+          "local_market_conditions": "Retail market stable",
+          "company_score": 10,
+          "industry_score": 3,
+          "data_sources": [
+            "Industry Report 2024 (Retail)",
+            "Google Search (limited results)",
+            "Crunchbase"
+          ]
+        }
+      },
+      {
+        "agent": "Agent_5_Scoring",
+        "timestamp": "2025-11-06T05:19:57.758441",
+        "processing_time_ms": 0.007,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "final_score": 10,
+          "tier": "SKIP",
+          "category_breakdown": {
+            "company_changes": 10,
+            "personnel_changes": 0,
+            "competitive_intel": 2,
+            "customer_reengagement": 0,
+            "conversation_quality": 10,
+            "loss_reason": 7,
+            "timing": 3
+          },
+          "penalties_applied": -18,
+          "qualification_gate_applied": false,
+          "multi_signal_count": 1,
+          "reasoning": "Qualification: 37.5% (POORLY QUALIFIED - significant gaps exist). Engagement: MODERATE (NEUTRAL sentiment). Competitive: Lost to competitor - difficult to revive. Days since close: 120. Penalties applied: -18. Multi-signal count: 1. Final: 10/100 (SKIP tier)."
+        }
+      },
+      {
+        "agent": "Agent_6_Strategy",
+        "timestamp": "2025-11-06T05:19:57.758447",
+        "processing_time_ms": 0.002,
+        "input": {
+          "opportunity_id": "opp_003"
+        },
+        "output": {
+          "recommended_action": "Do not contact",
+          "resource_allocation": {
+            "rep_time": false,
+            "marketing_automation": false,
+            "time_investment": "0 minutes"
+          },
+          "expected_outcome": {
+            "revival_probability": "<5%",
+            "rationale": "Very low score (10/100)"
+          },
+          "next_steps": [],
+          "draft_email": null
+        }
+      },
+      {
+        "agent": "Agent_7_Quality",
+        "timestamp": "2025-11-06T05:19:57.758452",
+        "processing_time_ms": 0.002,
+        "input": {},
+        "output": {
+          "quality_score": 92,
+          "grade": "A (Excellent quality)",
+          "dimension_scores": {
+            "reasoning_clarity": 9,
+            "signal_detection_accuracy": 8,
+            "methodology_adherence": 10,
+            "score_consistency": 10,
+            "risk_identification": 9,
+            "recommendation_quality": 9,
+            "data_completeness": 8,
+            "bias_detection": 9,
+            "multi_signal_convergence": 10,
+            "transparency": 10
+          },
+          "strengths": [
+            "Clear reasoning with cited evidence",
+            "All MEDDIC/BANT criteria checked rigorously",
+            "Transparent category breakdown",
+            "Specific, actionable recommendations"
+          ],
+          "weaknesses": [
+            "Could have more external data (limited by MCP availability)",
+            "Personnel change detection not available in test"
+          ],
+          "recommendations": [
+            "Add LinkedIn API for personnel change detection",
+            "Expand company research data sources",
+            "Add real-time website tracking integration"
+          ],
+          "rerun_required": false
+        }
+      }
+    ]
+  }
+]

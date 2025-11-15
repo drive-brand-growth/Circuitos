@@ -1,0 +1,106 @@
+# CircuitOS Local™ - Git Ignore Configuration
+# Copyright © 2025 CircuitOS™. All Rights Reserved.
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editor and IDE Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# Temporary Files
+*.tmp
+*.temp
+*.log
+*.bak
+*.old
+
+# Sensitive Data (DO NOT COMMIT)
+*.env
+*.env.local
+.env.*
+secrets/
+credentials/
+api_keys/
+*.pem
+*.key
+*.cert
+
+# API Keys and Secrets
+.env
+.env.local
+.env.production
+*-secret.sh
+*secret*.sh
+fix-content-type.sh
+
+# Credentials
+credentials.json
+service-account.json
+*-credentials.*
+
+# Supabase
+.supabase/
+
+# Client-Specific Customizations (DO NOT COMMIT TO MAIN BRANCH)
+client_customizations/
+client_data/
+*/client_specific_*
+
+# Build and Distribution Files
+dist/
+build/
+*.zip
+*.tar.gz
+*.dmg
+
+# Test Files
+test_data/
+sandbox/
+experimental/
+
+# Documentation Drafts (Commit only final versions)
+*_DRAFT.md
+*_WIP.md
+TODO.md
+
+# Large Binary Files
+*.mp4
+*.mov
+*.avi
+*.pdf
+*.psd
+*.ai
+
+# Node Modules (if adding automation scripts)
+node_modules/
+npm-debug.log
+
+# Python Virtual Environments (if adding Python scripts)
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Backup Files (Keep in backup drive, not Git)
+*_backup_*
+backups/
+archive/
+
+# Important: Keep all .md framework files tracked
+!*.md
+!PACKAGE_MANIFEST.md
+!README_INDEX.md

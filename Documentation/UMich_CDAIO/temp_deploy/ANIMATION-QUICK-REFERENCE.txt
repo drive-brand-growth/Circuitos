@@ -1,0 +1,272 @@
+================================================================================
+CIRCUIT OS - NEON + STEEL ANIMATIONS
+QUICK REFERENCE GUIDE
+================================================================================
+
+CSS CLASSES TO USE
+================================================================================
+
+INTERACTIVE ELEMENTS:
+---------------------
+.card-interactive          → Steel border with neon hover transformation
+.logo-neon-pulse          → Pulsing neon glow effect for logos
+.neon-pulse               → General neon pulse animation
+.status-dot-neon          → Animated status indicator dot
+.btn-neon                 → Neon green button with steel outline
+.steel-border             → Animated steel shimmer border
+.progress-neon            → Neon progress bar with glow
+.neon-text                → Glowing text effect
+.circuit-line             → Animated circuit flow line
+
+LAYOUT ELEMENTS:
+----------------
+.circuit-background       → Circuit board grid pattern
+.divider-steel-neon       → Steel divider with neon dot
+.divider-line-steel       → Steel gradient line
+.divider-dot-neon         → Neon accent dot
+
+================================================================================
+
+CSS VARIABLES TO USE
+================================================================================
+
+NEON GREEN:
+-----------
+--neon-green              → #38FF6A (primary)
+--neon-green-bright       → #5aff88 (hover states)
+--neon-green-dark         → #2ecc54 (gradients)
+--neon-glow               → rgba(56, 255, 106, 0.6) (shadows)
+--neon-glow-subtle        → rgba(56, 255, 106, 0.3) (backgrounds)
+
+STEEL GRAY:
+-----------
+--steel-gray              → #8B9198 (borders)
+--steel-light             → #B8BCC2 (highlights)
+--steel-dark              → #6B6F75 (shadows)
+--steel-metallic          → gradient (shimmer effect)
+
+================================================================================
+
+ANIMATION KEYFRAMES
+================================================================================
+
+@keyframes neonPulse           → Logo/icon pulsing glow (3s)
+@keyframes steelShimmer        → Border shimmer effect (3s)
+@keyframes neonTextGlow        → Text shadow pulse (2s)
+@keyframes neonDotPulse        → Status dot pulse (2s)
+@keyframes circuitFlow         → Line flow animation (20s)
+@keyframes neonProgress        → Progress bar fill (1.5s)
+
+================================================================================
+
+JAVASCRIPT API
+================================================================================
+
+// Pause all animations
+window.CircuitAnimations.pauseAll();
+
+// Resume all animations
+window.CircuitAnimations.resumeAll();
+
+// Get specific controller
+const controller = window.CircuitAnimations.getController('neonPulse');
+
+// Available controllers:
+- neonPulse
+- steelShimmer
+- circuitFlow
+- neonText
+- interactiveCards
+- neonProgress
+- statusDots
+- circuitBackground
+- performance
+
+================================================================================
+
+COMMON PATTERNS
+================================================================================
+
+INTERACTIVE CARD:
+-----------------
+<div class="card-interactive">
+    <!-- Content -->
+</div>
+
+Style automatically:
+- Steel border (2px)
+- Hover: Neon border + glow + lift
+- Click: Ripple effect
+
+NEON BUTTON:
+------------
+<button class="btn-neon">
+    Click Me
+</button>
+
+Style automatically:
+- Neon gradient background
+- Steel border
+- Hover: Bright + lift + glow
+
+STATUS INDICATOR:
+-----------------
+<div class="status-badge">
+    <span class="status-dot-neon"></span>
+    SYSTEM ONLINE
+</div>
+
+Dot pulses automatically
+
+PROGRESS BAR:
+-------------
+<div class="progress-container">
+    <div class="progress-neon" style="width: 75%"></div>
+</div>
+
+Animates on load
+
+DIVIDER:
+--------
+<div class="divider-steel-neon">
+    <div class="divider-line-steel"></div>
+    <div class="divider-dot-neon"></div>
+    <div class="divider-line-steel"></div>
+</div>
+
+================================================================================
+
+PERFORMANCE TIPS
+================================================================================
+
+✅ DO:
+- Use transform and opacity for animations
+- Apply animations to small elements
+- Use GPU-accelerated properties
+- Test on target devices
+
+❌ DON'T:
+- Animate width/height directly (use scale)
+- Animate many elements simultaneously
+- Use animations on large containers
+- Forget to test performance
+
+PERFORMANCE MODES:
+------------------
+High (60+ FPS)    → Full effects, parallax enabled
+Medium (30-50 FPS)→ Reduced parallax, core animations
+Low (<30 FPS)     → Essential animations only
+
+System auto-adjusts based on FPS
+
+================================================================================
+
+COLOR COMBINATIONS
+================================================================================
+
+PRIMARY BUTTONS:
+----------------
+Background: var(--neon-green) gradient
+Border: var(--steel-gray)
+Hover Border: #FFFFFF
+Shadow: var(--neon-glow)
+
+CARDS:
+------
+Background: rgba(20, 20, 20, 0.6)
+Border: var(--steel-gray)
+Hover Border: var(--neon-green)
+Hover Shadow: Multiple neon layers
+
+TEXT:
+-----
+Heading: var(--text-primary) with optional neonTextGlow
+Body: var(--text-secondary)
+Muted: var(--text-muted)
+Accent: var(--neon-green)
+
+================================================================================
+
+TIMING REFERENCE
+================================================================================
+
+QUICK (0.2-0.3s):     Button hover, quick transitions
+STANDARD (0.4s):      Card hover, state changes
+BREATHING (2-3s):     Pulse effects, ambient glow
+AMBIENT (20s):        Background animations, flow
+
+EASING:
+-------
+Interactive: cubic-bezier(0.4, 0, 0.2, 1)
+Pulse: ease-in-out
+Progress: ease-out
+
+================================================================================
+
+FILE LOCATIONS
+================================================================================
+
+/circuit-animations.js                           → Animation controller (13 KB)
+/index.html                                      → Landing page with animations
+/Dashboards/unified-demo-dashboard.html          → Full dashboard implementation
+/Dashboards/sales-team-dashboard.html            → Sales dashboard with progress bars
+/Dashboards/lead-processing-demo.html            → Processing demo with circuit flows
+/Dashboards/caio-university.html                 → University platform
+
+================================================================================
+
+TROUBLESHOOTING
+================================================================================
+
+Animations not working?
+-----------------------
+1. Check circuit-animations.js is loaded
+2. Verify CSS classes are applied
+3. Check browser console for errors
+4. Ensure elements exist when script runs
+
+Performance issues?
+-------------------
+1. Check FPS in console
+2. System auto-adjusts to low mode at <30 FPS
+3. Reduce number of animated elements
+4. Use performance API to pause/resume
+
+Hover effects not triggering?
+-----------------------------
+1. Ensure .card-interactive class is applied
+2. Check CSS transition properties exist
+3. Verify hover states are defined
+4. Test pointer-events are not disabled
+
+================================================================================
+
+BROWSER SUPPORT
+================================================================================
+
+✅ Chrome/Edge 90+    → Full support
+✅ Firefox 88+        → Full support
+✅ Safari 14+         → Full support
+✅ Mobile Safari      → Full support
+✅ Chrome Android     → Full support
+
+Fallback: CSS animations work without JavaScript
+Progressive enhancement: Core functionality works without animations
+
+================================================================================
+
+DEPLOYMENT CHECKLIST
+================================================================================
+
+✅ circuit-animations.js included in build
+✅ Script tag before closing </body>
+✅ CSS variables defined in :root
+✅ Animation keyframes included
+✅ Interactive classes applied
+✅ Performance tested on target devices
+✅ Fallback styles for no-JS browsers
+✅ WCAG accessibility maintained
+
+================================================================================
+Quick Reference v1.0 | Circuit OS Animation System
+================================================================================

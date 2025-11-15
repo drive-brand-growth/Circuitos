@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit OS - Dark Knight Edition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* The Dark Knight Palette */
+            --maastricht-blue: #001A38;
+            --oxford-blue: #00224E;
+            --dark-midnight-blue: #003367;
+            --eerie-black: #171D20;
+            --dark-gunmetal: #1E2529;
+            --dark-charcoal: #2F3133;
+
+            /* Additional variations */
+            --shadow-blue: #141b32;
+            --slate-blue: #353b4f;
+            --steel-gray: #5b6070;
+            --silver-gray: #888c96;
+            --light-gray: #adb0b7;
+
+            /* Accent */
+            --neon-green: #38FF6A;
+            --gold: #D4AF37;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--eerie-black) 0%, var(--maastricht-blue) 50%, var(--oxford-blue) 100%);
+            color: var(--light-gray);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Animated background gradient */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                var(--eerie-black) 0%,
+                var(--shadow-blue) 25%,
+                var(--maastricht-blue) 50%,
+                var(--oxford-blue) 75%,
+                var(--dark-midnight-blue) 100%
+            );
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(180deg, var(--dark-gunmetal) 0%, rgba(23, 29, 32, 0.95) 100%);
+            border-bottom: 1px solid var(--slate-blue);
+            padding: 24px 48px;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--neon-green) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(56, 255, 106, 0.3);
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            background: linear-gradient(135deg, rgba(56, 255, 106, 0.1) 0%, rgba(212, 175, 55, 0.1) 100%);
+            color: var(--neon-green);
+            border: 1px solid rgba(56, 255, 106, 0.3);
+            box-shadow: 0 0 20px rgba(56, 255, 106, 0.2);
+            letter-spacing: 0.1em;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 48px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #FFFFFF 0%, var(--light-gray) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--silver-gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .card {
+            background: linear-gradient(135deg,
+                var(--dark-gunmetal) 0%,
+                var(--dark-charcoal) 100%
+            );
+            border: 1px solid var(--slate-blue);
+            border-radius: 16px;
+            padding: 32px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-green) 0%, var(--gold) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--steel-gray);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6),
+                        0 0 40px rgba(56, 255, 106, 0.1);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            background: linear-gradient(135deg,
+                rgba(56, 255, 106, 0.1) 0%,
+                rgba(212, 175, 55, 0.1) 100%
+            );
+            border: 1px solid rgba(56, 255, 106, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 28px;
+        }
+
+        .card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .card p {
+            color: var(--silver-gray);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .card-stat {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-top: 1px solid var(--slate-blue);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--neon-green);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--steel-gray);
+        }
+
+        /* Color Palette Display */
+        .color-palette {
+            margin-top: 80px;
+            padding: 48px;
+            background: linear-gradient(135deg,
+                rgba(23, 29, 32, 0.6) 0%,
+                rgba(30, 37, 41, 0.6) 100%
+            );
+            border: 1px solid var(--slate-blue);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .palette-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+
+        .color-swatch {
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--slate-blue);
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.05);
+            border-color: var(--neon-green);
+        }
+
+        .color-box {
+            width: 100%;
+            height: 80px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .color-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 4px;
+        }
+
+        .color-code {
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            color: var(--silver-gray);
+        }
+
+        /* Button */
+        .cta-button {
+            display: inline-block;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--neon-green) 0%, rgba(56, 255, 106, 0.8) 100%);
+            color: var(--eerie-black);
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(56, 255, 106, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(56, 255, 106, 0.5);
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 48px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">CIRCUIT OS</div>
+            <div class="status-badge">DARK KNIGHT EDITION</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Dark Knight Palette</h1>
+            <p>Experience the power of Batman's iconic color scheme - deep, sophisticated, and commanding</p>
+        </div>
+
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">🦇</div>
+                <h3>Lead Processing</h3>
+                <p>AI-powered lead qualification with 90% accuracy using deep learning models</p>
+                <div class="card-stat">
+                    <span class="stat-value">2,847</span>
+                    <span class="stat-label">Leads Processed</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">⚡</div>
+                <h3>Real-Time Analytics</h3>
+                <p>Monitor your pipeline with instant insights and predictive intelligence</p>
+                <div class="card-stat">
+                    <span class="stat-value">94%</span>
+                    <span class="stat-label">Accuracy Rate</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🎯</div>
+                <h3>Smart Automation</h3>
+                <p>Automate complex workflows with explainable AI and human oversight</p>
+                <div class="card-stat">
+                    <span class="stat-value">12hrs</span>
+                    <span class="stat-label">Saved Per Week</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="color-palette">
+            <div class="palette-title">The Dark Knight Color Palette</div>
+            <div class="palette-grid">
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #001A38;"></div>
+                    <div class="color-name">Maastricht Blue</div>
+                    <div class="color-code">#001A38</div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #00224E;"></div>
+                    <div class="color-name">Oxford Blue</div>
+                    <div class="color-code">#00224E</div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #003367;"></div>
+                    <div class="color-name">Dark Midnight Blue</div>
+                    <div class="color-code">#003367</div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #171D20;"></div>
+                    <div class="color-name">Eerie Black</div>
+                    <div class="color-code">#171D20</div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #1E2529;"></div>
+                    <div class="color-name">Dark Gunmetal</div>
+                    <div class="color-code">#1E2529</div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #2F3133;"></div>
+                    <div class="color-name">Dark Charcoal</div>
+                    <div class="color-code">#2F3133</div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #141b32;"></div>
+                    <div class="color-name">Shadow Blue</div>
+                    <div class="color-code">#141b32</div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #353b4f;"></div>
+                    <div class="color-name">Slate Blue</div>
+                    <div class="color-code">#353b4f</div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #5b6070;"></div>
+                    <div class="color-name">Steel Gray</div>
+                    <div class="color-code">#5b6070</div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #888c96;"></div>
+                    <div class="color-name">Silver Gray</div>
+                    <div class="color-code">#888c96</div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #adb0b7;"></div>
+                    <div class="color-name">Light Gray</div>
+                    <div class="color-code">#adb0b7</div>
+                </div>
+
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #38FF6A;"></div>
+                    <div class="color-name">Neon Green (Accent)</div>
+                    <div class="color-code">#38FF6A</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <a href="main-dashboard.html" class="cta-button">View Main Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

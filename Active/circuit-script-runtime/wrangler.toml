@@ -1,0 +1,36 @@
+# Cloudflare Workers configuration for Circuit Script Runtime
+name = "circuit-script-runtime"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+# Production environment
+[env.production]
+name = "circuit-script-prod"
+route = "https://circuit-script.circuitos.com/*"
+
+# Staging environment
+[env.staging]
+name = "circuit-script-staging"
+route = "https://circuit-script-staging.circuitos.com/*"
+
+# Development environment
+[env.dev]
+name = "circuit-script-dev"
+
+# Durable Objects (for state management in Phase 2)
+# [[durable_objects.bindings]]
+# name = "CIRCUIT_EXECUTIONS"
+# class_name = "CircuitExecution"
+
+# KV namespace (for caching in Phase 2)
+# [[kv_namespaces]]
+# binding = "CIRCUIT_CACHE"
+# id = "your_kv_namespace_id"
+
+# Secrets (set with: wrangler secret put VARIABLE_NAME)
+# - GHL_API_KEY
+# - SALESFORCE_USERNAME
+# - SALESFORCE_PASSWORD
+# - CENSUS_API_KEY
+# - LINKEDIN_API_KEY
+# - GOOGLE_MAPS_API_KEY

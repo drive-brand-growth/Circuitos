@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit OS - AI Lead Gateway</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Vercel-style colors */
+            --background: #000000;
+            --foreground: #FFFFFF;
+            --gray-400: #A1A1AA;
+            --gray-500: #71717A;
+            --gray-600: #52525B;
+            --border: rgba(255, 255, 255, 0.1);
+
+            /* Industrial metal accents */
+            --steel: #B8C5D6;
+            --chrome: #E8EDF2;
+            --brushed-metal: #8B9099;
+            --dark-metal: #3D4349;
+            --metal-shine: linear-gradient(135deg, #E8EDF2 0%, #B8C5D6 50%, #8B9099 100%);
+
+            /* Circuit OS brand */
+            --neon-green: #38FF6A;
+            --gold: #D4AF37;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+            background: var(--background);
+            color: var(--gray-400);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Navigation with metal accent */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+        }
+
+        nav::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--metal-shine);
+            opacity: 0.15;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .logo-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--foreground);
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--foreground);
+        }
+
+        .nav-button {
+            padding: 8px 16px;
+            border-radius: 6px;
+            background: var(--foreground);
+            color: var(--background);
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--metal-shine);
+            transition: left 0.3s ease;
+        }
+
+        .nav-button:hover::before {
+            left: 100%;
+        }
+
+        .nav-button:hover {
+            transform: scale(1.02);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 24px 120px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Metal accent bars */
+        .metal-bar {
+            position: absolute;
+            height: 1px;
+            background: var(--metal-shine);
+            opacity: 0.2;
+        }
+
+        .metal-bar.top {
+            top: 140px;
+            left: 10%;
+            right: 10%;
+        }
+
+        .metal-bar.bottom {
+            bottom: 100px;
+            left: 20%;
+            right: 20%;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--gray-400);
+            margin-bottom: 32px;
+            background: rgba(255, 255, 255, 0.03);
+            position: relative;
+        }
+
+        .badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--metal-shine);
+            border-radius: 100px 0 0 100px;
+            opacity: 0.5;
+        }
+
+        h1 {
+            font-size: 72px;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            color: var(--foreground);
+            margin-bottom: 24px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to bottom right, var(--foreground), var(--chrome), var(--brushed-metal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--gray-400);
+            max-width: 600px;
+            margin: 0 auto 48px;
+            line-height: 1.6;
+        }
+
+        /* CTA Buttons */
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 64px;
+        }
+
+        .btn-primary {
+            padding: 12px 24px;
+            border-radius: 8px;
+            background: var(--foreground);
+            color: var(--background);
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: var(--metal-shine);
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+            opacity: 0.2;
+        }
+
+        .btn-primary:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary {
+            padding: 12px 24px;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--foreground);
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+        }
+
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 8px;
+            padding: 1px;
+            background: var(--metal-shine);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .btn-secondary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-secondary:hover {
+            border-color: transparent;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        /* Feature Grid with metal accents */
+        .features {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 24px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1px;
+            background: var(--metal-shine);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            opacity: 0.15;
+            position: relative;
+        }
+
+        .feature-grid::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--background);
+            mix-blend-mode: multiply;
+        }
+
+        .feature-card {
+            background: var(--background);
+            padding: 48px;
+            position: relative;
+            transition: all 0.15s ease;
+            z-index: 1;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--metal-shine);
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.5;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(184, 197, 214, 0.1), rgba(139, 144, 153, 0.1));
+            border: 1px solid rgba(184, 197, 214, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 20px;
+            position: relative;
+        }
+
+        .feature-icon::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 8px;
+            background: var(--metal-shine);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon::after {
+            opacity: 0.1;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--foreground);
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .feature-card p {
+            font-size: 15px;
+            color: var(--gray-400);
+            line-height: 1.6;
+        }
+
+        /* Stats Section with metal divider */
+        .stats {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 24px;
+            border-top: 1px solid var(--border);
+            position: relative;
+        }
+
+        .stats::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 2px;
+            background: var(--metal-shine);
+            opacity: 0.3;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 64px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 56px;
+            font-weight: 700;
+            background: var(--metal-shine);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Code Block */
+        .code-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 24px;
+        }
+
+        .code-block {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--metal-shine);
+            opacity: 0.2;
+        }
+
+        pre {
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--chrome);
+        }
+
+        .code-comment {
+            color: var(--gray-600);
+        }
+
+        .code-keyword {
+            color: #FF6B9D;
+        }
+
+        .code-string {
+            color: #00E676;
+        }
+
+        .code-function {
+            color: var(--steel);
+        }
+
+        /* Footer */
+        footer {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px 40px;
+            border-top: 1px solid var(--border);
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 24px;
+            right: 24px;
+            height: 1px;
+            background: var(--metal-shine);
+            opacity: 0.15;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-link {
+            font-size: 14px;
+            color: var(--gray-500);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--steel);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .hero, .features, .stats, .code-section {
+            animation: fadeIn 0.6s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 48px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .cta-group {
+                flex-direction: column;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                gap: 48px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <div class="logo-container">
+                <img src="Brand-Assets/circuit-os-executive-logo.svg" alt="Circuit OS" class="logo-icon">
+                <div class="logo-text">Circuit OS</div>
+            </div>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#" class="nav-link">Docs</a>
+                <a href="#" class="nav-link">Pricing</a>
+                <button class="nav-button">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="metal-bar top"></div>
+        <div class="badge">AI Lead Gateway</div>
+        <h1>
+            Transform Leads Into<br>
+            <span class="gradient-text">Revenue Intelligence</span>
+        </h1>
+        <p>
+            Deploy AI-powered lead qualification in minutes. Connect your CRM, train custom models, and automate your entire sales pipeline with explainable AI.
+        </p>
+        <div class="cta-group">
+            <a href="main-dashboard.html" class="btn-primary">View Demo Dashboard</a>
+            <a href="#features" class="btn-secondary">Learn More</a>
+        </div>
+        <div class="metal-bar bottom"></div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Lightning Fast</h3>
+                <p>Process thousands of leads per second with sub-100ms latency on our global edge network.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>Custom AI Models</h3>
+                <p>Train models on your historical data. 90%+ accuracy with explainable decision-making.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Enterprise Security</h3>
+                <p>SOC 2 Type II certified. Your data never leaves your infrastructure.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Real-Time Analytics</h3>
+                <p>Live dashboards with predictive insights. Know which leads will convert before they do.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>CRM Integration</h3>
+                <p>Connect to Salesforce, HubSpot, or any CRM via API. Sync bidirectionally in real-time.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Smart Routing</h3>
+                <p>Automatically route high-value leads to your best reps. Optimize for conversion.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat">
+                <div class="stat-value">94%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">2.8M</div>
+                <div class="stat-label">Leads Processed</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">43ms</div>
+                <div class="stat-label">P99 Latency</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">12hrs</div>
+                <div class="stat-label">Saved Per Week</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="code-section">
+        <div class="code-block">
+            <pre><span class="code-comment">// Deploy AI lead qualification in 3 lines</span>
+
+<span class="code-keyword">import</span> { CircuitOS } <span class="code-keyword">from</span> <span class="code-string">'@circuit-os/sdk'</span>;
+
+<span class="code-keyword">const</span> gateway = <span class="code-keyword">new</span> <span class="code-function">CircuitOS</span>({
+  apiKey: process.env.CIRCUIT_API_KEY,
+  model: <span class="code-string">'lead-qualification-v2'</span>
+});
+
+<span class="code-keyword">const</span> result = <span class="code-keyword">await</span> gateway.<span class="code-function">qualify</span>({
+  email: <span class="code-string">'prospect@company.com'</span>,
+  company: <span class="code-string">'Acme Corp'</span>,
+  revenue: <span class="code-string">'$50M-$100M'</span>
+});
+
+<span class="code-comment">// { score: 0.94, tier: 'A', confidence: 0.92 }</span></pre>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="logo-container">
+                <img src="Brand-Assets/circuit-os-executive-logo.svg" alt="Circuit OS" class="logo-icon" style="width: 24px; height: 24px;">
+                <div class="logo-text">Circuit OS</div>
+            </div>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy</a>
+                <a href="#" class="footer-link">Terms</a>
+                <a href="https://github.com/drive-brand-growth/Circuitos" class="footer-link" target="_blank">GitHub</a>
+                <a href="#" class="footer-link">Status</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

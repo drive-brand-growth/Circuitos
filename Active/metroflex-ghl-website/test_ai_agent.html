@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetroFlex AI Agent - Local Testing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+
+        .status {
+            background: #f8f9fa;
+            padding: 15px 30px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-healthy {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .chat-container {
+            padding: 30px;
+        }
+
+        .test-section {
+            margin-bottom: 30px;
+        }
+
+        .test-section h3 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .test-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .response-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .response-box h4 {
+            color: #495057;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .response-box pre {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .intent-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-right: 5px;
+            margin-top: 5px;
+        }
+
+        .intent-datetime { background: #cfe2ff; color: #084298; }
+        .intent-sponsor { background: #fff3cd; color: #664d03; }
+        .intent-vendor { background: #d1e7dd; color: #0f5132; }
+        .intent-registration { background: #f8d7da; color: #842029; }
+        .high-intent { background: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 MetroFlex Enhanced AI Agent</h1>
+            <p>World-Class RAG Testing Interface</p>
+        </div>
+
+        <div class="status">
+            <span class="status-badge status-healthy" id="statusBadge">● Connecting...</span>
+        </div>
+
+        <div class="chat-container">
+            <div class="test-section">
+                <h3>Quick Tests</h3>
+                <div class="test-buttons">
+                    <button onclick="testQuery('When is the next event?')">📅 Date Query</button>
+                    <button onclick="testQuery('How much does sponsorship cost?')">💰 Sponsor Query (High Intent)</button>
+                    <button onclick="testQuery('Where can I get spray tanned?')">🎨 Vendor Query</button>
+                    <button onclick="testQuery('I want to compete. How do I register?')">🏆 Registration Query</button>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>Custom Query</h3>
+                <div class="input-group">
+                    <input type="text" id="customQuery" placeholder="Ask anything about MetroFlex events..."
+                           onkeypress="if(event.key==='Enter') sendCustomQuery()">
+                    <button onclick="sendCustomQuery()">Send</button>
+                </div>
+            </div>
+
+            <div id="responseContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5001';
+
+        // Check health on load
+        async function checkHealth() {
+            try {
+                const response = await fetch(`${API_URL}/health`);
+                const data = await response.json();
+                if (data.status === 'healthy') {
+                    document.getElementById('statusBadge').innerHTML = '● Agent Online';
+                    document.getElementById('statusBadge').className = 'status-badge status-healthy';
+                }
+            } catch (error) {
+                document.getElementById('statusBadge').innerHTML = '● Agent Offline';
+                document.getElementById('statusBadge').className = 'status-badge';
+                document.getElementById('statusBadge').style.background = '#f8d7da';
+                document.getElementById('statusBadge').style.color = '#842029';
+            }
+        }
+
+        async function testQuery(query) {
+            showLoading();
+            try {
+                // First test intent classification
+                const intentResponse = await fetch(`${API_URL}/webhook/test-intent`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query })
+                });
+                const intentData = await intentResponse.json();
+
+                // Then get actual response
+                const chatResponse = await fetch(`${API_URL}/webhook/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: 'test_user',
+                        message: query
+                    })
+                });
+                const chatData = await chatResponse.json();
+
+                showResponse(query, intentData, chatData);
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        async function sendCustomQuery() {
+            const query = document.getElementById('customQuery').value.trim();
+            if (!query) return;
+            await testQuery(query);
+            document.getElementById('customQuery').value = '';
+        }
+
+        function showLoading() {
+            document.getElementById('responseContainer').innerHTML = `
+                <div class="response-box">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p style="margin-top: 15px;">Processing query...</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showResponse(query, intentData, chatData) {
+            const highIntent = intentData.high_intent_analysis.has_high_intent;
+            const intent = intentData.intent.intent;
+
+            document.getElementById('responseContainer').innerHTML = `
+                <div class="response-box">
+                    <h4>Query</h4>
+                    <p style="padding: 10px; background: white; border-radius: 5px; margin-bottom: 15px;">
+                        "${query}"
+                    </p>
+
+                    <h4>Intent Classification</h4>
+                    <div style="margin-bottom: 15px;">
+                        <span class="intent-badge intent-${intent}">${intent.toUpperCase()}</span>
+                        ${highIntent ? '<span class="intent-badge high-intent">HIGH INTENT - LEAD CAPTURE</span>' : ''}
+                    </div>
+
+                    <h4>Agent Response</h4>
+                    <p style="padding: 15px; background: white; border-radius: 5px; line-height: 1.6; margin-bottom: 15px;">
+                        ${chatData.response || 'No response'}
+                    </p>
+
+                    <h4>Full Response Data</h4>
+                    <pre>${JSON.stringify(chatData, null, 2)}</pre>
+                </div>
+            `;
+        }
+
+        function showError(message) {
+            document.getElementById('responseContainer').innerHTML = `
+                <div class="response-box" style="border-left-color: #dc3545;">
+                    <h4>Error</h4>
+                    <p style="color: #dc3545;">${message}</p>
+                </div>
+            `;
+        }
+
+        // Initialize
+        checkHealth();
+        setInterval(checkHealth, 10000); // Check every 10 seconds
+    </script>
+</body>
+</html>

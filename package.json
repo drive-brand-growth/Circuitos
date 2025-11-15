@@ -1,0 +1,26 @@
+{
+  "name": "circuitos-local-complete-package",
+  "version": "1.0.0",
+  "description": "CircuitOS Local Complete Package - Development Environment Orchestrator",
+  "main": "warp-bridge.js",
+  "scripts": {
+    "warp": "node warp-bridge.js run",
+    "warp:exec": "node warp-bridge.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "circuit-os",
+    "development",
+    "orchestrator",
+    "warp-terminal"
+  ],
+  "author": "CircuitOS",
+  "license": "PROPRIETARY",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "bin": {
+    "warp-bridge": "./warp-bridge.js"
+  }
+}
+
