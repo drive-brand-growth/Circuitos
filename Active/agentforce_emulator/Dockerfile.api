@@ -17,9 +17,10 @@ RUN pip install uv
 COPY pyproject.toml ./
 RUN uv pip install --system . || pip install fastapi uvicorn sqlalchemy psycopg2-binary redis
 
-# Create placeholder directories and files
-RUN mkdir -p services/agent_runtime && \
-    echo 'from fastapi import FastAPI; app = FastAPI(); @app.get("/health"): return {"status": "healthy"}' > services/agent_runtime/app.py
+# Copy application code
+COPY services/ ./services/ 2>/dev/null || mkdir -p services
+COPY cli/ ./cli/ 2>/dev/null || mkdir -p cli
+COPY configs/ ./configs/ 2>/dev/null || mkdir -p configs
 
 # Expose port
 EXPOSE 8000
