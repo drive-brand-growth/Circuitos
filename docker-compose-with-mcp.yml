@@ -1,0 +1,180 @@
+version: '3.8'
+
+# ========================================
+# ULTIMATE SETUP: RAG + MCP SERVERS
+# Complete system with Model Context Protocol integration
+# ========================================
+
+services:
+  # ========================================
+  # Include all services from ultimate setup
+  # ========================================
+
+  # (Previous services: postgres, qdrant, redis, minio, n8n instances, etc.)
+  # For brevity, extending docker-compose-ultimate.yml
+
+  # ========================================
+  # MCP SERVERS (Model Context Protocol)
+  # Run as Docker services, accessible to ALL projects
+  # ========================================
+
+  # Google Maps MCP Server
+  mcp-google-maps:
+    build: ./mcp-servers/google-maps
+    container_name: mcp-google-maps
+    restart: unless-stopped
+    ports:
+      - "8090:8080"
+    environment:
+      - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
+      - MCP_PORT=8080
+    networks:
+      - circuit-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Google Analytics 4 MCP Server
+  mcp-google-analytics:
+    build: ./mcp-servers/google-analytics
+    container_name: mcp-google-analytics
+    restart: unless-stopped
+    ports:
+      - "8091:8080"
+    environment:
+      - GOOGLE_ANALYTICS_PROPERTY_ID=${GA4_PROPERTY_ID}
+      - GOOGLE_ANALYTICS_CREDENTIALS=${GA4_CREDENTIALS_JSON}
+      - MCP_PORT=8080
+    networks:
+      - circuit-network
+
+  # Google My Business MCP Server
+  mcp-google-my-business:
+    build: ./mcp-servers/google-my-business
+    container_name: mcp-gmb
+    restart: unless-stopped
+    ports:
+      - "8092:8080"
+    environment:
+      - GMB_ACCOUNT_ID=${GMB_ACCOUNT_ID}
+      - GMB_LOCATION_ID=${GMB_LOCATION_ID}
+      - GOOGLE_CREDENTIALS=${GMB_CREDENTIALS_JSON}
+      - MCP_PORT=8080
+    networks:
+      - circuit-network
+
+  # US Census Bureau MCP Server
+  mcp-census:
+    build: ./mcp-servers/census
+    container_name: mcp-census
+    restart: unless-stopped
+    ports:
+      - "8093:8080"
+    environment:
+      - MCP_PORT=8080
+    networks:
+      - circuit-network
+
+  # OpenStreetMap MCP Server
+  mcp-openstreetmap:
+    build: ./mcp-servers/openstreetmap
+    container_name: mcp-osm
+    restart: unless-stopped
+    ports:
+      - "8094:8080"
+    environment:
+      - MCP_PORT=8080
+    networks:
+      - circuit-network
+
+  # OpenWeather MCP Server
+  mcp-openweather:
+    build: ./mcp-servers/openweather
+    container_name: mcp-weather
+    restart: unless-stopped
+    ports:
+      - "8095:8080"
+    environment:
+      - OPENWEATHER_API_KEY=${OPENWEATHER_API_KEY}
+      - MCP_PORT=8080
+    networks:
+      - circuit-network
+
+  # ========================================
+  # MCP GATEWAY (Unified Access Point)
+  # ========================================
+
+  mcp-gateway:
+    build: ./mcp-gateway
+    container_name: mcp-gateway
+    restart: unless-stopped
+    ports:
+      - "8089:8080"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      # MCP Server URLs
+      - MCP_GOOGLE_MAPS_URL=http://mcp-google-maps:8080
+      - MCP_GOOGLE_ANALYTICS_URL=http://mcp-google-analytics:8080
+      - MCP_GMB_URL=http://mcp-gmb:8080
+      - MCP_CENSUS_URL=http://mcp-census:8080
+      - MCP_OSM_URL=http://mcp-osm:8080
+      - MCP_WEATHER_URL=http://mcp-weather:8080
+    depends_on:
+      - redis
+      - mcp-google-maps
+      - mcp-google-analytics
+      - mcp-google-my-business
+      - mcp-census
+      - mcp-openstreetmap
+      - mcp-openweather
+    networks:
+      - circuit-network
+
+  # ========================================
+  # ENHANCED AI AGENTS WITH MCP ACCESS
+  # ========================================
+
+  # Virtual LPR Service (Uses MCP servers)
+  virtual-lpr:
+    build: ./virtual-lpr-service
+    container_name: virtual-lpr
+    restart: unless-stopped
+    ports:
+      - "8096:8080"
+    environment:
+      - MCP_GATEWAY_URL=http://mcp-gateway:8080
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - ./shared-files:/files
+    depends_on:
+      - mcp-gateway
+      - qdrant
+      - redis
+    networks:
+      - circuit-network
+
+networks:
+  circuit-network:
+    driver: bridge
+
+# ========================================
+# MCP SERVER USAGE EXAMPLES
+# ========================================
+
+# From n8n workflow:
+# HTTP Request → http://mcp-gateway:8080/maps/geocode?address=Dallas,TX
+# HTTP Request → http://mcp-gateway:8080/gmb/insights?location_id=xxx
+# HTTP Request → http://mcp-gateway:8080/census/demographics?zip=75201
+
+# From AI Agent API:
+# import httpx
+# response = await httpx.get("http://mcp-gateway:8080/maps/nearby?location=lat,lng&type=gym")
+
+# From Circuit Script:
+# mcp_data = requests.get("http://mcp-gateway:8080/weather/current?city=Dallas").json()
