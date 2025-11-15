@@ -24,5 +24,5 @@ EXPOSE 5001
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
   CMD curl -f http://localhost:5001/health || exit 1
 
-# Run with Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:5001", "--workers", "2", "--timeout", "120", "app:app"]
+# Run with Gunicorn (unified_api_server has all 5 agents)
+CMD ["gunicorn", "--bind", "0.0.0.0:5001", "--workers", "2", "--timeout", "120", "unified_api_server:app"]
