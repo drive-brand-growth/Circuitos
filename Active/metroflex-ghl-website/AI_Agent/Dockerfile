@@ -26,4 +26,4 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 
 # Run with Gunicorn (unified_api_server has all 5 agents)
 # Use Railway's PORT env var, fallback to 5001 for local development
-CMD gunicorn --bind 0.0.0.0:${PORT:-5001} --workers 2 --timeout 120 unified_api_server:app
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-5001} --workers 2 --timeout 120 unified_api_server:app"]
