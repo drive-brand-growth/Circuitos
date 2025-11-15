@@ -1,0 +1,388 @@
+version: '3.8'
+
+# ========================================
+# ULTIMATE MULTI-PROJECT RAG SETUP
+# Supports: Metroflex Events + Gym Agents + Circuit Script + Any Future Projects
+# ========================================
+
+services:
+  # ========================================
+  # CORE INFRASTRUCTURE
+  # ========================================
+
+  # PostgreSQL - Main Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres-main
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-admin}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=circuit_os
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - circuit-network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-admin}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Qdrant - Vector Database for RAG (ALL PROJECTS)
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant-rag
+    restart: unless-stopped
+    ports:
+      - "6333:6333"  # HTTP API
+      - "6334:6334"  # gRPC
+    volumes:
+      - qdrant_data:/qdrant/storage
+      - ./qdrant-config:/qdrant/config
+    networks:
+      - circuit-network
+    environment:
+      - QDRANT__SERVICE__GRPC_PORT=6334
+      - QDRANT__LOG_LEVEL=INFO
+
+  # Redis - Caching & Queue Management
+  redis:
+    image: redis:7-alpine
+    container_name: redis-cache
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - circuit-network
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+
+  # MinIO - S3-Compatible File Storage
+  minio:
+    image: minio/minio:latest
+    container_name: minio-storage
+    restart: unless-stopped
+    ports:
+      - "9001:9001"  # Console
+      - "9002:9002"  # API
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER:-minioadmin}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+    volumes:
+      - minio_data:/data
+    networks:
+      - circuit-network
+    command: server /data --console-address ":9001" --address ":9002"
+
+  # ========================================
+  # PROJECT 1: METROFLEX EVENTS
+  # ========================================
+
+  # n8n for Metroflex Events Automation
+  n8n-metroflex:
+    image: n8nio/n8n:latest
+    container_name: n8n-metroflex-events
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD}
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - WEBHOOK_URL=https://${N8N_HOST}/
+      - GENERIC_TIMEZONE=${TIMEZONE:-America/Chicago}
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+      # API Keys
+      - CLAUDE_API_KEY=${CLAUDE_API_KEY}
+      - GHL_WEBHOOK_URL=${GHL_WEBHOOK_URL}
+      # Database
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=n8n_metroflex
+      - DB_POSTGRESDB_USER=${POSTGRES_USER:-admin}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - n8n_metroflex_data:/home/node/.n8n
+      - ./shared-files:/files
+    depends_on:
+      - postgres
+      - qdrant
+      - redis
+    networks:
+      - circuit-network
+
+  # Metroflex Events AI Agent API
+  metroflex-ai-api:
+    build: ./ai-agent-api
+    container_name: metroflex-ai-agents
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - CLAUDE_API_KEY=${CLAUDE_API_KEY}
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PROJECT=metroflex_events
+    volumes:
+      - ./ai-agent-api:/app
+      - ./shared-files:/files
+    depends_on:
+      - qdrant
+      - redis
+    networks:
+      - circuit-network
+
+  # ========================================
+  # PROJECT 2: METROFLEX GYM AGENTS
+  # ========================================
+
+  # n8n for Gym Operations
+  n8n-gym:
+    image: n8nio/n8n:latest
+    container_name: n8n-gym-operations
+    restart: unless-stopped
+    ports:
+      - "5679:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD}
+      - N8N_HOST=${N8N_GYM_HOST:-localhost}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - WEBHOOK_URL=https://${N8N_GYM_HOST}/
+      - GENERIC_TIMEZONE=${TIMEZONE:-America/Chicago}
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+      # Database
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=n8n_gym
+      - DB_POSTGRESDB_USER=${POSTGRES_USER:-admin}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - n8n_gym_data:/home/node/.n8n
+      - ./shared-files:/files
+      - ./audio-training:/audio-training:ro
+    depends_on:
+      - postgres
+    networks:
+      - circuit-network
+
+  # Gym AI Agents (Churn Prevention, Lead Scoring, etc.)
+  gym-ai-api:
+    build: ./gym-ai-agents
+    container_name: gym-ai-agents
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    environment:
+      - CLAUDE_API_KEY=${CLAUDE_API_KEY}
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PROJECT=gym_operations
+      - GHL_API_KEY=${GHL_API_KEY}
+    volumes:
+      - ./gym-ai-agents:/app
+      - ./shared-files:/files
+      - ./audio-training:/audio-training:ro
+    depends_on:
+      - qdrant
+      - redis
+    networks:
+      - circuit-network
+
+  # ========================================
+  # PROJECT 3: CIRCUIT SCRIPT (Your Apex Clone)
+  # ========================================
+
+  # Circuit API Server
+  circuit-api:
+    build: ./circuit-script
+    container_name: circuit-apex-api
+    restart: unless-stopped
+    ports:
+      - "8082:8080"
+    environment:
+      - CLAUDE_API_KEY=${CLAUDE_API_KEY}
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=circuit_os
+      - POSTGRES_USER=${POSTGRES_USER:-admin}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - PROJECT=circuit_script
+    volumes:
+      - ./circuit-script:/app
+      - ./shared-files:/files
+    depends_on:
+      - postgres
+      - qdrant
+      - redis
+    networks:
+      - circuit-network
+
+  # ========================================
+  # SHARED RAG & KNOWLEDGE BASE SERVICES
+  # ========================================
+
+  # RAG Ingestion Service (Processes all documents)
+  rag-ingestor:
+    build: ./rag-system
+    container_name: rag-ingestor
+    restart: unless-stopped
+    ports:
+      - "8083:8080"
+    environment:
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MINIO_ENDPOINT=minio:9002
+      - MINIO_ACCESS_KEY=${MINIO_ROOT_USER:-minioadmin}
+      - MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD}
+    volumes:
+      - ./rag-system:/app
+      - ./shared-files:/files
+      - ./audio-training:/audio-training:ro
+      - ./documents:/documents:ro
+    depends_on:
+      - qdrant
+      - minio
+    networks:
+      - circuit-network
+    command: python ingestor-service.py
+
+  # NotebookLM-Style Query Interface
+  notebooklm-api:
+    build: ./rag-system
+    container_name: notebooklm-interface
+    restart: unless-stopped
+    ports:
+      - "8084:8080"
+    environment:
+      - CLAUDE_API_KEY=${CLAUDE_API_KEY}
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+    volumes:
+      - ./rag-system:/app
+    depends_on:
+      - qdrant
+    networks:
+      - circuit-network
+    command: uvicorn notebooklm_api:app --host 0.0.0.0 --port 8080
+
+  # ========================================
+  # UTILITIES & MANAGEMENT
+  # ========================================
+
+  # Nginx - Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - n8n-metroflex
+      - n8n-gym
+      - metroflex-ai-api
+      - gym-ai-api
+      - circuit-api
+    networks:
+      - circuit-network
+
+  # Portainer - Docker Management UI
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer-mgmt
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+      - "8000:8000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - circuit-network
+
+  # Watchtower - Auto-update containers
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower-autoupdate
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=604800  # Weekly
+    networks:
+      - circuit-network
+
+  # Backup Service
+  backup:
+    image: offen/docker-volume-backup:latest
+    container_name: backup-service
+    restart: unless-stopped
+    environment:
+      - BACKUP_CRON_EXPRESSION=0 2 * * *  # 2am daily
+      - BACKUP_RETENTION_DAYS=7
+      - BACKUP_FILENAME=circuit-os-%Y%m%d.tar.gz
+    volumes:
+      - n8n_metroflex_data:/backup/n8n_metroflex:ro
+      - n8n_gym_data:/backup/n8n_gym:ro
+      - qdrant_data:/backup/qdrant:ro
+      - postgres_data:/backup/postgres:ro
+      - ./backups:/archive
+    networks:
+      - circuit-network
+
+# ========================================
+# VOLUMES
+# ========================================
+
+volumes:
+  postgres_data:
+    driver: local
+  qdrant_data:
+    driver: local
+  redis_data:
+    driver: local
+  minio_data:
+    driver: local
+  n8n_metroflex_data:
+    driver: local
+  n8n_gym_data:
+    driver: local
+  portainer_data:
+    driver: local
+
+# ========================================
+# NETWORKS
+# ========================================
+
+networks:
+  circuit-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
