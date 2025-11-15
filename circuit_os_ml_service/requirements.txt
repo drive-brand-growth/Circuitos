@@ -18,10 +18,19 @@ asyncpg==0.29.0  # Async PostgreSQL
 chromadb==0.4.18
 sentence-transformers==2.2.2
 
-# ML/AI
-scikit-learn==1.3.2
+# ML/AI - ENHANCED (v2.0)
+# Core ML Libraries
+scikit-learn==1.3.2  # All algorithms: Linear, Logistic, KNN, SVM, Random Forest, Gradient Boosting
 numpy==1.26.2
 pandas==2.1.3
+
+# Advanced ML (Optional but Recommended)
+xgboost==2.0.3  # State-of-the-art gradient boosting (XGBoost)
+joblib==1.3.2  # Model serialization (save/load trained models)
+
+# Visualization (for ML curriculum circuits and feature analysis)
+matplotlib==3.8.2  # Optional: for visualizing clusters, decision boundaries
+seaborn==0.13.0  # Optional: for prettier statistical plots
 
 # Claude API
 anthropic==0.7.7

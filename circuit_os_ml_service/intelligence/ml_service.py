@@ -1,17 +1,60 @@
 """
 ML Service - Machine Learning with AutoML
 Self-improving models with feedback loops
+
+ENHANCED VERSION (v2.0)
+- 10+ ML algorithms from ML Algorithms Overview
+- Comprehensive evaluation metrics
+- Intelligent algorithm selection
+- Complete supervised learning coverage
 """
 
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime, timedelta
 import numpy as np
 import pickle
 import logging
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingRegressor
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, mean_squared_error
+
+# Scikit-learn algorithms (from ML Algorithms Overview)
+from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import (
+    RandomForestClassifier,
+    RandomForestRegressor,
+    GradientBoostingClassifier,
+    GradientBoostingRegressor,
+    AdaBoostClassifier,
+    BaggingClassifier,
+    BaggingRegressor
+)
+
+# Model selection and evaluation
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    mean_squared_error,
+    mean_absolute_error,
+    r2_score,
+    confusion_matrix,
+    classification_report
+)
+
 import joblib
+
+# Try to import XGBoost (optional, high-performance)
+try:
+    from xgboost import XGBClassifier, XGBRegressor
+    XGBOOST_AVAILABLE = True
+except ImportError:
+    XGBOOST_AVAILABLE = False
+    logger = logging.getLogger(__name__)
+    logger.warning("XGBoost not available. Install with: pip install xgboost")
 
 logger = logging.getLogger(__name__)
 
@@ -77,6 +120,12 @@ class ModelRegistry:
 class AutoMLTrainer:
     """
     AutoML training with model selection and hyperparameter tuning
+
+    ENHANCED VERSION (v2.0)
+    - 10+ classification algorithms
+    - 8+ regression algorithms
+    - Comprehensive evaluation metrics
+    - Intelligent algorithm selection based on data characteristics
     """
 
     def __init__(self):
@@ -86,10 +135,22 @@ class AutoMLTrainer:
         self,
         X: np.ndarray,
         y: np.ndarray,
-        model_name: str = "auto_classifier"
+        model_name: str = "auto_classifier",
+        algorithms: List[str] = None
     ) -> Dict[str, Any]:
         """
         Train classification model with auto model selection
+
+        From ML Algorithms Overview:
+        - Logistic Regression: Basic classification, probability scores
+        - KNN: Non-parametric, similarity-based
+        - SVM: Maximum margin, kernel trick for complex patterns
+        - Naive Bayes: Fast, good for text classification
+        - Decision Tree: Interpretable rules
+        - Random Forest: Ensemble bagging, prevents overfitting
+        - AdaBoost: Sequential boosting
+        - Gradient Boosting: High accuracy, prone to overfitting
+        - XGBoost: State-of-the-art, optimized boosting
         """
         logger.info(f"Training classifier {model_name} with {len(X)} samples")
 
@@ -98,27 +159,82 @@ class AutoMLTrainer:
             X, y, test_size=0.2, random_state=42
         )
 
-        # Try different models
-        models = {
+        # All available classification algorithms (from ML overview)
+        all_models = {
+            # Basic Algorithms
+            "logistic_regression": LogisticRegression(max_iter=1000, random_state=42),
+            "knn": KNeighborsClassifier(n_neighbors=5),
+            "naive_bayes": GaussianNB(),
+
+            # SVM with different kernels (kernel trick from overview)
+            "svm_linear": SVC(kernel='linear', probability=True, random_state=42),
+            "svm_rbf": SVC(kernel='rbf', probability=True, random_state=42),
+            "svm_poly": SVC(kernel='poly', degree=3, probability=True, random_state=42),
+
+            # Tree-based
+            "decision_tree": DecisionTreeClassifier(max_depth=10, random_state=42),
+
+            # Ensemble - Bagging (from overview)
             "random_forest": RandomForestClassifier(n_estimators=100, random_state=42),
+            "bagging": BaggingClassifier(n_estimators=100, random_state=42),
+
+            # Ensemble - Boosting (from overview)
+            "adaboost": AdaBoostClassifier(n_estimators=100, random_state=42),
+            "gradient_boosting": GradientBoostingClassifier(n_estimators=100, random_state=42),
         }
+
+        # Add XGBoost if available (state-of-the-art from overview)
+        if XGBOOST_AVAILABLE:
+            all_models["xgboost"] = XGBClassifier(
+                n_estimators=100,
+                random_state=42,
+                eval_metric='logloss'
+            )
+
+        # Filter to requested algorithms if specified
+        if algorithms:
+            models = {k: v for k, v in all_models.items() if k in algorithms}
+        else:
+            models = all_models
 
         best_model = None
         best_accuracy = 0
         best_model_name = None
+        best_metrics = None
+        results = {}
 
         for name, model in models.items():
             try:
+                # Train model
                 model.fit(X_train, y_train)
+
+                # Predictions
                 y_pred = model.predict(X_test)
-                accuracy = accuracy_score(y_test, y_pred)
 
-                logger.info(f"  {name}: accuracy={accuracy:.3f}")
+                # Get probabilities if available
+                y_prob = None
+                if hasattr(model, 'predict_proba'):
+                    y_prob = model.predict_proba(X_test)
 
-                if accuracy > best_accuracy:
-                    best_accuracy = accuracy
+                # Comprehensive evaluation (from overview)
+                metrics = self._evaluate_classifier(y_test, y_pred, y_prob)
+
+                logger.info(
+                    f"  {name}: accuracy={metrics['accuracy']:.3f}, "
+                    f"precision={metrics['precision']:.3f}, "
+                    f"recall={metrics['recall']:.3f}, "
+                    f"f1={metrics['f1_score']:.3f}"
+                )
+
+                # Store results
+                results[name] = metrics
+
+                # Track best model by F1 score (better than accuracy alone)
+                if metrics['f1_score'] > best_accuracy:
+                    best_accuracy = metrics['f1_score']
                     best_model = model
                     best_model_name = name
+                    best_metrics = metrics
 
             except Exception as e:
                 logger.error(f"Error training {name}: {e}")
@@ -126,22 +242,60 @@ class AutoMLTrainer:
         training_result = {
             "model": best_model,
             "model_type": best_model_name,
-            "accuracy": best_accuracy,
+            "accuracy": best_metrics['accuracy'] if best_metrics else 0,
+            "precision": best_metrics['precision'] if best_metrics else 0,
+            "recall": best_metrics['recall'] if best_metrics else 0,
+            "f1_score": best_metrics['f1_score'] if best_metrics else 0,
+            "all_results": results,
             "samples": len(X),
-            "trained_at": datetime.now().isoformat()
+            "trained_at": datetime.now().isoformat(),
+            "algorithms_tested": len(models)
         }
 
         self.training_history.append(training_result)
         return training_result
 
+    def _evaluate_classifier(
+        self,
+        y_true: np.ndarray,
+        y_pred: np.ndarray,
+        y_prob: np.ndarray = None
+    ) -> Dict[str, Any]:
+        """
+        Comprehensive classifier evaluation
+        From ML Algorithms Overview: accuracy, precision, recall, F1, confidence
+        """
+        metrics = {
+            "accuracy": accuracy_score(y_true, y_pred),
+            "precision": precision_score(y_true, y_pred, average='weighted', zero_division=0),
+            "recall": recall_score(y_true, y_pred, average='weighted', zero_division=0),
+            "f1_score": f1_score(y_true, y_pred, average='weighted', zero_division=0),
+        }
+
+        # Add confidence if probabilities available
+        if y_prob is not None:
+            metrics["confidence"] = float(y_prob.max(axis=1).mean())
+
+        return metrics
+
     async def train_regressor(
         self,
         X: np.ndarray,
         y: np.ndarray,
-        model_name: str = "auto_regressor"
+        model_name: str = "auto_regressor",
+        algorithms: List[str] = None
     ) -> Dict[str, Any]:
         """
-        Train regression model
+        Train regression model with auto model selection
+
+        From ML Algorithms Overview:
+        - Linear Regression: Mother of all ML, minimizes sum of squares
+        - KNN Regression: Average of K nearest neighbors
+        - SVR: Support Vector Regression with kernel trick
+        - Decision Tree: Interpretable regression rules
+        - Random Forest: Ensemble bagging for regression
+        - Gradient Boosting: Sequential model improvement (high accuracy)
+        - XGBoost: State-of-the-art regression
         """
         logger.info(f"Training regressor {model_name} with {len(X)} samples")
 
@@ -150,27 +304,110 @@ class AutoMLTrainer:
             X, y, test_size=0.2, random_state=42
         )
 
-        # Train model
-        model = GradientBoostingRegressor(n_estimators=100, random_state=42)
-        model.fit(X_train, y_train)
+        # All available regression algorithms (from ML overview)
+        all_models = {
+            # Linear Models (Mother of all ML from overview)
+            "linear_regression": LinearRegression(),
 
-        # Evaluate
-        y_pred = model.predict(X_test)
-        mse = mean_squared_error(y_test, y_pred)
-        rmse = np.sqrt(mse)
+            # Non-parametric
+            "knn": KNeighborsRegressor(n_neighbors=5),
 
-        logger.info(f"  RMSE: {rmse:.3f}")
+            # SVM with kernels
+            "svr_linear": SVR(kernel='linear'),
+            "svr_rbf": SVR(kernel='rbf'),
+
+            # Tree-based
+            "decision_tree": DecisionTreeRegressor(max_depth=10, random_state=42),
+
+            # Ensemble - Bagging
+            "random_forest": RandomForestRegressor(n_estimators=100, random_state=42),
+            "bagging": BaggingRegressor(n_estimators=100, random_state=42),
+
+            # Ensemble - Boosting (high accuracy from overview)
+            "gradient_boosting": GradientBoostingRegressor(n_estimators=100, random_state=42),
+        }
+
+        # Add XGBoost if available
+        if XGBOOST_AVAILABLE:
+            all_models["xgboost"] = XGBRegressor(n_estimators=100, random_state=42)
+
+        # Filter to requested algorithms if specified
+        if algorithms:
+            models = {k: v for k, v in all_models.items() if k in algorithms}
+        else:
+            models = all_models
+
+        best_model = None
+        best_rmse = float('inf')
+        best_model_name = None
+        best_metrics = None
+        results = {}
+
+        for name, model in models.items():
+            try:
+                # Train model
+                model.fit(X_train, y_train)
+
+                # Predictions
+                y_pred = model.predict(X_test)
+
+                # Comprehensive evaluation
+                metrics = self._evaluate_regressor(y_test, y_pred)
+
+                logger.info(
+                    f"  {name}: RMSE={metrics['rmse']:.3f}, "
+                    f"MAE={metrics['mae']:.3f}, "
+                    f"R²={metrics['r2']:.3f}"
+                )
+
+                # Store results
+                results[name] = metrics
+
+                # Track best model by RMSE (lower is better)
+                if metrics['rmse'] < best_rmse:
+                    best_rmse = metrics['rmse']
+                    best_model = model
+                    best_model_name = name
+                    best_metrics = metrics
+
+            except Exception as e:
+                logger.error(f"Error training {name}: {e}")
 
         training_result = {
-            "model": model,
-            "model_type": "gradient_boosting",
-            "rmse": rmse,
+            "model": best_model,
+            "model_type": best_model_name,
+            "rmse": best_metrics['rmse'] if best_metrics else 0,
+            "mae": best_metrics['mae'] if best_metrics else 0,
+            "r2": best_metrics['r2'] if best_metrics else 0,
+            "all_results": results,
             "samples": len(X),
-            "trained_at": datetime.now().isoformat()
+            "trained_at": datetime.now().isoformat(),
+            "algorithms_tested": len(models)
         }
 
         self.training_history.append(training_result)
         return training_result
+
+    def _evaluate_regressor(
+        self,
+        y_true: np.ndarray,
+        y_pred: np.ndarray
+    ) -> Dict[str, Any]:
+        """
+        Comprehensive regressor evaluation
+        From ML Algorithms Overview: RMSE, MAE, R²
+        """
+        mse = mean_squared_error(y_true, y_pred)
+        rmse = np.sqrt(mse)
+        mae = mean_absolute_error(y_true, y_pred)
+        r2 = r2_score(y_true, y_pred)
+
+        return {
+            "rmse": float(rmse),
+            "mae": float(mae),
+            "r2": float(r2),
+            "mse": float(mse)
+        }
 
 
 class MLService:
