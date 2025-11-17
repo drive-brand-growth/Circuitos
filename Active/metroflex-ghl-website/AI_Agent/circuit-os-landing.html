@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Circuit OS — Demo With Live Metrics</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  body {
+    margin:0;
+    font-family: Inter, system-ui, sans-serif;
+    background:#0A0B0C;
+    color:white;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+  }
+
+  .header {
+    display:flex;
+    justify-content:space-between;
+    padding:32px 64px;
+    align-items:center;
+  }
+
+  .signal-dot {
+    width:14px;
+    height:14px;
+    border-radius:999px;
+    background:#38FF6A;
+    box-shadow:0 0 18px rgba(56,255,106,.75);
+    transition:0.35s ease;
+  }
+
+  .signal-dot.operator {
+    background:#D12B2B;
+    box-shadow:0 0 18px rgba(209,43,43,.75);
+  }
+
+  .word {
+    font-family: 'Eurostile', system-ui;
+    letter-spacing:0.18em;
+    font-size:12px;
+    opacity:.7;
+  }
+
+  .btn-min {
+    padding:10px 18px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,.12);
+    background:transparent;
+    color:white;
+    cursor:pointer;
+  }
+  .btn-min:hover { border-color:#38FF6A; }
+
+  .hero {
+    text-align:center;
+    margin-top:90px;
+    padding:0 20px;
+  }
+
+  .hero h1 {
+    font-family:'Eurostile',system-ui;
+    font-size:72px;
+    letter-spacing:.1em;
+    background:linear-gradient(to bottom,#EEF2F5,#50565E);
+    -webkit-background-clip:text;
+    color:transparent;
+    text-shadow:0 4px 16px rgba(0,0,0,.55);
+  }
+
+  .hero p {
+    color:#C2C8CF;
+    font-size:22px;
+    max-width:850px;
+    margin:24px auto 0;
+  }
+
+  /* CTA row */
+  .cta-row {
+    margin-top:48px;
+    display:flex;
+    justify-content:center;
+    gap:38px;
+  }
+
+  .cta {
+    padding:18px 38px;
+    font-size:18px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.14);
+    cursor:pointer;
+    background:#141618;
+    box-shadow:0 0 12px rgba(56,255,106,.35);
+    transition:.25s;
+  }
+
+  .cta:hover {
+    box-shadow:0 0 32px rgba(56,255,106,.55);
+  }
+
+  .cta-op {
+    padding:18px 38px;
+    font-size:18px;
+    border-radius:12px;
+    border:1px solid #D12B2B;
+    background:#1A1D21;
+    color:#D12B2B;
+    box-shadow:0 0 18px rgba(209,43,43,.35);
+    cursor:pointer;
+    transition:.25s;
+  }
+
+  /* METRICS BAR */
+  .metrics {
+    margin-top:80px;
+    display:flex;
+    justify-content:center;
+    gap:90px;
+    font-size:20px;
+  }
+
+  .metric-label {
+    opacity:.55;
+    font-size:14px;
+    letter-spacing:.12em;
+  }
+
+  .metric-number {
+    font-family:'JetBrains Mono', monospace;
+    font-size:38px;
+    letter-spacing:-1px;
+  }
+
+  /* DROPDOWN */
+  .dropdown {
+    margin-top:42px;
+  }
+
+  .dropdown button {
+    padding:16px 28px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.12);
+    background:#141618;
+    font-size:16px;
+    cursor:pointer;
+  }
+
+  .dropdown button:hover {
+    border-color:#38FF6A;
+  }
+
+  .dropdown-panel {
+    display:none;
+    margin-top:14px;
+    padding:26px;
+    border-radius:14px;
+    font-size:18px;
+    line-height:1.6;
+    background:#111315;
+    border:1px solid rgba(255,255,255,.08);
+    width:420px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  footer {
+    text-align:center;
+    opacity:.4;
+    font-size:14px;
+    margin-top:auto;
+    padding:54px 0 32px;
+  }
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="signal-dot" id="signalDot"></div>
+    <span class="word">CIRCUIT OS</span>
+  </div>
+
+  <button class="btn-min">LOGIN</button>
+</header>
+
+<section class="hero">
+  <h1>COMMAND REVENUE</h1>
+
+  <p>
+    The first operating system that eliminates pipeline chaos<br>
+    and activates lost revenue — autonomously.
+  </p>
+
+  <div class="cta-row">
+    <button class="cta" id="deployBtn">Deploy Quick Switch</button>
+    <button class="cta-op" id="opBtn">Enter Operator Mode</button>
+  </div>
+</section>
+
+<!-- FAKE LIVE METRICS -->
+<div class="metrics">
+  <div>
+    <div class="metric-label">PIPELINE ACTIVATED</div>
+    <div class="metric-number" id="m1">0%</div>
+  </div>
+  <div>
+    <div class="metric-label">MEETINGS BOOKED</div>
+    <div class="metric-number" id="m2">0</div>
+  </div>
+  <div>
+    <div class="metric-label">REVENUE RECOVERED</div>
+    <div class="metric-number" id="m3">$0</div>
+  </div>
+</div>
+
+<!-- DROPDOWN -->
+<div class="dropdown">
+  <button id="ddBtn">▼ Show recovered revenue details</button>
+  <div class="dropdown-panel" id="ddPanel">
+    <strong>Recovered Pipeline:</strong> $482,900<br>
+    Average Deal Size: $31,300<br>
+    Recovered Opportunities: 18<br>
+    Time-to-Activation: 19.2 hours<br><br>
+
+    <em>Powered by Quick Switch™ — Zero SDR Touch.</em>
+  </div>
+</div>
+
+<footer>
+  © <script>document.write(new Date().getFullYear())</script> CIRCUIT OS — Industrial Operator Edition™
+</footer>
+
+<script>
+/*** FAKE LIVE METRIC ENGINE ***/
+let a = 0, b = 0, c = 0;
+let m1 = document.getElementById("m1");
+let m2 = document.getElementById("m2");
+let m3 = document.getElementById("m3");
+
+let interval = setInterval(()=>{
+  if(a < 92){ a+=3; m1.textContent = a+"%"; }
+  if(b < 18){ b+=1; m2.textContent = b; }
+  if(c < 482900){ c+=9820; m3.textContent = "$"+c.toLocaleString(); }
+}, 120);
+
+/*** DROPDOWN ***/
+let ddBtn = document.getElementById("ddBtn");
+let ddPanel = document.getElementById("ddPanel");
+let open = false;
+
+ddBtn.onclick = ()=>{
+  open = !open;
+  ddPanel.style.display = open ? "block" : "none";
+  ddBtn.textContent = open ? "▲ Hide revenue details" : "▼ Show recovered revenue details";
+};
+
+/*** OPERATOR MODE BUTTON CHANGES SIGNAL STATE ***/
+document.getElementById("opBtn").onclick = ()=>{
+  document.getElementById("signalDot").classList.toggle("operator");
+};
+</script>
+
+</body>
+</html>

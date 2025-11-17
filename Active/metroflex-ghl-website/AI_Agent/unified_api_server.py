@@ -23,7 +23,7 @@ Performance: 2.3x higher conversion vs generic GHL bots
 import os
 import json
 import logging
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 import requests
 from licensing_agent import LicensingQualificationAgent
@@ -380,6 +380,40 @@ def agents_status():
             '17-Point Judgment Framework (Nate\'s 10 + 7 expansions)',
             'ML-driven DMN decision logic'
         ]
+    }), 200
+
+
+@app.route('/circuit-os', methods=['GET'])
+@app.route('/circuit-os/', methods=['GET'])
+def circuit_os_landing():
+    """Serve Circuit OS Landing Page"""
+    try:
+        landing_page_path = os.path.join(os.path.dirname(__file__), 'circuit-os-landing.html')
+        if os.path.exists(landing_page_path):
+            return send_file(landing_page_path, mimetype='text/html')
+        else:
+            return jsonify({'error': 'Circuit OS landing page not found'}), 404
+    except Exception as e:
+        logger.error(f"Error serving Circuit OS landing: {e}")
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/', methods=['GET'])
+def root():
+    """Root endpoint with navigation"""
+    return jsonify({
+        'service': 'MetroFlex Unified AI Agent Server',
+        'status': 'running',
+        'endpoints': {
+            'circuit_os': '/circuit-os - Circuit OS Landing Page Demo',
+            'health': '/health - Health check',
+            'agents_status': '/api/agents/status - Agent status',
+            'licensing': '/api/licensing/chat - Licensing agent',
+            'gym_member': '/api/gym/chat - Gym membership agent',
+            'events': '/api/events/chat - Events agent',
+            'workflow': '/api/workflow/generate - Workflow generator',
+            'conversation': '/api/conversation/handle - Conversation manager'
+        }
     }), 200
 
 
