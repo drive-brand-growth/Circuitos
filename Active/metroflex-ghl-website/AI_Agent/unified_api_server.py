@@ -30,6 +30,7 @@ from licensing_agent import LicensingQualificationAgent
 from gym_member_agent import GymMemberOnboardingAgent
 from ghl_workflow_agent import generate_workflow_api
 from ghl_conversation_agent import conversation_api
+from adaptive_rag_api import rag_api
 
 # Configure logging
 logging.basicConfig(
@@ -41,6 +42,10 @@ logger = logging.getLogger(__name__)
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)
+
+# Register Adaptive RAG API Blueprint
+app.register_blueprint(rag_api)
+logger.info("✅ Adaptive RAG API registered at /api/rag/*")
 
 # Configuration
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
@@ -335,7 +340,7 @@ def conversation_handle():
 
 @app.route('/api/agents/status', methods=['GET'])
 def agents_status():
-    """Get status of all 5 agents"""
+    """Get status of all agents including Adaptive RAG"""
     return jsonify({
         'agents': {
             'licensing': {
@@ -367,6 +372,17 @@ def agents_status():
                 'description': 'Real-time objection handling',
                 'performance': '2.3x higher response rate vs generic GHL',
                 'conversion_lift': '55-70% response, 12-18% booking (vs 15-25% / 3-8%)'
+            },
+            'adaptive_rag': {
+                'available': True,
+                'endpoints': {
+                    'ingest': '/api/rag/ingest_url',
+                    'query': '/api/rag/query',
+                    'feedback': '/api/rag/feedback',
+                    'health': '/api/rag/health'
+                },
+                'description': 'Self-improving knowledge base with web crawling',
+                'features': ['URL ingestion', 'Semantic search', 'Feedback loop', 'Auto re-indexing']
             }
         },
         'total_revenue_potential': '$420k-$975k/year',

@@ -1,0 +1,197 @@
+{
+  "name": "RAG Feedback-Triggered Re-ingestion",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "rag-feedback-reingest",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Feedback Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [100, 300],
+      "webhookId": "rag-feedback-reingest"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.body.feedback_type }}",
+              "operation": "equals",
+              "value2": "outdated"
+            }
+          ]
+        }
+      },
+      "id": "check-feedback-type",
+      "name": "Is Outdated?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [320, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://metroflex-ai:5001/api/rag/reingest/{{ $json.body.document_id }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "reingest-immediately",
+      "name": "Re-ingest Immediately",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [540, 200]
+    },
+    {
+      "parameters": {
+        "channel": "#rag-updates",
+        "text": "=🔄 *Feedback-Triggered Re-ingestion*\n\nDocument ID: {{ $json.body.document_id }}\nURL: {{ $json.url }}\nReason: {{ $json.body.comment || 'Marked as outdated' }}\nAgent: {{ $json.body.agent_id || 'Unknown' }}\n\nResult: {{ $json.success ? '✅ Success' : '❌ Failed' }}\nChunks: {{ $json.chunks_created || 0 }}",
+        "otherOptions": {}
+      },
+      "id": "slack-notify-reingest",
+      "name": "Slack: Re-ingestion Alert",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [760, 200],
+      "credentials": {
+        "slackApi": {
+          "id": "slack-credentials",
+          "name": "Slack API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://metroflex-ai:5001/api/rag/feedback",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "feedback_type",
+              "value": "={{ $json.body.feedback_type }}"
+            },
+            {
+              "name": "chunk_id",
+              "value": "={{ $json.body.chunk_id }}"
+            },
+            {
+              "name": "document_id",
+              "value": "={{ $json.body.document_id }}"
+            },
+            {
+              "name": "comment",
+              "value": "={{ $json.body.comment }}"
+            },
+            {
+              "name": "agent_id",
+              "value": "={{ $json.body.agent_id }}"
+            },
+            {
+              "name": "query",
+              "value": "={{ $json.body.query }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "store-feedback",
+      "name": "Store Feedback",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [540, 400]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "feedback_stored"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-response",
+      "name": "Set Response",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [760, 400]
+    }
+  ],
+  "connections": {
+    "Feedback Webhook": {
+      "main": [
+        [
+          {
+            "node": "Is Outdated?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Outdated?": {
+      "main": [
+        [
+          {
+            "node": "Re-ingest Immediately",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Store Feedback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Re-ingest Immediately": {
+      "main": [
+        [
+          {
+            "node": "Slack: Re-ingestion Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Feedback": {
+      "main": [
+        [
+          {
+            "node": "Set Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "rag",
+      "id": "rag-tag"
+    },
+    {
+      "name": "feedback",
+      "id": "feedback-tag"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-01-15T00:00:00.000Z",
+  "versionId": "1"
+}

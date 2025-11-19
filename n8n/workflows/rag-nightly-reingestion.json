@@ -1,0 +1,270 @@
+{
+  "name": "RAG Nightly Re-ingestion",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 24
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Nightly Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [100, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "http://metroflex-ai:5001/api/rag/stale",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "get-stale-docs",
+      "name": "Get Stale Documents",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [320, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.count }}",
+              "operation": "larger",
+              "value2": 0
+            }
+          ]
+        }
+      },
+      "id": "check-stale-count",
+      "name": "Has Stale Documents?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [540, 300]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "stale_documents",
+        "options": {}
+      },
+      "id": "split-documents",
+      "name": "Split Documents",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [760, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://metroflex-ai:5001/api/rag/reingest/{{ $json.id }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "reingest-document",
+      "name": "Re-ingest Document",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [980, 200]
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "id": "aggregate-results",
+      "name": "Aggregate Results",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [1200, 200]
+    },
+    {
+      "parameters": {
+        "channel": "#rag-updates",
+        "text": "=🔄 *RAG Nightly Re-ingestion Complete*\n\nDocuments processed: {{ $json.data.length }}\n\nResults:\n{{ $json.data.map(d => `• ${d.url}: ${d.success ? '✅' : '❌'} (${d.chunks_created || 0} chunks)`).join('\\n') }}",
+        "otherOptions": {}
+      },
+      "id": "slack-notify-success",
+      "name": "Slack: Success Summary",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [1420, 200],
+      "credentials": {
+        "slackApi": {
+          "id": "slack-credentials",
+          "name": "Slack API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "channel": "#rag-updates",
+        "text": "=✅ *RAG Nightly Re-ingestion*\n\nNo stale documents found. Knowledge base is up to date.",
+        "otherOptions": {}
+      },
+      "id": "slack-notify-none",
+      "name": "Slack: No Stale Docs",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [760, 400],
+      "credentials": {
+        "slackApi": {
+          "id": "slack-credentials",
+          "name": "Slack API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "http://metroflex-ai:5001/api/rag/health",
+        "options": {}
+      },
+      "id": "health-check",
+      "name": "RAG Health Check",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1640, 200]
+    },
+    {
+      "parameters": {
+        "channel": "#rag-updates",
+        "text": "=📊 *RAG System Health*\n\nStatus: {{ $json.status }}\nDocuments: {{ $json.documents }}\nChunks: {{ $json.chunks }}\nEmbedding Model: {{ $json.embedding_model }}",
+        "otherOptions": {}
+      },
+      "id": "slack-health-report",
+      "name": "Slack: Health Report",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [1860, 200],
+      "credentials": {
+        "slackApi": {
+          "id": "slack-credentials",
+          "name": "Slack API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Nightly Schedule": {
+      "main": [
+        [
+          {
+            "node": "Get Stale Documents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Stale Documents": {
+      "main": [
+        [
+          {
+            "node": "Has Stale Documents?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Stale Documents?": {
+      "main": [
+        [
+          {
+            "node": "Split Documents",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Slack: No Stale Docs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Documents": {
+      "main": [
+        [
+          {
+            "node": "Re-ingest Document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Re-ingest Document": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Results": {
+      "main": [
+        [
+          {
+            "node": "Slack: Success Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack: Success Summary": {
+      "main": [
+        [
+          {
+            "node": "RAG Health Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RAG Health Check": {
+      "main": [
+        [
+          {
+            "node": "Slack: Health Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "rag",
+      "id": "rag-tag"
+    },
+    {
+      "name": "maintenance",
+      "id": "maintenance-tag"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-01-15T00:00:00.000Z",
+  "versionId": "1"
+}

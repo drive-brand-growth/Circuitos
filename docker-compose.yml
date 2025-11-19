@@ -21,12 +21,16 @@ services:
       - PORT=5001
       - FLASK_ENV=${ENVIRONMENT:-production}
       - REDIS_URL=redis://redis:6379/1
+      - RAG_DATABASE_URL=postgresql://circuitos:${POSTGRES_PASSWORD:-changeme}@postgres:5432/agentforce
+      - RAG_EMBEDDING_MODEL=all-MiniLM-L6-v2
     ports:
       - "5001:5001"
     volumes:
       - ./Active/metroflex-ghl-website/AI_Agent/logs:/app/logs
     depends_on:
       redis:
+        condition: service_healthy
+      postgres:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
@@ -187,9 +191,9 @@ services:
   # INFRASTRUCTURE SERVICES
   # ============================================================================
 
-  # PostgreSQL (Shared Database)
+  # PostgreSQL (Shared Database with pgvector for RAG)
   postgres:
-    image: postgres:16-alpine
+    image: pgvector/pgvector:pg16
     container_name: circuitos-db
     restart: unless-stopped
     environment:

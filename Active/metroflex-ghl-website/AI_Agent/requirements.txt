@@ -4,7 +4,7 @@
 # Core AI/ML Libraries
 openai==1.3.0                    # OpenAI GPT-4 API for conversational responses
 sentence-transformers==2.2.2     # Embedding model for semantic search
-chromadb==0.4.18                 # Vector database for RAG retrieval
+chromadb==0.4.18                 # Vector database for RAG retrieval (legacy)
 
 # Web Framework
 flask==3.0.0                     # Webhook server for GHL integration
@@ -13,6 +13,13 @@ flask-cors==4.0.0                # CORS support for cross-origin requests
 # Utilities
 python-dotenv==1.0.0             # Environment variable management
 gunicorn==21.2.0                 # Production WSGI server (for deployment)
-
-# Optional but Recommended
 requests==2.31.0                 # HTTP requests (if extending to other APIs)
+
+# Adaptive RAG Stack - Web Crawling & Content Extraction
+beautifulsoup4==4.12.2           # HTML parsing for content extraction
+trafilatura==1.6.2               # Advanced content extraction from web pages
+lxml==4.9.3                      # XML/HTML processing (trafilatura dependency)
+
+# Adaptive RAG Stack - Vector Storage
+psycopg2-binary==2.9.9           # PostgreSQL adapter for pgvector
+numpy==1.24.3                    # Numerical operations for embeddings
