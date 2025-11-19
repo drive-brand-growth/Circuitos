@@ -1,0 +1,132 @@
+{
+  "id": "LeadQualification_v1",
+  "name": "Lead Qualification Decision",
+  "description": "DMN decision table for qualifying leads based on business criteria",
+  "hitPolicy": "FIRST",
+  "inputs": [
+    {
+      "id": "timeInBusiness",
+      "label": "Time in Business (years)",
+      "type": "number"
+    },
+    {
+      "id": "vehicleCount",
+      "label": "Number of Vehicles",
+      "type": "number"
+    },
+    {
+      "id": "annualRevenue",
+      "label": "Annual Revenue ($)",
+      "type": "number"
+    },
+    {
+      "id": "hasExistingLicense",
+      "label": "Has Existing License",
+      "type": "boolean"
+    }
+  ],
+  "outputs": [
+    {
+      "id": "qualification",
+      "label": "Qualification Status",
+      "type": "string"
+    },
+    {
+      "id": "score",
+      "label": "Qualification Score",
+      "type": "number"
+    },
+    {
+      "id": "nextAction",
+      "label": "Recommended Next Action",
+      "type": "string"
+    },
+    {
+      "id": "priority",
+      "label": "Priority Level",
+      "type": "string"
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule_fast_track",
+      "description": "High-value established business - Fast Track",
+      "conditions": {
+        "timeInBusiness": ">= 3",
+        "vehicleCount": ">= 10",
+        "annualRevenue": ">= 500000",
+        "hasExistingLicense": "any"
+      },
+      "outputs": {
+        "qualification": "FAST_TRACK",
+        "score": 95,
+        "nextAction": "IMMEDIATE_CALL",
+        "priority": "CRITICAL"
+      }
+    },
+    {
+      "id": "rule_qualified_high",
+      "description": "Qualified lead with strong indicators",
+      "conditions": {
+        "timeInBusiness": ">= 2",
+        "vehicleCount": ">= 5",
+        "annualRevenue": ">= 250000",
+        "hasExistingLicense": "any"
+      },
+      "outputs": {
+        "qualification": "QUALIFIED",
+        "score": 85,
+        "nextAction": "SCHEDULE_DEMO",
+        "priority": "HIGH"
+      }
+    },
+    {
+      "id": "rule_qualified_medium",
+      "description": "Qualified lead with moderate indicators",
+      "conditions": {
+        "timeInBusiness": ">= 1",
+        "vehicleCount": ">= 3",
+        "annualRevenue": ">= 100000",
+        "hasExistingLicense": "any"
+      },
+      "outputs": {
+        "qualification": "QUALIFIED",
+        "score": 70,
+        "nextAction": "NURTURE_SEQUENCE",
+        "priority": "MEDIUM"
+      }
+    },
+    {
+      "id": "rule_nurture",
+      "description": "Needs nurturing - early stage or small operation",
+      "conditions": {
+        "timeInBusiness": ">= 0",
+        "vehicleCount": ">= 1",
+        "annualRevenue": ">= 50000",
+        "hasExistingLicense": "any"
+      },
+      "outputs": {
+        "qualification": "NURTURE",
+        "score": 50,
+        "nextAction": "EDUCATIONAL_CONTENT",
+        "priority": "LOW"
+      }
+    },
+    {
+      "id": "rule_not_qualified",
+      "description": "Does not meet minimum criteria",
+      "conditions": {
+        "timeInBusiness": "any",
+        "vehicleCount": "any",
+        "annualRevenue": "any",
+        "hasExistingLicense": "any"
+      },
+      "outputs": {
+        "qualification": "NOT_QUALIFIED",
+        "score": 20,
+        "nextAction": "ARCHIVE",
+        "priority": "NONE"
+      }
+    }
+  ]
+}

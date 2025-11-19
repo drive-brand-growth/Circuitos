@@ -1,0 +1,123 @@
+{
+  "id": "HandoffDecision_v1",
+  "name": "Conversation Handoff Decision",
+  "description": "DMN decision table for determining when to hand off to human agent",
+  "hitPolicy": "FIRST",
+  "inputs": [
+    {
+      "id": "handoffScore",
+      "label": "Handoff Score (0-100)",
+      "type": "number"
+    },
+    {
+      "id": "sentiment",
+      "label": "Customer Sentiment",
+      "type": "string",
+      "allowedValues": ["positive", "neutral", "negative", "frustrated"]
+    },
+    {
+      "id": "objectionCount",
+      "label": "Number of Objections",
+      "type": "number"
+    },
+    {
+      "id": "conversationLength",
+      "label": "Conversation Length (messages)",
+      "type": "number"
+    }
+  ],
+  "outputs": [
+    {
+      "id": "action",
+      "label": "Action",
+      "type": "string"
+    },
+    {
+      "id": "urgency",
+      "label": "Urgency Level",
+      "type": "string"
+    },
+    {
+      "id": "reason",
+      "label": "Handoff Reason",
+      "type": "string"
+    }
+  ],
+  "rules": [
+    {
+      "id": "rule_immediate_handoff",
+      "description": "Critical - Immediate human intervention needed",
+      "conditions": {
+        "handoffScore": ">= 90",
+        "sentiment": "any",
+        "objectionCount": "any",
+        "conversationLength": "any"
+      },
+      "outputs": {
+        "action": "IMMEDIATE_HANDOFF",
+        "urgency": "CRITICAL",
+        "reason": "High handoff score indicates complex situation"
+      }
+    },
+    {
+      "id": "rule_frustrated_customer",
+      "description": "Frustrated customer needs human touch",
+      "conditions": {
+        "handoffScore": ">= 60",
+        "sentiment": "frustrated",
+        "objectionCount": "any",
+        "conversationLength": "any"
+      },
+      "outputs": {
+        "action": "IMMEDIATE_HANDOFF",
+        "urgency": "HIGH",
+        "reason": "Customer frustration detected"
+      }
+    },
+    {
+      "id": "rule_multiple_objections",
+      "description": "Multiple objections indicate need for human",
+      "conditions": {
+        "handoffScore": ">= 50",
+        "sentiment": "any",
+        "objectionCount": ">= 3",
+        "conversationLength": "any"
+      },
+      "outputs": {
+        "action": "QUEUE_HANDOFF",
+        "urgency": "MEDIUM",
+        "reason": "Multiple objections require human negotiation"
+      }
+    },
+    {
+      "id": "rule_long_conversation",
+      "description": "Extended conversation without resolution",
+      "conditions": {
+        "handoffScore": ">= 40",
+        "sentiment": "any",
+        "objectionCount": "any",
+        "conversationLength": ">= 15"
+      },
+      "outputs": {
+        "action": "SUGGEST_HANDOFF",
+        "urgency": "LOW",
+        "reason": "Extended conversation may benefit from human agent"
+      }
+    },
+    {
+      "id": "rule_continue_ai",
+      "description": "AI can continue handling conversation",
+      "conditions": {
+        "handoffScore": "any",
+        "sentiment": "any",
+        "objectionCount": "any",
+        "conversationLength": "any"
+      },
+      "outputs": {
+        "action": "CONTINUE_AI",
+        "urgency": "NONE",
+        "reason": "AI handling is appropriate"
+      }
+    }
+  ]
+}
