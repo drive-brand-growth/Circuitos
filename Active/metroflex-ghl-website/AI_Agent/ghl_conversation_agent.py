@@ -27,8 +27,26 @@ from dataclasses import dataclass
 from datetime import datetime
 from openai import OpenAI
 
+# Import evaluator for quality assurance
+try:
+    from evaluator_agent import ResponseEvaluator, evaluate_before_send
+    EVALUATOR_AVAILABLE = True
+except ImportError:
+    EVALUATOR_AVAILABLE = False
+    print("⚠️ Evaluator agent not available - responses will not be validated")
+
+# Import experiment tracker for A/B testing
+try:
+    from experiment_tracker import ExperimentTracker, MetricType
+    EXPERIMENTS_AVAILABLE = True
+except ImportError:
+    EXPERIMENTS_AVAILABLE = False
+    print("⚠️ Experiment tracker not available - A/B testing disabled")
+
 # Lazy initialization - only create client when needed (not at import time)
 _client = None
+_evaluator = None
+_experiment_tracker = None
 
 def get_openai_client():
     """Get or create OpenAI client (lazy initialization)"""
@@ -39,6 +57,20 @@ def get_openai_client():
             raise ValueError("OPENAI_API_KEY environment variable not set")
         _client = OpenAI(api_key=api_key)
     return _client
+
+def get_evaluator():
+    """Get or create evaluator (lazy initialization)"""
+    global _evaluator
+    if _evaluator is None and EVALUATOR_AVAILABLE:
+        _evaluator = ResponseEvaluator()
+    return _evaluator
+
+def get_experiment_tracker():
+    """Get or create experiment tracker (lazy initialization)"""
+    global _experiment_tracker
+    if _experiment_tracker is None and EXPERIMENTS_AVAILABLE:
+        _experiment_tracker = ExperimentTracker()
+    return _experiment_tracker
 
 # =============================================================================
 # OBJECTION DETECTION FRAMEWORK
@@ -527,7 +559,8 @@ def handle_conversation(
             "response": f"I'm connecting you with {handoff['recommended_rep']} right now - he can help you better than I can. Expect a call within 5 minutes.",
             "framework_used": "human-handoff",
             "handoff_score": handoff['handoff_score'],
-            "next_action": "trigger_handoff"
+            "next_action": "trigger_handoff",
+            "evaluation": None
         }
     else:
         # Generate bot response
@@ -538,6 +571,47 @@ def handle_conversation(
             awareness_assessment=awareness,
             channel=channel
         )
+
+        # Step 4.5: EVALUATE response before delivery (Quality Assurance)
+        evaluator = get_evaluator()
+        if evaluator:
+            eval_context = {
+                "user_query": new_message,
+                "knowledge_base_context": f"Business: {conversation_state.business_context}",
+                "lead_data": {
+                    "name": conversation_state.contact_name,
+                    "lpr_score": conversation_state.lpr_score
+                },
+                "awareness_level": awareness['awareness_level'],
+                "detected_objection": objection,
+                "business_context": conversation_state.business_context
+            }
+
+            eval_result = evaluate_before_send(
+                evaluator=evaluator,
+                response=response_data['response'],
+                context=eval_context,
+                agent_type="conversation",
+                channel=channel
+            )
+
+            # Use evaluated response (original, revised, or fallback)
+            response_data['response'] = eval_result['response']
+            response_data['evaluation'] = {
+                "passed": eval_result['evaluation'].passed,
+                "score": eval_result['evaluation'].overall_score,
+                "was_revised": eval_result['was_revised'],
+                "blocked": eval_result['blocked'],
+                "eval_time_ms": eval_result['evaluation'].evaluation_time_ms
+            }
+
+            if eval_result['blocked']:
+                # Evaluation blocked response - trigger human handoff
+                handoff['handoff_score'] = max(handoff['handoff_score'], 75)
+                handoff['handoff_reason'] += " | Response failed quality check"
+                response_data['next_action'] = "trigger_handoff"
+        else:
+            response_data['evaluation'] = None
 
     # Step 5: Update conversation state
     conversation_state.message_history.append(ConversationMessage(
@@ -563,6 +637,7 @@ def handle_conversation(
         "handoff_decision": handoff,
         "framework_used": response_data['framework_used'],
         "next_action": response_data['next_action'],
+        "evaluation": response_data.get('evaluation'),
         "update_contact_fields": {
             "awareness_level": conversation_state.current_awareness_level,
             "last_objection": objection['objection_type'],
@@ -641,5 +716,6 @@ def conversation_api(request_data: Dict) -> Dict:
         "handoff_reason": result['handoff_decision']['handoff_reason'],
         "update_fields": result['update_contact_fields'],
         "detected_objection": result['detected_objection'],
-        "framework_used": result['framework_used']
+        "framework_used": result['framework_used'],
+        "evaluation": result.get('evaluation')
     }

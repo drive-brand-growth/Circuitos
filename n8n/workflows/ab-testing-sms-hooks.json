@@ -1,0 +1,342 @@
+{
+  "name": "A/B Testing SMS Hooks - Licensing Outreach",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ab-test-trigger",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "ab-test-webhook"
+    },
+    {
+      "parameters": {
+        "url": "={{$env.API_BASE_URL}}/api/experiments/assign",
+        "method": "POST",
+        "options": {},
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "experiment_id",
+              "value": "={{$json.experiment_id || 'licensing_sms_hook_v1'}}"
+            },
+            {
+              "name": "contact_id",
+              "value": "={{$json.contact_id}}"
+            }
+          ]
+        }
+      },
+      "id": "get-variant",
+      "name": "Get Experiment Variant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.variant_id}}",
+              "operation": "endsWith",
+              "value2": "_v0"
+            }
+          ]
+        }
+      },
+      "id": "variant-router",
+      "name": "Route by Variant",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "message",
+              "value": "Brian Dobson here from MetroFlex. Ready to discuss your gym licensing opportunity? Call me at 817-465-9331."
+            },
+            {
+              "name": "variant_name",
+              "value": "Control - Direct"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "control-message",
+      "name": "Control Message",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [850, 200]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "message",
+              "value": "Only 3 licensing territories left in Texas. Brian from MetroFlex - can we talk this week about your opportunity?"
+            },
+            {
+              "name": "variant_name",
+              "value": "Treatment - Urgency"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "treatment-message",
+      "name": "Treatment Message",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [850, 400]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "final_message",
+              "value": "={{$json.message}}"
+            },
+            {
+              "name": "variant_id",
+              "value": "={{$('Get Experiment Variant').item.json.variant_id}}"
+            },
+            {
+              "name": "contact_id",
+              "value": "={{$('Webhook Trigger').item.json.contact_id}}"
+            },
+            {
+              "name": "phone",
+              "value": "={{$('Webhook Trigger').item.json.phone}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "merge-data",
+      "name": "Merge Message Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [1050, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{$env.GHL_API_URL}}/contacts/{{$json.contact_id}}/messages",
+        "method": "POST",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "options": {},
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "type",
+              "value": "SMS"
+            },
+            {
+              "name": "message",
+              "value": "={{$json.final_message}}"
+            }
+          ]
+        }
+      },
+      "id": "send-sms",
+      "name": "Send SMS via GHL",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1250, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "ghl-api-key",
+          "name": "GHL API Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{$env.API_BASE_URL}}/api/experiments/metric",
+        "method": "POST",
+        "options": {},
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "variant_id",
+              "value": "={{$json.variant_id}}"
+            },
+            {
+              "name": "metric_type",
+              "value": "impression"
+            },
+            {
+              "name": "contact_id",
+              "value": "={{$json.contact_id}}"
+            }
+          ]
+        }
+      },
+      "id": "record-impression",
+      "name": "Record Impression Metric",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1450, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "status",
+              "value": "sent"
+            },
+            {
+              "name": "variant_id",
+              "value": "={{$json.variant_id}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "response",
+      "name": "Send Response",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [1650, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{JSON.stringify($json)}}"
+      },
+      "id": "respond-webhook",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1850, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Experiment Variant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Experiment Variant": {
+      "main": [
+        [
+          {
+            "node": "Route by Variant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Variant": {
+      "main": [
+        [
+          {
+            "node": "Control Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Treatment Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Control Message": {
+      "main": [
+        [
+          {
+            "node": "Merge Message Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Treatment Message": {
+      "main": [
+        [
+          {
+            "node": "Merge Message Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Message Data": {
+      "main": [
+        [
+          {
+            "node": "Send SMS via GHL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send SMS via GHL": {
+      "main": [
+        [
+          {
+            "node": "Record Impression Metric",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Record Impression Metric": {
+      "main": [
+        [
+          {
+            "node": "Send Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Response": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "description": "A/B testing workflow for SMS hook variants. Tests different messaging approaches for licensing outreach and tracks engagement metrics."
+  }
+}
