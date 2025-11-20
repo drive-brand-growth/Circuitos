@@ -23,3 +23,7 @@ lxml==4.9.3                      # XML/HTML processing (trafilatura dependency)
 # Adaptive RAG Stack - Vector Storage
 psycopg2-binary==2.9.9           # PostgreSQL adapter for pgvector
 numpy==1.24.3                    # Numerical operations for embeddings
+
+# Adaptive RAG Stack - Production Features (SOTA 2025)
+redis==5.0.1                     # Redis client for semantic caching
+hiredis==2.2.3                   # C parser for Redis (performance boost)
