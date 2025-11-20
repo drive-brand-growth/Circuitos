@@ -1,0 +1,221 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "RAG: Health Check",
+      "type": "shell",
+      "command": "curl -s http://localhost:5001/api/rag/health | jq",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "RAG: Cache Stats",
+      "type": "shell",
+      "command": "curl -s http://localhost:5001/api/rag/cache/stats | jq",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "RAG: Query Test",
+      "type": "shell",
+      "command": "curl -s -X POST http://localhost:5001/api/rag/query -H 'Content-Type: application/json' -d '{\"query\": \"What are the 2026 NPC event rules?\", \"skip_quality_gates\": false}' | jq",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "RAG: List Stale Documents",
+      "type": "shell",
+      "command": "curl -s 'http://localhost:5001/api/rag/stale?days=7' | jq '.stale_documents[] | {id, url, last_updated, feedback_count}'",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "MetroFlex: Test Licensing Agent",
+      "type": "shell",
+      "command": "curl -s -X POST http://localhost:5001/api/licensing/chat -H 'Content-Type: application/json' -d '{\"query\": \"I want to open a MetroFlex gym\", \"lead_data\": {\"name\": \"Test Lead\", \"email\": \"test@example.com\", \"phone\": \"555-0000\", \"liquid_capital\": 180000, \"industry_experience_years\": 5, \"existing_gym\": false, \"existing_gym_sqft\": 0, \"location\": \"Test City\", \"passion_score\": 9}}' | jq '{qualification_score, high_intent}'",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "MetroFlex: Agent Status",
+      "type": "shell",
+      "command": "curl -s http://localhost:5001/api/agents/status | jq '{agents: .agents | map_values(.available), revenue_potential: .total_revenue_potential}'",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "Circuit OS: Full Health Check",
+      "type": "shell",
+      "command": "echo '=== Circuit OS Health Check ===' && echo '' && echo '📦 Services:' && docker compose ps | grep -c 'Up' && echo '/16 services expected' && echo '' && echo '🤖 AI Services:' && curl -s http://localhost:5001/health | jq -r '.status' && echo '' && echo '🔍 RAG:' && curl -s http://localhost:5001/api/rag/health | jq '{status, documents, chunks}' && echo '' && echo '🗄️  Database:' && docker exec circuitos-db pg_isready && echo '' && echo '📊 Monitoring:' && curl -s http://localhost:9090/-/healthy",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Circuit OS: Resource Usage",
+      "type": "shell",
+      "command": "docker stats --no-stream --format 'table {{.Name}}\\t{{.CPUPerc}}\\t{{.MemUsage}}\\t{{.NetIO}}' | head -n 10",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "Docker: Rebuild MetroFlex AI",
+      "type": "shell",
+      "command": "docker compose build metroflex-ai && echo '✅ Build complete. Run \"Docker: Deploy MetroFlex AI\" to start.'",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Docker: Deploy MetroFlex AI",
+      "type": "shell",
+      "command": "docker compose up -d metroflex-ai && sleep 5 && curl -s http://localhost:5001/health | jq",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "dependsOn": ["Docker: Rebuild MetroFlex AI"]
+    },
+    {
+      "label": "Docker: View MetroFlex Logs",
+      "type": "shell",
+      "command": "docker compose logs -f --tail 100 metroflex-ai",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Docker: Start All Services",
+      "type": "shell",
+      "command": "docker compose up -d && sleep 10 && docker compose ps",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Docker: Stop All Services",
+      "type": "shell",
+      "command": "docker compose down",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Database: Backup All",
+      "type": "shell",
+      "command": "mkdir -p ./backups/$(date +%Y-%m-%d) && docker exec circuitos-db pg_dumpall -U circuitos | gzip > ./backups/$(date +%Y-%m-%d)/all-databases.sql.gz && ls -lh ./backups/$(date +%Y-%m-%d)/",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "Database: Check Sizes",
+      "type": "shell",
+      "command": "docker exec circuitos-db psql -U circuitos -c \"SELECT datname, pg_size_pretty(pg_database_size(datname)) as size FROM pg_database WHERE datname IN ('agentforce', 'ml_audit', 'circuit_runtime') ORDER BY pg_database_size(datname) DESC;\"",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "n8n: Trigger RAG Re-ingestion",
+      "type": "shell",
+      "command": "echo 'Manually triggering n8n RAG re-ingestion workflow...' && curl -s -X POST http://localhost:5678/webhook/rag-reingest | jq",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "Monitoring: Open Grafana",
+      "type": "shell",
+      "command": "open http://localhost:3002 || xdg-open http://localhost:3002 || echo 'Grafana: http://localhost:3002'",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "Monitoring: Open Prometheus",
+      "type": "shell",
+      "command": "open http://localhost:9090 || xdg-open http://localhost:9090 || echo 'Prometheus: http://localhost:9090'",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "CI/CD: Run All Tests",
+      "type": "shell",
+      "command": "echo 'Running comprehensive test suite...' && npm run test && echo '✅ All tests passed'",
+      "problemMatcher": ["$eslint-compact"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "Git: Pre-Commit Check",
+      "type": "shell",
+      "command": "git status && echo '' && echo '=== Recent commits ===' && git log --oneline -5 && echo '' && echo '=== Staged changes ===' && git diff --cached --stat",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    }
+  ]
+}

@@ -13,6 +13,7 @@ desktop.ini
 
 # Editor and IDE Files
 .vscode/
+!.vscode/tasks.json
 .idea/
 *.swp
 *.swo
