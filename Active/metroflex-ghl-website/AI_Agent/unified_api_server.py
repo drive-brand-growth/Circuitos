@@ -31,6 +31,7 @@ from gym_member_agent import GymMemberOnboardingAgent
 from ghl_workflow_agent import generate_workflow_api
 from ghl_conversation_agent import conversation_api
 from adaptive_rag_api import rag_api
+from orchestrator_api import orchestrator_api
 
 # Configure logging
 logging.basicConfig(
@@ -46,6 +47,10 @@ CORS(app)
 # Register Adaptive RAG API Blueprint
 app.register_blueprint(rag_api)
 logger.info("✅ Adaptive RAG API registered at /api/rag/*")
+
+# Register Orchestrator API Blueprint
+app.register_blueprint(orchestrator_api)
+logger.info("✅ Orchestrator API registered at /api/orchestrator/*")
 
 # Configuration
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
@@ -383,11 +388,28 @@ def agents_status():
                 },
                 'description': 'Self-improving knowledge base with web crawling',
                 'features': ['URL ingestion', 'Semantic search', 'Feedback loop', 'Auto re-indexing']
+            },
+            'orchestrator': {
+                'available': True,
+                'endpoints': {
+                    'task_submit': '/api/orchestrator/task',
+                    'task_execute': '/api/orchestrator/task/<id>/execute',
+                    'task_status': '/api/orchestrator/task/<id>/status',
+                    'demo_workflow': '/api/orchestrator/demo/licensing_inquiry',
+                    'agents_list': '/api/orchestrator/agents',
+                    'governance': '/api/orchestrator/governance/metrics',
+                    'health': '/api/orchestrator/health'
+                },
+                'description': 'Multi-agent command & control with governance',
+                'worker_agents': ['RAG Worker (knowledge retrieval)', 'Action Worker (GHL writes, webhooks)'],
+                'governance_features': ['Policy enforcement', 'Approval gates', 'Audit trails', 'Explainability'],
+                'investor_demo': 'GET /api/orchestrator/demo/licensing_inquiry shows full workflow'
             }
         },
         'total_revenue_potential': '$420k-$975k/year',
         'ghl_webhook_configured': GHL_WEBHOOK_URL != '' and 'placeholder' not in GHL_WEBHOOK_URL,
         'replaces_ghl_employee_ai': True,
+        'command_architecture': True,
         'world_class_frameworks': [
             'Eugene Schwartz 5 Levels of Awareness',
             'Alex Hormozi Value Equation',
