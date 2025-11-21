@@ -185,7 +185,9 @@ class PerplexityResearcher:
                 ]
             }
 
-        elif "economic" in query.lower() or "downturn" in query.lower():
+        elif ("economic downturn" in query.lower() or "economic impact" in query.lower() or
+              "economic pressure" in query.lower() or "downturn" in query.lower() or
+              "interest rate" in query.lower() or "macroeconomic" in query.lower()):
             return {
                 'answer': """Lead scoring models are experiencing degraded performance due to macroeconomic shifts:
 
@@ -235,6 +237,113 @@ class PerplexityResearcher:
                     'Federal Reserve economic indicators API',
                     'Company financial health databases (Dun & Bradstreet)',
                     'Sales conversation NLP analysis'
+                ]
+            }
+
+        elif ("gym" in query.lower() or "fitness" in query.lower() or "licensing" in query.lower() or
+              "franchise" in query.lower() or "boutique" in query.lower() or "big_box" in query.lower() or
+              "big-box" in query.lower() or "crossfit" in query.lower() or "traditional_big_box" in query.lower()):
+            return {
+                'answer': """Gym licensing lead scoring has experienced degraded performance due to major industry shifts:
+
+1. **GLP-1 Weight Loss Drug Impact (Ozempic/Wegovy)**: The explosion of GLP-1 drugs in 2025 has fundamentally changed gym membership demographics. Weight-loss-focused gym seekers dropped 41% as consumers opt for pharmaceutical solutions. However, serious lifters and strength training enthusiasts increased 67% as casual dieters left gyms.
+
+2. **Post-COVID Shift to Boutique Fitness**: Large-footprint traditional gyms (10,000+ sq ft) saw 34% decline in new memberships, while boutique strength training facilities (<5,000 sq ft) grew 156%. Licensing prospects with smaller, specialized concepts convert at 3.4x higher rates.
+
+3. **Social Media Influence on Gym Culture**: TikTok and Instagram drove a 287% increase in "hardcore gym" culture. Licensing prospects who emphasize powerlifting, Olympic lifting, or strongman convert at 4.1x higher rates than general fitness concepts. The "influencer gym" phenomenon creates high-visibility, high-revenue licensing opportunities.
+
+4. **Economic Pressure on Boutique Gym Budgets**: Rising commercial real estate costs (average +23% in metro areas) changed the ideal licensee profile. Prospects with existing space convert at 89% vs 52% for those seeking new leases. Cash-ready buyers (>$150k liquid) convert 3.8x higher than those needing SBA loans.
+
+5. **Equipment Supply Chain Normalization**: Post-pandemic equipment shortages resolved in late 2024, reducing licensing barrier. However, prospects aware of equipment financing options convert 2.6x higher, suggesting education gap.
+
+**Recommended Data Sources:**
+- Commercial real estate availability by market (CoStar, LoopNet APIs)
+- SBA lending data for fitness franchise approvals
+- Social media engagement metrics (TikTok/Instagram fitness content reach)
+- Existing gym/fitness facility ownership records
+- Equipment financing pre-qualification status
+
+**Key Signals to Track:**
+- Prospect has existing commercial space (owned or long-term lease)
+- Cash reserves >$150k liquid (equity, not credit lines)
+- Social media presence or influencer connections in fitness space
+- Focus on strength training vs general fitness/cardio
+- Mentions of "powerlifting," "strongman," "Olympic lifting," or "hardcore"
+- Current gym ownership or fitness industry experience
+- Located in markets with low boutique gym saturation (<2 per 50k population)
+- Understanding of equipment financing (mentions Gym Source, Rogue financing, etc.)
+""",
+                'citations': [
+                    'https://www.ihrsa.org/publications/gym-membership-trends-2025/',
+                    'https://www.fitnessbusinesscanada.com/glp1-impact-gyms-2025/',
+                    'https://www.athleticbusiness.com/fitness-facilities/boutique-fitness-growth-2025/',
+                    'https://www.costar.com/commercial-real-estate-trends-2025/',
+                    'https://www.sba.gov/funding/fitness-franchise-lending-2025'
+                ],
+                'recommended_features': [
+                    {
+                        'name': 'has_existing_commercial_space',
+                        'type': 'boolean',
+                        'data_source': 'Commercial real estate records / Discovery questionnaire',
+                        'rationale': 'Prospects with space convert at 89% vs 52% without (rising real estate costs)',
+                        'expected_impact': 'Very High (0.28-0.38 feature importance)'
+                    },
+                    {
+                        'name': 'liquid_cash_reserves',
+                        'type': 'integer',
+                        'data_source': 'Financial pre-qualification / SBA loan check',
+                        'rationale': 'Cash reserves >$150k convert 3.8x higher than SBA-dependent prospects',
+                        'expected_impact': 'Very High (0.32-0.42 feature importance)'
+                    },
+                    {
+                        'name': 'strength_training_focus',
+                        'type': 'boolean',
+                        'data_source': 'Concept description NLP analysis',
+                        'rationale': 'Powerlifting/strongman concepts convert 4.1x higher (hardcore culture trend)',
+                        'expected_impact': 'Very High (0.30-0.40 feature importance)'
+                    },
+                    {
+                        'name': 'social_media_fitness_presence',
+                        'type': 'boolean',
+                        'data_source': 'Social media profile scan (TikTok/Instagram)',
+                        'rationale': '287% growth in hardcore gym culture driven by social media influence',
+                        'expected_impact': 'High (0.20-0.28 feature importance)'
+                    },
+                    {
+                        'name': 'fitness_industry_experience',
+                        'type': 'boolean',
+                        'data_source': 'Background check / LinkedIn profile',
+                        'rationale': 'Current gym owners or fitness professionals convert 2.9x higher',
+                        'expected_impact': 'High (0.18-0.25 feature importance)'
+                    },
+                    {
+                        'name': 'market_boutique_saturation_low',
+                        'type': 'boolean',
+                        'data_source': 'Gym location density analysis by ZIP',
+                        'rationale': 'Markets with <2 boutique gyms per 50k population convert 3.2x higher',
+                        'expected_impact': 'Medium-High (0.15-0.22 feature importance)'
+                    },
+                    {
+                        'name': 'understands_equipment_financing',
+                        'type': 'boolean',
+                        'data_source': 'Discovery call NLP / mentions of equipment financing',
+                        'rationale': 'Prospects aware of financing options convert 2.6x higher',
+                        'expected_impact': 'Medium (0.12-0.18 feature importance)'
+                    },
+                    {
+                        'name': 'facility_size_under_5000_sqft',
+                        'type': 'boolean',
+                        'data_source': 'Space specifications from questionnaire',
+                        'rationale': 'Boutique facilities (<5k sqft) grew 156%, large footprints declined 34%',
+                        'expected_impact': 'High (0.20-0.28 feature importance)'
+                    }
+                ],
+                'data_sources': [
+                    'Commercial real estate databases (CoStar, LoopNet)',
+                    'SBA lending records for fitness franchises',
+                    'Social media APIs (TikTok, Instagram)',
+                    'Gym density analysis by market (Yelp, Google Maps)',
+                    'Equipment financing partner APIs (Gym Source, Rogue)'
                 ]
             }
 
@@ -402,7 +511,15 @@ class GapDetector:
 
         if primary_gap['type'] == 'vertical_specific_degradation':
             vertical = primary_gap['vertical']
-            return f"""Research question: Why would lead scoring accuracy drop for {vertical} businesses in {datetime.now().strftime('%B %Y')}?
+
+            # Detect if this is a gym/fitness scenario from vertical names
+            gym_verticals = ['boutique_strength', 'traditional_big_box', 'budget_fitness', 'crossfit_functional']
+            is_gym_scenario = vertical in gym_verticals
+
+            # Add industry context if it's a gym scenario
+            industry_context = " gym licensing prospects" if is_gym_scenario else " businesses"
+
+            return f"""Research question: Why would lead scoring accuracy drop for {vertical}{industry_context} in {datetime.now().strftime('%B %Y')}?
 
 Context:
 - Our XGBoost lead scoring model's F1 score dropped to {vertical_breakdown[vertical]['f1']:.2%} for {vertical} vertical
@@ -699,6 +816,27 @@ SCENARIOS = {
             'technology': {'f1': 0.74, 'precision': 0.79, 'recall': 0.70},
             'manufacturing': {'f1': 0.75, 'precision': 0.80, 'recall': 0.71}
         }
+    },
+
+    'gym_licensing': {
+        'name': 'Gym Licensing - Industry Disruption & Demographic Shift',
+        'description': 'GLP-1 drugs, social media trends, and boutique fitness boom changed ideal licensee profile',
+        'historical_metrics': {
+            'f1': 0.83,
+            'precision': 0.86,
+            'recall': 0.80
+        },
+        'current_metrics': {
+            'f1': 0.68,
+            'precision': 0.71,
+            'recall': 0.65
+        },
+        'vertical_breakdown': {
+            'boutique_strength': {'f1': 0.79, 'precision': 0.84, 'recall': 0.74},  # Doing better (hardcore trend)
+            'traditional_big_box': {'f1': 0.51, 'precision': 0.58, 'recall': 0.45},  # Crashed (market shift)
+            'budget_fitness': {'f1': 0.62, 'precision': 0.67, 'recall': 0.58},  # Struggling (GLP-1 impact)
+            'crossfit_functional': {'f1': 0.75, 'precision': 0.80, 'recall': 0.71}  # Stable (niche appeal)
+        }
     }
 }
 
@@ -739,6 +877,7 @@ async def main():
 Examples:
   python ml_autonomous_improvement_poc.py --scenario healthcare
   python ml_autonomous_improvement_poc.py --scenario economic_downturn
+  python ml_autonomous_improvement_poc.py --scenario gym_licensing
   python ml_autonomous_improvement_poc.py --scenario all
   python ml_autonomous_improvement_poc.py --scenario healthcare --real (uses real Perplexity API)
         """
